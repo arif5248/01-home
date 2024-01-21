@@ -2,6 +2,7 @@
 *{
     
     word-wrap: break-word;
+    margin: 0px;
 }
 p{
     margin: 0;
@@ -9,6 +10,20 @@ p{
 a{
     text-decoration: none;
     color: #000;
+}
+h1{
+    font-size: 22px;
+    margin: 0px;
+}
+h3{
+    font-size: 20px;
+    margin: 0px;
+    color: #000;
+}
+h5{
+    margin: 0;
+    font-weight: 400;
+    font-size: 16px;
 }
 hr{
     margin: 0;
@@ -58,13 +73,13 @@ body{
     margin-top: 2%;
 }
 .mainContentSection{
-    margin-top: 23%;
+    margin-top: 20%;
 }
 /*-----------------Footer-------------------*/
 .bottomSection{
     display: flex;
     justify-content: space-around;
-    padding: 10px 0px;
+    padding: 0px 0px;
     background-color: #dee2e6;
     width: 100%;
     position: fixed;

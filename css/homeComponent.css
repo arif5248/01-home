@@ -1,0 +1,298 @@
+/*-----------------Utilities-------------------*/
+*{
+    
+    word-wrap: break-word;
+}
+p{
+    margin: 0;
+}
+a{
+    text-decoration: none;
+    color: #000;
+}
+hr{
+    margin: 0;
+}
+
+.section-header{
+    height: 80px;
+}
+#navbarAfter,
+.heading{
+    height: 100%;
+}
+body{
+   
+    background-color: #676a6666;
+    
+}
+.mainSection{
+    position: relative;
+    overflow-y: auto;
+}
+
+
+/*-----------------Header-------------------*/
+.section-header{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #fff;
+    z-index: 10;
+}
+.logo-01 > img{
+    width: 55px;
+}
+
+
+/*-----------------profile-------------------*/
+.section-profile{
+    margin-top: 5px;
+    overflow-y: auto;
+}
+.profile-content{
+    border: 1px solid #000;
+    border-radius: 10px;
+    padding: 15px 10px;
+    background-color: #fff;
+    display: flex;
+}
+.leftSide{
+    width: 35%;
+    padding: 5px;
+}
+.rightSide{
+    width: 65%;
+    padding: 5px;
+    border: 1px solid #adb5bd;
+    border-radius: 10px;
+}
+.userImage > img{
+    width: 100%;
+}
+.profileBtn{
+    text-align: center;
+    background-color: #A4B799;
+    border-radius: 5px;
+    padding: 0px 0px;
+}
+
+/*-----------------table-------------------*/
+.moreHeading{
+    display: flex;
+    border: 1px solid #000;
+    border-radius: 10px;
+    justify-content: space-between;
+    padding: 5px 0px;
+}
+.moreHeading> img{
+    padding-right: 5px;
+}
+.moreHeading> h3{
+    margin: 0;
+}
+.table1Content-btn,
+.table-2Content
+{
+    margin-top: 15px;
+    /* border: 1px solid #000; */
+    border-radius: 10px;
+    padding: 15px 10px;
+    background-color: #fff;
+}
+.popUpSec{
+    margin-top: 0px;
+    width: 100%;
+    height: var(--vh);
+    background-color: #fff;
+    position: absolute;
+    top: 80px;
+}
+#more-table1{
+    width: 100%;
+    border: 1px solid #000;
+    border-radius: 10px;
+    padding: 15px 10px;
+    background-color: #fff;
+    
+}
+table{
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+ .column-left{
+    padding-left: 10px;
+    width: 60%;
+    border:1px solid #000 !important;
+    margin-bottom: 5px;
+    border-radius: 10px 0px 0px 10px;
+    border-right: 1px solid #fff;
+}
+.column-right{
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 40%;
+    border:1px solid #000 !important;
+    margin-bottom: 5px;
+    border-radius: 0px 10px 10px 0px;
+    border-right: 1px solid #fff;
+}
+.column-right >div{
+    display: flex;
+    justify-content: space-between;
+}
+.more{
+    color: #00008C;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.availableStockHeading,
+.availeExecutedTradesHeading{
+    text-align: center;
+    margin-top: 15px;
+    padding: 15px 0px;
+    border-radius: 10px 10px 0px 0px;
+    background-color: #e9ecefd9;
+}
+.btnRow{
+    background-color: #fff;
+    padding: 8px;
+}
+.btnGroup{
+    display: flex;
+    background-color: #676a66e8;
+    justify-content: space-around;
+    padding: 10px 0px;
+    align-items: center;
+}
+.stockBtn{
+    padding: 8px 15px;
+    border: 3px solid #676a66e8;
+    border-radius: 10px;
+}
+.btnGroup > .active{
+    padding: 8px 15px;
+    border: 3px solid #000;
+    border-radius: 10px;
+}
+.currentBtn,.stockBtn{
+    font-size: 20px;
+    color: white;
+    font-family: sans-serif;
+}
+.currentStockBody,
+.oldStockBody{
+    position: relative;
+}
+.stockBody{
+    height: 480px;
+    overflow-y: auto;
+}
+table> tbody >tr > th{
+    background-color: #212529f5;
+    position: sticky;
+    top: 0;
+    color: #fff;
+    font-weight: 400;
+    text-align: center;
+    padding-top: 0;
+}
+td{
+    text-align: center;
+}
+td:first-child{
+    text-align: left;
+}
+.currentStockFooter,
+.oldStockFooter{
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    background-color: #212529f5;
+    color: #fff;
+    justify-content: space-between;
+}
+.currentStockFooter > p,
+.oldStockFooter > p{
+    padding: 5px 0px;
+    padding-right: 20px
+}
+.section-ExecutedTrades > .container > .btnRow > .btnGroup{
+    background-color: #fff;
+    padding: 0;
+}
+.section-ExecutedTrades > .container > .btnRow > .btnGroup > input
+{
+    text-align: center;
+    background-color: #dee2e6;
+    border: 1px solid #000;
+    padding: 5px 0px;
+    border-radius: 5px;
+}
+/* .section-ExecutedTrades > .container > .btnRow > .btnGroup > img{
+    padding: 5px 0px;
+    border: 1px solid #000;
+    padding: 5px 0px;
+} */
+.searchImg{
+    padding: 5px 20px;
+    border-radius: 5px;
+    border: 1px solid #000;
+}
+
+
+
+/* Hide the arrow from Date */
+/* input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+} */
+
+  /* Hide the arrow in Firefox */
+/* input[type="date"]::-moz-calendar-picker-indicator {
+display: none;
+} */
+
+/*-----------------Footer-------------------*/
+.section-footer{
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0px;
+    background-color: #dee2e6;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    /* box-shadow: 0px -4px 10px -1px #000000a1; */
+
+}
+.footer-icon{
+    margin: 5px 10px;
+    text-align: center;
+    border: 1px solid #000;
+    border-radius: 20px;
+    background-color: #fff;
+    padding: 10px;
+}
+
+
+/*-----------------Bootstrap class-------------------*/
+/* .bg-light{
+    background-color: transparent !important;
+}
+.navbar-toggler{
+    background-color: #A4B799 !important;
+}
+.navbar-light .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e")
+}
+.offcanvas-title {
+    width: 20%;
+}
+.offcanvas-start {
+    width: 80%; 
+}
+.offcanvas-start.show {
+    transform: translateX(0);
+    width: 80%; 
+} */

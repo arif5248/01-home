@@ -1,0 +1,397 @@
+/*-----------------Utilities-------------------*/
+*{
+    
+    word-wrap: break-word;
+}
+p{
+    margin: 0;
+}
+a{
+    text-decoration: none;
+    color: #000;
+}
+hr{
+    margin: 0;
+}
+
+.section-header{
+    height: 80px;
+}
+#navbarAfter,
+.heading{
+    height: 100%;
+}
+body{
+   
+    background-color: #676a6666;
+    
+}
+.mainSection{
+    position: relative;
+    overflow-y: auto;
+}
+.nav-socialIcon{
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+}
+.hr-highlite{
+    border-bottom: 3px solid #000;
+}
+.hideCanvas{
+    visibility: hidden !important;
+}
+/*-----------------Header-------------------*/
+.topSection{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 10%;
+    background-color: #fff;
+    z-index: 10;
+}
+.logo-01 > img{
+    width: 55px;
+}
+/*-----------------main-------------------*/
+.mainSection{
+    margin-top: 2%;
+}
+.mainContentSection{
+    margin-top: 23%;
+}
+/*-----------------Footer-------------------*/
+.bottomSection{
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0px;
+    background-color: #dee2e6;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    /* box-shadow: 0px -4px 10px -1px #000000a1; */
+
+}
+.footer-icon{
+    margin: 5px 10px;
+    text-align: center;
+    border: 1px solid #000;
+    border-radius: 20px;
+    background-color: #fff;
+    padding: 10px;
+}
+.activeBtn{
+    background-color: #221177 !important;
+    color: #fff;
+}
+
+/*-----------------Support Team-------------------*/
+.support-slide {
+    position: fixed;
+    /* top: 0; */
+    bottom: 0; 
+    left: 0;
+    width: 100%;
+    background-color: #f2f2f2;
+    padding: 20px;
+    box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.2);
+    transition:  0.5s ease-in-out;
+}
+.support-content {
+    text-align: center;
+}
+.supportHeading,
+.sendMessageHeading{
+display: flex;
+justify-content: space-between;
+align-items: center;
+border-bottom: 1px solid #000;
+padding-bottom: 5px;
+}
+.supportHeading > span,
+.supportHeading >img,
+.sendMessageHeading>img{
+    padding-right: 5px;
+    width: 30px;
+    height: 30px;
+}
+.supportCall{
+    border-bottom: 1px solid #000;
+    padding: 10px 0px;
+}
+.supportCall > a{
+    font-weight: 700;
+    font-size: 23px;
+    color: #007bff;
+}
+.supportIcon{
+    width: 50px;
+    height: auto;
+}
+.supportIconGroup{
+    padding: 10px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #000;
+}
+.innerIconGroup{
+    display: flex;
+}
+.innerElement{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.innerElement > span{
+    color: #000;
+    font-weight: 700;
+    font-size: 20px;
+}
+/*--------------send message and video chat section---------------*/
+.sendMessageBody > form >select {
+    background-color: transparent;
+    height: 60px;
+    width: 100%;
+    color: #000;
+    margin-bottom: 10px;
+}
+.sendMessageSection,
+.videoChatSection{
+    height: 100%;
+    z-index: 1035;
+    position: absolute;
+    bottom: 0; 
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    padding: 20px;
+    transition:  0.5s ease-in-out;
+}
+.sendMessageHeading{
+    background-color: #2e0339;
+}
+.sendMessageHeading > h3{
+    color: white;
+    margin: 0;
+    padding: 10px 0px;
+}
+.sendMessageBody > form{
+    margin-top: 10px;
+}
+.sendMessageBody > form >select{
+    width: 100%;
+    color: #000;
+    margin-bottom: 10px;
+}
+.sendMessageBody > form .inputStyle{
+    width: 100%;
+    height: 60px;
+    margin-bottom: 10px;
+    background-color: transparent;
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding-left: 20px;
+}
+.sendMessageBody > form > input::placeholder,
+.sendMessageBody > form > input{
+    color: #000;
+}
+.sendMessageBody > form > textarea{
+    border-color: #000;
+    background-color: transparent;
+    width: 100%;
+    padding:5px 20px;
+    border-radius: 10px;
+}
+.file{
+    margin-top: 10px;
+    text-align: center;
+    padding: 10px 10px;
+    border: 1px solid #000;
+    border-radius: 10px;
+}
+.file > span{
+    font-weight: 900;
+    font-size: 20px;
+}
+.fileInputLabel input {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+.fileInputLabel span {
+    font-weight: 600;
+    font-size: 25px;
+    /* background-color: #007bff; */
+    color: #000;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.fileInputLabel {
+    margin-bottom: 30px;
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+    color: #000;
+    border: 1px solid #007bff;
+    display: inline-block;
+    padding: 12px 12px;
+    cursor: pointer;
+    border-radius: 10px;
+    width: 100%;
+}
+.fileInputLabel:hover {
+    /* background-color: #007bff; */
+    color: #fff;
+}
+#fileInput{
+    color: #000;
+    width: 100%;
+}
+.submitSendMsg{
+    margin-top: 35px;
+    margin-bottom: 20px;
+    background-color: green;
+    border-radius: 10px;
+    padding: 10px 0px;
+    width: 100%;
+    color: #fff;
+    font-size: 25px;
+    font-weight: 400;
+}
+/*-----------------Send Message-------------------*/
+
+.sendMessageHeading{
+    background-color: #2e0339;
+}
+.sendMessageHeading > h3{
+    color: white;
+    margin: 0;
+    padding: 10px 0px;
+}
+.sendMessageBody > form{
+    margin-top: 10px;
+}
+.sendMessageBody > form >select{
+    width: 100%;
+    color: #000;
+    margin-bottom: 10px;
+}
+.sendMessageBody > form .inputStyle{
+    width: 100%;
+    height: 60px;
+    margin-bottom: 10px;
+    background-color: transparent;
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding-left: 20px;
+}
+.sendMessageBody > form > input::placeholder,
+.sendMessageBody > form > input{
+    color: #000;
+}
+.sendMessageBody > form > textarea{
+    border-color: #000;
+    background-color: transparent;
+    width: 100%;
+    padding:5px 20px;
+    border-radius: 10px;
+}
+.file{
+    margin-top: 10px;
+    text-align: center;
+    padding: 10px 10px;
+    border: 1px solid #000;
+    border-radius: 10px;
+}
+.file > span{
+    font-weight: 900;
+    font-size: 20px;
+}
+.fileInputLabel input {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+.fileInputLabel span {
+    font-weight: 600;
+    font-size: 25px;
+    /* background-color: #007bff; */
+    color: #000;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.fileInputLabel {
+    margin-bottom: 30px;
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+    color: #000;
+    border: 1px solid #007bff;
+    display: inline-block;
+    padding: 12px 12px;
+    cursor: pointer;
+    border-radius: 10px;
+    width: 100%;
+}
+.fileInputLabel:hover {
+    /* background-color: #007bff; */
+    color: #fff;
+}
+#fileInput{
+    color: #000;
+    width: 100%;
+}
+.submitSendMsg{
+    margin-top: 35px;
+    margin-bottom: 20px;
+    background-color: green;
+    border-radius: 10px;
+    padding: 10px 0px;
+    width: 100%;
+    color: #fff;
+    font-size: 25px;
+    font-weight: 400;
+}
+
+/*-----------------Bootstrap class-------------------*/
+.bg-light{
+    background-color: transparent !important;
+}
+.navbar-toggler{
+    background-color: #A4B799 !important;
+}
+.navbar-light .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e")
+}
+.offcanvas-title {
+    width: 35% !important;
+}
+.offcanvas-start {
+    width: 80%; 
+}
+.offcanvas-start.show {
+    transform: translateX(0);
+    width: 80%; 
+}
+.offcanvas-header {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1rem;
+    flex-direction: column;
+}
+.offcanvas-header > div{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.offcanvas-header > div:last-child{
+    margin-bottom: 0px;
+}

@@ -1,0 +1,103 @@
+.mainContentSection{
+    height: 100%;
+    background-color: #fff;
+    padding-bottom: 30px;
+}
+.heading{
+    text-align: center;
+    padding: 10px 0px;
+    background-color: rgb(3, 3, 51);
+    color: #fff;
+    margin-bottom: 10px;
+}
+/* ========================Search box====================== */
+.searchContent{
+    padding: 10px 5px;
+    border: 1px solid #000;
+    border-radius: 10px;
+}
+.input-box{
+    padding: 0px 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.input-box > input{
+    padding: 10px;
+    background-color: #676a6666;
+    border-radius: 10px;
+    height: 50px;
+    font-weight: 700;
+}
+.input-box > span{
+    font-weight: 800;
+    font-size: 20px;
+}
+.searchLedger{
+    margin-top: 20px;
+    border-radius: 11px;
+    text-align: center;
+    padding: 10px 0px;
+    background-color: #000;
+    color: #fff;
+}
+
+/* ========================Ledger Summury====================== */
+.ledgerSummury{
+    margin-top: 15px;
+    border: 1px solid #000;
+    border-radius: 10px;
+    padding: 10px 10px;
+}
+.item{
+    display: flex;
+    padding: 5px 0px;
+}
+.item > .left{
+    display: flex;
+    justify-content: space-between;
+    width: 45%;
+}
+.item > .right{
+    text-align: right;
+    width: 55%;
+}
+
+table{
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+table > tbody > tr:first-child{
+    background-color: black;
+}
+table > tbody > tr:first-child > th{
+    color: #fff;
+    font-size: 20px;
+    padding: 5px 1px;
+}
+table > tbody > tr:first-child > th:first-child{
+    -webkit-padding-start: 10px;
+}
+table > tbody > tr:first-child > th:last-child{
+    -webkit-padding-end: 10px;
+}
+
+table > tbody > tr > td{
+    font-weight: 700;
+    font-size: 15px;
+    padding: 10px 0px;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    color: #000 !important;
+}
+table > tbody > tr > td:first-child{
+    -webkit-padding-start: 10px;
+    border-left: 1px solid #000;
+    border-radius: 15px 0px 0px 15px;
+}
+table > tbody > tr > td:last-child{
+    -webkit-padding-end: 10px;
+    border-right: 1px solid #000;
+    border-radius: 0px 15px 15px 0px;
+}

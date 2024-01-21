@@ -1,13 +1,3 @@
-
-
-
-
-
-
-
-
-
-
 function executeNews(){
     const mediaNews=[
         {
@@ -181,6 +171,7 @@ function executeNews(){
     
         });
     }
+
     function populatedMiscNews() {
         let miscNewsDiv = document.getElementById('miscNews');
     
@@ -201,11 +192,10 @@ function executeNews(){
                     <button class="btn btn-primary btn-details">Details</button>
                 </div>
             `;
-    
             miscNewsDiv.appendChild(newsElement);
-    
         });
     }
+
     function populatedMediaNews() {
         let meadiaNewsDiv = document.getElementById('mediaNews');
     
@@ -226,22 +216,10 @@ function executeNews(){
                     <button class="btn btn-primary btn-details">Details</button>
                 </div>
             `;
-    
             meadiaNewsDiv.appendChild(newsElement);
-    
-        });
-        
+        }); 
     }
     
-    
-   
-
-
-
-
-
-
-
     news()
     
     fetchData("todaysNews_api",populatedExchangeNews)

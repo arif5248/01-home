@@ -519,10 +519,14 @@ function executeHome(){
                 <div class="btnRow">
                     <div class="btnGroup">
                         <div class="stockBtn active" onclick="showStockData('currentStockBody')">
-                            <div class="currentBtn">CURRENT STOCK</div>
+                            <div class="currentBtn">
+                                <h5>CURRENT STOCK</h5>
+                            </div>
                         </div>
                         <div class="stockBtn" onclick="showStockData('oldStockBody')">
-                            <div class="oldButton">OLD STOCK</div>
+                            <div class="oldButton">
+                                <h5>OLD STOCK</h5>
+                            </div>
                         </div>
                     </div>
                 </div>

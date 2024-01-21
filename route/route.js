@@ -5,20 +5,6 @@ function route(js,css,case_name) {
         clearMemory(currentSection);
     }
     
-    const newStyleSheet = document.createElement('link');
-    newStyleSheet.rel = 'stylesheet';
-    newStyleSheet.href = css;
-    newStyleSheet.setAttribute('data-loaded', 'dynamic-style');
-    document.head.appendChild(newStyleSheet);
-
-    const script = document.head.getElementsByTagName('script');
-    const scriptTagsArray = Array.from(script);
-    scriptTagsArray.forEach(scriptTag => {
-        if (scriptTag.id !== 'boots' && scriptTag.id !== case_name && scriptTag.id !== 'fetch') {
-            scriptTag.parentNode.removeChild(scriptTag);
-        }
-    });
-
     const newScript = document.createElement('script');
     newScript.src = js;
     newScript.defer = true;
@@ -43,6 +29,20 @@ function route(js,css,case_name) {
     document.head.appendChild(newScript);
 
     currentSection = case_name;
+
+    const newStyleSheet = document.createElement('link');
+    newStyleSheet.rel = 'stylesheet';
+    newStyleSheet.href = css;
+    newStyleSheet.setAttribute('data-loaded', 'dynamic-style');
+    document.head.appendChild(newStyleSheet);
+
+    const script = document.head.getElementsByTagName('script');
+    const scriptTagsArray = Array.from(script);
+    scriptTagsArray.forEach(scriptTag => {
+        if (scriptTag.id !== 'boots' && scriptTag.id !== case_name && scriptTag.id !== 'fetch') {
+            scriptTag.parentNode.removeChild(scriptTag);
+        }
+    });
     
 }
 
@@ -108,6 +108,12 @@ function isVerifiedCacse(case_name){
             break;
         case 'ipo':
             executeIpo();
+            break;
+        case 'dividendRecord':
+            executeDividend_Record();
+            break;
+        case 'companyInfo':
+            executeCompanyInfo();
             break;
 
     }

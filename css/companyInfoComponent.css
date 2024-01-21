@@ -1,0 +1,41 @@
+.search-reload{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 5px;
+}
+.search-reload > input{
+    width: 80%;
+    border: 1px solid #000;
+    font-size: 16px;
+}
+
+.box{
+    border: 1px  solid #000;
+    border-radius: 10px;
+    padding: 5px 5px;
+    margin-top: 10px;
+    background-color: #fff;
+    box-shadow: 0px 0px 5px 0px #000;
+}
+.heading_box{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.drop-box > img{
+    width: 25px;
+}
+.drop-box > img:last-child{
+    rotate: 180deg;
+}
+.reload > img {
+    width: 35px;
+}
+table{
+    margin-top: 15px;
+    border-color: #000 !important;
+}
+table > tbody > tr > td{
+    width: 50%;
+}

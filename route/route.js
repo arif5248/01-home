@@ -115,6 +115,9 @@ function isVerifiedCacse(case_name){
         case 'companyInfo':
             executeCompanyInfo();
             break;
+        case 'moneyDeposit':
+            executeMoneyDeposit();
+            break;
 
     }
 }

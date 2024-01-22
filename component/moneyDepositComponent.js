@@ -1,4 +1,18 @@
 function executeMoneyDeposit(){
+    const bankList = [
+        {
+            imgUrl: "../images/payment-img/cityBank.png",
+            name:"The City Bank Limited"
+        },
+        {
+            imgUrl: "../images/payment-img/dutch.png",
+            name:"Dutch Bangla Bank Limited"
+        },
+        {
+            imgUrl: "../images/payment-img/eastern.png",
+            name:"Eastern Bank Limited"
+        },
+    ]
     
     function moneyDeposit(){
         document.getElementById('mainContentSection').innerHTML =`
@@ -57,6 +71,72 @@ function executeMoneyDeposit(){
         `
     }
 
+    function renderBankList(){
+        const body = document.getElementById('bank-more')
+        body.innerHTML=`
+            <div class="wrapper_box">
+            </div>
+        `
+
+        bankList.forEach(bank => {
+            const newDiv = document.createElement('div')
+            newDiv.classList.add('outer-box')
+            newDiv.innerHTML = `
+                <div class="inner-box">
+                    <div class="img-box">
+                        <img src=${bank.imgUrl}>
+                    </div>
+                    <div class="name">
+                        <h5>${bank.name}</h5>
+                    </div>
+                </div>
+            `
+            body.querySelector('.wrapper_box').appendChild(newDiv)
+        })
+        
+    }
+    function renderCard(){
+        const body = document.getElementById('card-more')
+        body.innerHTML=`
+            <div class="topBox">
+                <h5>We Accept</h5>
+                <img src="../images//payment-img/visa-master-express.png" alt="visa-master-express">
+                <div class="caution">
+                    <p>We are not saving any of your card information. We will redirect you to Bank's Secured Payment Gateway. Please complete payment within 10 minutes</p>
+                    <p>Additipnal 2.5% for Visa/Master and 4% for Amex card will be charged on payment amount.</p>
+                </div>
+            </div>
+            <div class="bottomBox">
+            <form action="#">
+                <input type="text" value="28" readonly>
+                <input type="text" value="MD. KAISER RAIHAN" readonly>
+                <input type="text" value="01857024681" readonly>
+                <input type="email" value="xyz@gmail.com" readonly>
+        
+                <label>
+                    <input type="radio" name="paymentMethod" value="visa_master" checked>
+                    Visa/MasterCard
+                </label>
+            
+                <label>
+                    <input type="radio" name="paymentMethod" value="amex">
+                    American Express (Amex)
+                </label>
+                <label for="amount">Payment Amount</label>
+                <input type="number" id="amount" name="amount" required>
+                <label for="charge">Chargeable Amount</label>
+                <input type="number" id="charge" name="charge" readonly required>
+                <label for="purpose">IPO Name</label>
+                <select id="purpose" name="purpose" required>
+                    <option value="invest">Invest</option>
+                    <option value="cdbl_fee">CDBL fee</option>
+                    <!-- Add more IPO options as needed -->
+                </select>
+            </form>
+            </div>
+        `
+    }
+
     function dropDown(){
         document.getElementById('bank-up').style.display = 'none'
         document.getElementById('card-up').style.display = 'none'
@@ -70,6 +150,8 @@ function executeMoneyDeposit(){
     
     moneyDeposit()
     dropDown()
+    renderBankList()
+    renderCard()
     hide_All_details()
 }
 
@@ -97,7 +179,7 @@ function hide_details(up,down){
     document.getElementById('bank-more').style.display = 'none'
     document.getElementById('card-more').style.display = 'none'
     document.getElementById('mobile-more').style.display = 'none'
-    
+
     document.getElementById(down).style.display = 'block'
     document.getElementById(up).style.display = 'none'
 }

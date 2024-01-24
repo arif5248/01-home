@@ -1,3 +1,13 @@
+/* ========================================== */
+
+input[readonly] {
+    background-color: #f0f0f0;
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* ========================================== */
+
 .box{
     border: 1px  solid #000;
     border-radius: 10px;
@@ -17,11 +27,15 @@
 .drop-box > img:last-child{
     rotate: 180deg;
 }
-#bank-more,
+#bank-more{
+    position: relative;
+    height: 300px;
+    overflow-y: auto;
+}
 #card-more,
 #mobile-more{
     position: relative;
-    height: 300px;
+    height: 500px;
     overflow-y: auto;
 }
 .wrapper_box{
@@ -58,4 +72,75 @@
 .name > h5{
     font-weight: bold;
     font-size: 13px;
+}
+/*============================================*/
+.topBox{
+    text-align: center;
+}
+.topBox > img {
+    width: 150px;
+}
+.topBox > h5{
+    font-weight: 700;
+}
+.caution{
+    margin-top: 10px;
+    padding: 0px 10px;
+}
+.caution > p{
+    text-align: left;
+    margin-bottom: 15px;
+    color: red;
+}
+input,
+select{
+    
+    margin-bottom: 10px;
+    border-radius: 5px;
+    padding: 5px 5px;
+}
+label{
+    margin-bottom: 10px;
+    
+}
+.form-box-1{
+    display: flex;
+    flex-direction: column;
+}
+.form-box-1 > input{
+    width: 100%;
+}
+.form-box-2 {
+    display: flex;
+    justify-content: space-around;
+}
+.form-box-2 > div{
+    display: flex;
+}
+.form-box-2 > div > input{
+    margin-right: 10px;
+    width: 20px;
+}
+.form-box-3{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.form-box-3 > select,
+.form-box-3 > label,
+.form-box-3 > input{
+    width: 45%;
+}
+#amount,
+#charge{
+    text-align: right;
+}
+.proceed-btn > input{
+    width: 100%;
+    background-color: #4CB050;
+    color: #fff;
+}
+form > p{
+    font-weight: 600;
+    margin-bottom: 10px;
 }

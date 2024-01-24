@@ -7,6 +7,7 @@ function route(js,css,case_name) {
     
     const newScript = document.createElement('script');
     newScript.src = js;
+    newScript.id = case_name;
     newScript.defer = true;
     newScript.setAttribute('data-loaded', 'dynamic-script');
 
@@ -117,6 +118,18 @@ function isVerifiedCacse(case_name){
             break;
         case 'moneyDeposit':
             executeMoneyDeposit();
+            break;
+        case 'bankDeposit-0':
+            executeBankDeposit_0();
+            break;
+        case 'bankDeposit-1':
+            executeBankDeposit_1();
+            break;
+        case 'bankDeposit-2':
+            executeBankDeposit_2();
+            break;
+        case 'moneyWithdrawal':
+            executeMoneyWithdrawal();
             break;
 
     }

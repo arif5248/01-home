@@ -78,11 +78,11 @@ function executeMoneyDeposit(){
             </div>
         `
 
-        bankList.forEach(bank => {
+        bankList.forEach((bank, index) => {
             const newDiv = document.createElement('div')
             newDiv.classList.add('outer-box')
             newDiv.innerHTML = `
-                <div class="inner-box">
+                <div onclick="removeFooterBtnState(); route('../component/bankDepositComponent.js','../css/bankDepositComponent.css', 'bankDeposit-${index}')" class="inner-box">
                     <div class="img-box">
                         <img src=${bank.imgUrl}>
                     </div>
@@ -100,38 +100,93 @@ function executeMoneyDeposit(){
         body.innerHTML=`
             <div class="topBox">
                 <h5>We Accept</h5>
-                <img src="../images//payment-img/visa-master-express.png" alt="visa-master-express">
+                <img src="../images/payment-img/visa-master-express.png" alt="visa-master-express">
                 <div class="caution">
                     <p>We are not saving any of your card information. We will redirect you to Bank's Secured Payment Gateway. Please complete payment within 10 minutes</p>
-                    <p>Additipnal 2.5% for Visa/Master and 4% for Amex card will be charged on payment amount.</p>
+                    <p>Additional 2.5% for Visa/Master and 4% for Amex card will be charged on payment amount.</p>
                 </div>
             </div>
             <div class="bottomBox">
             <form action="#">
-                <input type="text" value="28" readonly>
-                <input type="text" value="MD. KAISER RAIHAN" readonly>
-                <input type="text" value="01857024681" readonly>
-                <input type="email" value="xyz@gmail.com" readonly>
-        
-                <label>
-                    <input type="radio" name="paymentMethod" value="visa_master" checked>
-                    Visa/MasterCard
-                </label>
-            
-                <label>
-                    <input type="radio" name="paymentMethod" value="amex">
-                    American Express (Amex)
-                </label>
-                <label for="amount">Payment Amount</label>
-                <input type="number" id="amount" name="amount" required>
-                <label for="charge">Chargeable Amount</label>
-                <input type="number" id="charge" name="charge" readonly required>
-                <label for="purpose">IPO Name</label>
-                <select id="purpose" name="purpose" required>
-                    <option value="invest">Invest</option>
-                    <option value="cdbl_fee">CDBL fee</option>
-                    <!-- Add more IPO options as needed -->
-                </select>
+                <div class="form-box-1">
+                    <input type="text" value="28" readonly>
+                    <input type="text" value="MD. KAISER RAIHAN" readonly>
+                    <input type="text" value="01857024681" readonly>
+                    <input type="email" value="xyz@gmail.com" readonly>
+                </div>
+                
+                <div class="form-box-2">
+                    <div>
+                        <input type="radio" name="paymentMethod" value="visa_master" checked>
+                        <label>Visa/MasterCard</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="paymentMethod" value="amex">
+                        <label>Amex</label>
+                    </div>
+                </div>
+
+                <div class="form-box-3">
+                    <label for="amount">Payment Amount</label>
+                    <input type="number" id="amount" name="amount" placeholder="Enter Taka" required>
+                </div>
+                <div class="form-box-3">
+                    <label for="charge">Chargeable Amount</label>
+                    <input type="number" id="charge" name="charge" placeholder="Tk" readonly required>
+                </div>
+                <div class="form-box-3">
+                    <label for="purpose">IPO Name</label>
+                    <select id="purpose" name="purpose" required>
+                        <option value="invest">Invest</option>
+                        <option value="cdbl_fee">CDBL fee</option>
+                        <!-- Add more IPO options as needed -->
+                    </select>
+                </div>
+                <div class="proceed-btn">
+                    <input type="submit" value="PROCEED">
+                </div>
+            </form>
+            </div>
+        `
+    }
+    function renderBkash(){
+        const body = document.getElementById('mobile-more')
+        body.innerHTML=`
+            <div class="topBox">
+                <img src="../images/payment-img/bkash.png" alt="bkash">
+                <div class="caution">
+                    <p>Additional 2.5% will be charged on payment amount.</p>
+                </div>
+            </div>
+            <div class="bottomBox">
+            <form action="#">
+                <div class="form-box-1">
+                    <input type="text" value="28" readonly>
+                    <input type="text" value="MD. KAISER RAIHAN" readonly>
+                    <input type="text" value="01857024681" readonly>
+                    <input type="email" value="xyz@gmail.com" readonly>
+                </div>
+
+                <div class="form-box-3">
+                    <label for="amount">Payment Amount</label>
+                    <input type="number" id="amount" name="amount" placeholder="Enter Taka" required>
+                </div>
+                <div class="form-box-3">
+                    <label for="charge">Chargeable Amount</label>
+                    <input type="number" id="charge" name="charge" placeholder="Tk" readonly required>
+                </div>
+                <div class="form-box-3">
+                    <label for="purpose">IPO Name</label>
+                    <select id="purpose" name="purpose" required>
+                        <option value="invest">Invest</option>
+                        <option value="cdbl_fee">CDBL fee</option>
+                        <!-- Add more IPO options as needed -->
+                    </select>
+                </div>
+                <p>( bkash verification code will be sent to your bkash registered mobile number )</p>
+                <div class="proceed-btn">
+                    <input type="submit" value="VERIFY">
+                </div>
             </form>
             </div>
         `
@@ -152,6 +207,7 @@ function executeMoneyDeposit(){
     dropDown()
     renderBankList()
     renderCard()
+    renderBkash()
     hide_All_details()
 }
 

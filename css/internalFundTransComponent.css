@@ -1,0 +1,41 @@
+.box{
+    background-color: #fff;
+    border: 1px solid #000;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    padding: 10px 10px;
+}
+.box-data{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.box-data > label{
+    width: 50%;
+    font-size: 18px;
+}
+.box-data > input{
+    border: 1px solid #000;
+    width: 50%;
+}
+.box-data > input,
+.box-data > select{
+    border: 1px solid #000;
+    border-radius: 10px;
+    width: 50%;
+    height: 45px;
+    font-size: 16px;
+    text-align: center;
+}
+.submit-box{
+    margin-top: 40px;
+}
+.submit-box > input{
+    width: 100%;
+    background-color: #000;
+    color: #fff;
+    border-radius: 10px;
+    padding: 10px 0px;
+    font-size: 20px;
+}

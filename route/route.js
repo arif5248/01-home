@@ -131,6 +131,9 @@ function isVerifiedCacse(case_name){
         case 'moneyWithdrawal':
             executeMoneyWithdrawal();
             break;
+        case 'internalFundTrans':
+            executeInternalFundTransfer();
+            break;
 
     }
 }

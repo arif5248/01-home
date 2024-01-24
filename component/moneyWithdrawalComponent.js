@@ -212,7 +212,6 @@ function showMethod(type){
 
     document.getElementById(type).style.display= 'block'
 }
-
 function show(content){
     document.getElementById('requisitionContent').style.display = 'none'
     document.getElementById('statusContent').style.display = 'none'

@@ -57,8 +57,9 @@ function renderInternalFundTransfer(){
                 <div class="box">
                     <div class="box-data">
                         <label for="amountForTrans">Enter Amount</label>
-                        <input onchange="checkValidity(this)" type="number" id="amountForTrans" name="amountForTrans" required>
+                        <input oninput="checkValidity(this)" type="number" id="amountForTrans" name="amountForTrans" required><br>
                     </div>
+                    <p style="display: none;" id="invalidAmount">Entered amount exceeds available balance.</p>
                     <div class="submit-box">
                         <input type="submit" value="SUBMIT">
                     </div>
@@ -66,7 +67,16 @@ function renderInternalFundTransfer(){
             </div>
         </div>
     `
-    document.getElementById('amountForTrans').addEventListener('change', function(event) {
+    document.getElementById('amountForTrans').addEventListener('input', function(event) {
+        function checkValidity(value) {
+            const amount = document.getElementById('availableBalanceFrom').value
+            if (amount !== null && parseFloat(value) > parseFloat(amount)) {
+                console.log("Entered amount exceeds available balance.");
+                document.getElementById('invalidAmount').style.display = 'block'
+            }else{
+                document.getElementById('invalidAmount').style.display = 'none'
+            }
+        }
         checkValidity(event.target.value);
     });
 }

@@ -1,4 +1,13 @@
 /*-----------------Utilities-------------------*/
+/* ========================================== */
+
+input[readonly] {
+    background-color: #f0f0f0;
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* ========================================== */
 *{
     
     word-wrap: break-word;

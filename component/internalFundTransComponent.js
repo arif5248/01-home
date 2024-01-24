@@ -22,7 +22,7 @@ function executeInternalFundTransfer(){
 
 function renderInternalFundTransfer(){
     document.getElementById('mainContentSection').innerHTML = `
-        <div class="pageHeading" id="financial-Heading">
+        <div class="pageHeading pageHeading_2" id="financial-Heading">
             <div class="heading">
                 <h1>MAIN LEDGER TO PROFIT LEDGER (VICE VERSA)</h1>
             </div>
@@ -30,7 +30,7 @@ function renderInternalFundTransfer(){
             <div class="container">
                 <div class="box">
                     <div class="box-data">
-                        <label for="tansferfrom">Available Balance</label>
+                        <label for="tansferfrom">From</label>
                         <select onchange="handleSelectChange(this)" id="tansferfrom" name="tansferfrom" required>
                             <option value="default">--Select Type--</option>
                             <option value="Main Ledger">Main Ledger</option>
@@ -57,7 +57,7 @@ function renderInternalFundTransfer(){
                 <div class="box">
                     <div class="box-data">
                         <label for="amountForTrans">Enter Amount</label>
-                        <input oninput="checkValidity(this)" type="number" id="amountForTrans" name="amountForTrans" required><br>
+                        <input oninput="checkValidity(this)" type="number" id="amountForTrans" name="amountForTrans" required readonly><br>
                     </div>
                     <p style="display: none;" id="invalidAmount">Entered amount exceeds available balance.</p>
                     <div class="submit-box">
@@ -71,7 +71,6 @@ function renderInternalFundTransfer(){
         function checkValidity(value) {
             const amount = document.getElementById('availableBalanceFrom').value
             if (amount !== null && parseFloat(value) > parseFloat(amount)) {
-                console.log("Entered amount exceeds available balance.");
                 document.getElementById('invalidAmount').style.display = 'block'
             }else{
                 document.getElementById('invalidAmount').style.display = 'none'
@@ -112,7 +111,7 @@ function handleSelectChange(data){
     document.getElementById('availableBalanceFrom').value = availableBalance_from
     document.getElementById('to').value = to
     document.getElementById('availableBalanceTo').value = availableBalance_to
-
+    document.getElementById('amountForTrans').removeAttribute('readonly');
 
 }
 function checkValidity(value) {

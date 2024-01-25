@@ -1,78 +1,81 @@
-.transferBtn{
-    margin-top: 15px;
-    border: 1px solid #000;
-    padding: 10px 10px;
-    border-radius: 5px;
-    background-color: #4CB050;
-    color: #fff;
-    text-align: center;
-}
-.box{
+.referDetails,
+.referredList{
+    margin-top: 10px;
     background-color: #fff;
     border: 1px solid #000;
     border-radius: 10px;
-    margin-bottom: 10px;
-    padding: 10px 10px;
+    padding: 10px;
 }
 .box-data{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
+    margin: 5px;
 }
-.box-data > label{
-    width: 50%;
-    font-size: 18px;
+.box-data > p:first-child{
+    font-weight: 500;
+    width: 70%;
+    color: #000;
 }
-.box-data > input{
-    border: 1px solid #000;
-    width: 50%;
+.box-data > p:last-child{
+    font-weight: 500;
+    width: 30%;text-align: right;
+    color: #000;
+}
+.link-box{
+    margin-top: 15px;
+}
+.link-box > p:first-child{
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+.link-box > p:last-child{
+    font-weight: 700;
+    color: #2C007B;
 }
 
-
-.box-data > input,
-.box-data > select{
-    border: 1px solid #000;
-    border-radius: 10px;
-    width: 50%;
-    height: 45px;
-    font-size: 16px;
+.heading_refer{
     text-align: center;
+    margin-top: 15px;
+    padding: 15px 0px;
+    border-radius: 10px 10px 0px 0px;
+    background-color: #e9ecefd9;
 }
-.submit-box{
-    margin-top: 40px;
+
+.searchImg{
+    padding: 5px 20px;
+    border-radius: 5px;
+    border: 1px solid #000;
 }
-.submit-box > input{
-    width: 100%;
-    background-color: #000;
-    color: #fff;
+.input-box{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.input-box > span{
+    font-weight: 800;
+}
+.input-box > input {
+    padding: 10px 10px;
+    background-color: #676a6666;
     border-radius: 10px;
-    padding: 10px 0px;
-    font-size: 20px;
+    font-weight: 700;
+    width: 140px;
 }
-#invalidAmount{
-    color: red;
-    text-align: right;
-    margin-top: -15px;
-    height: 10px;
-}
-.pageHeading_2 > .heading > h1{
-    font-size: 16px;
+.btnRow{
     margin-bottom: 10px;
-}
-.pageHeading_2 {
-    margin-bottom: 10px;
-}
-.transferHistory{
-    background-color: #fff;
-    padding: 0px 10px;
 }
 /*=================table================*/
-
+.table-content{
+    overflow-y: auto;
+    height: 400px;
+}
 table{
     width: 100%;
     border-collapse: separate;
     border-spacing: 0 10px;
+    overflow-y: auto;
+    height: 200px;
 }
 
 table > tbody > tr:first-child{
@@ -112,4 +115,13 @@ table > tbody > tr > td:last-child{
     -webkit-padding-end: 10px;
     border-right: 1px solid #000;
     border-radius: 0px 15px 15px 0px;
+}
+.referListFooter {
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    background-color: #212529f5;
+    color: #fff;
+    justify-content: space-between;
+    padding: 5px 10px;
 }

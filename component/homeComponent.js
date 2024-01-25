@@ -703,19 +703,18 @@ function executeHome(){
         `;
     }
     function renderExecutionTrades() {
+        const today = new Date().toISOString().split('T')[0];
         const executedTrades = document.getElementById('executedTrades');
         executedTrades.innerHTML =
          `  <div class="btnRow">
-                <div class="btnGroup">
-            
-                    <input type="date" id="date-from" >
-                
-                    <span>To</span>
-                
-                    <input type="date" id="date-to">
-                
-                    <div class="searchImg">
-                        <img style="width: 20px;" src="../images/icons/magnifying-glass.png" alt="search">
+                <div class="searchContent">
+                    <div class="input-box">
+                        <input type="date" id="date-from" value= ${today} >
+                        <span>To</span>
+                        <input type="date" id="date-to" value= ${today}>
+                        <div class="searchImg">
+                            <img style="width: 20px;" src="../images/icons/magnifying-glass.png" alt="search">
+                        </div>
                     </div>
                 </div>
             </div>

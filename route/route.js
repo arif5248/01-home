@@ -44,7 +44,9 @@ function route(js,css,case_name) {
             scriptTag.parentNode.removeChild(scriptTag);
         }
     });
-    
+
+    const newUrl = window.location.origin + window.location.pathname + `#${case_name}`;
+    history.pushState({ case_name }, null, newUrl);
 }
 
 function clearMemory(section) {
@@ -74,10 +76,18 @@ document.addEventListener('DOMContentLoaded', function () {
 //   videoChat()
     
 });
+document.addEventListener('DOMContentLoaded', function () {
+    window.addEventListener('popstate', function (event) {
+        if (event.state) {
+            const case_name = event.state.case_name;
+            route(`../component/${case_name}Component.js`, `../css/${case_name}Component.css`, case_name);
+        }
+    });
+});
 
 function isVerifiedCacse(case_name){
     switch (case_name) {
-        case 'market':
+        case 'marketStatus':
             executeMarket();
             break;
         case 'news':
@@ -133,6 +143,18 @@ function isVerifiedCacse(case_name){
             break;
         case 'internalFundTrans':
             executeInternalFundTransfer();
+            break;
+        case 'rewardPoints':
+            executeRewardPoints();
+            break;
+        case 'refer01':
+            executeRefer01();
+            break;
+        case 'specalOffer':
+            executeOffer();
+            break;
+        case 'souvenirStore':
+            executeSouvenirStore();
             break;
 
     }

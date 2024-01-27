@@ -110,7 +110,7 @@ function executeNews(){
                             <div class="input-group">
                                 <div class="input-group-append">
                                     <span class="input-group-text" id="searchIcon">
-                                        <img src="../images//icons/magnifying-glass.png" alt="search icon">
+                                        <img src="../images//icons/magnifying-glass.png" alt="search icon" loading="lazy">
                                     </span>
                                 </div>
     

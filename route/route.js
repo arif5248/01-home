@@ -1,81 +1,98 @@
+document.addEventListener('DOMContentLoaded', function () {
+  route('../component/homeComponent.js', '../css/homeComponent.css', 'home');
+  closeSupportTeam();
+  closeSendMessage();
+  closeVideoChat();
+
+});
+
 let currentSection = null;
 
-function route(js,css,case_name) {
+async function route(js, css, case_name) {
     if (currentSection !== null) {
-        clearMemory(currentSection);
-    }
-    
-    const newScript = document.createElement('script');
-    newScript.src = js;
-    newScript.id = case_name;
-    newScript.defer = true;
-    newScript.setAttribute('data-loaded', 'dynamic-script');
-
-    
-    function scriptLoaded() {
-        newScript.removeEventListener('load', scriptLoaded);
-        newScript.removeEventListener('error', scriptError);
-
-        isVerifiedCacse(case_name)
-        
+        await clearMemory(currentSection);
     }
 
-    function scriptError() {
-        console.error(`Error loading ${section}.js`);
+    // Add a loading class to indicate that content is being loaded
+    document.getElementById('mainContentSection').classList.add('loading');
+
+    const response = await Promise.all([
+        fetch(js),
+        fetch(css)
+    ]);
+
+    const [scriptResponse, styleResponse] = response;
+
+    if (!scriptResponse.ok || !styleResponse.ok) {
+        console.error(`Error loading ${case_name}.js or ${case_name}.css`);
+        // Remove loading class in case of an error
+        document.getElementById('mainContentSection').classList.remove('loading');
+        return;
     }
 
-    newScript.addEventListener('load', scriptLoaded);
-    newScript.addEventListener('error', scriptError);
+    const scriptCode = await scriptResponse.text();
+    const styleCode = await styleResponse.text();
 
-    document.head.appendChild(newScript);
+    // Inject the new script
+    const scriptElement = document.createElement('script');
+    scriptElement.textContent = scriptCode;
+    document.head.appendChild(scriptElement);
+
+    // Inject the new styles
+    const styleElement = document.createElement('style');
+    styleElement.textContent = styleCode;
+    document.head.appendChild(styleElement);
+
+    // Remove loading class once script and styles are injected
+    document.getElementById('mainContentSection').classList.remove('loading');
 
     currentSection = case_name;
 
-    const newStyleSheet = document.createElement('link');
-    newStyleSheet.rel = 'stylesheet';
-    newStyleSheet.href = css;
-    newStyleSheet.setAttribute('data-loaded', 'dynamic-style');
-    document.head.appendChild(newStyleSheet);
-
-    const script = document.head.getElementsByTagName('script');
-    const scriptTagsArray = Array.from(script);
-    scriptTagsArray.forEach(scriptTag => {
-        if (scriptTag.id !== 'boots' && scriptTag.id !== case_name && scriptTag.id !== 'fetch') {
-            scriptTag.parentNode.removeChild(scriptTag);
-        }
-    });
-
     const newUrl = window.location.origin + window.location.pathname + `#${case_name}`;
     history.pushState({ case_name }, null, newUrl);
+
+    isVerifiedCacse(case_name);
 }
 
-function clearMemory(section) {
-    const styleSheet = document.head.getElementsByTagName('link');
-    const styleTagsArray = Array.from(styleSheet);
-    styleTagsArray.forEach(style => {
-        if (style.id !== 'boots' && style.id !== 'main-page') {
-            style.parentNode.removeChild(style);
-        }
-    });
-
-    const script = document.head.getElementsByTagName('script');
-    const scriptTagsArray = Array.from(script);
-    scriptTagsArray.forEach(scriptTag => {
-        if (scriptTag.id !== 'boots' && scriptTag.id !== 'routes' && scriptTag.id !== 'fetch' && scriptTag.id !== 'main') {
-            scriptTag.parentNode.removeChild(scriptTag);
-        }
-    });
-}
-
-document.addEventListener('DOMContentLoaded', function () {
-  route('../component/homeComponent.js','../css/homeComponent.css','home');
-  closeSupportTeam()
-  closeSendMessage()
-  closeVideoChat()
-//   sendMessage()
-//   videoChat()
-    
+window.addEventListener('load', function () {
+    route('../component/homeComponent.js', '../css/homeComponent.css', 'home');
+    closeSupportTeam();
+    closeSendMessage();
+    closeVideoChat();
 });
+
+window.addEventListener('popstate', function (event) {
+    if (event.state) {
+        const case_name = event.state.case_name;
+        route(`../component/${case_name}Component.js`, `../css/${case_name}Component.css`, case_name);
+    }
+});
+
+
+async function clearMemory(section) {
+    return new Promise(resolve => {
+      const script = document.head.getElementsByTagName('script');
+      const scriptTagsArray = Array.from(script);
+      scriptTagsArray.forEach(scriptTag => {
+        if (scriptTag.id !== 'boots' && scriptTag.id !== 'routes' && scriptTag.id !== 'fetch' && scriptTag.id !== 'main') {
+          scriptTag.parentNode.removeChild(scriptTag);
+        }
+      });
+  
+      const styleSheet = document.head.getElementsByTagName('link');
+      const styleTagsArray = Array.from(styleSheet);
+      styleTagsArray.forEach(style => {
+        if (style.id !== 'boots' && style.id !== 'main-page') {
+          style.parentNode.removeChild(style);
+        }
+      });
+  
+      resolve(); // Don't forget this line to resolve the promise
+    });
+  }
+  
+
+
 document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('popstate', function (event) {
         if (event.state) {

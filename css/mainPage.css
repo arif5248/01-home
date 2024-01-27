@@ -8,6 +8,17 @@ input[readonly] {
 }
 
 /* ========================================== */
+.loading-spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+  }
+  
+  .loading-spinner img {
+    width: 50px; /* Adjust the width as needed */
+  }
 *{
     
     word-wrap: break-word;
@@ -88,7 +99,7 @@ body{
     height: 100%;
     padding-bottom: 30px;
 }
-.pageHeading  .heading{
+.pageHeading  > .heading{
     text-align: center;
     padding: 10px 0px;
     background-color: rgb(3, 3, 51);

@@ -29,9 +29,7 @@ body, html {
 .about01 >h5>a{
     color: blue;
 }
-.pageHeading{
-    display: inline-block;
-}
+
 .navbar {
     display: inline-block;
     margin: 0;

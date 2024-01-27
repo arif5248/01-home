@@ -1,6 +1,6 @@
+  /*====================Market Status=================*/
 a{
     text-decoration: none;
-    color: white;
 }
 .content-padding{
     padding-top: 140px;
@@ -68,9 +68,9 @@ h1{
 .icon:hover {
     opacity: 0.7;
 }
-.cseSection{
+/* .cseSection{
     margin-top: 60px;
-}
+} */
 .companyDataSection{
     position: relative;
     margin-top: 15px;
@@ -83,13 +83,23 @@ h1{
 }
   /*====================Table=================*/
   .customTable{
-    border: 1px solid black;
+    border: 1px solid black !important;
+    border-spacing: 0px 0px;
+  }
+  .customTable > tbody > tr > th{
+    /* border: 1px solid #000; */
+    color: #000 !important;
+  }
+  .customTable > tbody > tr > td{
+    /* border-right: 1px solid #000; */
+    color: #000 !important;
+    text-align: center !important;
   }
   .cse_logo > img {
     width: 100px;
   }
   .table{
-    position: relative;
+    position: relative; 
     text-align: center;
   }
   .verticaclAlign{

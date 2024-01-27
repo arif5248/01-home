@@ -109,7 +109,7 @@ body{
 .bottomSection{
     display: flex;
     justify-content: space-around;
-    padding: 0px 0px;
+    padding: 5px 0px;
     background-color: #dee2e6;
     width: 100%;
     position: fixed;
@@ -124,6 +124,12 @@ body{
     border-radius: 20px;
     background-color: #fff;
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 70px;
+    width: 70px;
 }
 .activeBtn{
     background-color: #221177 !important;
@@ -439,4 +445,8 @@ padding-bottom: 5px;
 }
 .offcanvas-header > div:last-child{
     margin-bottom: 0px;
+}
+.mainContentSection.loading {
+    background-color: #2e0339;
+    display: none;
 }

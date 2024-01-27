@@ -1,3 +1,4 @@
+const historyStack = [];
 document.addEventListener('DOMContentLoaded', function () {
     route('../component/homeComponent.js', '../css/homeComponent.css', 'home');
     closeSupportTeam();
@@ -55,11 +56,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Remove loading class once script and styles are injected
     document.getElementById('mainContentSection').classList.remove('loading');
-
+    historyStack.push({ case_name });
     currentSection = case_name;
 
     const newUrl = window.location.origin + window.location.pathname + `#${case_name}`;
     history.pushState({ case_name }, null, newUrl);
+    console.log(historyStack)
 
     isVerifiedCacse(case_name);
 }
@@ -88,15 +90,27 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     
   
-  
-  document.addEventListener('DOMContentLoaded', function () {
-      window.addEventListener('popstate', function (event) {
-          if (event.state) {
-              const case_name = event.state.case_name;
-              route(`../component/${case_name}Component.js`, `../css/${case_name}Component.css`, case_name);
-          }
-      });
-  });
+
+  function goBack() {
+    if (historyStack.length > 1) {
+        historyStack.pop(); 
+        const prevState = historyStack.pop(); 
+        const case_name = prevState.case_name;
+        route(`../component/${case_name}Component.js`, `../css/${case_name}Component.css`, case_name);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    window.addEventListener('popstate', function (event) {
+        if (event.state) {
+            const case_name = event.state.case_name;
+            goBack();
+        }
+    });
+});
+
+
+
   
   function isVerifiedCacse(case_name){
       switch (case_name) {

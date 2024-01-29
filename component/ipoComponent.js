@@ -146,7 +146,7 @@ function executeIpo(){
             newDiv.classList.add('ipo_item')
             newDiv.innerHTML=`
                 <div class="contentHeader">
-                <div class="ipoHeading"> 
+                <div class="ipoHeading" id="ipoHeading_${index}"> 
                     <h3 class="static-heading" id="staticHeading_${index}">IPO</h3>
                     <h3 class="headingForIPO" id="dynamicHeading_${index}">${ipo.ipo_heading}</h3>
                 </div>
@@ -219,8 +219,10 @@ function executeIpo(){
             `
     
             ipoContentBody.appendChild(newDiv)
-            var dynamicHeadingHeight = document.getElementById(`dynamicHeading_${index}`).offsetHeight;
-            document.getElementById(`staticHeading_${index}`).style.height = dynamicHeadingHeight + 'px';
+            let dynamicHeadingHeight = document.getElementById(`dynamicHeading_${index}`).offsetHeight;
+            document.getElementById(`ipoHeading_${index}`).style.height = dynamicHeadingHeight + 'px';
+            document.getElementById(`staticHeading_${index}`).style.height = '100%'
+            console.log(dynamicHeadingHeight)
         }) 
     }
     function renderHistoryIpoContent(){

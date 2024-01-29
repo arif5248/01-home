@@ -76,6 +76,14 @@ body{
     border-radius: 5px;
     padding: 0px 0px;
 }
+.table1MoreDetails{
+    background-color: #fff;
+    padding: 5px 10px;
+    margin-top: 5px;
+    border: 1px solid #000;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px 0px #000;
+}
 
 /*-----------------table-------------------*/
 .moreHeading{

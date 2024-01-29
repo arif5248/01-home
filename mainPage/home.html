@@ -71,7 +71,7 @@
                     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"     data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
                     <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="logo-01">
+                    <div class="logo-01" onclick="updateFooterBtnState('home');route('../component/homeComponent.js','../css/homeComponent.css','home')">
                         <img src="../images/01.gif" alt="01">
                     </div>
                     <div class="support-team-area" onclick="showSupportTeam()">
@@ -229,21 +229,20 @@
         <div class="mainContentSection" id="mainContentSection"></div>
 
         <div class="bottomSection" id="bottomSecion">
-            <div class="footer-icon homeBtn activeBtn" onclick="updateFooterBtnState('homeBtn');route('../component/homeComponent.js','../css/homeComponent.css','home')" >
+            <div class="footer-icon home activeBtn" onclick="updateFooterBtnState('home');route('../component/homeComponent.js','../css/homeComponent.css','home')" >
                     <img style="width: 30px; height: auto;" src="../images/home-button.png" alt="Home">
                     <span>Home</span>
             </div>
-            <div class="footer-icon marketBtn"  onclick="updateFooterBtnState('marketBtn');route('../component/marketStatusComponent.js','../css/marketStatusComponent.css','marketStatus')">
+            <div class="footer-icon marketStatus"  onclick="updateFooterBtnState('marketStatus');route('../component/marketStatusComponent.js','../css/marketStatusComponent.css','marketStatus')">
                 <img style="width: 30px; height: auto;" src="../images/stock.png" alt="Market">
                 <span>Market</span>
             </div>
-            <div class="footer-icon tradeBtn" onclick="updateFooterBtnState('tradeBtn')">
+            <div class="footer-icon trade" onclick="updateFooterBtnState('trade');route('../component/tradeComponent.js','../css/tradeComponent.css','trade')">
                 <img style="width: 30px; height: auto;" src="../images/trade.png" alt="Trade">
                 <span>Trade</span>
-                
             </div>
-            <div class="footer-icon newsBtn" onclick="updateFooterBtnState('newsBtn');route('../component/newsComponent.js','../css/newsComponent.css','news')" >
-                <img style="width: 30px; height: auto;" src="../images/newspaper.png" alt="Home">
+            <div class="footer-icon news" onclick="updateFooterBtnState('news');route('../component/newsComponent.js','../css/newsComponent.css','news')" >
+                <img style="width: 30px; height: auto;" src="../images/newspaper.png" alt="News">
                 <span>News</span>
              </div>
         </div>

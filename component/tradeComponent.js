@@ -131,6 +131,97 @@ function executeTrade(){
         }
     ]
 
+    const dse_buySellData = [
+        {
+            no_of_buyer: 25.0,
+            b_qty: 777000.0,
+            b_price: 5.3,
+            no_of_seller: 3.0,
+            s_qty: 458935.0,
+            s_price: 8.0,
+        },
+        {
+            no_of_buyer: 25.0,
+            b_qty: 777000.0,
+            b_price: 5.3,
+            no_of_seller: 3.0,
+            s_qty: 458935.0,
+            s_price: 8.0,
+        },
+        {
+            no_of_buyer: 25.0,
+            b_qty: 777000.0,
+            b_price: 5.3,
+            no_of_seller: 3.0,
+            s_qty: 458935.0,
+            s_price: 8.0,
+        },
+        {
+            no_of_buyer: 25.0,
+            b_qty: 777000.0,
+            b_price: 5.3,
+            no_of_seller: 3.0,
+            s_qty: 458935.0,
+            s_price: 8.0,
+        },
+        {
+            no_of_buyer: 25.0,
+            b_qty: 777000.0,
+            b_price: 5.3,
+            no_of_seller: 3.0,
+            s_qty: 458935.0,
+            s_price: 8.0,
+        },
+        {
+            no_of_buyer: 25.0,
+            b_qty: 777000.0,
+            b_price: 5.3,
+            no_of_seller: 3.0,
+            s_qty: 458935.0,
+            s_price: 8.0,
+        },
+        {
+            no_of_buyer: 25.0,
+            b_qty: 777000.0,
+            b_price: 5.3,
+            no_of_seller: 3.0,
+            s_qty: 458935.0,
+            s_price: 8.0,
+        },
+        {
+            no_of_buyer: 25.0,
+            b_qty: 777000.0,
+            b_price: 5.3,
+            no_of_seller: 3.0,
+            s_qty: 458935.0,
+            s_price: 8.0,
+        },
+        {
+            no_of_buyer: 25.0,
+            b_qty: 777000.0,
+            b_price: 5.3,
+            no_of_seller: 3.0,
+            s_qty: 458935.0,
+            s_price: 8.0,
+        },
+        {
+            no_of_buyer: 25.0,
+            b_qty: 777000.0,
+            b_price: 5.3,
+            no_of_seller: 3.0,
+            s_qty: 458935.0,
+            s_price: 8.0,
+        },
+        {
+            no_of_buyer: 22.0,
+            b_qty: 547000.0,
+            b_price: 5.8,
+            no_of_seller: 5.0,
+            s_qty: 24475.0,
+            s_price: 6.0,
+        }
+    ]
+
     function trade(){
         document.getElementById('mainContentSection').innerHTML = `
             <div class="pageHeading" id="financial-Heading">
@@ -194,6 +285,30 @@ function executeTrade(){
                 </div>
             </div>
 
+            <div class="buySellSection">
+                <div class= "container">
+                    <div class= "box">
+                        <div class="btnGroup" id="btnGroup">
+                            <div onclick="render('buyContent')" class="Btn" id="buy">BUY</div>
+                            <div onclick="render('sellContent')" class="Btn" id="sell">SELL</div>
+                        </div>
+                        <div class="buySellOrder">
+                            <div class="ipoContent" id="buyContent"></div>
+                            <div class="ipoContent" id="sellContent"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
 
             <br>
             <br>
@@ -311,6 +426,7 @@ function executeTrade(){
         document.getElementById('countdown').innerHTML = countdownText;
         document.getElementById('trade_status').innerHTML = `Open`
         document.getElementById('trade_status').style.color = `green`
+        document.getElementById('remaining_trade_time').innerHTML = `Remaining Trade Time`
     }
 
     function renderTradeSearchBox(){
@@ -337,7 +453,7 @@ function executeTrade(){
         `
     }
 
-    function renderCseContent() {
+    function renderDseContent() {
         const tableBody = document.getElementById('cseContent');
         tableBody.innerHTML =
          `
@@ -449,6 +565,196 @@ function executeTrade(){
         `;
     }
 
+    function renderCseContent() {
+        const tableBody = document.getElementById('dseContent');
+        tableBody.innerHTML =
+         `
+            <table>
+                <tr>
+                    <th>No of<br>Buyer</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                    <th>No of<br>Seller</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                </tr>
+            </table>
+            <div id="dseFooter" class="cseFooter"></div>
+        `;
+    
+        dse_buySellData.forEach(data => {
+            const newRow = document.createElement('tr');
+    
+            newRow.innerHTML = `
+                <td>${data.no_of_buyer}</td>
+                <td>${data.b_qty}</td>
+                <td>${data.b_price}</td>
+                <td>${data.no_of_seller}</td>
+                <td>${data.s_qty}</td>
+                <td>${data.s_price}</td>
+            `;
+        tableBody.querySelector('tbody').appendChild(newRow);
+        });
+        const tableFooter = document.getElementById('dseFooter');
+    
+        tableFooter.innerHTML = `
+            <div>
+                <div class= "item">
+                    <div class="left">
+                        <p>Last Trade<br>Price</p>
+                        <p>:</p>
+                    </div>
+                    <div class="right">
+                        <p>7.0</p>
+                    </div>     
+                </div>
+                <div class= "item">
+                    <div class="left">
+                        <p>Total Volume</p>
+                        <p>:</p>
+                    </div>
+                    <div class="right">
+                        <p>98437</p>
+                    </div>     
+                </div>
+                <div class= "item">
+                    <div class="left">
+                        <p>Day's Low</p>
+                        <p>:</p>
+                    </div>
+                    <div class="right">
+                        <p>9.5</p>
+                    </div>     
+                </div>
+                <div class= "item">
+                    <div class="left">
+                        <p>YCP</p>
+                        <p>:</p>
+                    </div>
+                    <div class="right">
+                        <p>2.8</p>
+                    </div>     
+                </div>
+            </div>
+            <div>
+                <div class= "item">
+                    <div class="left">
+                        <p>Last Trade<br>Price</p>
+                        <p>:</p>
+                    </div>
+                    <div class="right">
+                        <p>3.9</p>
+                    </div>     
+                </div>
+                <div class= "item">
+                    <div class="left">
+                        <p>Total Volume</p>
+                        <p>:</p>
+                    </div>
+                    <div class="right">
+                        <p>78045</p>
+                    </div>     
+                </div>
+                <div class= "item">
+                    <div class="left">
+                        <p>Day's High</p>
+                        <p>:</p>
+                    </div>
+                    <div class="right">
+                        <p>9.9</p>
+                    </div>     
+                </div>
+                <div class= "item">
+                    <div class="left">
+                        <p>Circuit</p>
+                        <p>:</p>
+                    </div>
+                    <div class="right">
+                        <p>4.8</p>
+                    </div>     
+                </div>
+            </div>
+        `;
+    }
+
+    function renderBuyContent() {
+        document.getElementById('buyContent').innerHTML=`
+        <div class="availableFund">
+            <p>Available Fund</p>
+            <p>Tk 0</p>
+        </div>
+        <div class="buySellFormContent">
+            <form action="#">
+                <div class="rowForm rowForm-1">
+                    <div class="rowItem">
+                        <input id="marketPrice" type="checkbox" name="marketPrice" >
+                        <label for="marketPrice">Market Price</label>
+                    </div>
+                </div>
+                <div class="rowForm">
+                    <label for="b_quantity">Quantity</label>
+                    <input type="number" id="b_quantity" name="b_quantity" placeholder="Enter Qty" required>
+                </div>
+                <div class="rowForm">
+                    <label for="b_rate">Rate</label>
+                    <input type="number" id="b_rate" name="b_rate" placeholder="Enter Rate"  required>
+                </div>
+                <div class="rowForm">
+                    <label for="estimatedTotal">Estimated Taka, You Need</label>
+                    <input type="number" id="estimatedTotal" name="" placeholder="Tk0" required readonly>
+                </div>
+                <div class="orderSubmit">
+                    <input type="submit" id="buyOrderSubmit" value="ORDER SUBMIT">
+                </div>
+            </form>
+        </div>
+        `
+    }
+
+    function renderSellContent() {
+        document.getElementById('sellContent').innerHTML=`
+        <div class="availableFund">
+            <p>Available Fund</p>
+            <p>Tk 0</p>
+        </div>
+        <div class="buySellFormContent">
+            <form action="#">
+                <div class="rowForm rowForm-1">
+                    <div class="rowItem">
+                        <input id="sellMarketPrice" type="checkbox" name="sellMarketPrice" >
+                        <label for="sellMarketPrice">Market Price</label>
+                    </div>
+                    <div class="box">
+                        <div>
+                            <input id="halfSell" type="checkbox" name="halfSell" >
+                            <label for="halfSell">Half</label>
+                        </div>
+                        <div>
+                            <input id="fullSell" type="checkbox" name="fullSell" >
+                            <label for="fullSell">Full</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="rowForm">
+                    <label for="s_quantity">Quantity</label>
+                    <input type="number" id="s_quantity" name="s_quantity" placeholder="Enter Qty" required>
+                </div>
+                <div class="rowForm">
+                    <label for="s_rate">Rate</label>
+                    <input type="number" id="s_rate" name="s_rate" placeholder="Enter Rate"  required>
+                </div>
+                <div class="rowForm">
+                    <label for="sellTotal">Total Taka, You Received</label>
+                    <input type="number" id="sellTotal" name="sellTotal" placeholder="Tk0" required readonly>
+                </div>
+                <div class="orderSubmit">
+                    <input type="submit" id="sellOrderSubmit" value="ORDER SUBMIT">
+                </div>
+            </form>
+        </div>
+        `
+    }
+
 
     
 
@@ -459,8 +765,13 @@ function executeTrade(){
     renderTradeSearchBox()
     renderSelectedStockBox()
     renderCseContent()
+    renderDseContent()
+    renderBuyContent()
+    renderSellContent() 
     document.getElementById('cseContent').style.display = 'block'
     document.getElementById('dseContent').style.display = 'none'
+    document.getElementById('buyContent').style.display = 'block'
+    document.getElementById('sellContent').style.display = 'none'
     
 
     return {
@@ -489,4 +800,28 @@ function updateButtonState(activeButton) {
     if (activeButtonElement) {
         activeButtonElement.classList.add('active');
     }
+}
+function render(content){
+    document.getElementById('buyContent').style.display = 'none'
+    document.getElementById('sellContent').style.display = 'none'
+
+    document.getElementById(content).style.display = 'block'
+
+    updateButton(content)
+}
+function updateButton(activeButton) {
+
+    if(activeButton === 'buyContent'){
+        document.getElementById('buy').style.backgroundColor = '#4CB050'
+        document.getElementById('buyOrderSubmit').style.backgroundColor = '#4CB050'
+        document.getElementById('sell').style.backgroundColor = '#868686'
+
+    }
+    if(activeButton === 'sellContent'){
+        document.getElementById('sell').style.backgroundColor = '#FE0000'
+        document.getElementById('sellOrderSubmit').style.backgroundColor = '#FE0000'
+        document.getElementById('buy').style.backgroundColor = '#868686'
+
+    }
+
 }

@@ -164,13 +164,6 @@ h6{
     font-size: 25px;
     color: #fff;
 }
-/* .buyerSeller > h3:first-child{
-    border-right: 2px solid #5C5C5C;
-}
-.buyerSeller > h3:last-child{
-    border-left: 2px solid #5C5C5C;
-} */
-
 .buySellData{
     height: 450px;
     overflow-y: auto;
@@ -242,4 +235,86 @@ h6{
 .item > .right{
     text-align: right;
     width: 45%;
+}
+
+/*=============BuySell order==============*/
+.buySellSection{
+    margin-top: 10px;
+}
+.buySellSection > .container > .box >.btnGroup{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0px;
+    margin: 10px 0px;
+    background-color: #868686;
+    border-radius: 10px;
+}
+.buySellSection > .container > .box > .btnGroup > .Btn{
+    padding: 10px 10px;
+    border: 1px solid #0000005b;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    width: 40%;
+}
+.availableFund{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+}
+.rowForm-1{
+    margin-bottom: 20px !important;
+}
+.rowForm-1 > .rowItem > input {
+    border: 1px solid #fff;
+    background-color: unset;
+    padding: 5px;
+    height: 50px;
+}
+.rowForm-1 > .box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-color: #fff;
+    width: 50%;
+}
+.rowForm-1 > .rowItem{
+    display: flex;
+    align-items: center;
+}
+.rowForm-1 > .rowItem > input{
+    margin-right: 10px;
+}
+.rowForm-1 > .box > div > input{
+    margin-right: 10px;
+}
+.rowForm{
+    display: flex;
+    margin-bottom: 10px;
+    align-items: center;
+    justify-content: space-between;
+}
+.rowForm > label,
+.rowForm > input{
+    width: 50%;
+}
+.rowForm > input{
+    background-color: unset;
+    border: 1px solid #98989A;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-align: right;
+}
+.orderSubmit{
+    margin-top: 15px;
+}
+.orderSubmit > input{
+    width: 100%;
+    background-color: #868686;
+    padding: 5px 10px;
+    border-radius: 5px;
 }

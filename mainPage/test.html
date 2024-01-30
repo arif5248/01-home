@@ -7,22 +7,35 @@
     </head>
     <body>
         
-        <div class="container">
-            <div class="tradeAllBtnBox" id="tradeAllBtnBox">
-                <div class="singleBtn">COMP INFO</div>
-                <div class="singleBtn">NEWS</div>
-                <div class="singleBtn">ALL TRADES</div>
-                <div class="singleBtn">PRICE ALERT</div>
-                <div class="singleBtn">FUND STATUS</div>
-                <div class="singleBtn">LAST TRADES</div>
-                <div class="singleBtn">MKT MOVER</div>
-                <div class="singleBtn">DIVIDEND</div>
-                <div class="singleBtn">STK STATUS</div>
-                <div class="singleBtn">RATE HISTORY</div>
-                <div class="singleBtn">HALTED COMP</div>
-                <div class="singleBtn">FAVOURITES</div>
-            </div>
+        <div class="availableFund">
+            <p>Available Fund</p>
+            <p>Tk 0</p>
         </div>
-        
+        <div class="buySellFormContent">
+            <form action="#">
+                <div class="rowForm">
+                    <div class="rowItem rowFirst">
+                        <input id="marketPrice" type="radio" name="marketPrice" >
+                        <label for="marketPrice">Market Price</label>
+                    </div>
+                </div>
+                <div class="rowForm">
+                    <label for="b_quantity">Quantity</label>
+                    <input type="number" id="b_quantity" name="b_quantity" placeholder="Enter Qty" required>
+                </div>
+                <div class="rowForm">
+                    <label for="b_rate">Rate</label>
+                    <input type="number" id="b_rate" name="b_rate" placeholder="Enter Rate"  required>
+                </div>
+                <div class="rowForm">
+                    <label for="estimatedTotal">Estimated Taka, You Need</label>
+                    <input type="number" id="estimatedTotal" name="" placeholder="Tk0" required>
+                </div>
+                <div class="orderSubmit">
+                    <input type="submit" value="ORDER SUBMIT">
+                </div>
+            </form>
+        </div>
+
     </body>
 </html>

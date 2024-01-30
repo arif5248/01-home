@@ -230,6 +230,7 @@ h6{
 .item > .left{
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 55%;
 }
 .item > .right{

@@ -814,11 +814,13 @@ function updateButton(activeButton) {
     if(activeButton === 'buyContent'){
         document.getElementById('buy').style.backgroundColor = '#4CB050'
         document.getElementById('buyOrderSubmit').style.backgroundColor = '#4CB050'
+        document.getElementById('buyOrderSubmit').style.color = '#fff'
         document.getElementById('sell').style.backgroundColor = '#868686'
 
     }
     if(activeButton === 'sellContent'){
         document.getElementById('sell').style.backgroundColor = '#FE0000'
+        document.getElementById('sellOrderSubmit').style.color = '#fff'
         document.getElementById('sellOrderSubmit').style.backgroundColor = '#FE0000'
         document.getElementById('buy').style.backgroundColor = '#868686'
 

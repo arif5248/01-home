@@ -243,12 +243,17 @@ function executeTrade(){
             <div class="container">
                 <div class="box">
                     <div class="tradeAllBtnBox" id="tradeAllBtnBox">
-                        <div class="singleBtn">COMP INFO</div>
-                        <div class="singleBtn">NEWS</div>
-                        <div class="singleBtn">ALL TRADES</div>
+                        <div onclick="updateFooterBtnState('trade');route('../component/TP_companyInfoComponent.js','../css/TP_companyInfoComponent.css','TP_companyInfo')" class="singleBtn">COMP INFO</div>
+
+                        <div onclick="updateFooterBtnState('trade');route('../component/TP_newsComponent.js','../css/TP_newsComponent.css','TP_news')" class="singleBtn">NEWS</div>
+
+                        <div onclick="updateFooterBtnState('trade');route('../component/TP_todayTradeComponent.js','../css/TP_todayTradeComponent.css','TP_todayTrade')" class="singleBtn">ALL TRADES</div>
+
                         <div class="singleBtn">PRICE ALERT</div>
-                        <div class="singleBtn">FUND STATUS</div>
-                        <div class="singleBtn">LAST TRADES</div>
+
+                        <div class="singleBtn" onclick="showFund()" >FUND STATUS</div>
+
+                        <div onclick="updateFooterBtnState('trade');route('../component/TP_lastTradeComponent.js','../css/TP_lastTradeComponent.css','TP_lastTrade')" class="singleBtn">LAST TRADES</div>
                         <div class="singleBtn">MKT MOVER</div>
                         <div class="singleBtn">DIVIDEND</div>
                         <div class="singleBtn">STK STATUS</div>
@@ -300,6 +305,28 @@ function executeTrade(){
                 </div>
             </div>
 
+            <div class="fundStatusBox" id="fundStatusBox"> 
+                <div class="container">
+                    <div class="box">
+                        <div class="head">FUND STATUS</div>
+                        <div class="body">
+                            <div class="item">
+                                <p>Opening Balance</p>
+                                <p>77</p>
+                            </div>
+                            <div class="item">
+                                <p>Net Blocked</p>
+                                <p>0</p>
+                            </div>
+                            <div class="item">
+                                <p>Purchase Limit</p>
+                                <p>0</p>
+                            </div>
+                        </div>
+                        <div class="footer" onclick="closeFund()">CANCEL</div>
+                    </div>
+                </div>
+            </div>
 
             <br>
             <br>
@@ -425,14 +452,14 @@ function executeTrade(){
         const countdownText = `${hours}h ${minutes}m ${seconds}s`;
         document.getElementById('countdown').innerHTML = countdownText;
         document.getElementById('trade_status').innerHTML = `Open`
-        document.getElementById('trade_status').style.color = `green`
+        document.getElementById('trade_status').style.color = `#0aeb0a`
         document.getElementById('remaining_trade_time').innerHTML = `Remaining Trade Time`
     }
 
     function renderTradeSearchBox(){
         document.getElementById('tradeSearchBox').innerHTML = `
         <div class="search">
-            <input type="text" name="searchBox">
+            <input type="text" name="searchBox" placeholder="Select Script">
         </div>
         <div class="relaod">
             <img src="../images/icons/reload.png" alt="reload" style="width: 30px;">
@@ -453,7 +480,7 @@ function executeTrade(){
         `
     }
 
-    function renderDseContent() {
+    function renderCseContent() {
         const tableBody = document.getElementById('cseContent');
         tableBody.innerHTML =
          `
@@ -489,7 +516,7 @@ function executeTrade(){
             <div>
                 <div class= "item">
                     <div class="left">
-                        <p>Last Trade<br>Price</p>
+                        <p>Last Trade Price</p>
                         <p>:</p>
                     </div>
                     <div class="right">
@@ -527,7 +554,7 @@ function executeTrade(){
             <div>
                 <div class= "item">
                 <div class="left">
-                    <p>Last Trade<br>Price</p>
+                    <p>Last Trade Price</p>
                     <p>:</p>
                 </div>
                 <div class="right">
@@ -565,7 +592,7 @@ function executeTrade(){
         `;
     }
 
-    function renderCseContent() {
+    function renderDseContent() {
         const tableBody = document.getElementById('dseContent');
         tableBody.innerHTML =
          `
@@ -601,7 +628,7 @@ function executeTrade(){
             <div>
                 <div class= "item">
                     <div class="left">
-                        <p>Last Trade<br>Price</p>
+                        <p>Last Trade Price</p>
                         <p>:</p>
                     </div>
                     <div class="right">
@@ -639,7 +666,7 @@ function executeTrade(){
             <div>
                 <div class= "item">
                     <div class="left">
-                        <p>Last Trade<br>Price</p>
+                        <p>Last Trade Price</p>
                         <p>:</p>
                     </div>
                     <div class="right">
@@ -726,11 +753,11 @@ function executeTrade(){
                     </div>
                     <div class="box">
                         <div>
-                            <input id="halfSell" type="checkbox" name="halfSell" >
+                            <input id="halfSell" type="radio" name="sellType" value="half">
                             <label for="halfSell">Half</label>
                         </div>
                         <div>
-                            <input id="fullSell" type="checkbox" name="fullSell" >
+                            <input id="fullSell" type="radio" name="sellType" value="full" >
                             <label for="fullSell">Full</label>
                         </div>
                     </div>
@@ -768,6 +795,7 @@ function executeTrade(){
     renderDseContent()
     renderBuyContent()
     renderSellContent() 
+    document.getElementById('fundStatusBox').style.display = 'none'
     document.getElementById('cseContent').style.display = 'block'
     document.getElementById('dseContent').style.display = 'none'
     document.getElementById('buyContent').style.display = 'block'
@@ -781,6 +809,13 @@ function executeTrade(){
         renderMarketScheduale: renderMarketScheduale,
         updateCountdown: updateCountdown, 
     };
+}
+function showFund(){
+    document.getElementById('fundStatusBox').style.display = 'block'
+}
+function closeFund(){
+    document.getElementById('fundStatusBox').style.display = 'none'
+
 }
 function show(content){
     document.getElementById('cseContent').style.display = 'none'

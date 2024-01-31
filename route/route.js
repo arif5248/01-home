@@ -11,70 +11,71 @@ document.addEventListener('DOMContentLoaded', function () {
   let currentSection = null;
   
   async function route(js, css, case_name) {
-    
     if (currentSection !== null) {
         await clearMemory();
     }
 
     // Add a loading class to indicate that content is being loaded
     document.getElementById('mainContentSection').classList.add('loading');
+    try {
+        const styleResponse = await fetch(css);
+        if (!styleResponse.ok) {
+            throw new Error(`Error loading ${case_name}.css`);
+        }
 
-    const response = await Promise.all([
-        fetch(js),
-        fetch(css)
-    ]);
+        const styleCode = await styleResponse.text();
 
-    const [scriptResponse, styleResponse] = response;
+        // Inject the new link tag for styles
+        const styleElement = document.createElement('link');
+        styleElement.id = `style-${case_name}`;
+        styleElement.rel = 'stylesheet';
+        styleElement.href = css;
+        document.head.appendChild(styleElement);
 
-    if (!scriptResponse.ok || !styleResponse.ok) {
-        console.error(`Error loading ${case_name}.js or ${case_name}.css`);
+        // Remove loading class once styles are injected
+        document.getElementById('mainContentSection').classList.remove('loading');
+
+        const response = await fetch(js);
+        if (!response.ok) {
+            throw new Error(`Error loading ${case_name}.js`);
+        }
+
+        const scriptCode = await response.text();
+
+        // Inject the new script
+        const scriptElement = document.createElement('script');
+        scriptElement.id = case_name;
+        scriptElement.textContent = scriptCode;
+        document.head.appendChild(scriptElement);
+
+        const prev_case = historyStack[historyStack.length - 1];
+        if (!prev_case || prev_case.case_name !== case_name) {
+            historyStack.push({ case_name });
+        }
+
+        currentSection = case_name;
+
+        const newUrl = window.location.origin + window.location.pathname + `#${case_name}`;
+        history.pushState({ case_name }, null, newUrl);
+
+        isVerifiedCacse(case_name);
+
+        if (case_name === 'trade') {
+            if (prev_case.case_name !== case_name) {
+                const executeTradeResult = executeTrade();
+                let updateCountdown = executeTradeResult.updateCountdown;
+                marketIntervalId = setInterval(updateCountdown, 1000);
+            }
+        } else {
+            clearInterval(marketIntervalId);
+        }
+    } catch (error) {
+        console.error(error);
         // Remove loading class in case of an error
         document.getElementById('mainContentSection').classList.remove('loading');
-        return;
-    }
-
-    const scriptCode = await scriptResponse.text();
-    const styleCode = await styleResponse.text();
-
-    // Inject the new script
-    const scriptElement = document.createElement('script');
-    scriptElement.id = case_name;
-    scriptElement.textContent = scriptCode;
-    document.head.appendChild(scriptElement);
-
-    // Inject the new link tag for styles
-    const styleElement = document.createElement('link');
-    styleElement.id = `style-${case_name}`;
-    styleElement.rel = 'stylesheet';
-    styleElement.href = css;
-    document.head.appendChild(styleElement);
-
-    // Remove loading class once script and styles are injected
-    document.getElementById('mainContentSection').classList.remove('loading');
-
-    const prev_case = historyStack[historyStack.length-1]
-    if (!prev_case || prev_case.case_name !== case_name ) {
-        historyStack.push({ case_name });
-    }
-    
-    currentSection = case_name;
-
-    const newUrl = window.location.origin + window.location.pathname + `#${case_name}`;
-    history.pushState({ case_name }, null, newUrl);
-
-    isVerifiedCacse(case_name);
-
-    if(case_name === 'trade'){
-        if(prev_case.case_name !== case_name){
-            const executeTradeResult = executeTrade();
-            let updateCountdown = executeTradeResult.updateCountdown
-            marketIntervalId = setInterval(updateCountdown, 1000);
-        }
-        
-    } else {
-        clearInterval(marketIntervalId);
     }
 }
+
 
   
   async function clearMemory() {
@@ -107,7 +108,12 @@ document.addEventListener('DOMContentLoaded', function () {
         const prevState = historyStack.pop(); 
         const case_name = prevState.case_name;
         route(`../component/${case_name}Component.js`, `../css/${case_name}Component.css`, case_name);
-        updateFooterBtnState(case_name);
+        if(case_name && typeof case_name === 'string' && case_name.startsWith('TP_')){
+            updateFooterBtnState('trade');
+        }else{
+            updateFooterBtnState(case_name);
+        }
+        
     }
 }
 
@@ -192,6 +198,18 @@ function isVerifiedCacse(case_name){
             break;
         case 'trade':
             executeTrade();
+            break;
+        case 'TP_companyInfo':
+            executeTP_CompanyInfo();
+            break;
+        case 'TP_news':
+            executeTP_News();
+            break;
+        case 'TP_todayTrade':
+            executeTP_todayTrade();
+            break;
+        case 'TP_lastTrade':
+            executeTP_lastTrade();
             break;
 
     }

@@ -1,0 +1,80 @@
+
+.mainContentSection{
+    position: relative;
+    overflow-y: auto;
+    height: 80vh;
+}
+/*==============search==============*/
+#tradeSearchBox{
+    display: flex;
+    padding: 15px 0px;
+    /* position: sticky;
+    top: 0; */
+}
+#tradeSearchBox > .search{
+    width: 85%;
+    margin-right: 10px;
+}
+#tradeSearchBox > .search > input{
+    width: 100%;
+    border-radius: 5px;
+    padding: 7px 10px;
+    border: none;
+}
+#tradeSearchBox > .relaod{
+    width: 15%;
+    background-color: #fff;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/*==============table==============*/
+
+.todaysTradeBody > table{
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    
+}
+
+.todaysTradeBody > table > tbody > tr:first-child{
+    background-color: black;
+    position: sticky;
+    top: 0;
+    
+}
+.todaysTradeBody > table > tbody > tr:first-child > th{
+    color: #fff;
+    font-size: 20px;
+    padding: 5px 1px;
+    text-align: center;
+    
+}
+.todaysTradeBody > table > tbody > tr:first-child > th:first-child{
+    -webkit-padding-start: 10px;
+}
+.todaysTradeBody > table > tbody > tr:first-child > th:last-child{
+    -webkit-padding-end: 10px;
+}
+
+.todaysTradeBody > table > tbody > tr > td{
+    font-weight: 700;
+    font-size: 15px;
+    padding: 10px 0px;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    color: #000 !important;
+    text-align: center;
+}
+.todaysTradeBody > table > tbody > tr > td:first-child{
+    -webkit-padding-start: 10px;
+    border-left: 1px solid #000;
+    border-radius: 15px 0px 0px 15px;
+}
+.todaysTradeBody > table > tbody > tr > td:last-child{
+    -webkit-padding-end: 10px;
+    border-right: 1px solid #000;
+    border-radius: 0px 15px 15px 0px;
+}

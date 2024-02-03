@@ -36,4 +36,21 @@ function showVideoChat(){
 function closeVideoChat(){
     document.getElementById('videoChatSection').style.display = 'none'
 }
+function showSettings(){
+    document.getElementById('settings').style.display = 'block'
+    document.getElementById('overlay').style.display = 'block';
+    
+}
+function closeSettings(){
+    document.getElementById('settings').style.display = 'none'
+    document.getElementById('overlay').style.display = 'none';
+    document.body.style.overflow = 'scroll';
+}
+function changePass(){
+    document.getElementById('settings').style.display = 'none'
+    document.getElementById('overlay').style.display = 'none';
+    document.body.style.overflow = 'scroll';
+    route("../component/changePassComponent.js","../css/changePassComponent.css", 'changePass')
+}
+
 

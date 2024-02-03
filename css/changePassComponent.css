@@ -1,0 +1,16 @@
+.changePassBody > form > div > input{
+    width: 100%;
+    background-color: #fff;
+    height: 45px;
+    margin: 10px 0px;
+    border-radius: 5px;
+    padding: 0px 5px;
+}
+.inputItem{
+    position: relative;
+}
+.iconPass{
+    position: absolute;
+    top: 30%;
+    right: 2%;
+}

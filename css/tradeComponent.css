@@ -336,7 +336,7 @@ h6{
     top: 50%;
     left: 50%;
     width: 80vw;
-    z-index: 20;
+    z-index: 1005;
     animation: animatedFundStatus 0.5s linear(0.54 -17.65%, 1 100%);
 }
 @keyframes animatedFundStatus {

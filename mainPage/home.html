@@ -16,7 +16,7 @@
 </head> 
 <body>
     <div id="overlay"></div>
-    <section class="mainSection">
+    <section class="mainSection" id="mainSection">
         <div class="sendMessageSection" id="sendMessageSection">
             <div class="sendMessageHeading">
                 <span></span>
@@ -61,6 +61,15 @@
                         <input type="time" placeholder="Select a Time" class="inputStyle input-color" id="video_req_time" name="time">
                         <button class= "submitSendMsg" type="submit">Submit</button>
                     </form>
+                </div>
+            </div>
+        </div>
+        <div class="settings" id="settings">
+            <div class="container">
+                <div class="box">
+                    <div class="head">SETTINGS</div>
+                    <div class="body" onclick="changePass()">Change Password</div>
+                    <div class="footer" onclick="closeSettings()">CANCEL</div>
                 </div>
             </div>
         </div>
@@ -184,7 +193,7 @@
                                         <hr class="hr-highlite">
                                     </li>
                                     <li class="nav-item">
-                                        <div class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Settings</div>
+                                        <div class="nav-link active" aria-current="page" onclick="showSettings()" data-bs-dismiss="offcanvas">Settings</div>
                                         <hr>
                                     </li>
                                     <li class="nav-item">

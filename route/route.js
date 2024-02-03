@@ -78,8 +78,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 }
 
-
-  
   async function clearMemory() {
       return new Promise(resolve => {
         const script = document.head.getElementsByTagName('script');
@@ -101,8 +99,6 @@ document.addEventListener('DOMContentLoaded', function () {
         resolve(); 
       });
     }
-    
-  
 
   function goBack() {
     if (historyStack.length > 1) {
@@ -215,6 +211,12 @@ function isVerifiedCacse(case_name){
             break;
         case 'TP_marketMover':
             executeTP_marketMover();
+            break;
+        case 'personalNote':
+            executePersonalNote();
+            break;
+        case 'personalNotification':
+            executePersonalNotification();
             break;
 
     }

@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
     closeSendMessage();
     closeVideoChat();
     document.getElementById('overlay').style.display = 'none';
+    document.getElementById('settings').style.display = 'none';
 
   
   });
@@ -218,6 +219,10 @@ function isVerifiedCacse(case_name){
         case 'personalNotification':
             executePersonalNotification();
             break;
+        case 'changePass':
+            executeChangePass();
+            break;
+
 
     }
 }

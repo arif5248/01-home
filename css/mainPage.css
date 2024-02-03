@@ -449,3 +449,11 @@ padding-bottom: 5px;
     background-color: #2e0339;
     display: none;
 }
+#overlay{
+    width: 100vw;
+    height: 100vh;
+    background-color: #00000082;
+    position: absolute;
+    top: 0;
+    z-index: 11;
+}

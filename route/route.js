@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', function () {
     closeSupportTeam();
     closeSendMessage();
     closeVideoChat();
+    document.getElementById('overlay').style.display = 'none';
+
   
   });
   
@@ -210,6 +212,9 @@ function isVerifiedCacse(case_name){
             break;
         case 'TP_lastTrade':
             executeTP_lastTrade();
+            break;
+        case 'TP_marketMover':
+            executeTP_marketMover();
             break;
 
     }

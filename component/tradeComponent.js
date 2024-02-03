@@ -254,7 +254,9 @@ function executeTrade(){
                         <div class="singleBtn" onclick="showFund()" >FUND STATUS</div>
 
                         <div onclick="updateFooterBtnState('trade');route('../component/TP_lastTradeComponent.js','../css/TP_lastTradeComponent.css','TP_lastTrade')" class="singleBtn">LAST TRADES</div>
-                        <div class="singleBtn">MKT MOVER</div>
+                        
+                        <div onclick="updateFooterBtnState('trade');route('../component/TP_marketMoverComponent.js','../css/TP_marketMoverComponent.css','TP_marketMover')" class="singleBtn">MKT MOVER</div>
+                        
                         <div class="singleBtn">DIVIDEND</div>
                         <div class="singleBtn">STK STATUS</div>
                         <div class="singleBtn">RATE HISTORY</div>
@@ -800,6 +802,7 @@ function executeTrade(){
     document.getElementById('dseContent').style.display = 'none'
     document.getElementById('buyContent').style.display = 'block'
     document.getElementById('sellContent').style.display = 'none'
+    document.getElementById('overlay').style.display = 'none';
     
 
     return {
@@ -810,11 +813,17 @@ function executeTrade(){
         updateCountdown: updateCountdown, 
     };
 }
+
+document.getElementById('overlay').style.display = 'none';
 function showFund(){
     document.getElementById('fundStatusBox').style.display = 'block'
+    document.getElementById('overlay').style.display = 'block';
+    document.body.style.overflow = 'hidden';
 }
 function closeFund(){
     document.getElementById('fundStatusBox').style.display = 'none'
+    document.getElementById('overlay').style.display = 'none';
+    document.body.style.overflow = 'scroll';
 
 }
 function show(content){

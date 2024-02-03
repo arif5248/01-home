@@ -86,7 +86,7 @@
                 
                         <div class="offcanvas offcanvas-start" tabindex="1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                             <div class="offcanvas-header">
-                                <div>
+                                <div class="header_box_1">
                                     <img class="offcanvas-title" id="offcanvasNavbarLabel" src="../images/01.gif" alt="01 ltd">
         
                                     <div class="appInfo" >
@@ -99,19 +99,19 @@
                                     </div>
                                 </div>
 
-                                <div>
-                                    <div class="footer-icon"  >
-                                        <img style="width: 45px; height: auto;" src="../images/icons/notes.png" alt="Home">
+                                <div class="header_box_2">
+                                    <div class="footer-icon" onclick="removeFooterBtnState(); route('../component/personalNoteComponent.js','../css/personalNoteComponent.css', 'personalNote')" data-bs-dismiss="offcanvas">
+                                        <img style="width: 40px; height: auto;" src="../images/icons/notes.png" alt="Home">
                                         <span>Notes</span>
                                     
                                     </div>
-                                    <div class="footer-icon"  >
-                                        <img style="width: 45px; height: auto;" src="../images/icons/notification-bell.png" alt="Home">
+                                    <div class="footer-icon" onclick="removeFooterBtnState(); route('../component/personalNotificationComponent.js','../css/personalNotificationComponent.css', 'personalNotification')" data-bs-dismiss="offcanvas" >
+                                        <img style="width: 40px; height: auto;" src="../images/icons/notification-bell.png" alt="notification">
                                         <span>notification</span>
                                     
                                     </div>
                                     <div class="footer-icon" >
-                                        <img style="width: 45px; height: auto;" src="../images/icons/logout.png" alt="Home">
+                                        <img style="width: 40px; height: auto;" src="../images/icons/logout.png" alt="Home">
                                         <span>Logout</span>
                                     
                                     </div>

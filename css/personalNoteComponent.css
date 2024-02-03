@@ -1,0 +1,67 @@
+
+.date-box-body{
+    margin-top: 5px;
+}
+.box{
+    border: 1px solid #000;
+    border-radius: 5px;
+    background-color: #fff;
+}
+.date-box{
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
+.date-box > label,
+.date-box > input{
+    width: 50%;
+}
+.date-box > input{
+    border-radius: 5px;
+    background-color: #DEE2E6;
+    height: 45px;
+}
+/*====================note===============*/
+.note-box-body{
+    margin-top: 10px;
+}
+.note-box{
+    padding: 10px 5px;
+}
+.proceed-btn{
+    display: flex;
+}
+
+.proceed-btn > input{
+    width: 50%;
+    background-color: #4CB050;
+    color: #fff;
+    margin: 10px 10px;
+    padding: 8px 5px;
+}
+.proceed-btn > input:first-child{
+    background-color: red;
+}
+textarea{
+    width: 100%;
+    background-color: #F4F6C4;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    padding: 5px 5px;
+}
+/*=================All Note Body=============*/
+.all-note-box-body{
+    margin-top: 10px;
+}
+.all_note_heading{
+    display: flex;
+    background-color: blue;
+    color: #fff;
+    padding: 5px 10px;
+}
+.all_note_heading > p:first-child{
+    width: 40%;
+}
+.all-note-box{
+    height: 40vh;;
+}

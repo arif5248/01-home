@@ -1,0 +1,77 @@
+/*==============table==============*/
+
+.dataBody > table{
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 5px;
+    margin-bottom: 30px;
+    background-color: #fff;
+    padding: 0px 10px;
+}
+
+.dataBody > table > tbody > tr:first-child{
+    background-color: black;
+    position: sticky;
+    top: 40px;
+    
+}
+.dataBody > table > tbody > tr:first-child > th{
+    color: #fff;
+    font-size: 16px;
+    padding: 5px 1px;
+    text-align: center;
+    
+}
+.dataBody > table > tbody > tr:first-child > th:first-child{
+    -webkit-padding-start: 10px;
+}
+.dataBody > table > tbody > tr:first-child > th:last-child{
+    -webkit-padding-end: 10px;
+}
+
+.dataBody > table > tbody > tr > td{
+    font-weight: 700;
+    font-size: 15px;
+    padding: 7px 0px;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    color: #000 !important;
+    text-align: center;
+}
+.dataBody > table > tbody > tr > td:first-child{
+    -webkit-padding-start: 10px;
+    border-left: 1px solid #000;
+    border-radius: 15px 0px 0px 15px;
+}
+.dataBody > table > tbody > tr > td:last-child{
+    -webkit-padding-end: 10px;
+    border-right: 1px solid #000;
+    border-radius: 0px 15px 15px 0px;
+}
+
+.dataBody > h3{
+    text-align: center;
+    padding: 10px 0px;
+    background-color: #fff;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.marketMoverContainer{
+    margin-top: 10px;
+    position: relative;
+    overflow-y: auto;
+    height: 80vh;
+}
+
+
+
+.dataBody > h3{
+    position: sticky;
+    top: 0px; /* Adjust this value based on the height of your page heading */
+    background-color: white; /* Ensure a background to see the sticky effect */
+    z-index: 900; /* Set a z-index lower than the page heading but higher than the table */
+}
+
+

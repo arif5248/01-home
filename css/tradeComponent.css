@@ -1,0 +1,388 @@
+
+#mainContentSection{
+    background-color :#111111;
+}
+h6{
+    margin: 0px;
+}
+.stock_ticker_box {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.scrolling-content {
+    display: flex;
+    animation: scrolling 30s linear infinite; 
+}
+.ticker_item{
+    background-color: green;
+    color: #fff;
+    margin: 5px;
+    padding: 10px;
+    text-align: center;
+}
+
+@keyframes scrolling {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-100%); 
+    }
+}
+
+/*============Schedual market============*/
+.marketScheduale{
+    margin-top: 10px;
+}
+.box{
+    border: 1px solid #000;
+    padding: 5px 10px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px 2px #111;
+    background-color: #2C2C2E;
+    color: #fff;
+}
+/* .marketScheduleBox{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+} */
+.marketScheduleBox > .marketStatus,
+.marketScheduleBox > .remaining_time{
+    display: flex;
+    justify-content: space-around;
+}
+.marketStatus > p,
+.remaining_time > h4{
+    width: 50%;
+}
+.marketStatus > p:last-child,
+.remaining_time > h4:last-child{
+    text-align: right;
+}
+.remaining_time > h4{
+    font-weight: 700;
+    margin-top: 5px;
+}
+
+#trade_status{
+    color: green;
+}
+
+/*==============search==============*/
+#tradeSearchBox{
+    display: flex;
+    padding: 15px 0px;
+}
+#tradeSearchBox > .search{
+    width: 85%;
+    margin-right: 10px;
+}
+#tradeSearchBox > .search > input{
+    width: 100%;
+    border-radius: 5px;
+    padding: 7px 10px;
+    border: none;
+}
+#tradeSearchBox > .relaod{
+    width: 15%;
+    background-color: #fff;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/*=============btn==============*/
+.tradeAllBtnBox{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+.singleBtn{
+    background-color: #737373;
+    width: 75px;
+    height: 35px;
+    margin: 5px;
+    font-size: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+/*=============selected stock==============*/
+.selectedStockSection{
+    margin-top: 10px;
+}
+.selectedStockBox{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 5px;
+}
+.selectedStockBox > .innerCol:last-child{
+    text-align: right;
+}
+.innerCol > p{
+    margin-top: 5px;
+}
+/*=============main trade==============*/
+.mainTradeSection{
+    margin-top: 10px;
+}
+.mainTradeSection > .container > .box >.btnGroup{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0px;
+    margin: 10px 0px;
+    background-color: #868686;
+    border-radius: 10px;
+}
+.mainTradeSection > .container > .box > .btnGroup > .Btn{
+    padding: 10px 10px;
+    border: 1px solid #0000005b;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    width: 40%;
+}
+.mainTradeSection > .container > .box > .btnGroup > .active{
+    background-color: #5C5C5C;
+    color: #fff;
+}
+.buyerSeller{
+    display: flex;
+}
+.buyerSeller > h3{
+    width: 50%;
+    text-align: center;
+    font-size: 20px;
+    color: #fff;
+}
+.buySellData{
+    height: 390px;
+    overflow-y: auto;
+}
+.buySellData > .ipoContent > table{
+    margin-top: 5px;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 2px;
+}
+.buySellData > .ipoContent > table > tbody >tr > th{
+    background-color: #5C5C5C;
+    position: sticky;
+    top: 0;
+    color: #fff;
+    font-weight: 400;
+    text-align: center;
+    padding-top: 0;
+    font-size: 14px;
+    font-weight: 600;
+}
+.buySellData > .ipoContent > table > tbody >tr > td:nth-child(3){
+    border-right: 4px solid #5C5C5C;
+}
+.buySellData > .ipoContent > table > tbody >tr > td:nth-child(4){
+    border-left: 4px solid #5C5C5C;
+}
+.buySellData > .ipoContent > table > tbody >tr > td{
+    text-align: center;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    padding: 5px 0px;
+    font-size: 12px;
+}
+.buySellData > .ipoContent > table > tbody >tr > td:first-child{
+    -webkit-padding-start: 10px;
+    text-align: left;
+    border-left: 1px solid #000;
+    border-radius: 15px 0px 0px 15px;
+}
+.buySellData > .ipoContent > table > tbody >tr > td:last-child{
+    -webkit-padding-end: 10px;
+    border-right: 1px solid #000;
+    border-radius: 0px 15px 15px 0px;
+}
+.cseFooter,
+.dseFooter{
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    background-color: #2C2C2E;
+    color: #fff;
+    justify-content: space-between;
+}
+
+.cseFooter > div{
+    width: 50%;
+    padding: 0px 8px;
+}
+.cseFooter > div:first-child{
+    border-right: 1px solid #5C5C5C;
+}
+.item{
+    display: flex;
+    padding: 5px 0px;
+}
+.item > .left{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 55%;
+}
+.item > .right{
+    text-align: right;
+    width: 45%;
+}
+.item > .left  > p,
+.item > .right > p{
+    font-size: 12px;
+}
+
+/*=============BuySell order==============*/
+.buySellSection{
+    margin-top: 10px;
+}
+.buySellSection > .container > .box >.btnGroup{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0px;
+    margin: 10px 0px;
+    background-color: #868686;
+    border-radius: 10px;
+}
+.buySellSection > .container > .box > .btnGroup > .Btn{
+    padding: 10px 10px;
+    border: 1px solid #0000005b;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    width: 40%;
+    color: #000;
+}
+.availableFund{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+}
+.rowForm-1{
+    margin-bottom: 20px !important;
+}
+.rowForm-1 > .rowItem > input {
+    border: 1px solid #fff;
+    background-color: unset;
+    padding: 5px;
+    height: 50px;
+}
+.rowForm-1 > .box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-color: #fff;
+    width: 50%;
+}
+.rowForm-1 > .rowItem{
+    display: flex;
+    align-items: center;
+}
+.rowForm-1 > .rowItem > input{
+    margin-right: 10px;
+}
+.rowForm-1 > .box > div > input{
+    margin-right: 10px;
+}
+.rowForm{
+    display: flex;
+    margin-bottom: 10px;
+    align-items: center;
+    justify-content: space-between;
+}
+.rowForm > label,
+.rowForm > input{
+    width: 50%;
+}
+.rowForm > input{
+    background-color: unset;
+    border: 1px solid #98989A;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-align: right;
+}
+.orderSubmit{
+    margin-top: 15px;
+}
+.orderSubmit > input{
+    width: 100%;
+    background-color: #868686;
+    padding: 10px 10px;
+    border-radius: 5px;
+}
+
+
+
+.fundStatusBox {
+    transform: translateY(-50%) translateX(-40vw);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 80vw;
+    z-index: 20;
+    animation: animatedFundStatus 0.5s linear(0.54 -17.65%, 1 100%);
+}
+@keyframes animatedFundStatus {
+    from {
+        transform: translateY(-100vh) translateX(-40vw);
+    }
+    to {
+        transform: translateY(-50%) translateX(-40vw); 
+    }
+}
+
+#overlay{
+    animation: overlay 0.5s linear(0.54 -17.65%, 1 100%);
+}
+@keyframes overlay {
+    from {
+        top: -200vh;
+    }
+    to {
+        top: 0; 
+    }
+}
+
+.fundStatusBox > .container > .box{
+    background-color: #fff;
+    color: #000;
+    padding: 0;
+}
+.fundStatusBox > .container > .box > .footer,
+.fundStatusBox > .container > .box > .head{
+    text-align: center;
+    background-color: #000;
+    padding: 5px 0px;
+    color: #fff;
+}
+.fundStatusBox > .container > .box > .footer{
+    text-align: center;
+    background-color: #5c5c5cad;
+    padding: 5px 0px;
+    color: #fff;
+}
+.fundStatusBox > .container > .box > .body > .item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 10px;
+    padding-left: 10px;
+    
+}

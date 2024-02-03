@@ -3,9 +3,9 @@
 <head id="head">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link id="boots" rel="stylesheet" href="../vendor/bootstrap/css/bootstrap.min.css">
+    <link  id="boots" rel="stylesheet" href="../vendor/bootstrap/css/bootstrap.min.css">
     <link id="main-page" rel="stylesheet" href="../css/mainPage.css">
-    <link rel="stylesheet" href="../css/homeComponent.css">
+    <!-- <link rel="stylesheet" href="../css/homeComponent.css"> -->
     <script id="fetch" src="../apiFeatching/fetchData.js"></script>
     <script id="routes" src="../route/route.js"></script>
     <script id="main" src="../js/mainPage.js"></script>
@@ -15,6 +15,7 @@
 
 </head> 
 <body>
+    <div id="overlay"></div>
     <section class="mainSection">
         <div class="sendMessageSection" id="sendMessageSection">
             <div class="sendMessageHeading">
@@ -70,7 +71,7 @@
                     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"     data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
                     <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="logo-01">
+                    <div class="logo-01" onclick="updateFooterBtnState('home');route('../component/homeComponent.js','../css/homeComponent.css','home')">
                         <img src="../images/01.gif" alt="01">
                     </div>
                     <div class="support-team-area" onclick="showSupportTeam()">
@@ -119,19 +120,19 @@
                             <div class="offcanvas-body">
                                 <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                                     <li class="nav-item">
-                                        <div onclick="removeFooterBtnState(); route('../component/openBoAccComponent.js','../css/openBoAcc.css', 'openBoAccount')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">BO Account Open</div>
+                                        <div onclick="removeFooterBtnState(); route('../component/openBoAccountComponent.js','../css/openBoAccountComponent.css', 'openBoAccount')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">BO Account Open</div>
                                         <hr class="hr-highlite">
                                     </li>
                                     <li class="nav-item">
-                                        <div onclick="removeFooterBtnState(); route('../component/financialLedgerComponent.js','../css/financialLedger.css', 'financialLedger')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Financial Ledger</div>
+                                        <div onclick="removeFooterBtnState(); route('../component/financialLedgerComponent.js','../css/financialLedgerComponent.css', 'financialLedger')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Financial Ledger</div>
                                         <hr>
                                     </li>
                                     <li class="nav-item">
-                                        <div onclick="removeFooterBtnState(); route('../component/profitLedgerComponent.js','../css/financialLedger.css', 'profitLedger')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Profit Ledger</div>
+                                        <div onclick="removeFooterBtnState(); route('../component/profitLedgerComponent.js','../css/profitLedgerComponent.css', 'profitLedger')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Profit Ledger</div>
                                         <hr>
                                     </li>
                                     <li class="nav-item">
-                                        <div onclick="removeFooterBtnState(); route('../component/stockLedgerComponnt.js','../css/stockLedgerComponent.css', 'stockLedger')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Stock Ledger</div>
+                                        <div onclick="removeFooterBtnState(); route('../component/stockLedgerComponent.js','../css/stockLedgerComponent.css', 'stockLedger')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Stock Ledger</div>
                                         <hr>
                                     </li>
                                     <li class="nav-item">
@@ -163,23 +164,23 @@
                                         <hr>
                                     </li>
                                     <li class="nav-item">
-                                        <div class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Internal Fund Transfer</div>
+                                        <div onclick="removeFooterBtnState(); route('../component/internalFundTransComponent.js','../css/internalFundTransComponent.css', 'internalFundTrans')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Internal Fund Transfer</div>
                                         <hr class="hr-highlite">
                                     </li>
                                     <li class="nav-item">
-                                        <div class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Reward Points</div>
+                                        <div onclick="removeFooterBtnState(); route('../component/rewardPointsComponent.js','../css/rewardPointsComponent.css', 'rewardPoints')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Reward Points</div>
                                         <hr>
                                     </li>
                                     <li class="nav-item">
-                                        <div class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Refer Friends & Family</div>
+                                        <div onclick="removeFooterBtnState(); route('../component/refer01Component.js','../css/refer01Component.css', 'refer01')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Refer Friends & Family</div>
                                         <hr>
                                     </li>
                                     <li class="nav-item">
-                                        <div class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Special Offer</div>
+                                        <div onclick="removeFooterBtnState(); route('../component/offerComponent.js','../css/offerComponent.css', 'specalOffer')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Special Offer</div>
                                         <hr class="hr-highlite">
                                     </li>
                                     <li class="nav-item">
-                                        <div class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Souvenir Store</div>
+                                        <div onclick="removeFooterBtnState(); route('../component/souvenirStoreComponent.js','../css/souvenirStoreComponent.css', 'souvenirStore')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Souvenir Store</div>
                                         <hr class="hr-highlite">
                                     </li>
                                     <li class="nav-item">
@@ -228,21 +229,20 @@
         <div class="mainContentSection" id="mainContentSection"></div>
 
         <div class="bottomSection" id="bottomSecion">
-            <div class="footer-icon homeBtn activeBtn" onclick="updateFooterBtnState('homeBtn');route('../component/homeComponent.js','../css/homeComponent.css','home')" >
-                    <img style="width: 45px; height: auto;" src="../images/home-button.png" alt="Home">
+            <div class="footer-icon home activeBtn" onclick="updateFooterBtnState('home');route('../component/homeComponent.js','../css/homeComponent.css','home')" >
+                    <img style="width: 30px; height: auto;" src="../images/home-button.png" alt="Home">
                     <span>Home</span>
             </div>
-            <div class="footer-icon marketBtn"  onclick="updateFooterBtnState('marketBtn');route('../component/marketComponent.js','../css/marketStatus.css','market')">
-                <img style="width: 45px; height: auto;" src="../images/stock.png" alt="Market">
+            <div class="footer-icon marketStatus"  onclick="updateFooterBtnState('marketStatus');route('../component/marketStatusComponent.js','../css/marketStatusComponent.css','marketStatus')">
+                <img style="width: 30px; height: auto;" src="../images/stock.png" alt="Market">
                 <span>Market</span>
             </div>
-            <div class="footer-icon tradeBtn" onclick="updateFooterBtnState('tradeBtn')">
-                <img style="width: 45px; height: auto;" src="../images/trade.png" alt="Trade">
+            <div class="footer-icon trade" onclick="updateFooterBtnState('trade');route('../component/tradeComponent.js','../css/tradeComponent.css','trade')">
+                <img style="width: 30px; height: auto;" src="../images/trade.png" alt="Trade">
                 <span>Trade</span>
-                
             </div>
-            <div class="footer-icon newsBtn" onclick="updateFooterBtnState('newsBtn');route('../component/newsComponent.js','../css/newsComponent.css','news')" >
-                <img style="width: 45px; height: auto;" src="../images/newspaper.png" alt="Home">
+            <div class="footer-icon news" onclick="updateFooterBtnState('news');route('../component/newsComponent.js','../css/newsComponent.css','news')" >
+                <img style="width: 30px; height: auto;" src="../images/newspaper.png" alt="News">
                 <span>News</span>
              </div>
         </div>

@@ -36,6 +36,7 @@ function executeHome(){
             value: 0
         },
     ]
+    
     const table2 = [
         {
             fieldName: "Investment",
@@ -499,7 +500,7 @@ function executeHome(){
                 <div class="table1Content-btn">
                     <div id="table-1Content" class="table-1Content"></div>
                     <div class="moreBtn">
-                        <div class="more" onclick="showMore()">More...</div>
+                        <div class="more" onclick="removeFooterBtnState();getTable1More()">More...</div>
                     </div>
                 </div> 
             </div>
@@ -605,6 +606,8 @@ function executeHome(){
             }
         })
     }
+
+    
     function renderTable2(){
         var tableContent = document.getElementById('table-2Content')
         var table= tableContent.appendChild(document.createElement('table'))
@@ -703,19 +706,18 @@ function executeHome(){
         `;
     }
     function renderExecutionTrades() {
+        const today = new Date().toISOString().split('T')[0];
         const executedTrades = document.getElementById('executedTrades');
         executedTrades.innerHTML =
          `  <div class="btnRow">
-                <div class="btnGroup">
-            
-                    <input type="date" id="date-from" >
-                
-                    <span>To</span>
-                
-                    <input type="date" id="date-to">
-                
-                    <div class="searchImg">
-                        <img style="width: 20px;" src="../images/icons/magnifying-glass.png" alt="search">
+                <div class="searchContent">
+                    <div class="input-box">
+                        <input type="date" id="date-from" value= ${today} >
+                        <span>To</span>
+                        <input type="date" id="date-to" value= ${today}>
+                        <div class="searchImg">
+                            <img style="width: 20px;" src="../images/icons/magnifying-glass.png" alt="search">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -757,6 +759,7 @@ function executeHome(){
     homeComponent()
     renderProfile()
     renderTable1()
+    
     renderTable2()
     renderCurrentStockTable()
     renderOldStockTable()
@@ -764,6 +767,63 @@ function executeHome(){
     document.getElementById('currentStockBody').style.display = 'block';
     document.getElementById('oldStockBody').style.display = 'none';
 
+}
+
+async function getTable1More(){
+    const table1More =[
+        {
+            fieldName: "Unposted Amount",
+            value: 0
+        },
+        {
+            fieldName: "Due CDBL Fee",
+            value: 0
+        },
+        {
+            fieldName: "Pending Withdrawl",
+            value: 0
+        },
+        {
+            fieldName: "IPO Fund Block",
+            value: 0
+        },
+        {
+            fieldName: "Purchase Limit",
+            value: 0
+        },
+    ]
+
+     document.getElementById('mainContentSection').innerHTML=`
+     <div class="table1More">
+        <div class="pageHeading" id="pageHeading">
+            <div class="heading">
+                <h1>More</h1>
+            </div>
+        </div>
+        <div class="container">
+            <div class="table1MoreDetails">
+                <table id="table">
+                    <tbody id="tbody">
+                    </tbody
+                </table>
+            </div>
+        </div>
+     </div>   
+    `
+    const table = document.getElementById('table')
+    table1More.forEach(function (row) {
+        var tableRow = document.createElement('tr');
+        tableRow.classList.add('item');
+
+        tableRow.innerHTML = `
+            <td class="column-left">${row.fieldName}</td>
+            <td class="column-right">
+                <div> <span>TK</span> <span>${row.value}</span> </div>
+            </td>
+        `;
+
+        table.querySelector('tbody').appendChild(tableRow);
+    })
 }
 
 function showStockData(stockType) {

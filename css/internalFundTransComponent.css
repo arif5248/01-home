@@ -1,26 +1,71 @@
-/*=================Button================*/
-.btnGroup{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 10px 0px;
-    margin: 10px 0px;
-    background-color: #fff;
-}
-.btnGroup > .Btn{
+.transferBtn{
+    margin-top: 15px;
+    border: 1px solid #000;
     padding: 10px 10px;
-    border: 1px solid #0000005b;
-    border-radius: 10px;
-    font-size: 16px;
-    font-weight: 700;
-}
-.btnGroup > .active{
-    background-color: rgb(3, 3, 51);
+    border-radius: 5px;
+    background-color: #4CB050;
     color: #fff;
+    text-align: center;
+}
+.box{
+    background-color: #fff;
+    border: 1px solid #000;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    padding: 10px 10px;
+}
+.box-data{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.box-data > label{
+    width: 50%;
+    font-size: 18px;
+}
+.box-data > input{
+    border: 1px solid #000;
+    width: 50%;
 }
 
+
+.box-data > input,
+.box-data > select{
+    border: 1px solid #000;
+    border-radius: 10px;
+    width: 50%;
+    height: 45px;
+    font-size: 16px;
+    text-align: center;
+}
+.submit-box{
+    margin-top: 40px;
+}
+.submit-box > input{
+    width: 100%;
+    background-color: #000;
+    color: #fff;
+    border-radius: 10px;
+    padding: 10px 0px;
+    font-size: 20px;
+}
+#invalidAmount{
+    color: red;
+    text-align: right;
+    margin-top: -15px;
+    height: 10px;
+}
+.pageHeading_2 > .heading > h1{
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+.pageHeading_2 {
+    margin-bottom: 10px;
+}
 .transferHistory{
     background-color: #fff;
+    padding: 0px 10px;
 }
 /*=================table================*/
 
@@ -40,6 +85,7 @@ table > tbody > tr:first-child > th{
     color: #fff;
     font-size: 20px;
     padding: 5px 1px;
+    text-align: center;
 }
 table > tbody > tr:first-child > th:first-child{
     -webkit-padding-start: 10px;
@@ -55,6 +101,7 @@ table > tbody > tr > td{
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
     color: #000 !important;
+    text-align: center;
 }
 table > tbody > tr > td:first-child{
     -webkit-padding-start: 10px;

@@ -1,83 +1,135 @@
-let currentSection = null;
+const historyStack = [];
+let marketIntervalId;
+document.addEventListener('DOMContentLoaded', function () {
+    route('../component/homeComponent.js', '../css/homeComponent.css', 'home');
+    closeSupportTeam();
+    closeSendMessage();
+    closeVideoChat();
+    document.getElementById('overlay').style.display = 'none';
 
-function route(js,css,case_name) {
+  
+  });
+  
+  let currentSection = null;
+  
+  async function route(js, css, case_name) {
     if (currentSection !== null) {
-        clearMemory(currentSection);
-    }
-    
-    const newScript = document.createElement('script');
-    newScript.src = js;
-    newScript.id = case_name;
-    newScript.defer = true;
-    newScript.setAttribute('data-loaded', 'dynamic-script');
-
-    
-    function scriptLoaded() {
-        newScript.removeEventListener('load', scriptLoaded);
-        newScript.removeEventListener('error', scriptError);
-
-        isVerifiedCacse(case_name)
-        
+        await clearMemory();
     }
 
-    function scriptError() {
-        console.error(`Error loading ${section}.js`);
-    }
-
-    newScript.addEventListener('load', scriptLoaded);
-    newScript.addEventListener('error', scriptError);
-
-    document.head.appendChild(newScript);
-
-    currentSection = case_name;
-
-    const newStyleSheet = document.createElement('link');
-    newStyleSheet.rel = 'stylesheet';
-    newStyleSheet.href = css;
-    newStyleSheet.setAttribute('data-loaded', 'dynamic-style');
-    document.head.appendChild(newStyleSheet);
-
-    const script = document.head.getElementsByTagName('script');
-    const scriptTagsArray = Array.from(script);
-    scriptTagsArray.forEach(scriptTag => {
-        if (scriptTag.id !== 'boots' && scriptTag.id !== case_name && scriptTag.id !== 'fetch') {
-            scriptTag.parentNode.removeChild(scriptTag);
+    // Add a loading class to indicate that content is being loaded
+    document.getElementById('mainContentSection').classList.add('loading');
+    try {
+        const styleResponse = await fetch(css);
+        if (!styleResponse.ok) {
+            throw new Error(`Error loading ${case_name}.css`);
         }
-    });
-    
+
+        const styleCode = await styleResponse.text();
+
+        // Inject the new link tag for styles
+        const styleElement = document.createElement('link');
+        styleElement.id = `style-${case_name}`;
+        styleElement.rel = 'stylesheet';
+        styleElement.href = css;
+        document.head.appendChild(styleElement);
+
+        // Remove loading class once styles are injected
+        document.getElementById('mainContentSection').classList.remove('loading');
+
+        const response = await fetch(js);
+        if (!response.ok) {
+            throw new Error(`Error loading ${case_name}.js`);
+        }
+
+        const scriptCode = await response.text();
+
+        // Inject the new script
+        const scriptElement = document.createElement('script');
+        scriptElement.id = case_name;
+        scriptElement.textContent = scriptCode;
+        document.head.appendChild(scriptElement);
+
+        const prev_case = historyStack[historyStack.length - 1];
+        if (!prev_case || prev_case.case_name !== case_name) {
+            historyStack.push({ case_name });
+        }
+
+        currentSection = case_name;
+
+        const newUrl = window.location.origin + window.location.pathname + `#${case_name}`;
+        history.pushState({ case_name }, null, newUrl);
+
+        isVerifiedCacse(case_name);
+
+        if (case_name === 'trade') {
+            if (prev_case.case_name !== case_name) {
+                const executeTradeResult = executeTrade();
+                let updateCountdown = executeTradeResult.updateCountdown;
+                marketIntervalId = setInterval(updateCountdown, 1000);
+            }
+        } else {
+            clearInterval(marketIntervalId);
+        }
+    } catch (error) {
+        console.error(error);
+        // Remove loading class in case of an error
+        document.getElementById('mainContentSection').classList.remove('loading');
+    }
 }
 
-function clearMemory(section) {
-    const styleSheet = document.head.getElementsByTagName('link');
-    const styleTagsArray = Array.from(styleSheet);
-    styleTagsArray.forEach(style => {
-        if (style.id !== 'boots' && style.id !== 'main-page') {
-            style.parentNode.removeChild(style);
-        }
-    });
 
-    const script = document.head.getElementsByTagName('script');
-    const scriptTagsArray = Array.from(script);
-    scriptTagsArray.forEach(scriptTag => {
-        if (scriptTag.id !== 'boots' && scriptTag.id !== 'routes' && scriptTag.id !== 'fetch' && scriptTag.id !== 'main') {
+  
+  async function clearMemory() {
+      return new Promise(resolve => {
+        const script = document.head.getElementsByTagName('script');
+        const scriptTagsArray = Array.from(script);
+        scriptTagsArray.forEach(scriptTag => {
+          if (scriptTag.id !== 'boots' && scriptTag.id !== 'routes' && scriptTag.id !== 'fetch' && scriptTag.id !== 'main') {
             scriptTag.parentNode.removeChild(scriptTag);
+          }
+        });
+    
+        const styleSheet = document.head.getElementsByTagName('link');
+        const styleTagsArray = Array.from(styleSheet);
+        styleTagsArray.forEach(style => {
+          if (style.id !== 'boots' && style.id !== 'main-page') {
+            style.parentNode.removeChild(style);
+          }
+        });
+    
+        resolve(); 
+      });
+    }
+    
+  
+
+  function goBack() {
+    if (historyStack.length > 1) {
+        historyStack.pop(); 
+        const prevState = historyStack.pop(); 
+        const case_name = prevState.case_name;
+        route(`../component/${case_name}Component.js`, `../css/${case_name}Component.css`, case_name);
+        if(case_name && typeof case_name === 'string' && case_name.startsWith('TP_')){
+            updateFooterBtnState('trade');
+        }else{
+            updateFooterBtnState(case_name);
         }
-    });
+        
+    }
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-  route('../component/homeComponent.js','../css/homeComponent.css','home');
-  closeSupportTeam()
-  closeSendMessage()
-  closeVideoChat()
-//   sendMessage()
-//   videoChat()
-    
+    window.addEventListener('popstate', function (event) {
+        if (event.state) {
+            goBack();
+        }
+    });
 });
 
 function isVerifiedCacse(case_name){
     switch (case_name) {
-        case 'market':
+        case 'marketStatus':
             executeMarket();
             break;
         case 'news':
@@ -130,6 +182,39 @@ function isVerifiedCacse(case_name){
             break;
         case 'moneyWithdrawal':
             executeMoneyWithdrawal();
+            break;
+        case 'internalFundTrans':
+            executeInternalFundTransfer();
+            break;
+        case 'rewardPoints':
+            executeRewardPoints();
+            break;
+        case 'refer01':
+            executeRefer01();
+            break;
+        case 'specalOffer':
+            executeOffer();
+            break;
+        case 'souvenirStore':
+            executeSouvenirStore();
+            break;
+        case 'trade':
+            executeTrade();
+            break;
+        case 'TP_companyInfo':
+            executeTP_CompanyInfo();
+            break;
+        case 'TP_news':
+            executeTP_News();
+            break;
+        case 'TP_todayTrade':
+            executeTP_todayTrade();
+            break;
+        case 'TP_lastTrade':
+            executeTP_lastTrade();
+            break;
+        case 'TP_marketMover':
+            executeTP_marketMover();
             break;
 
     }

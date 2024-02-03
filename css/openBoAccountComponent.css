@@ -21,23 +21,23 @@
     text-align: center;
     padding-bottom: 10px;
 }
-table{
+.BO-content > table{
     width: 100%;
     border-collapse: separate;
     border-spacing: 0 10px;
 }
-table > tbody > tr > td{
+.BO-content > table > tbody > tr > td{
     font-weight: 700;
     font-size: 15px;
     padding: 10px 0px;
     border: 1px solid #000;
     color: #000 !important;
 }
-table > tbody > tr > td:first-child{
+.BO-content > table > tbody > tr > td:first-child{
     -webkit-padding-start: 10px;
     border-radius: 15px 0px 0px 15px;
 }
-table > tbody > tr > td:last-child{
+.BO-content > table > tbody > tr > td:last-child{
     padding-right: 10px;
     border-radius: 0px 15px 15px 0px;
 }

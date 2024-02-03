@@ -42,7 +42,7 @@ body, html {
 }
 h1{
     margin: 0;
-    padding-left: 60px;
+    /* padding-left: 60px; */
 }
 .homeButton > img{
     width: 45px;

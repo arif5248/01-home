@@ -222,6 +222,15 @@ function isVerifiedCacse(case_name){
         case 'changePass':
             executeChangePass();
             break;
+        case 'TP_stockStatus':
+            executeTP_StockStatus();
+            break;
+        case 'TP_rateHistory':
+            executeTP_rateHistory();
+            break;
+        case 'TP_halted':
+            executeTP_halted();
+            break;
 
 
     }

@@ -51,6 +51,7 @@ function changePass(){
     document.getElementById('overlay').style.display = 'none';
     document.body.style.overflow = 'scroll';
     route("../component/changePassComponent.js","../css/changePassComponent.css", 'changePass')
+    
 }
 
 

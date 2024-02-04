@@ -31,7 +31,10 @@
 }
 
 /*==============table==============*/
-
+.todaysTradeBody{
+    background-color: #fff;
+    padding: 0px 10px;
+}
 .todaysTradeBody > table{
     width: 100%;
     border-collapse: separate;

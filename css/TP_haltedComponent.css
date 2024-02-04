@@ -1,0 +1,25 @@
+.haltedSection{
+    margin-top: 10px;
+}
+.haltedSection > .container > .box >.btnGroup{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0px;
+    margin: 10px 0px;
+    background-color: #868686;
+    border-radius: 10px;
+}
+.haltedSection > .container > .box > .btnGroup > .Btn{
+    padding: 10px 10px;
+    border: 1px solid #0000005b;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    width: 40%;
+}
+.haltedSection > .container > .box > .btnGroup > .active{
+    background-color: #5C5C5C;
+    color: #fff;
+}

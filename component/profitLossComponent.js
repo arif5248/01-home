@@ -376,9 +376,6 @@ function executeProfitLoss(){
             <br>
             <br>
             <br>
-            <br>
-            <br>
-            <br>
         `
     }
 

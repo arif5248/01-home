@@ -310,9 +310,7 @@ function executeStockLedger(){
             <br>
             <br>
             <br>
-            <br>
-            <br>
-            <br>
+           
         `
     }
 

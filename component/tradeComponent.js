@@ -258,9 +258,13 @@ function executeTrade(){
                         <div onclick="updateFooterBtnState('trade');route('../component/TP_marketMoverComponent.js','../css/TP_marketMoverComponent.css','TP_marketMover')" class="singleBtn">MKT MOVER</div>
                         
                         <div class="singleBtn">DIVIDEND</div>
-                        <div class="singleBtn">STK STATUS</div>
-                        <div class="singleBtn">RATE HISTORY</div>
-                        <div class="singleBtn">HALTED COMP</div>
+                        
+                        <div onclick="updateFooterBtnState('trade');route('../component/TP_stockStatusComponent.js','../css/TP_stockStatusComponent.css','TP_stockStatus')" class="singleBtn">STK STATUS</div>
+
+                        <div onclick="updateFooterBtnState('trade');route('../component/TP_rateHistoryComponent.js','../css/TP_rateHistoryComponent.css','TP_rateHistory')" class="singleBtn">RATE HISTORY</div>
+                        
+                        <div onclick="updateFooterBtnState('trade');route('../component/TP_haltedComponent.js','../css/TP_haltedComponent.css','TP_halted')" class="singleBtn">HALTED COMP</div>
+
                         <div class="singleBtn">FAVOURITES</div>
                     </div>
                 </div>

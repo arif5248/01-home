@@ -3,9 +3,258 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <link rel="stylesheet" href="./vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <script id="fetch" src="./apiFeatching/fetchData.js"></script>
+    <script defer src="./JS/index.js"></script>
+    <script src="./vendor/bootstrap/js/bootstrap.min.js"></script>
+    <title>01</title>
+    
 </head>
 <body>
-    <a href="./mainPage/home.html">Hey Broh.... Click Me</a>
+    <div class="overlay"></div>
+    <section class="homeContent">
+        <div id="forgotPasswordModal" class=" forgotPasswordModal">
+            <div class=" recoverPassword">
+                <h3 class="recoverPassHeading">RECOVER PASSWORD</h3>
+                <input type="text" placeholder="Enter your 01 ID/phone number" class="inputStyle input-color input-recoverPass container" id="01_id" name="01_id">
+                <div class="recoverPassBtn container">
+                    <div class="close btn btndsgn" onclick="closeForgotPasswordModal()">CANCEL</div>
+                    <button class="ok btn btndsgn">OK</button>
+                </div>
+            </div>
+        </div>
+        <div id="support-slide" class="support-slide">
+            <div class="support-content">
+                <div class="container supportHeading">
+                    <span></span>
+                    <h3 class="heading">Support Team</h3>
+                    <img onclick="closeSupportTeam()" src="./images/icons/remove.png" alt="Close">
+                </div>
+                <div class="container supportCall">
+                    <a href="tel:+8809678781212"><img src="./images/icons/call.jpg" alt="Call" class="supportIcon"> Call +88 096 7878 1212</a>
+                </div>
+                <div class="container supportCall">
+                    <a href="tel:+8801810031200"><img src="./images/icons/call.jpg" alt="Call" class="supportIcon"> Call +88 018 1003 1200</a>
+                </div>
+                <div class="container supportIconGroup">
+                    <a href="#"><img src="./images/icons/messenger.png" alt="Messenger" class="supportIcon"></a>
+                    <a href="#"><img src="./images/icons/whatsapp.png" alt="WhatsApp" class="supportIcon"></a>
+                    <a href="#"><img src="./images/icons/viber.png" alt="Viber" class="supportIcon"></a>
+                    <a href="#"><img src="./images/icons/telegram.png" alt="Telegram" class="supportIcon"></a>
+                </div>
+                <div class="container supportCall">
+                    <a href="mailto:support@01.limited"><img src="./images/icons/email.png" alt="Call" class="supportIcon"> Email: support@01.limited</a>
+                </div>
+                <div class="container supportIconGroup">
+                    <div class="innerIconGroup" onclick="showSendMessage()">
+                        <a href="#" class="innerElement"><img src="./images/icons/comments.png" alt="Message" class="supportIcon"><span>Message</span></a>
+                    </div>
+                    <div class="innerIconGroup" onclick="showVideoChat()">
+                        <a href="#" class="innerElement"><img src="./images/icons/video-call.png" alt="Video Chat" class="supportIcon"><span>Video Chat</span></a>
+                    </div>
+                    <div class="innerIconGroup">
+                        <a href="#" class="innerElement"><img src="./images/icons/live-chat.png" alt="Live Chat" class="supportIcon"><span>Live Chat</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sendMessageSection" id="sendMessageSection"></div>
+        <div class="videoChatSection" id="videoChatSection"></div>
+        <!-- ==============Navbar============== -->
+        <div class="topSection" id="beforeTopSection">
+            <nav class="navbar navbar-light bg-light fixed-top">
+                <div class="container-fluid">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"     data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    
+                    <div class="btn-login-get01">
+                        <button class="btn btn-login" onclick="navigateToPage('index.html')">Login</button>
+                        <button onclick="showGetNew01Id()" class="btn btn-01">Get New 01 ID</button>
+                    </div>
+                
+                    <div class="offcanvas offcanvas-start" tabindex="1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                        <div class="offcanvas-header">
+                            <img class="offcanvas-title" id="offcanvasNavbarLabel" src="./images/01.gif" alt="01 ltd">
+    
+                            <div class="appInfo" >
+                                 <div>
+                                    <span style="font-weight: bold;"> 01 APP </span>  <br> V 1.0.3 <br> 01 Limited
+                                 </div>
+                                 <div class="about01">
+                                    <h5><a href="./component/about01.html">About 01</a></h5>
+                                 </div>
+                            </div>
+                            
+                        </div>
+                        <div class="offcanvas-body">
+                            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="index.html">Login</a>
+                                    <hr>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="./component/marketStatus.html">Market Staus</a>
+                                    <hr>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="./component/sharePrice.html">Share Price</a>
+                                    <hr>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="./component/news.html">News</a>
+                                    <hr>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="./component/ipoStatus.html">IPO Status</a>
+                                    <hr>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="./component/why01.html">Why 01</a>
+                                    <hr>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="./component/ourService.html">Our Service</a>
+                                    <hr>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="./component/payUs.html">How to Pay Us</a>
+                                    <hr>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="./component/get01Technology.html">Get 01 Technology</a>
+                                    <hr>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="#">Promotions</a>
+                                    <hr>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="./component/notification.html">Notifications</a>
+                                    <hr>
+                                </li>
+                            </ul>
+
+                            <div class="socialIcon">
+                                <div class="icon">
+                                    <a href="#">
+                                        <img src="./images/icons/facebook.png" alt="facebook">
+                                    </a>
+                                </div>
+                                <div class="icon">
+                                    <a href="#">
+                                        <img src="./images/icons/instagram.png" alt="instagram">
+                                    </a>
+                                </div>
+                                <div class="icon">
+                                    <a href="#">
+                                        <img src="./images/icons/youtube.png" alt="youtube">
+                                    </a>
+                                </div>
+                                <div class="icon">
+                                    <a href="#">
+                                        <img src="./images/icons/linkedin.png" alt="linkedIn">
+                                    </a>
+                                </div>
+                                <div class="icon">
+                                    <a href="#">
+                                        <img src="./images/icons/twitter.png" alt="twitter">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </nav>  
+        </div> 
+        <!-- ==============Navbar============== -->
+
+        <div class="homeMainSection">
+            <div class="logInSection">
+                <div id="logInDetails" class="logInDetails">
+                    <form>
+                        <div>
+                            <input type="text" placeholder="User ID" class="input-color inputStyle " id="user_id" name="user_id">
+                        </div>
+                        <div class="password-container">
+                            <input id="loginPass" type="password" placeholder="Password" id="password" name="password" class="input-color inputStyle password-input">
+                            <div class="logInPassIcon">
+                                <img onclick="showPassword()" style="width: 30px;" id="showPass" src="./images/icons/eye-white.png" alt="show password">
+                                <img onclick="hidePassword()" style="width: 30px;" id="hidePass" src="./images/icons/view-white.png" alt="hide password">
+                            </div>
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="input-color form-check-input checkboxStyle" id="saveMe">
+                            <label class="form-check-label" for="saveMe">Save Me</label>
+                        </div>
+                        <div class="logInBtnRow">
+                            <div href="#" class="forgotPass" onclick="showForgotPassword()">Forgot ID/Password</div>
+                            <a href="./mainPage/home.html">
+                                <input type="submit" value="Login" class="btn login-btn">
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+
+            <div class="getNew01Section">
+                <div id="get-new-01-ID" class="get-new-01-ID">
+                    <form>
+                        <div>
+                            <input type="text" placeholder="NAME (As in NID/PASSWORD)" class="inputStyle input-color" id="new_user_nid" name="user_nid">
+                            <p class=" instructionLine">B/O account must be open in this name</p>
+                        </div>
+                        <div class="country-city-mobile-container">
+                            <div class="country-city" id="country-city">
+                                <select name="" id="country">
+                                    <option value="">-- Select Country --</option>
+                                </select>
+                                <select name="" id="city">
+                                    <option value="">-- Select City --</option>
+                                </select>
+                            </div>
+                            <div class="mobile" id="mobileContainer">
+                                <span id="countryCode" class="countryCode">+880</span>
+                                <input type="tel" class="input-color inputStyle" placeholder="Mobile Number">
+                            </div>
+                            <p class="instructionLine">Login Password will be sent to this number</p>
+                        </div>
+                        <div>
+                            <input type="text" placeholder="Email" class="input-color inputStyle " id="new_user_email" name="email">
+                            <p class="instructionLine">All documents shall be sent to this Email</p>
+                        </div>
+                        <select name="" class="css-for-select" id="occupation">
+                            <option value="">-- Select Occupation --</option>
+                        </select>
+                        <input type="text" placeholder="Enter 01 Reference ID (if any)" class="input-color inputStyle " id="user_email" name="email">
+                        <select class="css-for-select" name="" id="howFindUs">
+                            <option value="">-- How Do you Find Us --</option>
+                        </select>
+        
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input checkboxStyle" id="confirm">
+                            <label class="form-check-label" for="confirm">I Confirm,Above information are  correct.</label>
+                        </div>
+                        <div class="logInBtnRow">
+                            
+                            <input type="submit" value="CREATE MY ID"  class="input-color btn login-btn">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="support">
+            <div onclick="showSupportTeam()" id="supportTeam" class="btn supportTeam">Support Team</div>
+        </div>
+    </section>
+    
 </body>
+
+
 </html>

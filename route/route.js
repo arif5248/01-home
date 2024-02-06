@@ -7,8 +7,6 @@ document.addEventListener('DOMContentLoaded', function () {
     closeVideoChat();
     document.getElementById('overlay').style.display = 'none';
     document.getElementById('settings').style.display = 'none';
-
-  
   });
   
   let currentSection = null;

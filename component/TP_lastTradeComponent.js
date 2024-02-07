@@ -191,7 +191,7 @@ function executeTP_lastTrade(){
 
 
     function renderTodayTrades(){
-        var tableBody = document.getElementById('lastTradeBody')
+        const tableBody = document.getElementById('lastTradeBody')
         tableBody.innerHTML =
          `
             <table>

@@ -227,9 +227,9 @@ option{
     color: white;
 } */
 
-/* hr{
+hr{
     margin: 0px;
-} */
+}
 /* body, html {
     margin: 0;
     padding: 0;
@@ -494,7 +494,10 @@ padding-bottom: 5px;
     font-size: 20px;
 }
 
-
+.socialIcon > .icon > a > img{
+    width: 30px;
+    height: auto;
+}
 /*-----------------Bootstrap class-------------------*/
 .bg-light{
     background-color: transparent !important;

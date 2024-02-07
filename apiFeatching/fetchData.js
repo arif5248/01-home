@@ -13,7 +13,6 @@ function fetchData(api_name, callback){
         if(api_name === api_item.api_name){
             await fetch(api_item.url)
                 .then(response => {
-                    console.log(response)
                     if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }

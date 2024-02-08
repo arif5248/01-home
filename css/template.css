@@ -1,0 +1,546 @@
+/*====================BeforeHeading=================*/
+.beforHeading{
+    height: 60px;
+    width: 100%;
+    background-color: #fff;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+}
+/*=====***********====before main====***********=====*/
+.beforeMian{
+    margin-top: 60px;
+}
+
+
+  /*====================Start Market Status=================*/
+  .cseSection,
+  .dseSection,
+  .button_search_section,
+  .companyDataSection{
+      background-color: #fff !important;
+  }
+  .cse_logo > img {
+    width: 100px;
+  }
+   .customTable{
+    border: 1px solid black !important;
+    border-spacing: 0px 0px;
+  }
+  .customTable > tbody > tr > th{
+    text-align: center;
+    color: #000 !important;
+  }
+  .customTable > tbody > tr > td{
+    color: #000 !important;
+    text-align: center !important;
+  }
+  .verticaclAlign{
+    vertical-align: middle !important;
+  }
+  .dataBox{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .allButton{
+    display: flex;
+    justify-content: space-around;
+}
+.allBtn{
+    border: 1px solid black;
+    border-radius: 10px;
+}
+.MS_searchRow{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.MS_searchBox{
+    position: relative;
+    padding: 10px 0px;
+}
+.MS_searchBox > input{
+    padding-left: 35px;
+    border-radius: 10px;
+    background-color: #EEEEEE;
+}
+.MS_searchIcon{
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+}
+.SP_table,
+.MS_table{
+    overflow-y: auto;
+    height: 400px;
+}
+.SP_table  > table,
+.MS_table > table{
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    overflow-y: auto;
+    height: 200px;
+}
+.SP_table > table > tbody > tr:first-child,
+.MS_table > table > tbody > tr:first-child{
+    position: sticky;
+    top: 0;
+    background-color: black;
+}
+.SP_table > table > tbody > tr:first-child > th,
+.MS_table > table > tbody > tr:first-child > th{
+    
+    color: #fff;
+    font-size: 20px;
+    padding: 5px 1px;
+    text-align: center;
+}
+.SP_table > table > tbody > tr:first-child > th:first-child,
+.MS_table > table > tbody > tr:first-child > th:first-child{
+    -webkit-padding-start: 10px;
+}
+.SP_table > table > tbody > tr:first-child > th:last-child
+.MS_table > table > tbody > tr:first-child > th:last-child{
+    -webkit-padding-end: 10px;
+}
+.SP_table > table > tbody > tr > td,
+.MS_table > table > tbody > tr > td{
+    font-weight: 700;
+    font-size: 15px;
+    padding: 10px 0px;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    color: #000 !important;
+    text-align: center;
+}
+.SP_table > table > tbody > tr > td:first-child,
+.MS_table > table > tbody > tr > td:first-child{
+    -webkit-padding-start: 10px;
+    border-left: 1px solid #000;
+    border-radius: 15px 0px 0px 15px;
+}
+.SP_table > table > tbody > tr > td:last-child,
+.MS_table > table > tbody > tr > td:last-child{
+    -webkit-padding-end: 10px;
+    border-right: 1px solid #000;
+    border-radius: 0px 15px 15px 0px;
+}
+  /*====================End Market Status=================*/
+  /*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
+  /*====================Start Share Price =================*/
+.SP_searchRow{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.SP_searchBox{
+    position: relative;
+    padding: 10px 0px;
+}
+.SP_searchBox > input{
+    padding-left: 35px;
+    border-radius: 10px;
+    background-color: #EEEEEE;
+}
+.SP_searchIcon{
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+}
+.SP_table{
+    height: 85vh !important;
+}
+  /*====================End Share Price=================*/
+  /*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
+  /*====================Start News =================*/
+  .N_button_search_section{
+    background-color:#cdc9c9 ;
+  }
+  .N_searchRow{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.N_searchBox{
+    position: relative;
+    padding: 10px 0px;
+}
+.N_searchBox > input{
+    padding-left: 35px;
+    border-radius: 10px;
+    background-color: #EEEEEE;
+}
+.N_searchIcon{
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+}
+
+.newsSection{
+    position: relative;
+    height: 800px;
+}
+.newsContainer{
+    position: relative;
+    height: 100%;
+}
+.btnwrapper{
+    overflow-y: auto; 
+    height: 350px; 
+    height: 100%;
+}
+/*-----------------Button-------------------*/
+.newsBtnGroup{
+    position: sticky;
+    top: 0;
+    display: flex;
+    background-color: #dee2e6;
+    padding: 7px 0px;
+    align-items: center;
+    align-content: center;
+    flex-wrap: wrap;
+    border-radius: 5px;
+    justify-content: space-evenly;
+}
+.active{
+    background-color: white;
+}
+.btn:focus{
+    box-shadow: none;
+}
+/*----------------- media news-------------------*/
+.news-item{
+    border: solid 1px black;
+    display: flex;
+    margin: 10px 0px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.273);
+}
+.exchange-news-item{
+    border: solid 1px black;
+    margin: 10px 0px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.273);
+}
+.exchangeHeading{
+    background-color: #0d6efd;
+    padding: 5px;
+    text-align: center;
+}
+.exchangeHeading > h4{
+    font-weight: 400;
+    font-size: 22px;
+    color: white;
+}
+.newsImage{
+    display: flex;
+    width: 35%;
+    height: auto !important;
+    border-right: 1px solid black;
+    align-items: center;
+}
+.newsContent{
+    display: flex;
+    width: 65%;
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 10px;
+
+}
+.newsImage > img{
+    width: 100%;
+    padding: 10px;
+}
+.date-source{
+    width: 90%;
+    border-bottom: 1px solid black;
+    text-align: right;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+.headline > h4{
+    text-align: right;
+    font-size: 14px;
+    font-weight: 600;
+}
+.btn-details{
+    padding: 1px 5px;
+}
+
+.exchangeContent{
+    padding: 5px;
+}
+.exchangeContent > p{
+    text-align: justify;
+}
+/*====================End News=================*/
+/*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
+/*====================Start IPO =================*/
+  .mainContentSection{
+    height: 100%;
+    padding-bottom: 30px;
+}
+.heading{
+    text-align: center;
+    padding: 10px 0px;
+    background-color: rgb(3, 3, 51);
+    color: #fff;
+}
+/*=================ipo Button================*/
+.btnGroup{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0px;
+    margin: 10px 0px;
+    background-color: #dbd8d8;
+}
+.btnGroup > .Btn{
+    padding: 10px 10px;
+    border: 1px solid #0000005b;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+}
+.btnGroup > .active{
+    background-color: rgb(3, 3, 51);
+    color: #fff;
+}
+/*=================ipo body================*/
+.ipo_item{
+    border: 1px  solid #000;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0px 0px 5px 0px #000;
+    margin-bottom: 15px;
+}
+.contentHeader{
+    text-align: center;
+    border-bottom: 2px solid #000;
+}
+.ipoHeading{
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.ipoHeading>h3{
+    margin: 0;
+    padding: 10px 0px;
+}
+.static-heading{
+    display: flex;
+    height: 100% !important;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    text-align: center;
+    width: 15%;
+    background-color: #A4B799;
+
+}
+.headingForIPO{
+    font-size: 22px;
+    text-align: left;
+    width: 85%;
+    background-color: #000;
+    color: #fff;
+    padding-left: 5px !important;
+}
+.subscriptionDate >h5{
+    padding: 10px 0px;
+    margin: 0;
+}
+.ipo_item > .contentBody > table{
+    width: 100%;
+}
+.ipo_item > .contentBody > table > tbody > tr > td:first-child{
+    text-align: left;
+    width: 50%;
+}
+.ipo_item > .contentBody > table > tbody > tr> td:last-child{
+    text-align: right;
+    width: 50%;
+}
+.ipo_item > .contentBody > table > tbody > tr> td > .btn{
+    background-color: #A4B799;
+    margin: 5px;
+    color: white;
+}
+
+/*====================End IPO=================*/
+/*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
+/*====================Start Why 01=================*/
+.why-01-section{
+    padding-top: 1px;
+}
+.why01_item{
+    padding: 10px;
+    border: solid 1px black;
+    margin: 10px 0px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.273);
+}
+.why01_item > a{
+    text-decoration: none;
+    color: black;
+}
+.why01_item > a > h4{
+    font-size: 12px;
+    font-weight: 400;
+    margin: 0;
+}
+/*====================End Why 01=================*/
+/*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
+/*====================Start Our Service=================*/
+.our-service-section{
+    padding-top: 1px;
+}
+.ourService_item{
+    padding: 10px;
+    border: solid 1px black;
+    margin: 10px 0px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.273);
+}
+.ourService_item > a{
+    text-decoration: none;
+    color: black;
+}
+.ourService_item > a > h4{
+    font-size: 12px;
+    font-weight: 400;
+    margin: 0;
+}
+/*====================End Our Service=================*/
+/*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
+/*====================Start Get 01-Tech=================*/
+.get-01-section{
+    padding-top: 1px;
+}
+.get01_item{
+    padding: 10px;
+    border: solid 1px black;
+    margin: 10px 0px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.273);
+}
+.get01_item > a{
+    text-decoration: none;
+    color: black;
+}
+.get01_item > a > h4{
+    font-size: 12px;
+    font-weight: 400;
+    margin: 0;
+}
+/*====================End Get 01-Tech=================*/
+/*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
+/*====================Start Noti=================*/
+
+
+
+.noti-section{
+    padding-top: 1px;
+}
+.notification{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+.noti_item{
+    padding: 10px;
+    border: solid 1px black;
+    margin: 10px 0px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.273);
+}
+hr{
+    width: 80%;
+    border: 1px solid black;
+    color: black;
+    margin-top: 0px;
+}
+/*====================End Noti=================*/
+/*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
+/*====================Start Pay us=================*/
+
+.payUsMobile,
+.payUsCard,
+.payUsBank{
+    height: 200px;
+    border: solid 1px black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: 10px 10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.273);
+}
+.payUsHeading > hr {
+    width: 100%;
+}
+.payUsHeading > h4{
+    padding-left: 5px;
+}
+.payUs{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-left: 10px;
+}
+.payUsType{
+    margin-right: 5px;
+    padding: 10px;
+    border: 1px solid black;
+    background-color: #E7FFFF;
+    width: 90px;
+    height: 90px;
+}
+.payUsType > img{
+    width: 70px;
+    height: auto;
+}
+/*-----------------Bootstrap class-------------------*/
+.fixed-top{
+    z-index: 8 !important;
+}
+.bg-light{
+    background-color: transparent !important;
+}
+.navbar-toggler{
+    background-color: #A4B799 !important;
+}
+
+.navbar-light .navbar-toggler-icon,
+.customNav {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e")
+}
+.offcanvas-title {
+    width: 20%;
+}
+.offcanvas-start {
+    width: 80%; 
+}
+
+.offcanvas-start.show {
+    transform: translateX(0);
+    width: 80%; 
+}
+hr{
+    margin: 0;
+}
+.nav-socialIcon{
+    display: flex;
+}
+.nav-socialIcon > .icon{
+    margin: 10px 5px;
+}

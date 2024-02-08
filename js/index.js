@@ -12,6 +12,9 @@ const countryCityCodeinfo = [
 ];
 
 
+    
+
+
 function hidePassword(){
     document.getElementById('showPass').style.display = 'block'
     document.getElementById('hidePass').style.display = 'none'
@@ -94,8 +97,8 @@ function navigateToPage(pageUrl) {
 }
 function selectCountryCityCode() {
     const selectCountry = document.getElementById('country'),
-        selectCity = document.getElementById('city'),
-        selectCountryCode = document.getElementById('countryCode');
+    selectCity = document.getElementById('city'),
+    selectCountryCode = document.getElementById('countryCode');
 
     selectCity.disabled = true;
     selectCountryCode.disabled = true;
@@ -141,6 +144,9 @@ function showVideoChat(){
 function closeVideoChat(){
     document.getElementById('videoChatSection').style.display = 'none'
 }
+function testFunc(){
+    console.log('hiiiiiiiiiiii')
+}
 
 
 window.onload = function() {
@@ -153,5 +159,6 @@ window.onload = function() {
     videoChat();
     sendMessage();
     hidePassword();
+    
     
 };

@@ -317,7 +317,10 @@ body {
     z-index: 10;
 }
 .input-recoverPass{
+    color: #000;
+    height: 50px;
     border-bottom: 1px solid black;
+    margin: 10px 0px;
 }
 .input-recoverPass::placeholder{
     color: #00000083;

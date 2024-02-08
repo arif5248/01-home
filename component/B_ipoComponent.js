@@ -1,4 +1,4 @@
-function executeB_SharePrice(){
+function executeB_Ipo(){
     const upComingIPO=[
         {
             ipo_heading: "NRB BANK LIMITED (NRBBANK)",
@@ -79,11 +79,11 @@ function executeB_SharePrice(){
         
     ]
     function B_sharePrice(){
-        document.getElementById('page_heading').innerHTML=`Upcomig/Runnung IPO`
+        document.getElementById('page_heading').innerHTML=`Running IPO`
         document.getElementById('beforeMain').innerHTML = `
             <div class="btnGroup" id="btnGroup">
-                <div onclick="show('runningIpoContent')" class="Btn" id="history">Running</div>
-                <div onclick="show('upcomingIpoContent')" class="Btn active" id="upcomimg">Upcomimg</div>
+                <div onclick="show('runningIpoContent')" class="Btn active" id="history">Running</div>
+                <div onclick="show('upcomingIpoContent')" class="Btn" id="upcomimg">Upcomimg</div>
             </div>
             <div class="container">
                 <div class="ipoContent" id="upcomingIpoContent"></div>
@@ -183,7 +183,7 @@ function executeB_SharePrice(){
         }) 
     }
     function renderRunningIpoContent(){
-        const ipoContentBody = document.getElementById('historyIpoContent')
+        const ipoContentBody = document.getElementById('runningIpoContent')
         historyIPO.forEach((ipo,index) => {
             const newDiv = document.createElement('div')
             newDiv.classList.add('ipo_item')
@@ -272,4 +272,38 @@ function executeB_SharePrice(){
     B_sharePrice()
     renderUpcomingIpoContent()
     renderRunningIpoContent()
+    document.getElementById('upcomingIpoContent').style.display = 'none'
+    document.getElementById('runningIpoContent').style.display = 'block'
+}
+function show(content){
+    document.getElementById('upcomingIpoContent').style.display = 'none'
+    document.getElementById('runningIpoContent').style.display = 'none'
+
+    document.getElementById(content).style.display = 'block'
+
+    switch(content){
+        case 'upcomingIpoContent' :
+        document.getElementById('page_heading').innerHTML=`Upcomin IPO`
+        break;
+
+        case 'runningIpoContent' :
+        const heading_2 = document.getElementById('page_heading');
+        document.getElementById('page_heading').innerHTML=`Running IPO`
+
+        break;
+    }
+
+
+    updateButtonState(content)
+}
+function updateButtonState(activeButton) {
+    let buttons = document.querySelectorAll('.btnGroup .Btn');
+    buttons.forEach(function (button) {
+        button.classList.remove('active');
+    });
+
+    let activeButtonElement = document.querySelector('.btnGroup .Btn[onclick*="' + activeButton + '"]');
+    if (activeButtonElement) {
+        activeButtonElement.classList.add('active');
+    }
 }

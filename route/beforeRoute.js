@@ -91,6 +91,30 @@ async function isVerifiedCacse(case_name){
             await beforeRoute(`../component/${case_name}Component.js`)
             executeB_News();
             break;
+        case 'B_ipo':
+            await beforeRoute(`../component/${case_name}Component.js`)
+            executeB_Ipo();
+            break;
+        case 'B_why01':
+            await beforeRoute(`../component/${case_name}Component.js`)
+            executeB_Why01();
+            break;
+        case 'B_ourService':
+            await beforeRoute(`../component/${case_name}Component.js`)
+            executeB_OurService();
+            break;
+        case 'B_get01':
+            await beforeRoute(`../component/${case_name}Component.js`)
+            executeB_Get01Technology();
+            break;
+        case 'B_noti':
+            await beforeRoute(`../component/${case_name}Component.js`)
+            executeB_Notification();
+            break;
+        case 'B_payUs':
+            await beforeRoute(`../component/${case_name}Component.js`)
+            executeB_HowToPayUs();
+            break;
         
 
 

@@ -154,10 +154,7 @@ function executeB_SharePrice(){
                     <div class="SP_table" id="SP_table"></div>
                 </div>
             </div>
-    <br>
-    <br>
-    <br>
-    <br>
+    
     `
     }
 
@@ -173,6 +170,10 @@ function executeB_SharePrice(){
                     <th>+/-</th>
                 </tr>
             </table>
+            <br>
+            <br>
+            <br>
+            <br>
         `;
         SP_tableData.forEach(data => {
             const newRow = document.createElement('tr');

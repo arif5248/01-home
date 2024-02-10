@@ -1,203 +1,79 @@
 function executeHome(){
-    const profile = {
-        id: 101,
-        name: "Mohammad Jahangir",
-        mobile: "01730339167",
-        email: "mohammad.jahangir@berichbd.com",
-        image_url: "../images/user_photo.jpeg"
+    let user = null;
+    let dashBoardData = null;
+    let loginDashData = null
+    let getCurrentStocks = []
+    const storedData = localStorage.getItem('loginData');
+    const storedDashBoardData = localStorage.getItem('dashBoard');
+    if (storedData) {
+        const loginData = JSON.parse(storedData);
+        user = loginData[0]
     }
+    if (storedDashBoardData) {
+        loginDashData = JSON.parse(storedDashBoardData);
+        dashBoardData = loginDashData.Data[0]
+        
+
+    }
+    
     const table1 = [
         {
             fieldName: "Ledger Balance",
-            value: 0
+            value: dashBoardData.Ledger
         },
         {
             fieldName: "Profile Balance",
-            value: 0
+            value: dashBoardData.profit_bal
         },
         {
             fieldName: "Total Stock Value",
-            value: 0
+            value: dashBoardData.stk_val
         },
         {
             fieldName: "Total Portfolio",
-            value: 0
+            value: parseInt(dashBoardData.Equity.replace(/,/g, ''),10) + parseInt(dashBoardData.profit_bal.replace(/,/g, ''),10)
         },
         {
             fieldName: "Change from Last Day",
-            value: 0
+            value: dashBoardData.EquityChange
         },
         {
             fieldName: "Available Fund",
-            value: 0
+            value: dashBoardData.pur_lim
         },
         {
             fieldName: "Available Reward Points",
-            value: 0
+            value: dashBoardData.reward
         },
     ]
     
     const table2 = [
         {
             fieldName: "Investment",
-            value: 0
+            value: dashBoardData.Investment
         },
         {
             fieldName: "Withdrawn",
-            value: 0
+            value: dashBoardData.Withdrawn
         },
         {
             fieldName: "Net Investment",
-            value: 0
+            value: dashBoardData.NetInvestment
         },
         {
             fieldName: "Realized Profit/(Loss)",
-            value: 0
+            value: dashBoardData.Realized
         },
         {
             fieldName: "Unrealized Profit/(Loss)",
-            value: 0
+            value: dashBoardData.UnRealized
         },
         {
             fieldName: "Net Profit/(Loss)",
-            value: 0
+            value: dashBoardData.NetProfit
         },
     ]
-    const currentStocks = [
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'efgh',
-            stock_qty: 145,
-            avg_cost: 25,
-            last_price: 233,
-            total_price: 1275
-        },
-        {
-            company_name:'ijkl',
-            stock_qty: 567,
-            avg_cost: 12,
-            last_price: 890,
-            total_price: 3582
-        },
-        {
-            company_name:'mnop',
-            stock_qty: 907,
-            avg_cost: 236,
-            last_price: 985,
-            total_price: 1268
-        },
-        {
-            company_name:'qrst',
-            stock_qty: 952,
-            avg_cost: 89,
-            last_price: 429,
-            total_price: 3903
-        },
-        {
-            company_name:'uvwx',
-            stock_qty: 469,
-            avg_cost: 45,
-            last_price: 279,
-            total_price: 4903
-        },
-        {
-            company_name:'yzab',
-            stock_qty: 468,
-            avg_cost: 12,
-            last_price: 906,
-            total_price: 4567
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        }
-    ]
+    
     const oldStocks = [
         {
             company_name:'qrst',
@@ -565,7 +441,7 @@ function executeHome(){
         document.getElementById('profile-content').innerHTML = `
         <div class="leftSide">
             <div class="userImage">
-                <img src=${profile.image_url} alt=${profile.name}>
+                <img style="width:75px" src=${user.ProfileImage} alt=${user.LoggedInInvestorName}'s Image>
             </div>
             <div class="profileBtn">
                 <a href="#">PROFILE</a>
@@ -573,12 +449,12 @@ function executeHome(){
         </div>
         <div class="rightSide">
             <div class="mainInfo">
-                <h3>ID: ${profile.id}</h3>
-                <h3>${profile.name}</h3>
+                <h3>ID: ${user.LoggedInInvestorId}</h3>
+                <h3>${user.LoggedInInvestorName}</h3>
             </div>
-            <hr>
+            <hr class="hr_profile">
             <div class="contactInfo">
-                <p>${profile.mobile}</p> <p> ${profile.email}</p>
+                <p>${user.phone}</p> <p> ${user.email}</p>
             </div>
         </div>
         `
@@ -647,21 +523,22 @@ function executeHome(){
             <div id="currentStockFooter" class="currentStockFooter"></div>
         `;
     
-        currentStocks.forEach(stock => {
+        loginDashData.Stock.forEach(stock => {
+            console.log(stock)
             const newRow = document.createElement('tr');
     
             newRow.innerHTML = `
-                <td>${stock.company_name}</td>
-                <td>${stock.stock_qty}</td>
-                <td>${stock.avg_cost}</td>
-                <td>${stock.last_price}</td>
-                <td>${stock.total_price}</td>
+                <td>${stock.company}</td>
+                <td>${stock.Stock}</td>
+                <td>${stock.FIFO}</td>
+                <td>${stock.LTP}</td>
+                <td>${stock.Total_Taka}</td>
             `;
         tableBody.querySelector('table').appendChild(newRow);
         });
         const tableFooter = document.getElementById('currentStockFooter');
-        const totalCount = currentStocks.length;
-        const totalValue = currentStocks.reduce((total, stock) => total + stock.stock_qty, 0);
+        const totalCount = loginDashData.Stock.length;
+        const totalValue = loginDashData.Stock.reduce((total, stock) => total + parseInt(stock.Total_Taka.replace(/,/g, ''),10), 0);
     
         tableFooter.innerHTML = `
             <p>Count : ${totalCount}</p>
@@ -684,21 +561,21 @@ function executeHome(){
             <div id="oldStockFooter" class="oldStockFooter"></div>
         `;
     
-        oldStocks.forEach(stock => {
+        loginDashData.OldStock.forEach(stock => {
             const newRow = document.createElement('tr');
     
             newRow.innerHTML = `
-                <td>${stock.company_name}</td>
-                <td>${stock.stock_qty}</td>
-                <td>${stock.avg_cost}</td>
-                <td>${stock.last_price}</td>
-                <td>${stock.total_price}</td>
+                <td>${stock.company}</td>
+                <td>${stock.Stock}</td>
+                <td>${stock.FIFO}</td>
+                <td>${stock.LTP}</td>
+                <td>${stock.Total_Taka}</td>
             `;
         tableBody.querySelector('table').appendChild(newRow);
         });
         const tableFooter = document.getElementById('oldStockFooter');
-        const totalCount = oldStocks.length;
-        const totalValue = oldStocks.reduce((total, stock) => total + stock.stock_qty, 0);
+        const totalCount = loginDashData.OldStock.length;
+        const totalValue = loginDashData.OldStock.reduce((total, stock) => total + parseInt(stock.Total_Taka.replace(/,/g, ''),10), 0);
     
         tableFooter.innerHTML = `
             <p>Count : ${totalCount}</p>
@@ -770,26 +647,32 @@ function executeHome(){
 }
 
 async function getTable1More(){
+    let dashBoardData = null
+    const storedDashBoardData = localStorage.getItem('dashBoard');
+    if (storedDashBoardData) {
+        const loginDashData = JSON.parse(storedDashBoardData);
+        dashBoardData = loginDashData.Data[0]
+    }
     const table1More =[
         {
             fieldName: "Unposted Amount",
-            value: 0
+            value: dashBoardData.un_tk
         },
         {
             fieldName: "Due CDBL Fee",
-            value: 0
+            value: dashBoardData.cdbl_fee
         },
         {
             fieldName: "Pending Withdrawl",
-            value: 0
+            value: dashBoardData.req_with
         },
         {
             fieldName: "IPO Fund Block",
-            value: 0
+            value: dashBoardData.ipo_blk
         },
         {
             fieldName: "Purchase Limit",
-            value: 0
+            value: dashBoardData.pur_lim
         },
     ]
 

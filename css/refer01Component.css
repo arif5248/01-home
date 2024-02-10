@@ -68,9 +68,9 @@
 /*=================table================*/
 .table-content{
     overflow-y: auto;
-    height: 400px;
+    max-height: 400px;
 }
-table{
+.referredList > .box > .table-content > table{
     width: 100%;
     border-collapse: separate;
     border-spacing: 0 10px;
@@ -78,45 +78,45 @@ table{
     height: 200px;
 }
 
-table > tbody > tr:first-child{
+.referredList > .box > .table-content > table > tbody > tr:first-child{
     position: sticky;
     top: 0;
     background-color: black;
 }
-table > tbody > tr:first-child > th{
+.referredList > .box > .table-content > table > tbody > tr:first-child > th{
     
     color: #fff;
-    font-size: 20px;
+    font-size: 12px;
     padding: 5px 1px;
     text-align: center;
 }
-table > tbody > tr:first-child > th:first-child{
+.referredList > .box > .table-content > table > tbody > tr:first-child > th:first-child{
     -webkit-padding-start: 10px;
 }
-table > tbody > tr:first-child > th:last-child{
+.referredList > .box > .table-content > table > tbody > tr:first-child > th:last-child{
     -webkit-padding-end: 10px;
 }
 
-table > tbody > tr > td{
+.referredList > .box > .table-content > table > tbody > tr > td{
     font-weight: 700;
-    font-size: 15px;
+    font-size: 12px;
     padding: 10px 0px;
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
     color: #000 !important;
     text-align: center;
 }
-table > tbody > tr > td:first-child{
+.referredList > .box > .table-content > table > tbody > tr > td:first-child{
     -webkit-padding-start: 10px;
     border-left: 1px solid #000;
     border-radius: 15px 0px 0px 15px;
 }
-table > tbody > tr > td:last-child{
+.referredList > .box > .table-content > table > tbody > tr > td:last-child{
     -webkit-padding-end: 10px;
     border-right: 1px solid #000;
     border-radius: 0px 15px 15px 0px;
 }
-.referListFooter {
+.referredList > .box > .referListFooter {
     position: sticky;
     bottom: 0;
     display: flex;

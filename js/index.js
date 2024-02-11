@@ -1,30 +1,51 @@
-// import { investorLogin } from './apiFeatching/fetchData.js';
-
 document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.querySelector('#logInDetails form');
+    const saveMeCheckbox = document.getElementById('saveMe');
+    const userIDInput = document.getElementById('user_id');
+    const passwordInput = document.getElementById('loginPass');
+
+    const savedUserID = localStorage.getItem('savedUserID');
+    const savedPassword = localStorage.getItem('savedPassword');
+
+    if (savedUserID && savedPassword) {
+        userIDInput.value = savedUserID;
+        passwordInput.value = savedPassword;
+        saveMeCheckbox.checked = true;
+    }
+
+    saveMeCheckbox.addEventListener('change', function() {
+        if (this.checked) {
+            localStorage.setItem('savedUserID', userIDInput.value);
+            localStorage.setItem('savedPassword', passwordInput.value);
+        } else {
+            localStorage.removeItem('savedUserID');
+            localStorage.removeItem('savedPassword');
+        }
+    });
+
     loginForm.addEventListener('submit', async (event) => {
         event.preventDefault();
         
-        const userId = document.querySelector('#user_id').value;
-        const password = document.querySelector('#loginPass').value;
+        const userId = userIDInput.value;
+        const password = passwordInput.value;
         
         try {
             const loginResponse = await investorLogin(userId, password);
             if (loginResponse[0].LoggedInStatus === 'Success'){
                 localStorage.setItem('loginData', JSON.stringify(loginResponse));
                 const userDashBoard = await getDashBoardData(loginResponse[0].LoggedInInvestorId)
-                if(userDashBoard){
+                
+                if(userDashBoard && userDashBoard !== undefined){
                     localStorage.setItem('dashBoard', JSON.stringify(userDashBoard));
+                    window.location.href = '../mainPage/home.html';
                 }
-                window.location.href = '../mainPage/home.html';
-            }else{
+                
+            } else {
                 document.getElementById('failed_login').style.display = 'block'
                 setTimeout(() => {
                     document.getElementById('failed_login').style.display = 'none'
                 }, 3000);
             }
-            
-            
         } catch (error) {
             console.error('Login failed:', error);
         }
@@ -172,12 +193,16 @@ function showVideoChat(){
 function closeVideoChat(){
     document.getElementById('videoChatSection').style.display = 'none'
 }
-function testFunc(){
-    console.log('hiiiiiiiiiiii')
+function existUser(){
+    const existUser = localStorage.getItem('loginData');
+    if(existUser){
+        window.location.href = '../mainPage/home.html';
+    }
 }
 
 
 window.onload = function() {
+    existUser()
     closeForgotPasswordModal();
     closeGetNew01Id();
     closeSendMessage();

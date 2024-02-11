@@ -2,12 +2,13 @@ function executeHome(){
     let user = null;
     let dashBoardData = null;
     let loginDashData = null
-    let getCurrentStocks = []
     const storedData = localStorage.getItem('loginData');
     const storedDashBoardData = localStorage.getItem('dashBoard');
     if (storedData) {
         const loginData = JSON.parse(storedData);
         user = loginData[0]
+    }else{
+        window.location.href = '../index.html';
     }
     if (storedDashBoardData) {
         loginDashData = JSON.parse(storedDashBoardData);
@@ -74,149 +75,6 @@ function executeHome(){
         },
     ]
     
-    const oldStocks = [
-        {
-            company_name:'qrst',
-            stock_qty: 1002,
-            avg_cost: 89,
-            last_price: 429,
-            total_price: 3903
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'uvwx',
-            stock_qty: 469,
-            avg_cost: 45,
-            last_price: 279,
-            total_price: 4903
-        },
-        {
-            company_name:'yzab',
-            stock_qty: 468,
-            avg_cost: 12,
-            last_price: 906,
-            total_price: 4567
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'efgh',
-            stock_qty: 145,
-            avg_cost: 25,
-            last_price: 233,
-            total_price: 1275
-        },
-        {
-            company_name:'ijkl',
-            stock_qty: 567,
-            avg_cost: 12,
-            last_price: 890,
-            total_price: 3582
-        },
-        {
-            company_name:'mnop',
-            stock_qty: 907,
-            avg_cost: 236,
-            last_price: 985,
-            total_price: 1268
-        },
-        
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        }
-    ]
     const executedTradesData = [
         {
             company_name:'qrst',
@@ -368,7 +226,13 @@ function executeHome(){
                 <div class="profile-content" id="profile-content"></div>
             </div>
         </div>
-    
+        <div class='home_marquee_section'>
+            <div class='container'>
+                <div class='home_marquee'>
+                    <marquee behavior="scroll" direction="left" scrollamount="5" id="marqueeContainer"></marquee>
+                </div>
+            </div>
+        </div>
         <div class="eligibleIPO" id="eligibleIPO"></div>
     
         <div class="section section-table-1">
@@ -444,7 +308,7 @@ function executeHome(){
                 <img style="width:75px" src=${user.ProfileImage} alt=${user.LoggedInInvestorName}'s Image>
             </div>
             <div class="profileBtn">
-                <a href="#">PROFILE</a>
+                <div onclick='removeFooterBtnState(); getUserDetails(${user.LoggedInInvestorId})'>PROFILE</div>
             </div>
         </div>
         <div class="rightSide">
@@ -458,6 +322,13 @@ function executeHome(){
             </div>
         </div>
         `
+    }
+    function renderMarquee(){
+        const marqueeContainer = document.getElementById('marqueeContainer');
+
+        loginDashData.marquee.forEach(function(item) {
+        marqueeContainer.innerHTML += item.marquee + `&emsp;<img style='width:25px !important; height: auto' src='../images/icons/01_icon.jpeg' alt='01'>&emsp;`;
+    });
     }
     function renderTable1(){
         var tableContent = document.getElementById('table-1Content')
@@ -524,7 +395,6 @@ function executeHome(){
         `;
     
         loginDashData.Stock.forEach(stock => {
-            console.log(stock)
             const newRow = document.createElement('tr');
     
             newRow.innerHTML = `
@@ -534,7 +404,7 @@ function executeHome(){
                 <td>${stock.LTP}</td>
                 <td>${stock.Total_Taka}</td>
             `;
-        tableBody.querySelector('table').appendChild(newRow);
+        tableBody.querySelector('tbody').appendChild(newRow);
         });
         const tableFooter = document.getElementById('currentStockFooter');
         const totalCount = loginDashData.Stock.length;
@@ -571,7 +441,7 @@ function executeHome(){
                 <td>${stock.LTP}</td>
                 <td>${stock.Total_Taka}</td>
             `;
-        tableBody.querySelector('table').appendChild(newRow);
+        tableBody.querySelector('tbody').appendChild(newRow);
         });
         const tableFooter = document.getElementById('oldStockFooter');
         const totalCount = loginDashData.OldStock.length;
@@ -635,6 +505,7 @@ function executeHome(){
     
     homeComponent()
     renderProfile()
+    renderMarquee()
     renderTable1()
     
     renderTable2()
@@ -644,8 +515,73 @@ function executeHome(){
     document.getElementById('currentStockBody').style.display = 'block';
     document.getElementById('oldStockBody').style.display = 'none';
 
-}
+   
 
+}
+async function getUserDetails(userId){
+    const userDetails = await getUserDetailsData(userId)
+    document.getElementById('mainContentSection').innerHTML=`
+    <div class="invProfileSection">
+        <div class="pageHeading" id="pageHeading">
+            <div class="heading">
+                <h1>Investor Profile</h1>
+            </div>
+        </div>
+        <div class="container">
+            <div class="inv_ProfileBox">
+                <div id='img_box_1' class="img_box">
+                    <div class="img_border_box">
+                        <div class='invImgDiv'>
+                            <img class='invPhoto' alt='Investor Photo' src=${userDetails.Photo[0].Photo}>
+                        </div>
+                        <div class='divHeading'>
+                            <p>Photo</p>
+                        </div> 
+                    </div>
+                </div>
+                <div id='img_box_2' class="img_box">
+                    <div class="img_border_box">
+                        <div class='invImgDiv'>
+                            <img class='invSign' alt='Investor Signature' src=${userDetails.Sign[0].Sign}>
+                        </div>
+                        <div class='divHeading'>
+                            <p>Signature</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='container'>
+            <div class='invDetailsBody' id='invDetailsBody'>
+                <table>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+    </div> 
+    <br>  
+    <br>  
+    <br>  
+    <br>  
+    `
+   squareDiv()
+   const invDetails = document.getElementById('invDetailsBody')
+   userDetails.Data.forEach(item => {
+        const newRow = document.createElement('tr')
+        newRow.innerHTML=`
+        <td>
+            <p>${item.title}</P>
+            <p>${item.value}</P>
+        </td>
+        `
+        invDetails.querySelector('tbody').appendChild(newRow)
+   })
+    
+
+}
 async function getTable1More(){
     let dashBoardData = null
     const storedDashBoardData = localStorage.getItem('dashBoard');
@@ -728,4 +664,16 @@ function updateButtonState(activeButton) {
         activeButtonElement.classList.add('active');
     }
 }
+function squareDiv()  {
+    console.log('kjkjkjjh')
+    // Calculate the width of the .img_box divs
+    const imgBoxWidth = document.querySelector('.img_box').offsetWidth;
+    console.log(imgBoxWidth)
+    // Set the height of .img_box divs equal to their width
+    const imgBoxes = document.querySelectorAll('.img_box');
+    imgBoxes.forEach(imgBox => {
+        imgBox.style.height = `${imgBoxWidth}px`;
+    });
+};
+
 

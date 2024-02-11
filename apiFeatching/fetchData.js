@@ -29,3 +29,48 @@ function fetchData(api_name, callback){
     })
     
 }
+// =================Login==================//
+
+async function investorLogin(investorId, investorPassword) {
+    const url = `http://119.18.148.10/01api/kapi1.ashx?type=InvestorLoginV1&investorid=${investorId}&investorpassword=${investorPassword}`;
+    await fetch(url, {
+        method: 'GET'
+    })
+    try {
+        const response = await fetch(url, {
+            method: 'GET'
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+}
+// =================Get User DashBoard Data==================//
+
+async function getDashBoardData(id){
+    const url = `http://119.18.148.10/01api/kapi1.ashx?type=get_inv_bal&inv_id=${id}&comp_id=25`
+    await fetch(url, {
+        method: 'GET'
+    })
+    try {
+        const response = await fetch(url, {
+            method: 'GET'
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+
+}

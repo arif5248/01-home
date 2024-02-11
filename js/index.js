@@ -1,3 +1,36 @@
+// import { investorLogin } from './apiFeatching/fetchData.js';
+
+document.addEventListener('DOMContentLoaded', () => {
+    const loginForm = document.querySelector('#logInDetails form');
+    loginForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        
+        const userId = document.querySelector('#user_id').value;
+        const password = document.querySelector('#loginPass').value;
+        
+        try {
+            const loginResponse = await investorLogin(userId, password);
+            if (loginResponse[0].LoggedInStatus === 'Success'){
+                localStorage.setItem('loginData', JSON.stringify(loginResponse));
+                const userDashBoard = await getDashBoardData(loginResponse[0].LoggedInInvestorId)
+                if(userDashBoard){
+                    localStorage.setItem('dashBoard', JSON.stringify(userDashBoard));
+                }
+                window.location.href = '../mainPage/home.html';
+            }else{
+                document.getElementById('failed_login').style.display = 'block'
+                setTimeout(() => {
+                    document.getElementById('failed_login').style.display = 'none'
+                }, 3000);
+            }
+            
+            
+        } catch (error) {
+            console.error('Login failed:', error);
+        }
+    });
+});
+
 const countryCityCodeinfo = [
     {
         country: "Bangladesh",
@@ -10,11 +43,6 @@ const countryCityCodeinfo = [
         countryCode: "+1"
     }
 ];
-
-
-    
-
-
 function hidePassword(){
     document.getElementById('showPass').style.display = 'block'
     document.getElementById('hidePass').style.display = 'none'

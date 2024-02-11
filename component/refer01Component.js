@@ -56,11 +56,6 @@ function executeRefer01(){
             </div>
             <div class="referredList" id="referredList"></div>
         </div>
-
-
-        <br>
-        <br>
-        <br>
         <br>
         <br>
         <br>
@@ -122,16 +117,19 @@ function executeRefer01(){
                             </tr>
                         </tbody>
                     </table>
+                    
                 </div>
                 <div id="referredListFooter" class="referListFooter"></div>
+                
             </div>
+            
         `
 
         referListData.forEach((data,index) => {
             const newRow = document.createElement('tr');
     
             newRow.innerHTML = `
-                <td>${index}</td>
+                <td>${index + 1}</td>
                 <td>${data.name}</td>
                 <td>${data.Id01}</td>
                 <td>${data.trade_amount}</td>

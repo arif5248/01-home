@@ -23,7 +23,11 @@
     background-color: #fff;
 }
 /*=================table================*/
-
+#passedDividendContent,
+#upcomingDividendContent{
+    background-color: #fff;
+    padding: 0px 10px;
+}
 table{
     width: 100%;
     border-collapse: separate;

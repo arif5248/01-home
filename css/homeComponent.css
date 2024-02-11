@@ -54,23 +54,30 @@ body{
     display: flex;
 }
 .leftSide{
-    width: 35%;
+    text-align: center;
+    width: 30%;
     padding: 5px;
 }
 .rightSide{
-    width: 65%;
+    width: 70%;
     padding: 5px;
     border: 1px solid #adb5bd;
     border-radius: 10px;
+}
+.hr_profile{
+    margin: 15px 0px;
+    border: 1.5px solid #000;
+    opacity: 1;
 }
 .userImage > img{
     width: 100%;
 }
 .profileBtn{
+    margin-top: 5px;
     text-align: center;
     background-color: #A4B799;
     border-radius: 5px;
-    padding: 0px 0px;
+    padding: 5px 0px;
 }
 .table1MoreDetails{
     background-color: #fff;
@@ -191,7 +198,7 @@ table{
     position: relative;
 }
 .stockBody{
-    height: 480px;
+    max-height: 480px;
     overflow-y: auto;
 }
 table> tbody >tr > th{

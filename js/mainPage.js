@@ -54,4 +54,11 @@ function changePass(){
     
 }
 
+function logout(){
+    localStorage.removeItem('loginData');
+    localStorage.removeItem('dashBoard');
+    window.location.href = '../index.html';
+
+}
+
 

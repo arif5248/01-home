@@ -88,6 +88,19 @@ body{
     box-shadow: 0px 0px 5px 0px #000;
 }
 
+/*-----------------Marquee-------------------*/
+.home_marquee_section{
+    margin-top: 5px;
+}
+.home_marquee{
+    background-color: #fff;
+    padding: 5px 0px;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 15px;
+}
 /*-----------------table-------------------*/
 .moreHeading{
     display: flex;
@@ -200,22 +213,62 @@ table{
 .stockBody{
     max-height: 480px;
     overflow-y: auto;
+    background-color: #fff;
+    padding: 0px 10px;
 }
-table> tbody >tr > th{
-    background-color: #212529f5;
+.oldStockBody > table,
+.currentStockBody > table{
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    overflow-y: auto;
+    height: 200px;
+}
+.oldStockBody > table > tbody > tr:first-child,
+.currentStockBody > table > tbody > tr:first-child{
     position: sticky;
     top: 0;
+    background-color: black;
+}
+.oldStockBody > table > tbody > tr:first-child > th,
+.currentStockBody > table > tbody > tr:first-child > th{
+    
     color: #fff;
-    font-weight: 400;
-    text-align: center;
-    padding-top: 0;
-}
-td{
+    font-size: 12px;
+    padding: 5px 1px;
     text-align: center;
 }
-td:first-child{
-    text-align: left;
+.oldStockBody > table > tbody > tr:first-child > th:first-child,
+.currentStockBody > table > tbody > tr:first-child > th:first-child{
+    -webkit-padding-start: 10px;
 }
+.oldStockBody > table > tbody > tr:first-child > th:last-child,
+.currentStockBody > table > tbody > tr:first-child > th:last-child{
+    -webkit-padding-end: 10px;
+}
+.oldStockBody > table > tbody > tr > td,
+.currentStockBody > table > tbody > tr > td{
+    font-weight: 700;
+    font-size: 12px;
+    padding: 10px 0px;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    color: #000 !important;
+    text-align: center;
+}
+.oldStockBody > table > tbody > tr > td:first-child,
+.currentStockBody > table > tbody > tr > td:first-child{
+    -webkit-padding-start: 10px;
+    border-left: 1px solid #000;
+    border-radius: 15px 0px 0px 15px;
+}
+.oldStockBody > table > tbody > tr > td:last-child,
+.currentStockBody > table > tbody > tr > td:last-child{
+    -webkit-padding-end: 10px;
+    border-right: 1px solid #000;
+    border-radius: 0px 15px 15px 0px;
+}
+
 .currentStockFooter,
 .oldStockFooter{
     position: sticky;
@@ -260,7 +313,62 @@ td:first-child{
     font-weight: 700;
     width: 140px;
 }
-
+/*-----------------Get User Details-------------------*/
+.inv_ProfileBox{
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+}
+.inv_ProfileBox > .img_box{
+    width: 50%;
+    padding: 10px;
+}
+.inv_ProfileBox > .img_box > .img_border_box{
+    width: 100%;
+    height: 100%;
+    border: 1px solid #000;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+}
+.inv_ProfileBox > .img_box > .img_border_box > .invImgDiv{
+    display: flex;
+    height: 80%;
+    align-items: center;
+    justify-content: center;
+}
+.invPhoto{
+    width: 60%;
+    height: auto;
+}
+.invSign{
+    width: 95%;
+    height: auto;
+}
+.invDetailsBody > table > tbody > tr > td{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #000;
+    padding: 10px 5px;
+    border-radius: 5px;
+    background-color: #fff;
+}
+.invDetailsBody > table{
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+.invDetailsBody > table > tbody > tr > td > p:first-child{
+    width: 50%;
+}
+.invDetailsBody > table > tbody > tr > td > p:last-child{
+    width: 50%;
+    text-align: right;
+}
 
 /*-----------------Footer-------------------*/
 .section-footer{

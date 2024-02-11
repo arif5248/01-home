@@ -1,3 +1,6 @@
+const c_Id = 25;
+
+// ============simple Get API=====================//
 function fetchData(api_name, callback){
     const allApi = [
         {
@@ -29,7 +32,7 @@ function fetchData(api_name, callback){
     })
     
 }
-// =================Login==================//
+// =================Login API==================//
 
 async function investorLogin(investorId, investorPassword) {
     const url = `http://119.18.148.10/01api/kapi1.ashx?type=InvestorLoginV1&investorid=${investorId}&investorpassword=${investorPassword}`;
@@ -51,18 +54,13 @@ async function investorLogin(investorId, investorPassword) {
         console.error('Error fetching data:', error);
     }
 }
-// =================Get User DashBoard Data==================//
-
-async function getDashBoardData(id){
-    const url = `http://119.18.148.10/01api/kapi1.ashx?type=get_inv_bal&inv_id=${id}&comp_id=25`
-    await fetch(url, {
-        method: 'GET'
-    })
+// =================Get Data With Inv ID and  Company ID==================//
+async function fetchDataWthIdAndCompId(url){
     try {
         const response = await fetch(url, {
             method: 'GET'
         });
-
+        
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -72,5 +70,15 @@ async function getDashBoardData(id){
     } catch (error) {
         console.error('Error fetching data:', error);
     }
+}
 
+// =================Get User DashBoard Data==================//
+async function getDashBoardData(id){
+    const url = `http://119.18.148.10/01api/kapi1.ashx?type=get_inv_bal&inv_id=${id}&comp_id=${c_Id}`
+    return fetchDataWthIdAndCompId(url)
+}
+// =================Get User Details Data==================//
+async function getUserDetailsData(id){
+    const url = `http://119.18.148.10/01api/kapi1.ashx?type=get_inv_profile&inv_id=${id}&comp_id=${c_Id}`
+    return fetchDataWthIdAndCompId(url)
 }

@@ -1,348 +1,26 @@
+async function executeProfitLoss(){
+    const currentStocks = []
+    const oldStocks = []
+    let profitLossSummaryData = {}
+    const fetchedData = await getProfitLossStocksData(user.LoggedInInvestorId)
+    if(fetchedData.status === true){
+        profitLossSummaryData.real_val = 0
+        profitLossSummaryData.unreal_val = 0
+        profitLossSummaryData.tsv = 0
+        fetchedData.Data.forEach(item => {
+            profitLossSummaryData.real_val = profitLossSummaryData.real_val + Number(item.real_val.replace(/,/g, ''))
+            profitLossSummaryData.unreal_val = profitLossSummaryData.unreal_val + Number(item.unreal_val.replace(/,/g, ''))
+            if(item.bal_qty === '0'){
+                oldStocks.push(item)
+            }else{
+                currentStocks.push(item)
+                profitLossSummaryData.tsv = profitLossSummaryData.tsv + Math.round(Number(item.bal_qty.replace(/,/g, '')) * Number(item.cur_price.replace(/,/g, '')))
 
-
-function executeProfitLoss(){
-    const currentStocks = [
-        {
-            company_name:'AIL',
-            total_stock_qty: 100,
-            realizes_profit_loss: 0,
-            unrealizes_profit_loss: 0,
-            buy_sell:[
-                {
-                    type: 'Buy',
-                    qty:1,
-                    price_per_qty:90.36,
-                    total_price:90
-                },
-                {
-                    type: 'Sell',
-                    qty:0,
-                    price_per_qty:0,
-                    total_price:0,
-                },
-            ],
-        },
-        {
-            company_name:'GP',
-            total_stock_qty: 2,
-            realizes_profit_loss: 0,
-            unrealizes_profit_loss: -14,
-            buy_sell:[{
-                    type: 'Buy',
-                    qty:2,
-                    price_per_qty:363.45,
-                    total_price:727,
-                },
-                {
-                    type: 'Sell',
-                    qty:0,
-                    price_per_qty:0,
-                    total_price:0,
-                }
-            ]
-        },
-        {
-            company_name:'KEYACOSMET',
-            total_stock_qty: 12,
-            realizes_profit_loss: 926,
-            unrealizes_profit_loss: -10,
-            buy_sell:[
-                {
-                    type: 'Buy',
-                    qty:2743,
-                    price_per_qty:7.33,
-                    total_price:20106
-                },{
-                    type: 'Sell',
-                    qty:2731,
-                    price_per_qty:7.67,
-                    total_price:20947,
-                }
-            ]
-        },
-        {
-            company_name:'MAKSONSPIN',
-            total_stock_qty: 278,
-            realizes_profit_loss: 0,
-            unrealizes_profit_loss: -778,
-            buy_sell:[
-                {
-                    type: 'Buy',
-                    qty:278,
-                    price_per_qty:25.4,
-                    total_price:7061
-                },{
-                    type: 'Sell',
-                    qty:0,
-                    price_per_qty:0,
-                    total_price:0,
-                }
-            ]
-        },
-        {
-            company_name:'SSSTEEL',
-            total_stock_qty: 292,
-            realizes_profit_loss: -17443,
-            unrealizes_profit_loss: -1606,
-            buy_sell:[
-                {
-                    type: 'Buy',
-                    qty:5001,
-                    price_per_qty:22.2,
-                    total_price:111022
-                },
-                {
-                    type: 'Sell',
-                    qty:4709,
-                    price_per_qty:19.88,
-                    total_price:93615,
-                }
-            ]
-        },
-        {
-            company_name:'AIL',
-            total_stock_qty: 100,
-            realizes_profit_loss: 0,
-            unrealizes_profit_loss: 0,
-            buy_sell:[
-                {
-                    type: 'Buy',
-                    qty:1,
-                    price_per_qty:90.36,
-                    total_price:90
-                },
-                {
-                    type: 'Sell',
-                    qty:0,
-                    price_per_qty:0,
-                    total_price:0,
-                }
-            ]
-        },
-        {
-            company_name:'AIL',
-            total_stock_qty: 100,
-            realizes_profit_loss: 0,
-            unrealizes_profit_loss: 0,
-            buy_sell:[
-                {
-                    type: 'Buy',
-                    qty:1,
-                    price_per_qty:90.36,
-                    total_price:90
-                },
-                {
-                    type: 'Sell',
-                    qty:0,
-                    price_per_qty:0,
-                    total_price:0,
-                }
-            ]
-        },
-        {
-            company_name:'AIL',
-            total_stock_qty: 100,
-            realizes_profit_loss: 0,
-            unrealizes_profit_loss: 0,
-            buy_sell:[
-                {
-                    type: 'Buy',
-                    qty:1,
-                    price_per_qty:90.36,
-                    total_price:90
-                },
-                {
-                    type: 'Sell',
-                    qty:0,
-                    price_per_qty:0,
-                    total_price:0,
-                }
-            ]
-        },
-    ]
-    const oldStocks = [
-        {
-            company_name:'MAKSONSPIN',
-            total_stock_qty: 278,
-            realizes_profit_loss: 0,
-            unrealizes_profit_loss: -778,
-            buy_sell:[
-                {
-                    type: 'Buy',
-                    qty:278,
-                    price_per_qty:25.4,
-                    total_price:7061
-                },
-                {
-                    type: 'Sell',
-                    qty:0,
-                    price_per_qty:0,
-                    total_price:0,
-                }
-            ]
-        },
-        {
-            company_name:'KEYACOSMET',
-            total_stock_qty: 12,
-            realizes_profit_loss: 926,
-            unrealizes_profit_loss: -10,
-            buy_sell:[
-                {
-                    type: 'Buy',
-                    qty:2743,
-                    price_per_qty:7.33,
-                    total_price:20106
-                },
-                {
-                    type: 'Sell',
-                    qty:2731,
-                    price_per_qty:7.67,
-                    total_price:20947,
-                }
-            ]
-        },
-        {
-            company_name:'AIL',
-            total_stock_qty: 100,
-            realizes_profit_loss: 0,
-            unrealizes_profit_loss: 0,
-            buy_sell:[
-                {
-                    type: 'Buy',
-                    qty:1,
-                    price_per_qty:90.36,
-                    total_price:90
-                },
-                {
-                    type: 'Sell',
-                    qty:0,
-                    price_per_qty:0,
-                    total_price:0,
-                }
-            ]
-        },
-        {
-            company_name:'GP',
-            total_stock_qty: 2,
-            realizes_profit_loss: 0,
-            unrealizes_profit_loss: -14,
-            buy_sell:[
-                {
-                    type: 'Buy',
-                    qty:2,
-                    price_per_qty:363.45,
-                    total_price:727,
-                },
-                {
-                    type: 'Sell',
-                    qty:0,
-                    price_per_qty:0,
-                    total_price:0,
-                }
-            ]
-        },
-        {
-            company_name:'MAKSONSPIN',
-            total_stock_qty: 278,
-            realizes_profit_loss: 0,
-            unrealizes_profit_loss: -778,
-            buy_sell:[
-                {
-                    type: 'Buy',
-                    qty:278,
-                    price_per_qty:25.4,
-                    total_price:7061
-                },
-                {
-                    type: 'Sell',
-                    qty:0,
-                    price_per_qty:0,
-                    total_price:0,
-                }
-            ]
-        },
-        {
-            company_name:'SSSTEEL',
-            total_stock_qty: 292,
-            realizes_profit_loss: -17443,
-            unrealizes_profit_loss: -1606,
-            buy_sell:[
-                {
-                    type: 'Buy',
-                    qty:5001,
-                    price_per_qty:22.2,
-                    total_price:111022
-                },
-                {
-                    type: 'Sell',
-                    qty:4709,
-                    price_per_qty:19.88,
-                    total_price:93615,
-                }
-            ]
-        },
-        {
-            company_name:'AIL',
-            total_stock_qty: 100,
-            realizes_profit_loss: 0,
-            unrealizes_profit_loss: 0,
-            buy_sell:[
-                {
-                    type: 'Buy',
-                    qty:1,
-                    price_per_qty:90.36,
-                    total_price:90
-                },
-                {
-                    type: 'Sell',
-                    qty:0,
-                    price_per_qty:0,
-                    total_price:0,
-                }
-            ]
-        },
-        {
-            company_name:'AIL',
-            total_stock_qty: 100,
-            realizes_profit_loss: 0,
-            unrealizes_profit_loss: 0,
-            buy_sell:[
-                {
-                    type: 'Buy',
-                    qty:1,
-                    price_per_qty:90.36,
-                    total_price:90
-                },
-                {
-                    type: 'Sell',
-                    qty:0,
-                    price_per_qty:0,
-                    total_price:0,
-                }
-            ]
-        },
-        {
-            company_name:'AIL',
-            total_stock_qty: 100,
-            realizes_profit_loss: 0,
-            unrealizes_profit_loss: 0,
-            buy_sell:[
-                {
-                    type: 'Buy',
-                    qty:1,
-                    price_per_qty:90.36,
-                    total_price:90
-                },
-                {
-                    type: 'Sell',
-                    qty:0,
-                    price_per_qty:0,
-                    total_price:0,
-                }
-            ]
-        },
-    ]
-
+                
+            }
+        })
+        
+    }
     function profitLoss(){
         document.getElementById('mainContentSection').innerHTML = 
         `
@@ -355,9 +33,15 @@ function executeProfitLoss(){
                     <p>18-Jan-2024</p>
                 </div>
             </div>
-            <div class="section section-availableStok">
-                <div class="container">
-                    <div class="btnRow">
+            
+            <div class="section section-profitLossSummary">
+                <div class='container'>
+                    <div class= 'profitLossSummary' id= 'profitLossSummary'></div>
+                </div>
+            </div>
+            <div class="section section-availableStok" style="flex: 1 auto;overflow-y: auto;">
+                <div class="container" style="position: relative;">
+                    <div class="btnRow" style="position: sticky;top: 0;">
                         <div class="btnGroup">
                             <div class="stockBtn active" onclick="showStockData('currentStockBody')">
                                 <div class="currentBtn">CURRENT STOCK</div>
@@ -373,13 +57,28 @@ function executeProfitLoss(){
                     </div>
                 </div>
             </div>
-            <br>
-            <br>
-            <br>
         `
     }
 
-
+    function renderProfitLossSummary(){
+        const profitLossSummaryBody = document.getElementById('profitLossSummary')
+        profitLossSummaryBody.innerHTML = `
+        <div class='itemRow'>
+            <p>Total Stock Value</P>
+            <p>${profitLossSummaryData.tsv}</p>
+        </div>
+        <div class='itemRow'>
+            <p>Total Realized Profit/Loss</P>
+            <p id='trpl'>${profitLossSummaryData.real_val}</p>
+        </div>
+        <div class='itemRow'>
+            <p>Total Unrealized Profit/Loss</P>
+            <p id='tupl'>${profitLossSummaryData.unreal_val}</p>
+        </div>
+        `
+        document.getElementById(`trpl`).style.color = profitLossSummaryData.real_val >= 0 ? (profitLossSummaryData.real_val > 0 ? '#04A41E' : '#000') : '#FE0000'
+        document.getElementById(`tupl`).style.color = profitLossSummaryData.unreal_val >= 0 ? (profitLossSummaryData.unreal_val > 0 ? '#04A41E' : '#000') : '#FE0000'
+    }
     function renderCurrentStockTable() {
         const tableBody = document.getElementById('currentStockBody');
         tableBody.innerHTML =
@@ -390,23 +89,23 @@ function executeProfitLoss(){
             </table>
         `;
     
-        currentStocks.forEach(stock => {
+        currentStocks.forEach((stock, index) => {
             const newRow = document.createElement('tr');
     
             newRow.innerHTML = `
                 <td class='td'>
                     <div class="top">
                         <div class="topHead">
-                            <h2>${stock.company_name}</h2>
-                            <h2>${stock.total_stock_qty}</h2>  
+                            <h2>${stock.company}</h2>
+                            <h2>${stock.bal_qty}</h2>  
                         </div>
                         <div class="profit-loss">
                             <p>Realized Profit/Loss</p>
-                            <p>${stock.realizes_profit_loss}</p>
+                            <p id='C_realProfitLoss${index}'>${stock.real_val}</p>
                         </div>
                         <div class="profit-loss">
                             <p>Unrealized Profit/Loss</p>
-                            <p>${stock.unrealizes_profit_loss}</p>
+                            <p id='C_unrealProfitLoss${index}'>${stock.unreal_val}</p>
                         </div>
                     </div>
                     <div class="bottom"></div>
@@ -414,7 +113,25 @@ function executeProfitLoss(){
                 </td>
             `;
         tableBody.querySelector('tbody').appendChild(newRow);
-        const trades = stock.buy_sell
+        const r_value = Number(stock.real_val.replace(/,/g, ''))
+        document.getElementById(`C_realProfitLoss${index}`).style.color = r_value >= 0 ? (r_value > 0 ? '#04A41E' : '#000') : '#FE0000'
+
+        const ur_value = Number(stock.unreal_val.replace(/,/g, ''))
+        document.getElementById(`C_unrealProfitLoss${index}`).style.color = ur_value >= 0 ? (ur_value > 0 ? '#04A41E' : '#000') : '#FE0000'
+        const trades = [
+            {
+                type: 'Buy',
+                qty : stock.b_qty,
+                price_per_qty: stock.b_rate,
+                total_price: Math.round(Number(stock.b_qty.replace(/,/g, '')) * Number(stock.b_rate.replace(/,/g, '')))
+            },
+            {
+                type: 'Sell',
+                qty : stock.s_qty,
+                price_per_qty: stock.s_rate,
+                total_price: Math.round(Number(stock.s_qty.replace(/,/g, '')) * Number(stock.s_rate.replace(/,/g, '')))
+            }
+        ]
         trades.forEach(trade=>{
             const bottomData = newRow.querySelector('.bottom');
             const newDiv = document.createElement('div')
@@ -440,7 +157,7 @@ function executeProfitLoss(){
             </table>
         `;
     
-        oldStocks.forEach(stock => {
+        oldStocks.forEach((stock, index) => {
             const newRow = document.createElement('tr');
     
             newRow.innerHTML =
@@ -448,23 +165,44 @@ function executeProfitLoss(){
                 <td>
                     <div class="top">
                         <div class="topHead">
-                            <h2>${stock.company_name}</h2>
-                            <h2>${stock.total_stock_qty}</h2>  
+                            <h2>${stock.company}</h2>
+                            <h2>${stock.bal_qty}</h2>    
                         </div>
                         <div class="profit-loss">
                             <p>Realized Profit/Loss</p>
-                            <p>${stock.realizes_profit_loss}</p>
+                            <p id='P_realProfitLoss${index}'>${stock.real_val}</p>
                         </div>
                         <div class="profit-loss">
                             <p>Unrealized Profit/Loss</p>
-                            <p>${stock.unrealizes_profit_loss}</p>
+                            <p id='P_unrealProfitLoss${index}'>${stock.unreal_val}</p>
                         </div>
                     </div>
                     <div class="bottom"></div>
                 </td>
             `;
+        
+        
         tableBody.querySelector('tbody').appendChild(newRow);
-        const trades = stock.buy_sell
+        const r_value = Number(stock.real_val.replace(/,/g, ''))
+        document.getElementById(`P_realProfitLoss${index}`).style.color = r_value >= 0 ? (r_value > 0 ? '#04A41E' : '#000') : '#FE0000'
+
+        const ur_value = Number(stock.unreal_val.replace(/,/g, ''))
+        document.getElementById(`P_unrealProfitLoss${index}`).style.color = ur_value >= 0 ? (ur_value > 0 ? '#04A41E' : '#000') : '#FE0000'
+        
+        const trades = [
+            {
+                type: 'Buy',
+                qty : stock.b_qty,
+                price_per_qty: stock.b_rate,
+                total_price: Math.round(Number(stock.b_qty.replace(/,/g, '')) * Number(stock.b_rate.replace(/,/g, '')))
+            },
+            {
+                type: 'Sell',
+                qty : stock.s_qty,
+                price_per_qty: stock.s_rate,
+                total_price: Math.round(Number(stock.s_qty.replace(/,/g, '')) * Number(stock.s_rate.replace(/,/g, '')))
+            }
+        ]
         trades.forEach(trade=>{
             const bottomData = newRow.querySelector('.bottom');
             const newDiv = document.createElement('div')
@@ -482,6 +220,7 @@ function executeProfitLoss(){
 
 
     profitLoss()
+    renderProfitLossSummary()
     renderCurrentStockTable()
     renderOldStockTable()
     document.getElementById('currentStockBody').style.display = 'block';

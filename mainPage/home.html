@@ -8,6 +8,7 @@
     <script id="fetch" src="../apiFeatching/fetchData.js"></script>
     <script id="routes" src="../route/route.js"></script>
     <script id="main" src="../js/mainPage.js"></script>
+    <script id="tradeGraph" src="https://unpkg.com/lightweight-charts@4.0/dist/lightweight-charts.standalone.production.js"></script>
     <script id="boots" src="../vendor/bootstrap/js/bootstrap.min.js"></script>
     
     <title>Home</title>
@@ -15,66 +16,15 @@
 </head> 
 <body>
     <div id="overlay"></div>
+    <div id="loadingApi" style="display: none;">
+        <div class="loadingApiBox" style='background-color: #F1F2F4;'>
+            <img style="width: 20%; height: auto;" src="../images/loading.gif" alt="01 Logo">
+        </div>
+    </div>
     <section class="mainSection" id="mainSection">
-        <div class="sendMessageSection" id="sendMessageSection">
-            <div class="sendMessageHeading">
-                <span></span>
-                <h3>Send Message</h3>
-                <img onclick="closeSendMessage()" src="../images/icons/remove.png" alt="Close">
-            </div>
-            <div class="container">
-                <div class="sendMessageBody">
-                    <form action="" method="post" enctype="multipart/form-data">
-                        <select name="" id="messageType">
-                            <option value="">-- Select Type --</option>
-                        </select>
-                        <input type="text" placeholder="Enter Name" class="inputStyle input-color" id="msg_req_user_name" name="name">
-                        <input type="text" placeholder="Enter Mobile Number" class="inputStyle input-color" id="msg_req_user_mobile" name="mobile">
-                        <input type="text" placeholder="Enter Email Address" class="inputStyle input-color" id="msg_req_user_email" name="email">
-                        <textarea id="messageTextarea" name="message" rows="7" placeholder="Enter your message..."></textarea>
-                        <div class="file">
-                            <label for="fileInput" class="fileInputLabel">
-                                <span>Browse</span>
-                                <input type="file" id="fileInput" name="file" accept=".jpg, .jpeg, .png, .pdf">
-                            </label>
-                            <span>Allowed file type PNG, JPEG, PDF</span>
-                        </div>
-                        <button class= "submitSendMsg" type="submit">Submit</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="videoChatSection" id="videoChatSection">
-            <div class="sendMessageHeading">
-                <span></span>
-                <h3>Video Chat(Via Zoom)</h3>
-                <img onclick="closeVideoChat()" src="../images/icons/remove.png" alt="Close">
-            </div>
-            <div class="container">
-                <div class="sendMessageBody">
-                    <form action="" method="post" enctype="multipart/form-data">
-                        <input type="text" placeholder="Enter Name" class="inputStyle input-color" id="video_req_user_name" name="name">
-                        <input type="text" placeholder="Enter Mobile Number" class="inputStyle input-color" id="video_req_user_mobile" name="mobile">
-                        <input type="text" placeholder="Enter Email Address" class="inputStyle input-color" id="video_req_user_email" name="email">
-                        <input type="date" placeholder="Select a Date" class="inputStyle input-color" id="video_req_date" name="date">
-                        <input type="time" placeholder="Select a Time" class="inputStyle input-color" id="video_req_time" name="time">
-                        <button class= "submitSendMsg" type="submit">Submit</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="settings" id="settings">
-            <div class="container">
-                <div class="box">
-                    <div class="head">SETTINGS</div>
-                    <div class="body" onclick="changePass()">Change Password</div>
-                    <div class="footer" onclick="closeSettings()">CANCEL</div>
-                </div>
-            </div>
-        </div>
         
         <div class="topSection" id="topSection">
-            <nav class="navbar navbar-light bg-light fixed-top">
+            <nav onclick="setNotificationNum()" class="navbar navbar-light bg-light fixed-top">
                 <div class="container-fluid">
                     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"     data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
                     <span class="navbar-toggler-icon"></span>
@@ -102,7 +52,7 @@
                                             <span style="font-weight: bold;"> 01 APP </span>  <br> V 1.0.3 <br> 01 Limited
                                         </div>
                                         <div class="about01">
-                                            <h5><a href="./component/about01.html">About 01</a></h5>
+                                            <h5><a href="./about01.html">About 01</a></h5>
                                         </div>
                                     </div>
                                 </div>
@@ -113,9 +63,10 @@
                                         <span>Notes</span>
                                     
                                     </div>
-                                    <div class="footer-icon" onclick="removeFooterBtnState(); route('../component/personalNotificationComponent.js','../css/personalNotificationComponent.css', 'personalNotification')" data-bs-dismiss="offcanvas" >
+                                    <div class="footer-icon notiBox" onclick="removeFooterBtnState(); route('../component/personalNotificationComponent.js','../css/personalNotificationComponent.css', 'personalNotification')" data-bs-dismiss="offcanvas" >
                                         <img style="width: 40px; height: auto;" src="../images/icons/notification-bell.png" alt="notification">
                                         <span>notification</span>
+                                        <p id="unreadNotiNo"></p>
                                     
                                     </div>
                                     <div class="footer-icon" >
@@ -129,6 +80,14 @@
                                 <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                                     <li class="nav-item">
                                         <div onclick="removeFooterBtnState(); route('../component/openBoAccountComponent.js','../css/openBoAccountComponent.css', 'openBoAccount')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">BO Account Open</div>
+                                        <hr >
+                                    </li>
+                                    <li class="nav-item">
+                                        <div onclick="removeFooterBtnState(); route('../component/boInfoChangesComponent.js', '../css/boInfoChangesComponent.css', 'boInfoChanges')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">BO Info Changes</div>
+                                        <hr class="hr-highlite">
+                                    </li>
+                                    <li class="nav-item">
+                                        <div onclick="removeFooterBtnState(); route('../component/brokeragePlanComponent.js','../css/brokeragePlanComponent.css', 'brokeragePlan')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Set Brokerage Plan</div>
                                         <hr class="hr-highlite">
                                     </li>
                                     <li class="nav-item">
@@ -196,7 +155,11 @@
                                         <hr>
                                     </li>
                                     <li class="nav-item">
-                                        <div class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Scedule Of Charges</div>
+                                        <div onclick="removeFooterBtnState(); route('../component/scheduleChargesComponent.js','../css/scheduleChargesComponent.css', 'scheduleCharges')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Scedule Of Charges</div>
+                                        <hr class="hr-highlite">
+                                    </li>
+                                    <li class="nav-item">
+                                        <div class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Digital Branch</div>
                                         <hr class="hr-highlite">
                                     </li>
                                 </ul>
@@ -237,22 +200,24 @@
         <div class="mainContentSection" id="mainContentSection"></div>
 
         <div class="bottomSection" id="bottomSecion">
-            <div class="footer-icon home activeBtn" onclick="updateFooterBtnState('home');route('../component/homeComponent.js','../css/homeComponent.css','home')" >
+            <div class="innerBottom">
+                <div class="footer-icon home activeBtn" onclick="updateFooterBtnState('home');route('../component/homeComponent.js','../css/homeComponent.css','home')" >
                     <img style="width: 30px; height: auto;" src="../images/home-button.png" alt="Home">
                     <span>Home</span>
+                </div>
+                <div class="footer-icon marketStatus"  onclick="updateFooterBtnState('marketStatus');route('../component/marketStatusComponent.js','../css/marketStatusComponent.css','marketStatus')">
+                    <img style="width: 30px; height: auto;" src="../images/stock.png" alt="Market">
+                    <span>Market</span>
+                </div>
+                <div class="footer-icon trade" onclick="updateFooterBtnState('trade');route('../component/tradeComponent.js','../css/tradeComponent.css','trade')">
+                    <img style="width: 30px; height: auto;" src="../images/trade.png" alt="Trade">
+                    <span>Trade</span>
+                </div>
+                <div class="footer-icon news" onclick="updateFooterBtnState('news');route('../component/newsComponent.js','../css/newsComponent.css','news')" >
+                    <img style="width: 30px; height: auto;" src="../images/newspaper.png" alt="News">
+                    <span>News</span>
+                </div>
             </div>
-            <div class="footer-icon marketStatus"  onclick="updateFooterBtnState('marketStatus');route('../component/marketStatusComponent.js','../css/marketStatusComponent.css','marketStatus')">
-                <img style="width: 30px; height: auto;" src="../images/stock.png" alt="Market">
-                <span>Market</span>
-            </div>
-            <div class="footer-icon trade" onclick="updateFooterBtnState('trade');route('../component/tradeComponent.js','../css/tradeComponent.css','trade')">
-                <img style="width: 30px; height: auto;" src="../images/trade.png" alt="Trade">
-                <span>Trade</span>
-            </div>
-            <div class="footer-icon news" onclick="updateFooterBtnState('news');route('../component/newsComponent.js','../css/newsComponent.css','news')" >
-                <img style="width: 30px; height: auto;" src="../images/newspaper.png" alt="News">
-                <span>News</span>
-             </div>
         </div>
 
         <div id="support-slide" class="support-slide">
@@ -290,12 +255,51 @@
                 </div>
             </div>
         </div>
+        <div class="sendMessageSection" id="sendMessageSection">
+            <div class="sendMessageHeading">
+                <span></span>
+                <h3>Send Message</h3>
+                <img onclick="closeSendMessage()" src="../images/icons/remove.png" alt="Close">
+            </div>
+            <div class="container">
+                <div class="sendMessageBody" id="sendMessageBody">
+                    
+                </div>
+            </div>
+        </div>
+        <div class="videoChatSection" id="videoChatSection">
+            <div class="sendMessageHeading">
+                <span></span>
+                <h3>Video Chat(Via Zoom)</h3>
+                <img onclick="closeVideoChat()" src="../images/icons/remove.png" alt="Close">
+            </div>
+            <div class="container">
+                <div class="sendMessageBody">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        <input type="text" placeholder="Enter Name" class="inputStyle input-color" id="video_req_user_name" name="name">
+                        <input type="text" placeholder="Enter Mobile Number" class="inputStyle input-color" id="video_req_user_mobile" name="mobile">
+                        <input type="text" placeholder="Enter Email Address" class="inputStyle input-color" id="video_req_user_email" name="email">
+                        <input type="date" placeholder="Select a Date" class="inputStyle input-color" id="video_req_date" name="date">
+                        <input type="time" placeholder="Select a Time" class="inputStyle input-color" id="video_req_time" name="time">
+                        <button class= "submitSendMsg" type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="settings" id="settings">
+            <div class="container">
+                <div class="box">
+                    <div class="head">SETTINGS</div>
+                    <div class="body" onclick="changePass()">Change Password</div>
+                    <div class="footer" onclick="closeSettings()">CANCEL</div>
+                </div>
+            </div>
+        </div>
        
     </section>
-
-    
-    
-    
+    <script>
+        document.getElementById('overlay').addEventListener('click', closeSettings)
+    </script>
 </body>
 
 </html>

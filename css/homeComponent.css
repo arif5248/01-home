@@ -44,7 +44,6 @@ body{
 /*-----------------profile-------------------*/
 .section-profile{
     margin-top: 5px;
-    overflow-y: auto;
 }
 .profile-content{
     border: 1px solid #000;
@@ -63,6 +62,7 @@ body{
     padding: 5px;
     border: 1px solid #adb5bd;
     border-radius: 10px;
+    box-shadow: 0px 0px 2px 2px #0003;
 }
 .hr_profile{
     margin: 15px 0px;
@@ -90,7 +90,7 @@ body{
 
 /*-----------------Marquee-------------------*/
 .home_marquee_section{
-    margin-top: 5px;
+    margin-top: 10px;
 }
 .home_marquee{
     background-color: #fff;
@@ -102,6 +102,16 @@ body{
     font-size: 15px;
 }
 /*-----------------table-------------------*/
+.executedTrades {
+    background-color: #fff;
+    padding: 0px 5px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+.executedTrades > .btnRow {
+    position: sticky;
+    top: 0;
+}
 .moreHeading{
     display: flex;
     border: 1px solid #000;
@@ -118,8 +128,7 @@ body{
 .table1Content-btn,
 .table-2Content
 {
-    margin-top: 15px;
-    /* border: 1px solid #000; */
+    margin-top: 10px;
     border-radius: 10px;
     padding: 15px 10px;
     background-color: #fff;
@@ -182,7 +191,7 @@ table{
 }
 .btnRow{
     background-color: #fff;
-    padding: 8px;
+    padding: 5px 0px;
 }
 .btnGroup{
     display: flex;
@@ -215,21 +224,29 @@ table{
     overflow-y: auto;
     background-color: #fff;
     padding: 0px 10px;
+    border-radius: 0px 0px 10px 10px;
 }
+.executedTrades > table,
 .oldStockBody > table,
 .currentStockBody > table{
     width: 100%;
     border-collapse: separate;
     border-spacing: 0 10px;
     overflow-y: auto;
-    height: 200px;
+    max-height: 200px;
 }
+
+.executedTrades > table > tbody > tr:first-child,
 .oldStockBody > table > tbody > tr:first-child,
 .currentStockBody > table > tbody > tr:first-child{
     position: sticky;
     top: 0;
     background-color: black;
 }
+.executedTrades > table > tbody > tr:first-child{
+    top: 60px !important;
+}
+.executedTrades > table > tbody > tr:first-child > th,
 .oldStockBody > table > tbody > tr:first-child > th,
 .currentStockBody > table > tbody > tr:first-child > th{
     
@@ -238,30 +255,33 @@ table{
     padding: 5px 1px;
     text-align: center;
 }
+/* .executedTrades > table > tbody > tr:first-child > th:first-child,
 .oldStockBody > table > tbody > tr:first-child > th:first-child,
 .currentStockBody > table > tbody > tr:first-child > th:first-child{
     -webkit-padding-start: 10px;
 }
+.executedTrades > table > tbody > tr:first-child > th:last-child,
 .oldStockBody > table > tbody > tr:first-child > th:last-child,
 .currentStockBody > table > tbody > tr:first-child > th:last-child{
     -webkit-padding-end: 10px;
-}
+} */
+.executedTrades > table > tbody > tr > td,
 .oldStockBody > table > tbody > tr > td,
 .currentStockBody > table > tbody > tr > td{
-    font-weight: 700;
     font-size: 12px;
     padding: 10px 0px;
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
-    color: #000 !important;
     text-align: center;
 }
+.executedTrades > table > tbody > tr > td:first-child,
 .oldStockBody > table > tbody > tr > td:first-child,
 .currentStockBody > table > tbody > tr > td:first-child{
     -webkit-padding-start: 10px;
     border-left: 1px solid #000;
     border-radius: 15px 0px 0px 15px;
 }
+.executedTrades > table > tbody > tr > td:last-child,
 .oldStockBody > table > tbody > tr > td:last-child,
 .currentStockBody > table > tbody > tr > td:last-child{
     -webkit-padding-end: 10px;
@@ -277,6 +297,8 @@ table{
     background-color: #212529f5;
     color: #fff;
     justify-content: space-between;
+    margin: 0px -10px;
+    border-radius: 0px 0px 5px 5px;
 }
 .currentStockFooter > p,
 .oldStockFooter > p{
@@ -344,10 +366,10 @@ table{
     width: 60%;
     height: auto;
 }
-.invSign{
+/* .invSign{
     width: 95%;
     height: auto;
-}
+} */
 .invDetailsBody > table > tbody > tr > td{
     display: flex;
     align-items: center;

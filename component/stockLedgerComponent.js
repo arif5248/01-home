@@ -1,284 +1,7 @@
-
-
-function executeStockLedger(){
-    const currentStocks = [
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'efgh',
-            stock_qty: 145,
-            avg_cost: 25,
-            last_price: 233,
-            total_price: 1275
-        },
-        {
-            company_name:'ijkl',
-            stock_qty: 567,
-            avg_cost: 12,
-            last_price: 890,
-            total_price: 3582
-        },
-        {
-            company_name:'mnop',
-            stock_qty: 907,
-            avg_cost: 236,
-            last_price: 985,
-            total_price: 1268
-        },
-        {
-            company_name:'qrst',
-            stock_qty: 952,
-            avg_cost: 89,
-            last_price: 429,
-            total_price: 3903
-        },
-        {
-            company_name:'uvwx',
-            stock_qty: 469,
-            avg_cost: 45,
-            last_price: 279,
-            total_price: 4903
-        },
-        {
-            company_name:'yzab',
-            stock_qty: 468,
-            avg_cost: 12,
-            last_price: 906,
-            total_price: 4567
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        }
-    ]
-    const oldStocks = [
-        {
-            company_name:'qrst',
-            stock_qty: 1002,
-            avg_cost: 89,
-            last_price: 429,
-            total_price: 3903
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'uvwx',
-            stock_qty: 469,
-            avg_cost: 45,
-            last_price: 279,
-            total_price: 4903
-        },
-        {
-            company_name:'yzab',
-            stock_qty: 468,
-            avg_cost: 12,
-            last_price: 906,
-            total_price: 4567
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'efgh',
-            stock_qty: 145,
-            avg_cost: 25,
-            last_price: 233,
-            total_price: 1275
-        },
-        {
-            company_name:'ijkl',
-            stock_qty: 567,
-            avg_cost: 12,
-            last_price: 890,
-            total_price: 3582
-        },
-        {
-            company_name:'mnop',
-            stock_qty: 907,
-            avg_cost: 236,
-            last_price: 985,
-            total_price: 1268
-        },
-        
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        }
-    ]
+async function executeStockLedger(){
+    const fetchedStocks = await getDashBoardData(user.LoggedInInvestorId)
+    const currentStocks = fetchedStocks.Stock
+    const oldStocks = fetchedStocks.OldStock
 
     function stockLedger(){
         document.getElementById('mainContentSection').innerHTML = 
@@ -288,8 +11,7 @@ function executeStockLedger(){
                     <h1>Stock Ledger</h1>
                 </div>
             </div>
-
-            <div class="section section-availableStok">
+            <div class="section section-availableStok-btn">
                 <div class="container">
                     <div class="btnRow">
                         <div class="btnGroup">
@@ -301,15 +23,16 @@ function executeStockLedger(){
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="section section-availableStok">
+                <div class="container">
                     <div class="stockBody">
                         <div class="currentStockBody" id="currentStockBody"></div>
                         <div class="oldStockBody" id="oldStockBody"></div>
                     </div>
                 </div>
             </div>
-            <br>
-            <br>
-            <br>
            
         `
     }
@@ -335,11 +58,11 @@ function executeStockLedger(){
             const newRow = document.createElement('tr');
     
             newRow.innerHTML = `
-                <td>${stock.company_name}</td>
-                <td>${stock.stock_qty}</td>
-                <td>${stock.avg_cost}</td>
-                <td>${stock.last_price}</td>
-                <td>${stock.total_price}</td>
+            <td>${stock.company}</td>
+            <td>${stock.Stock}</td>
+            <td>${stock.FIFO}</td>
+            <td>${stock.LTP}</td>
+            <td>${stock.Total_Taka}</td>
             `;
         tableBody.querySelector('tbody').appendChild(newRow);
         });
@@ -372,11 +95,11 @@ function executeStockLedger(){
             const newRow = document.createElement('tr');
     
             newRow.innerHTML = `
-                <td>${stock.company_name}</td>
-                <td>${stock.stock_qty}</td>
-                <td>${stock.avg_cost}</td>
-                <td>${stock.last_price}</td>
-                <td>${stock.total_price}</td>
+                <td>${stock.company}</td>
+                <td>${stock.Stock}</td>
+                <td>${stock.FIFO}</td>
+                <td>${stock.LTP}</td>
+                <td>${stock.Total_Taka}</td>
             `;
         tableBody.querySelector('tbody').appendChild(newRow);
         });

@@ -1,6 +1,5 @@
 .mainContentSection{
     height: 100%;
-    padding-bottom: 30px;
 }
 .heading{
     text-align: center;
@@ -11,21 +10,35 @@
 .sub-heading{
     display: flex;
     justify-content: space-between;
-    padding: 10px 15px;
-    font-size: 20px;
+    padding: 5px 15px;
+    font-size: 16px;
     color: #000;
+    background-color: #e9ecef;
+    margin-bottom: 5px;
 
+}
+
+.profitLossSummary{
+    background-color: #fff;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+.profitLossSummary > .itemRow{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .btnRow{
     border-radius: 10px;
     border: 1px solid #000;
     background-color: #868686;
-    padding: 8px;
+    margin-bottom: 5px;
+    z-index: 1;
 }
 .btnGroup{
     display: flex;
-    background-color: #868686;
     justify-content: space-around;
     padding: 10px 0px;
     align-items: center;
@@ -41,7 +54,7 @@
     border-radius: 10px;
 }
 .currentBtn,.stockBtn{
-    font-size: 16px;
+    font-size: 14px;
     color: white;
     font-family: sans-serif;
 }
@@ -52,8 +65,7 @@
 }
 .stockBody{
     background-color: #fff;
-    height: 65vh;
-    overflow-y: auto;
+    border-radius: 5px;
 }
 table{
     width: 100%;
@@ -108,7 +120,13 @@ table > tbody > tr > td{
 .topHead>h2{
     margin: 0;
     font-weight: 700;
+    font-size: 20px;
+
 }
 .profit-loss{
     margin-bottom: 5px;
+}
+.bottom > div > p,
+.profit-loss > p{
+    font-weight: 600;
 }

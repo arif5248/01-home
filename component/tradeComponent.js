@@ -1,5 +1,13 @@
-function executeTrade(){
+async function executeTrade(){
+    let selectedScript = null
     let marketIntervalId;
+    let companyList =[]
+
+    const fetchedData = await getCompanyList()
+    if(fetchedData.status === true){
+        companyList = fetchedData.Data
+    }
+
     stock_ticker_data = [
         {
             name:  'MEGHNAPET-1',
@@ -130,7 +138,6 @@ function executeTrade(){
             s_price: 6.0,
         }
     ]
-
     const dse_buySellData = [
         {
             no_of_buyer: 25.0,
@@ -222,6 +229,15 @@ function executeTrade(){
         }
     ]
 
+    async function handleListItemClick(event) {
+        const companyName = event.target.textContent;
+        selectedScript = companyName;
+        const allCompanyList = document.getElementById('allCompanyList');
+        allCompanyList.innerHTML = '';
+        allCompanyList.style.display = 'none'
+        document.getElementById('searchCompany').value = companyName
+    }
+
     function trade(){
         document.getElementById('mainContentSection').innerHTML = `
             <div class="pageHeading" id="financial-Heading">
@@ -231,13 +247,21 @@ function executeTrade(){
             </div>
 
             <div class="stock_ticker_box">
-                <div class="scrolling-content" id="scrolling-content"></div>
+                <div class="scrolling-content" id="scrolling-content">
+                    <marquee behavior="scroll" direction="left" scrollamount="5" id="tradeMarqueeContainer">
+                        <div></div>
+                    </marquee>
+                </div>
             </div>
 
             <div class="marketScheduale" id="marketScheduale"></div>
 
             <div class='container'>
                 <div class="tradeSearchBox" id="tradeSearchBox"></div>
+            </div>
+
+            <div class= 'container'>
+                <ul style='display: none' class='allCompanyList' id='allCompanyList'></ul>
             </div>
 
             <div class="container">
@@ -296,7 +320,7 @@ function executeTrade(){
                 </div>
             </div>
 
-            <div class="buySellSection">
+            <div class="buySellSection" style='flex: 1 auto'>
                 <div class= "container">
                     <div class= "box">
                         <div class="btnGroup" id="btnGroup">
@@ -333,29 +357,10 @@ function executeTrade(){
                     </div>
                 </div>
             </div>
-
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
         `
     }
-
     function renderStockTicker(){
-        const stockTickerBody = document.getElementById('scrolling-content')
+        const stockTickerBody = document.getElementById('tradeMarqueeContainer')
         stock_ticker_data.forEach((ticker, index) => {
             const newDiv = document.createElement('div')
             newDiv.classList.add(`ticker_item`, `ticker_item_${index}`)
@@ -363,13 +368,10 @@ function executeTrade(){
                 <h6 class = "ticker_heading">${ticker.name}</h6>
                 <p class = "ticker_data">${ticker.data}</p>
             `
-            stockTickerBody.appendChild(newDiv)
+            stockTickerBody.querySelector('div').appendChild(newDiv)
         });
-        // const totalWidth = stock_ticker_data.length * 150
-        // stockTickerBody.style.width = `${totalWidth}px`;
         
     }
-
     function renderMarketScheduale(){
         document.getElementById('marketScheduale').innerHTML=`
             <div class='container'>
@@ -388,7 +390,6 @@ function executeTrade(){
             </div>
         `
     }
-
     function updateCountdown() {
         const now = new Date().toLocaleString("en-US", {timeZone: "Asia/Dhaka"});
         const currentTime = new Date(now);
@@ -461,18 +462,16 @@ function executeTrade(){
         document.getElementById('trade_status').style.color = `#0aeb0a`
         document.getElementById('remaining_trade_time').innerHTML = `Remaining Trade Time`
     }
-
     function renderTradeSearchBox(){
         document.getElementById('tradeSearchBox').innerHTML = `
         <div class="search">
-            <input type="text" name="searchBox" placeholder="Select Script">
+            <input id='searchCompany' type="text" name="searchBox" placeholder="Select Script">
         </div>
         <div class="relaod">
             <img src="../images/icons/reload.png" alt="reload" style="width: 30px;">
         </div>
         `
     }
-
     function renderSelectedStockBox(){
         document.getElementById('selectedStockBox').innerHTML = `
             <div class="innerCol">
@@ -485,7 +484,6 @@ function executeTrade(){
             </div>
         `
     }
-
     function renderCseContent() {
         const tableBody = document.getElementById('cseContent');
         tableBody.innerHTML =
@@ -597,7 +595,6 @@ function executeTrade(){
             </div>
         `;
     }
-
     function renderDseContent() {
         const tableBody = document.getElementById('dseContent');
         tableBody.innerHTML =
@@ -709,7 +706,6 @@ function executeTrade(){
             </div>
         `;
     }
-
     function renderBuyContent() {
         document.getElementById('buyContent').innerHTML=`
         <div class="availableFund">
@@ -743,7 +739,6 @@ function executeTrade(){
         </div>
         `
     }
-
     function renderSellContent() {
         document.getElementById('sellContent').innerHTML=`
         <div class="availableFund">
@@ -788,9 +783,6 @@ function executeTrade(){
         `
     }
 
-
-    
-
     trade()
     renderStockTicker()
     renderMarketScheduale()
@@ -807,7 +799,31 @@ function executeTrade(){
     document.getElementById('buyContent').style.display = 'block'
     document.getElementById('sellContent').style.display = 'none'
     document.getElementById('overlay').style.display = 'none';
-    
+
+    document.getElementById('searchCompany').addEventListener('input', async () => {
+        const existList = document.querySelectorAll('.allCompanyListItem');
+        if(existList){
+            existList.forEach(item => {
+                item.remove();
+            });
+        } 
+        document.getElementById('allCompanyList').style.display = 'block'
+        const setWidth = document.getElementById('searchCompany').offsetWidth
+        document.getElementById('allCompanyList').style.width = setWidth+'px'
+
+        const inputValue = document.getElementById('searchCompany').value;
+        companyList.forEach(item => {
+            const companyName = item.Company.toLowerCase();
+            if (companyName.includes(inputValue.toLowerCase()) && inputValue !== '') {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = item.Company
+                listItem.id = item.Company
+                listItem.classList.add('allCompanyListItem')
+                listItem.addEventListener('click', handleListItemClick);
+                document.getElementById('allCompanyList').appendChild(listItem)
+            }
+        });
+    });
 
     return {
         stopMarketInterval: function () {

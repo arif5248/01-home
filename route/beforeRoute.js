@@ -4,8 +4,10 @@ const beforeHistoryStack = [];
 
   const urlParams = new URLSearchParams(window.location.search);
   const case_name = urlParams.get('case');
+  const data = urlParams.get('data')
+  console.log(case_name,data)
 
-  isVerifiedCacse(case_name)
+  isVerifiedCacse(case_name, data)
   
   
 
@@ -77,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-async function isVerifiedCacse(case_name){
+async function isVerifiedCacse(case_name, data){
     switch (case_name) {
         case 'B_marketStatus':
             await beforeRoute(`../component/${case_name}Component.js`)
@@ -114,6 +116,11 @@ async function isVerifiedCacse(case_name){
         case 'B_payUs':
             await beforeRoute(`../component/${case_name}Component.js`)
             executeB_HowToPayUs();
+            break;
+        case 'B_priceHistory':
+            console.log('hi,hello')
+            await beforeRoute(`../component/${case_name}Component.js`)
+            executeB_PriceHistory(data);
             break;
         
 

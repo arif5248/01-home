@@ -1,0 +1,135 @@
+.activePlan{
+    background-color: #fff;
+    margin: 5px 0px;
+    text-align: center;
+    border: 1px solid #000;
+    border-radius: 5px;
+}
+.planBox{
+    background-color: #fff;
+    border: 1px solid #000;
+    border-radius: 5px;
+    margin: 5px 0px;
+}
+.planHeading{
+    background-color: #000;
+    text-align: center;
+    color: #fff;
+    padding: 5px 0px;
+    font-size: 16px;
+    font-weight: 400;
+    margin: 0;
+}
+.planBody{
+    padding: 5px 5px;
+}
+.planDetails{
+    padding: 5px 0px;
+    font-weight: bold;
+}
+.planPackagesBody{
+    padding: 5px 5px;
+    max-height: 45vh;
+    overflow-y: auto;
+}
+.planPackage{
+    border: 1px solid #000;
+    margin-bottom: 5px;
+    padding: 5px 5px;
+    border-radius: 5px;
+}
+.planPackage > p{
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+.packageHeading > h4{
+    display: inline-block;
+    font-size: 20px;
+}
+.paymentOption{
+    background-color: #fff;
+    padding-bottom: 5px;
+}
+.paymentOptionHeading{
+    background-color: #000;
+    text-align: center;
+    color: #fff;
+    padding: 5px 0px;
+    font-size: 16px;
+    font-weight: 400;
+    margin: 0;
+}
+.bill_reward{
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 0px 0px;
+    margin: 5px 5px;
+    display: flex;
+    align-items: center;
+}
+.bill_reward > p{
+    width: 50%;
+    padding: 3px  5px;
+}
+.bill_reward > p:first-child{
+    border-right: 1px solid #000;
+}
+.paymentBy{
+    padding: 5px 5px;
+}
+.paymentBy > .bill_reward{
+    margin: 0;
+    margin-top: 5px;
+}
+.paymentOptionBox{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 3px 5px;
+    width: 100%;
+}
+.terms_conditions,
+.validity,
+.autoRenew{
+    padding: 3px 5px;
+}
+.submit_plan{
+    text-align: center;
+    background-color: #0E8715;
+    padding: 3px 0px;
+    border-radius: 5px;
+    margin: 3px 5px;
+    color: #fff;
+}
+.termsConditionSection{
+    position: fixed;
+    top: 50vh;
+    width: 90%;
+    left: 50vw;
+    transform: translateY(-50%) translateX(-50%);
+    z-index: 1005;
+    animation: animatedTermsCondition 0.5s linear(0.54 -17.65%, 1 100%);
+}
+.termsCondition{
+    background-color: #fff;
+    border: 1px solid #000;
+    border-radius: 10px;
+    padding: 5px 5px;
+    box-shadow: 0px 0px 5px 1px #000;
+}
+@keyframes animatedTermsCondition {
+    from {
+        transform: translateY(-100vh) translateX(-40vw);
+    }
+    to {
+        transform: translateY(-50%) translateX(-40vw); 
+    }
+}
+#errorMessageForPackage,
+#errorMessageForTC{
+    color: red;
+    padding-left: 5px;
+    text-align: center;
+}

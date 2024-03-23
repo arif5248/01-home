@@ -1,57 +1,17 @@
-function executeDividend_Record(){
-    const upComingDividend=[
-        {
-            name: "AOL",
-            record_date: "25/Jan/2024",
-            agm: "18/Feb/2024",
-            dividend: "1% Cash"
-        },
-        {
-            name: "AOL",
-            record_date: "25/Jan/2024",
-            agm: "18/Feb/2024",
-            dividend: "1% Cash"
-        },
-        {
-            name: "AOL",
-            record_date: "25/Jan/2024",
-            agm: "18/Feb/2024",
-            dividend: "1% Cash"
-        },
-        {
-            name: "AOL",
-            record_date: "25/Jan/2024",
-            agm: "18/Feb/2024",
-            dividend: "1% Cash"
-        },
-    ]
-    const passedDividend=[
-        {
-            name: "KCL",
-            record_date: "26/Aug/2024",
-            agm: "18/Feb/2024",
-            dividend: "1% Cash"
-        },
-        {
-            name: "KCL",
-            record_date: "15/Aug/2024",
-            agm: "18/Feb/2024",
-            dividend: "1% Cash"
-        },
-        {
-            name: "KCL",
-            record_date: "25/Jan/2024",
-            agm: "18/Feb/2024",
-            dividend: "1% Cash"
-        },
-        {
-            name: "KCL",
-            record_date: "22/jul/2024",
-            agm: "18/Feb/2024",
-            dividend: "1% Cash"
-        },
-        
-    ]
+async function executeDividend_Record(){
+    let upComingDividend= []
+    let passedDividend=[]
+
+    const  fetchedUpcomingDividend = await getUpcomingDividend()
+    const fetchedPassedDividend = await getPassedDividend()
+    if(fetchedUpcomingDividend.status === true){
+        upComingDividend = fetchedUpcomingDividend.Data
+    }
+    if(fetchedPassedDividend.status === true){
+        passedDividend = fetchedPassedDividend.Data
+    }
+    
+    
     
     function dividendRecord(){
         document.getElementById('mainContentSection').innerHTML = `
@@ -96,10 +56,10 @@ function executeDividend_Record(){
             const newRow = document.createElement('tr');
     
             newRow.innerHTML = `
-                <td>${data.name}</td>
-                <td>${data.record_date}</td>
-                <td>${data.agm}</td>
-                <td>${data.dividend}</td>
+                <td>${data.Company}</td>
+                <td>${data.RecordDate}</td>
+                <td>${data.AGM}</td>
+                <td>${data.Dividend}</td>
             `;
             contentBody.querySelector('tbody').appendChild(newRow);
         }) 
@@ -121,10 +81,10 @@ function executeDividend_Record(){
             const newRow = document.createElement('tr');
     
             newRow.innerHTML = `
-                <td>${data.name}</td>
-                <td>${data.record_date}</td>
-                <td>${data.agm}</td>
-                <td>${data.dividend}</td>
+                <td>${data.Company}</td>
+                <td>${data.RecordDate}</td>
+                <td>${data.AGM}</td>
+                <td>${data.Dividend}</td>
             `;
             contentBody.querySelector('tbody').appendChild(newRow);
         }) 

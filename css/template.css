@@ -49,7 +49,9 @@
 }
 .allBtn{
     border: 1px solid black;
-    border-radius: 10px;
+    border-radius: 5px;
+    width: 30%;
+    height: 35px;
 }
 .MS_searchRow{
     display: flex;
@@ -71,7 +73,7 @@
     left: 5px;
     transform: translateY(-50%);
 }
-.SP_table,
+
 .MS_table{
     overflow-y: auto;
     height: 400px;
@@ -82,7 +84,6 @@
     border-collapse: separate;
     border-spacing: 0 10px;
     overflow-y: auto;
-    height: 200px;
 }
 .SP_table > table > tbody > tr:first-child,
 .MS_table > table > tbody > tr:first-child{
@@ -151,9 +152,9 @@
     left: 5px;
     transform: translateY(-50%);
 }
-.SP_table{
+/* .SP_table{
     height: 85vh !important;
-}
+} */
   /*====================End Share Price=================*/
   /*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
   /*====================Start News =================*/
@@ -278,6 +279,56 @@
 .exchangeContent > p{
     text-align: justify;
 }
+.allCompanyList{
+    margin-top: 5px;
+    list-style-type: none;
+    max-height: 200px;
+    overflow-y: auto;
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0px 0px 5px 2px #000000de;
+    padding: 0px;
+    z-index: 2;
+    top: 113px;
+    
+}
+.allCompanyList > .allCompanyListItem{
+    border-bottom: 1px solid #00000059;
+    padding: 5px 10px;
+    margin-bottom: 2px;
+}
+#showMediaNewsDetails{
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+
+}
+.selectedNewsBody{
+    border: 0px solid #000;
+    background-color: #fff;
+    width: 95vw;
+    box-shadow: 0px 0px 5px 3px #000;
+    border-radius: 10px;
+}
+.close{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.close_img_Box{
+    margin-bottom: -10px;
+    background-color: #fff;
+    border-radius: 50%;
+    padding: 5px;
+    width: 50px;
+    height: 50px;
+    border: 1px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 0px 5px 1px #000;
+}
 /*====================End News=================*/
 /*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
 /*====================Start IPO =================*/
@@ -335,6 +386,7 @@
 .ipoHeading>h3{
     margin: 0;
     padding: 10px 0px;
+    font-size: 18px;
 }
 .static-heading{
     display: flex;
@@ -508,6 +560,88 @@ hr{
 .payUsType > img{
     width: 70px;
     height: auto;
+}
+
+/*====================End Pay us=================*/
+/*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
+/*====================Start Price History=================*/
+#priceHisSummary{
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 5px 0px;
+}
+.companyHeaderBox,
+.companyCategoryBox,
+.price_up_down{
+    display: flex;
+    padding: 0px 10px;
+    justify-content: space-between;
+}
+#priceHisTable{
+    background-color: #fff;
+    padding: 5px 5px;
+    border-radius: 5px;
+}
+#priceHisTable > table{
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+#priceHisTable > table > tbody{
+    position: relative !important;
+    overflow-y: auto !important;
+}
+#priceHisTable > table > tbody > tr:first-child{
+    position: sticky;
+    top: 0;
+    background-color: #6200ED;
+}
+#priceHisTable > table > tbody > tr:first-child > th{
+    color: #fff;
+    font-size: 14px;
+    padding: 5px 1px;
+    text-align: right;
+}
+#priceHisTable > table > tbody > tr:first-child > th:first-child{
+    -webkit-padding-start: 10px;
+    text-align: center;
+}
+#priceHisTable > table > tbody > tr:first-child > th:last-child{
+    -webkit-padding-end: 10px;
+}
+#priceHisTable > table > tbody > tr > th{
+    width: 20% !important;
+}
+#priceHisTable > table > tbody > tr > td{
+    width: 20%;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 10px 0px;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    color: #000 !important;
+    text-align: right;
+}
+#priceHisTable > table > tbody > tr > td:first-child{
+    -webkit-padding-start: 10px;
+    border-left: 1px solid #000;
+    border-radius: 15px 0px 0px 15px;
+    text-align: left;
+}
+#priceHisTable > table > tbody > tr > td:last-child{
+    -webkit-padding-end: 10px;
+    border-right: 1px solid #000;
+    border-radius: 0px 15px 15px 0px;
+}
+.negative-change {
+    background-color: #FE0000;
+}
+.positive-change {
+    background-color: #04A41E;
+}
+.companyCategoryBox > p,
+.price_up_down > p{
+    margin: 0;
 }
 /*-----------------Bootstrap class-------------------*/
 .fixed-top{

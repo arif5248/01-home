@@ -1,0 +1,17 @@
+#scheduleChargesItem > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #000;
+    margin: 5px 0px;
+}
+#scheduleChargesItem > div > p{
+    width: 50%;
+}
+#scheduleChargesItem > div > p:first-child{
+    border-right: 1px solid #000;
+}
+#scheduleChargesItem > div > p:last-child{
+    text-align: right;
+    border-left: 1px solid #000;
+}

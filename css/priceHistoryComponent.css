@@ -1,0 +1,74 @@
+#priceHisSummary{
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 5px 0px;
+}
+.companyHeaderBox,
+.companyCategoryBox,
+.price_up_down{
+    display: flex;
+    padding: 0px 10px;
+    justify-content: space-between;
+}
+#priceHisTable{
+    background-color: #fff;
+    padding: 5px 5px;
+    border-radius: 5px;
+}
+#priceHisTable > table{
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+#priceHisTable > table > tbody{
+    position: relative !important;
+    overflow-y: auto !important;
+}
+#priceHisTable > table > tbody > tr:first-child{
+    position: sticky;
+    top: 0;
+    background-color: #6200ED;
+}
+#priceHisTable > table > tbody > tr:first-child > th{
+    color: #fff;
+    font-size: 14px;
+    padding: 5px 1px;
+    text-align: right;
+}
+#priceHisTable > table > tbody > tr:first-child > th:first-child{
+    -webkit-padding-start: 10px;
+    text-align: center;
+}
+#priceHisTable > table > tbody > tr:first-child > th:last-child{
+    -webkit-padding-end: 10px;
+}
+#priceHisTable > table > tbody > tr > th{
+    width: 20% !important;
+}
+#priceHisTable > table > tbody > tr > td{
+    width: 20%;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 10px 0px;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    color: #000 !important;
+    text-align: right;
+}
+#priceHisTable > table > tbody > tr > td:first-child{
+    -webkit-padding-start: 10px;
+    border-left: 1px solid #000;
+    border-radius: 15px 0px 0px 15px;
+    text-align: left;
+}
+#priceHisTable > table > tbody > tr > td:last-child{
+    -webkit-padding-end: 10px;
+    border-right: 1px solid #000;
+    border-radius: 0px 15px 15px 0px;
+}
+.negative-change {
+    background-color: #FE0000;
+}
+.positive-change {
+    background-color: #04A41E;
+}

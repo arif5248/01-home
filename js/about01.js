@@ -7,8 +7,11 @@ function displayAboutUsData(data) {
         aboutUsDataContainer.innerHTML = '<p>Error fetching data</p>';
     }
 }
+async function about01(){
+    const data = await getAbout01()
+    displayAboutUsData(data)
+}
 
 window.onload = function() {
-    
-    fetchData("about01_api", displayAboutUsData);
+    about01()
 };

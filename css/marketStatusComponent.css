@@ -1,187 +1,111 @@
-  /*====================Market Status=================*/
-a{
-    text-decoration: none;
-}
-.content-padding{
-    padding-top: 140px;
-}
-body, html {
-    margin: 0;
-    padding: 0;
-    /* height: var(--vh);
-    width: var(--vw); */
-}
-.blankDiv{
-    display: block;
-    margin-top: 10px;
-}
-.cseSection,
+/* .cseSection,
 .dseSection,
 .button_search_section,
 .companyDataSection{
     background-color: #fff !important;
-}
-
-.headingSection{
-    background-color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 10;
-    margin-bottom: 0px;
-}
-.about01 >h5{
-    margin-top: 30px;
-}
-.about01 >h5>a{
-    color: blue;
-}
-
-.navbar {
-    display: inline-block;
-    margin: 0;
-    padding: 0;
-    margin-top: 10px;
-}
-.homeButton{
-    margin-top: 8px;
-    display: inline-block;
-}
-h1{
-    margin: 0;
-    padding-left: 60px;
-}
-.homeButton > img{
-    width: 45px;
-}
-
-
-.socialIcon{
-    width: 100%;
-    display: flex;
-}.icon{
-    margin: 5px;
-}
-.icon > a> img{
-    width: 45px;
-}
-.icon:hover {
-    opacity: 0.7;
-}
-/* .cseSection{
-    margin-top: 60px;
 } */
-.companyDataSection{
-    position: relative;
-    margin-top: 15px;
+.cse_logo > img {
+  width: 100px;
 }
-.topSpace{
-    margin-top: 70px;
+ .customTable{
+  border: 1px solid black !important;
+  border-spacing: 0px 0px;
+  background-color: #fff;
 }
-.indexClass{
-    z-index: 0 !important;
+.customTable > tbody > tr > th{
+  text-align: center;
+  color: #000 !important;
 }
-  /*====================Table=================*/
-  .customTable{
-    border: 1px solid black !important;
-    border-spacing: 0px 0px;
-  }
-  .customTable > tbody > tr > th{
-    /* border: 1px solid #000; */
-    color: #000 !important;
-  }
-  .customTable > tbody > tr > td{
-    /* border-right: 1px solid #000; */
-    color: #000 !important;
-    text-align: center !important;
-  }
-  .cse_logo > img {
-    width: 100px;
-  }
-  .table{
-    position: relative; 
-    text-align: center;
-  }
-  .verticaclAlign{
-    vertical-align: middle !important;
-  }
-  .dataBox{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-  }
-  .tblHeader{
-    position: sticky;
-    top: 0;
-    background-color: rgb(71, 70, 70);
-    color: white;
-  }
-.comapnyTable td:nth-child(-n+3),
-th:nth-child(-n+3) {
-    border-right: none;
+.customTable > tbody > tr > td{
+  color: #000 !important;
+  text-align: center !important;
 }
-.specificHeight{
-    height: 100% !important;
+.verticaclAlign{
+  vertical-align: middle !important;
 }
-
- /*====================Button Section=================*/
+.dataBox{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
 .allButton{
-    display: flex;
-    justify-content: space-around;
+  display: flex;
+  justify-content: space-around;
 }
 .allBtn{
-    border: 1px solid black;
-    border-radius: 10px;
+  border: 1px solid black;
+  border-radius: 5px;
+  width: 30%;
+  height: 35px;
 }
-.input-group{
-    padding: 10px;
-    margin-top: 10px;
-    background-color: #5555551c;
+.MS_searchRow{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-.input-group-append > span{
-    background-color: #55555554;
-    border: none;
-
+.MS_searchBox{
+  position: relative;
+  padding: 10px 0px;
 }
-.input-group input{
-    background-color: #55555554;
-    border-radius: 10px;
+.MS_searchBox > input{
+  padding-left: 35px;
+  border-radius: 10px;
+  background-color: #EEEEEE;
 }
-.input-group-text > img{
-    width: 30px;
+.MS_searchIcon{
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
 }
-.reload{
-    margin-left: 5px;
+.MS_table{
+  overflow-y: auto;
+  height: 400px;
+  background-color: #fff;
+  padding: 0px 5px;
 }
-.reload > img {
-    margin-top: 5px;
-    margin-left: 15px;
-    width: 30px;
+.MS_table > table{
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  overflow-y: auto;
 }
-
-.table-wrapper {
-    overflow-y: auto; 
-    height: 500px;
+.MS_table > table > tbody > tr:first-child{
+  position: sticky;
+  top: 0;
+  background-color: black;
 }
-.table-wrapper-share-price{
-    overflow-y: auto; 
-    max-height: 1000px;
+.MS_table > table > tbody > tr:first-child > th{
+  
+  color: #fff;
+  font-size: 20px;
+  padding: 5px 1px;
+  text-align: center;
 }
-
-::-webkit-scrollbar {
-    width: 10px;
+.MS_table > table > tbody > tr:first-child > th:first-child{
+  -webkit-padding-start: 10px;
 }
-
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
+.MS_table > table > tbody > tr:first-child > th:last-child{
+  -webkit-padding-end: 10px;
 }
-
-::-webkit-scrollbar-thumb {
-    background: #888;
+.MS_table > table > tbody > tr > td{
+  font-weight: 700;
+  font-size: 15px;
+  padding: 10px 0px;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+  color: #000 !important;
+  text-align: center;
 }
-
-::-webkit-scrollbar-thumb:hover {
-    background: #555;
+.MS_table > table > tbody > tr > td:first-child{
+  -webkit-padding-start: 10px;
+  border-left: 1px solid #000;
+  border-radius: 15px 0px 0px 15px;
+}
+.MS_table > table > tbody > tr > td:last-child{
+  -webkit-padding-end: 10px;
+  border-right: 1px solid #000;
+  border-radius: 0px 15px 15px 0px;
 }
 
 

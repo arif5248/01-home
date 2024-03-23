@@ -1,9 +1,25 @@
 /*-----------------Utilities-------------------*/
 /* ========================================== */
 
+#loadingApi{
+    width: 100vw;
+    height: 100vh;
+    background-color: #CFE4EE;
+    position: absolute;
+    top: 0;
+    z-index: 1001;
+}
+#loadingApi > .loadingApiBox{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+}
 input[readonly] {
     background-color: #f0f0f0;
-    opacity: 0.7;
+    opacity: 1;
     cursor: not-allowed;
 }
 
@@ -53,18 +69,20 @@ hr{
 .section-header{
     height: 80px;
 }
-#navbarAfter,
+/* #navbarAfter,
 .heading{
     height: 100%;
-}
+} */
 body{
    
     background-color: #676a6666;
     
 }
 .mainSection{
-    position: relative;
-    overflow-y: auto;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 .nav-socialIcon{
     margin-top: 20px;
@@ -79,10 +97,9 @@ body{
 }
 /*-----------------Header-------------------*/
 .topSection{
-    position: fixed;
-    top: 0;
+    flex: 0 0 auto;
     width: 100%;
-    height: 10%;
+    height: 70px;
     background-color: #fff;
     z-index: 1000;
 }
@@ -90,15 +107,11 @@ body{
     width: 55px;
 }
 /*-----------------main-------------------*/
-.mainSection{
-    margin-top: 2%;
-}
+
 .mainContentSection{
-    margin-top: 20%;
-}
-.mainContentSection{
+    flex: 1 1 auto;
+    overflow-y: auto;
     height: 100%;
-    padding-bottom: 30px;
 }
 .pageHeading  > .heading{
     text-align: center;
@@ -108,16 +121,19 @@ body{
 }
 /*-----------------Footer-------------------*/
 .bottomSection{
+    flex: 0 0 auto;
     z-index: 999;
-    display: flex;
     justify-content: space-around;
     padding: 5px 0px;
     background-color: #dee2e6;
     width: 100%;
-    position: fixed;
-    bottom: 0;
     /* box-shadow: 0px -4px 10px -1px #000000a1; */
 
+}
+.innerBottom{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 .footer-icon{
     font-size: 12px;
@@ -173,18 +189,18 @@ padding-bottom: 5px;
     padding: 10px 0px;
 }
 .supportCall > a{
-    font-weight: 700;
-    font-size: 23px;
+    font-weight: 500;
+    font-size: 16px;
     color: #007bff;
 }
 .supportIcon{
-    width: 50px;
+    width: 35px;
     height: auto;
 }
 .supportIconGroup{
     padding: 10px 0px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     border-bottom: 1px solid #000;
 }
@@ -199,7 +215,7 @@ padding-bottom: 5px;
 .innerElement > span{
     color: #000;
     font-weight: 700;
-    font-size: 20px;
+    font-size: 18px;
 }
 /*--------------send message and video chat section---------------*/
 .sendMessageBody > form >select {
@@ -211,8 +227,8 @@ padding-bottom: 5px;
 }
 .sendMessageSection,
 .videoChatSection{
-    height: 100%;
     z-index: 1035;
+    height: 100%;
     position: absolute;
     bottom: 0; 
     left: 0;
@@ -220,6 +236,7 @@ padding-bottom: 5px;
     background-color: #fff;
     padding: 20px;
     transition:  0.5s ease-in-out;
+    overflow-y: auto;
 }
 .sendMessageHeading{
     background-color: #2e0339;
@@ -257,51 +274,60 @@ padding-bottom: 5px;
     padding:5px 20px;
     border-radius: 10px;
 }
-.file{
-    margin-top: 10px;
-    text-align: center;
-    padding: 10px 10px;
+.fileContent{
     border: 1px solid #000;
     border-radius: 10px;
+    padding: 10px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-.file > span{
-    font-weight: 900;
-    font-size: 20px;
+.fileContent > h5 {
+    font-weight: 800;
 }
-.fileInputLabel input {
-    position: absolute;
-    left: 0;
-    top: 0;
-    opacity: 0;
-    cursor: pointer;
-}
-.fileInputLabel span {
-    font-weight: 600;
-    font-size: 25px;
-    /* background-color: #007bff; */
-    color: #000;
-    border-radius: 4px;
-    cursor: pointer;
-}
-.fileInputLabel {
-    margin-bottom: 30px;
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-    text-align: center;
-    color: #000;
-    border: 1px solid #007bff;
-    display: inline-block;
-    padding: 12px 12px;
-    cursor: pointer;
-    border-radius: 10px;
+.file-box{
     width: 100%;
 }
-.fileInputLabel:hover {
-    /* background-color: #007bff; */
-    color: #fff;
+.file-box > input{
+    width: 100%;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    padding: 5px 5px;
 }
-#fileInput{
+#file-inputMP{
+    display: none;
+}
+#file-labelMP{
+    width: 100%;
+    text-align: center;
+    border: 1px solid #000;
+    border-radius: 10px;
+    padding: 5px 5px;
+}
+#preview-containerMP {
+    text-align: center;
+    display: none;
+    margin-top: 10px;
+    position: relative;
+  }
+  #undo-button{
+    position: absolute;
+    top: 0;
+    right: -20px;
+    cursor: pointer;
+    color: red;
+  }
+
+  #preview-imageMP {
+    max-width: 100%;
+    max-height: 100px;
+    margin-bottom: 10px;
+  }
+
+  #undo-button  > img {
+    width: 20px;
+  }
+#fileInputMP{
     color: #000;
     width: 100%;
 }
@@ -414,9 +440,56 @@ padding-bottom: 5px;
     font-weight: 400;
 }
 
+.messageHistorySection {
+    border: 1px solid #000;
+    border-radius: 10px;
+}
+.messageHisHeading{
+    padding: 10px 0px;
+}
+.messageHisHeading > h3 {
+    text-align: center;
+}
+.sent_message_body{
+    max-height: 400px;
+    overflow-y: auto;
+}
+.sent_message_body > .msgBox {
+    border: 1px solid #000;
+    margin: 10px 0px;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+.msgBox > .msgBoxItem{
+    display: flex;
+}
+.msgBoxItem > p:first-child{
+    width: 40%;
+}
+.msgBoxItem > p:last-child{
+    width: 60%;
+}
+
+/*============Notification Number===========*/
+.notiBox{
+    position: relative;
+}
+#unreadNotiNo{
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #fff;
+    background-color: #ff0000;
+    padding: 0px 7px;
+    font-size: 14px;
+    transform: translate(40%, -40%);
+}
 /*-----------------Bootstrap class-------------------*/
+.fixed-top{
+    position: unset !important;
+}
 .bg-light{
-    background-color: transparent !important;
+    background-color: #fff !important;
 }
 .navbar-toggler{
     background-color: #A4B799 !important;
@@ -455,10 +528,11 @@ padding-bottom: 5px;
 .offcanvas-header > div:last-child{
     margin-bottom: 0px;
 }
-.loading {
+/* .loading {
     background-color: #2e0339;
-    display: none;
-}
+    height: 100vh;
+    width: 100vw;
+} */
 #overlay{
     width: 100vw;
     height: 100vh;

@@ -4,32 +4,73 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
+        <style>
+            .main{
+                display: flex;
+                flex-direction: column;
+                height: 100vh;
+            }
+            .top {
+                flex: 0 0 auto; /* Do not grow, do not shrink */
+                background-color: red; /* Just for visibility */
+                height: 40px;
+            }
+
+            .mainContent {
+                flex: 1 1 auto; /* Grow, shrink, and fill available space */
+                background-color: #f0f0f0; /* Just for visibility */
+                overflow-y: auto;
+            }
+
+            .bottom {
+                flex: 0 0 auto; /* Do not grow, do not shrink */
+                background-color: green; /* Just for visibility */
+                height: 40px;
+            }
+            .testDiv{
+                background-color: yellow;
+                display: flex;
+            }
+        </style>
     </head>
     <body>
-        <form action="#">
-            <div>
-                <input id="oldPass" type="password" placeholder="Enter Old Password">
-                <img style="width: 10px;" id="hide_old_pass" src="../images/icons/closeEye.png" alt="hide password">
-                <img style="width: 10px;" id="show_old_pass" src="../images/icons/view.png" alt="hide password">
+        <div class="button_search_section">
+            <div class="container">
+                <div class="buttonRow">
+                    <div class="allButton">
+                        <select id='MS_selectType' class="allBtn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <option>Select type</option>
+                        </select>
+                        <select id='MS_selectSector' class="allBtn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <option>Select Sector</option>
+                        </select>
+                        <select id='MS_selectSort' class="allBtn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <option>Select Sort</option>
+                        </select>
+                    </div>
+                </div>
             </div>
-            <div>
-                <input id="newPass" type="password" placeholder="Enter New Password">
-                <img style="width: 10px;" id="hide_new_pass" src="../images/icons/closeEye.png" alt="hide password">
-                <img style="width: 10px;" id="show_new_pass" src="../images/icons/closeEye.png" alt="hide password">
-            </div>
-            <div>
-                <input id="oldPass" type="password" placeholder="Confirm New Password">
-                <img style="width: 10px;" id="hide_cn_pass" src="../images/icons/closeEye.png" alt="hide password">
-                <img style="width: 10px;" id="show_cn_pass" src="../images/icons/closeEye.png" alt="hide password">
-            </div>
-            
-            
-           
-            
-
-        </form>
-       
         
-
+            <div class="container">
+                <div class="searchBox">
+                    <div class="MS_searchRow">
+                        <div style="width: 90%; height:auto" class="MS_searchBox">
+                            <input id='searchSharePrice' type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="searchIcon">
+                            <img class="MS_searchIcon" style="width: 20px; height:auto" src="../images/icons/magnifying-glass.png" alt="search icon">
+                        </div>
+                        <div id='MS_Reload' class="reload">
+                            <img style="width: 30px; height:auto" src="../images/icons/reload.png" alt="Reload">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="companyDataSection">
+                <div class="container">
+                    <div class="MS_table" id="MS_table"></div>
+                </div>
+            </div>
+        </div>
+        
     </body>
 </html>

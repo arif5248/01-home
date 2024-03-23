@@ -15,11 +15,10 @@ function executeOpenBOAcc(){
                 <div class="heading">
                     <h1>Open BO Account</h1>
                 </div>
-    
+            </div>
+            <div class='boContentSection'>
                 <div class="container">
-                    <div class="BO-content" id="BO-content">
-                        
-                    </div>
+                    <div class="BO-content" id="BO-content"></div>
                 </div>
             </div>
         `

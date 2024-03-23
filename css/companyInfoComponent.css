@@ -1,8 +1,24 @@
 .search-reload{
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     margin-top: 5px;
+}
+.allCompanyList{
+    margin-top: 5px;
+    list-style-type: none;
+    max-height: 200px;
+    overflow-y: auto;
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px 2px #000000de;
+    padding: 0px;
+    
+}
+.allCompanyList > .allCompanyListItem{
+    border-bottom: 1px solid #00000059;
+    padding: 5px 10px;
+    margin-bottom: 2px;
 }
 .search-reload > input{
     width: 80%;
@@ -40,6 +56,9 @@
     border-bottom: 1px solid #000;
     width: 50%;
 }
+#basic-more > table > tbody > tr > td:last-child{
+    text-align: right;
+}
 #priceHistory-more,
 #dividend-more,
 #finance-more{
@@ -68,15 +87,16 @@
 #priceHistory-more > table > tbody > tr:first-child > th,
 #dividend-more > table > tbody > tr:first-child > th,
 #finance-more > table > tbody > tr:first-child > th{
-    
     color: #fff;
-    font-size: 16px;
+    font-size: 14px;
     padding: 5px 1px;
+    text-align: right;
 }
 #priceHistory-more > table > tbody > tr:first-child > th:first-child,
 #dividend-more > table > tbody > tr:first-child > th:first-child,
 #finance-more > table > tbody > tr:first-child > th:first-child{
     -webkit-padding-start: 10px;
+    text-align: center;
 }
 #priceHistory-more > table > tbody > tr:first-child > th:last-child,
 #dividend-more > table > tbody > tr:first-child > th:last-child,
@@ -94,11 +114,12 @@
 #finance-more > table > tbody > tr > td{
     width: 20%;
     font-weight: 700;
-    font-size: 15px;
+    font-size: 13px;
     padding: 10px 0px;
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
     color: #000 !important;
+    text-align: right;
 }
 #priceHistory-more > table > tbody > tr > td:first-child,
 #dividend-more > table > tbody > tr > td:first-child,
@@ -106,6 +127,7 @@
     -webkit-padding-start: 10px;
     border-left: 1px solid #000;
     border-radius: 15px 0px 0px 15px;
+    text-align: left;
 }
 #priceHistory-more > table > tbody > tr > td:last-child,
 #dividend-more > table > tbody > tr > td:last-child,
@@ -130,4 +152,48 @@
 }
 .positive-change {
     background-color: #04A41E;
+}
+
+/* ===============Graph=========== */
+.switcher {
+	display: flex;
+	align-items: center;
+	height: 30px;
+	margin-top: 8px;
+	color: #2196F3;
+}
+
+.switcher-item {
+	cursor: pointer;
+	text-decoration: none;
+	display: inline-block;
+	padding: 6px 8px;
+	font-size: 14px;
+	color: #262b3e;
+	background-color: transparent;
+	margin-right: 8px;
+	border: none;
+	border-radius: 4px;
+	outline: none;
+}
+
+.switcher-item:hover {
+	background-color: #f2f3f5;
+}
+
+.switcher-active-item {
+	text-decoration: none;
+	cursor: default;
+	color: #262b3e;
+}
+
+.switcher-active-item,
+.switcher-active-item:hover {
+	background-color: #e1eff9;
+}
+.tv-lightweight-charts{
+    width: 100% !important;
+}
+.tv-lightweight-charts > table {
+    width: 100% !important;
 }

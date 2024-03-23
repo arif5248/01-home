@@ -1,7 +1,8 @@
-function executeHome(){
+async function executeHome(){
     let user = null;
     let dashBoardData = null;
     let loginDashData = null
+
     const storedData = localStorage.getItem('loginData');
     const storedDashBoardData = localStorage.getItem('dashBoard');
     if (storedData) {
@@ -10,11 +11,10 @@ function executeHome(){
     }else{
         window.location.href = '../index.html';
     }
-    if (storedDashBoardData) {
-        loginDashData = JSON.parse(storedDashBoardData);
-        dashBoardData = loginDashData.Data[0]
-        
-
+    const fetchedDashData = await getDashBoardData(user.LoggedInInvestorId)
+    if (fetchedDashData.status === true) {
+        loginDashData = fetchedDashData;
+        dashBoardData = fetchedDashData.Data[0]
     }
     
     const table1 = [
@@ -75,150 +75,12 @@ function executeHome(){
         },
     ]
     
-    const executedTradesData = [
-        {
-            company_name:'qrst',
-            stock_qty: 1002,
-            avg_cost: 89,
-            last_price: 429,
-            total_price: 3903
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'uvwx',
-            stock_qty: 469,
-            avg_cost: 45,
-            last_price: 279,
-            total_price: 4903
-        },
-        {
-            company_name:'yzab',
-            stock_qty: 468,
-            avg_cost: 12,
-            last_price: 906,
-            total_price: 4567
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'efgh',
-            stock_qty: 145,
-            avg_cost: 25,
-            last_price: 233,
-            total_price: 1275
-        },
-        {
-            company_name:'ijkl',
-            stock_qty: 567,
-            avg_cost: 12,
-            last_price: 890,
-            total_price: 3582
-        },
-        {
-            company_name:'mnop',
-            stock_qty: 907,
-            avg_cost: 236,
-            last_price: 985,
-            total_price: 1268
-        },
-        
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
-        },
-        {
-            company_name:'abcd',
-            stock_qty: 100,
-            avg_cost: 20,
-            last_price: 123,
-            total_price: 34785
+    function handleClick(script){
+        return function(event){
+            removeFooterBtnState();
+            route('../component/stockDetailsComponent.js', '../css/stockDetailsComponent.css', 'stockDetails', script)
         }
-    ]
-    
+    }
     function homeComponent (){
         document.getElementById('mainContentSection').innerHTML = `
         <div class="section section-profile" id="section-profile">
@@ -226,7 +88,7 @@ function executeHome(){
                 <div class="profile-content" id="profile-content"></div>
             </div>
         </div>
-        <div class='home_marquee_section'>
+        <div id='home_marquee_section' class='home_marquee_section'>
             <div class='container'>
                 <div class='home_marquee'>
                     <marquee behavior="scroll" direction="left" scrollamount="5" id="marqueeContainer"></marquee>
@@ -278,27 +140,14 @@ function executeHome(){
             </div>
         </div>
     
-        <div class="section section-ExecutedTrades">
+        <div class="section section-ExecutedTrades" style='flex: 1 auto;'>
             <div class="container">
                 <div class="availeExecutedTradesHeading">
                     <h3>Executed Trades</h3>
                 </div>
-    
-                <div class="executionTradesBody" id="executionTradesBody">
-                    <div class="stockBody">
-                        <div class="executedTrades" id="executedTrades"></div>
-                    </div>
-                </div>
+                <div class="executedTrades" id="executedTrades"></div>     
             </div>
         </div>
-    
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
         `
     }
     function renderProfile() {
@@ -327,7 +176,11 @@ function executeHome(){
         const marqueeContainer = document.getElementById('marqueeContainer');
 
         loginDashData.marquee.forEach(function(item) {
-        marqueeContainer.innerHTML += item.marquee + `&emsp;<img style='width:25px !important; height: auto' src='../images/icons/01_icon.jpeg' alt='01'>&emsp;`;
+        if(item.marquee && item.marquee !== ''){
+            marqueeContainer.innerHTML += item.marquee + `&emsp;<img style='width:25px !important; height: auto' src='../images/icons/01_icon.jpeg' alt='01'>&emsp;`;
+        }else{
+            document.getElementById('home_marquee_section').style.display = 'none'
+        }
     });
     }
     function renderTable1(){
@@ -393,7 +246,6 @@ function executeHome(){
             </table>
             <div id="currentStockFooter" class="currentStockFooter"></div>
         `;
-    
         loginDashData.Stock.forEach(stock => {
             const newRow = document.createElement('tr');
     
@@ -405,6 +257,10 @@ function executeHome(){
                 <td>${stock.Total_Taka}</td>
             `;
         tableBody.querySelector('tbody').appendChild(newRow);
+        newRow.querySelectorAll('td').forEach(td=>{
+            td.style.color = Number(stock.Profit.replace(/,/g, '')) >= 0 ? (Number(stock.Profit.replace(/,/g, '')) > 0 ? '#04A41E' : '#000') : '#FE0000'
+        })
+        newRow.addEventListener('click', handleClick(stock.company))
         });
         const tableFooter = document.getElementById('currentStockFooter');
         const totalCount = loginDashData.Stock.length;
@@ -430,7 +286,6 @@ function executeHome(){
             </table>
             <div id="oldStockFooter" class="oldStockFooter"></div>
         `;
-    
         loginDashData.OldStock.forEach(stock => {
             const newRow = document.createElement('tr');
     
@@ -442,6 +297,10 @@ function executeHome(){
                 <td>${stock.Total_Taka}</td>
             `;
         tableBody.querySelector('tbody').appendChild(newRow);
+        newRow.querySelectorAll('td').forEach(td=>{
+            td.style.color = Number(stock.Profit.replace(/,/g, '')) >= 0 ? (Number(stock.Profit.replace(/,/g, '')) > 0 ? '#04A41E' : '#000') : '#FE0000'
+        })
+        newRow.addEventListener('click', handleClick(stock.company))
         });
         const tableFooter = document.getElementById('oldStockFooter');
         const totalCount = loginDashData.OldStock.length;
@@ -462,7 +321,7 @@ function executeHome(){
                         <input type="date" id="date-from" value= ${today} >
                         <span>To</span>
                         <input type="date" id="date-to" value= ${today}>
-                        <div class="searchImg">
+                        <div onclick='allExecuteTrades(${user.LoggedInInvestorId})' class="searchImg">
                             <img style="width: 20px;" src="../images/icons/magnifying-glass.png" alt="search">
                         </div>
                     </div>
@@ -479,27 +338,6 @@ function executeHome(){
             </table>
             <div id="executionStockFooter" class="oldStockFooter"></div>
         `;
-    
-        executedTradesData.forEach(stock => {
-            const newRow = document.createElement('tr');
-    
-            newRow.innerHTML = `
-                <td>${stock.company_name}</td>
-                <td>${stock.stock_qty}</td>
-                <td>${stock.avg_cost}</td>
-                <td>${stock.last_price}</td>
-                <td>${stock.total_price}</td>
-            `;
-            executedTrades.querySelector('table').appendChild(newRow);
-        });
-        const tableFooter = document.getElementById('executionStockFooter');
-        const totalCount = executedTradesData.length;
-        const totalValue = executedTradesData.reduce((total, stock) => total + stock.stock_qty, 0);
-    
-        tableFooter.innerHTML = `
-            <p>Count : ${totalCount}</p>
-            <p>Total Value: ${totalValue}</p>
-        `;
     }
     
     
@@ -514,10 +352,51 @@ function executeHome(){
     renderExecutionTrades() 
     document.getElementById('currentStockBody').style.display = 'block';
     document.getElementById('oldStockBody').style.display = 'none';
+    allExecuteTrades(user.LoggedInInvestorId)
 
    
 
 }
+async function allExecuteTrades(inv_Id) {
+    
+    let executedTradesData = []
+    const tableRows = document.querySelectorAll('.excTrdRow');
+    if(tableRows){
+        tableRows.forEach(row => {
+            row.remove();
+        });
+    }  
+    const executedTrades = document.getElementById('executedTrades');
+    const dateFrom = document.getElementById('date-from').value;
+    const dateTo = document.getElementById('date-to').value;
+    const fetchedTradesData = await getAllExecuteTrades(dateFrom, dateTo, inv_Id)
+    executedTradesData = fetchedTradesData.Data
+    executedTradesData.forEach((stock, index) => {
+        const newRow = document.createElement('tr');
+        newRow.classList.add('excTrdRow')
+        newRow.innerHTML = `
+            <td>${stock.company}</td>
+            <td id='B_S${index}'>${stock['B/S']}</td>
+            <td>${stock.Qty}</td>
+            <td>${stock.Rate}</td>
+            <td>${stock.Amount}</td>
+        `;
+        executedTrades.querySelector('tbody').appendChild(newRow);
+        document.getElementById(`B_S${index}`).style.color = stock['B/S'] === 'Buy' ? '#04A41E' : '#FE0000'
+        
+    });
+    const tableFooter = document.getElementById('executionStockFooter');
+    const totalCount = executedTradesData.length;
+    const totalValue = executedTradesData.reduce((total, stock) => total + parseInt(stock.Amount.replace(/,/g, ''),10), 0);
+
+    tableFooter.innerHTML = `
+        <p>Count : ${totalCount}</p>
+        <p>Total Value: ${totalValue}</p>
+    `;
+    
+    
+}
+
 async function getUserDetails(userId){
     const userDetails = await getUserDetailsData(userId)
     document.getElementById('mainContentSection').innerHTML=`
@@ -542,7 +421,7 @@ async function getUserDetails(userId){
                 <div id='img_box_2' class="img_box">
                     <div class="img_border_box">
                         <div class='invImgDiv'>
-                            <img class='invSign' alt='Investor Signature' src=${userDetails.Sign[0].Sign}>
+                            <img style='width: 95%; height: auto;' class='invSign' alt='Investor Signature' src=${userDetails.Sign[0].Sign}>
                         </div>
                         <div class='divHeading'>
                             <p>Signature</p>
@@ -665,15 +544,10 @@ function updateButtonState(activeButton) {
     }
 }
 function squareDiv()  {
-    console.log('kjkjkjjh')
-    // Calculate the width of the .img_box divs
     const imgBoxWidth = document.querySelector('.img_box').offsetWidth;
-    console.log(imgBoxWidth)
-    // Set the height of .img_box divs equal to their width
     const imgBoxes = document.querySelectorAll('.img_box');
     imgBoxes.forEach(imgBox => {
         imgBox.style.height = `${imgBoxWidth}px`;
     });
 };
-
 

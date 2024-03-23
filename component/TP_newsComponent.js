@@ -128,11 +128,15 @@ function executeTP_News(){
             paperNewsDiv.appendChild(newsElement);
         }); 
     }
+    async function getAllNews(){
+        const news =await getNews()
+        populatedExchangeNews(news.exchangeNews)  
+        populatedPaperNews();
+
+    }
     
     news()
-    
-    fetchData("todaysNews_api",populatedExchangeNews)
-    populatedPaperNews();
+    getAllNews()
 
     document.getElementById('paperNews').style.display = 'block';
     document.getElementById('exchangeNews').style.display = 'none';

@@ -11,9 +11,9 @@ h6{
     white-space: nowrap;
 }
 
-.scrolling-content {
+.scrolling-content > marquee > div{
     display: flex;
-    animation: scrolling 30s linear infinite; 
+    align-items: center;
 }
 .ticker_item{
     background-color: green;
@@ -22,15 +22,24 @@ h6{
     padding: 10px;
     text-align: center;
 }
-
-@keyframes scrolling {
-    from {
-        transform: translateX(0);
-    }
-    to {
-        transform: translateX(-100%); 
-    }
+/* ============ allcompany list============= */
+.allCompanyList{
+    margin-top: -10px;
+    list-style-type: none;
+    max-height: 200px;
+    overflow-y: auto;
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px 2px #000000de;
+    padding: 0px;
+    
 }
+.allCompanyList > .allCompanyListItem{
+    border-bottom: 1px solid #00000059;
+    padding: 5px 10px;
+    margin-bottom: 2px;
+}
+
 
 /*============Schedual market============*/
 .marketScheduale{
@@ -247,7 +256,7 @@ h6{
 
 /*=============BuySell order==============*/
 .buySellSection{
-    margin-top: 10px;
+    margin: 10px 0px;
 }
 .buySellSection > .container > .box >.btnGroup{
     display: flex;

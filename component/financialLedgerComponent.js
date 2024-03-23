@@ -1,98 +1,24 @@
-
-
-function executeFinancialLedger(){
-    const data = {
-        Opening_Balance:35465,
-        Total_Debit:68965,
-        Total_Credit:5645,
-        Closing_Balance:6564,               
+async function executeFinancialLedger(){
+    let openingBalance = 0
+    let closingBalance = 0
+    const ledgerSummuryData = {
+        opening_Balance: 0,
+        total_Debit: 0,
+        total_Credit: 0,
+        closing_Balance:0,               
     }
-
-    const ledgerData = [
-        {
-            date: "17/JAN/2024",
-            particulars: "Unknown",
-            debit: 345,
-            credit: 683,
-        },
-        {
-            date: "10/DEC/2023",
-            particulars: "Unknown",
-            debit: 456,
-            credit: 890,
-        },
-        {
-            date: "05/DEC/2023",
-            particulars: "Unknown",
-            debit: 234,
-            credit: 758,
-        },
-        {
-            date: "11/NOV/2023",
-            particulars: "Unknown",
-            debit: 4678,
-            credit: 8954,
-        },
-        {
-            date: "15/JAN/2023",
-            particulars: "Unknown",
-            debit: 347,
-            credit: 974,
-        },
-        {
-            date: "15/JAN/2023",
-            particulars: "Unknown",
-            debit: 345,
-            credit: 683,
-        },
-        {
-            date: "15/JAN/2023",
-            particulars: "Unknown",
-            debit: 345,
-            credit: 683,
-        },
-        {
-            date: "15/JAN/2023",
-            particulars: "Unknown",
-            debit: 345,
-            credit: 683,
-        },
-        {
-            date: "15/JAN/2023",
-            particulars: "Unknown",
-            debit: 345,
-            credit: 683,
-        },
-        {
-            date: "15/JAN/2023",
-            particulars: "Unknown",
-            debit: 345,
-            credit: 683,
-        },
-        {
-            date: "15/JAN/2023",
-            particulars: "Unknown",
-            debit: 345,
-            credit: 683,
-        },
-        {
-            date: "15/JAN/2023",
-            particulars: "Unknown",
-            debit: 345,
-            credit: 683,
-        },
-        {
-            date: "15/JAN/2023",
-            particulars: "Unknown",
-            debit: 345,
-            credit: 683,
-        },
-    ]
-
     const today = new Date().toISOString().split('T')[0];
-    
+    let ledgerData = []
 
-    function financialLedger(){
+    const fetchedData =await getFinacialLedger(user.LoggedInInvestorId, today, today)
+    if(fetchedData.status === true){
+        ledgerData = fetchedData.FinancialStatement
+        openingBalance = Math.round(Number(fetchedData.OpeningBalance.replace(/,/g, '')))
+        ledgerSummuryData.opening_Balance = openingBalance
+    }
+    
+    
+    async function financialLedger(){
         document.getElementById('mainContentSection').innerHTML = 
         `
             <div class="financial-Heading" id="financial-Heading">
@@ -101,12 +27,12 @@ function executeFinancialLedger(){
                 </div>
             </div>
 
-            <div class="container">
+            <div style='margin-top: 5px' class="container">
                 <div class="searchContent">
                     <div class="input-box">
-                        <input type="date" id="date-from" >
+                        <input type="date" id="FL_date-from" >
                         <span>To</span>
-                        <input type="date" id="date-to">
+                        <input type="date" id="FL_date-to">
                     </div>
                     <div class="searchLedger">
                         <h5>SEARCH</h5>
@@ -118,13 +44,12 @@ function executeFinancialLedger(){
                 <div class="ledgerSummury" id="ledgerSummury"></div>
             </div>
 
-            <div class="container">
+            <div class="container" style="flex: 1 auto;overflow-y: auto;">
             <div class="ledgerTable" id="ledgerTable"></div>
             </div>
             
         `
     }
-
     function renderLedgerSummury(){
         document.getElementById('ledgerSummury').innerHTML = 
         `
@@ -134,7 +59,7 @@ function executeFinancialLedger(){
                     <p>:</p>
                 </div>
                 <div class="right">
-                    <p>${data.Opening_Balance}</p>
+                    <p>${ledgerSummuryData.opening_Balance}</p>
                 </div>     
             </div>
             <div class= "item">
@@ -143,7 +68,7 @@ function executeFinancialLedger(){
                     <p>:</p>
                 </div>
                 <div class="right">
-                    <p>${data.Total_Debit}</p>
+                    <p>${ledgerSummuryData.total_Debit}</p>
                 </div>     
             </div>
             <div class= "item">
@@ -152,7 +77,7 @@ function executeFinancialLedger(){
                     <p>:</p>
                 </div>
                 <div class="right">
-                    <p>${data.Total_Credit}</p>
+                    <p>${ledgerSummuryData.total_Credit}</p>
                 </div>     
             </div>
             <div class= "item">
@@ -161,14 +86,16 @@ function executeFinancialLedger(){
                     <p>:</p>
                 </div>
                 <div class="right">
-                    <p>${data.Closing_Balance}</p>
+                    <p>${ledgerSummuryData.closing_Balance}</p>
                 </div>     
             </div>
         `
     }
 
     function renderLedgerTable(){
-        var tableBody = document.getElementById('ledgerTable')
+        let total_debit = 0
+        let total_credit = 0
+        const tableBody = document.getElementById('ledgerTable')
         tableBody.innerHTML =
          `
             <table>
@@ -179,26 +106,84 @@ function executeFinancialLedger(){
                     <th>Credit</th>
                 </tr>
             </table>
+           
         `;
         ledgerData.forEach(data => {
             const newRow = document.createElement('tr');
+            const newP = document.createElement('tr')
+            newP.classList.add('balanceRow')
     
             newRow.innerHTML = `
                 <td>${data.date}</td>
-                <td>${data.particulars}</td>
-                <td>${data.debit}</td>
-                <td>${data.credit}</td>
+                <td>${data.note}</td>
+                <td>${Math.round(Number(data.debit.replace(/,/g, '')))}</td>
+                <td>${Math.round(Number(data.credit.replace(/,/g, '')))}</td>
             `;
-        tableBody.querySelector('tbody').appendChild(newRow);
+            closingBalance = openingBalance + Math.round(Number(data.credit.replace(/,/g, '')))
+            closingBalance = closingBalance - Math.round(Number(data.debit.replace(/,/g, '')))
+            openingBalance = closingBalance
+            
+            total_debit = total_debit + Math.round(Number(data.debit.replace(/,/g, '')))
+            total_credit = total_credit + Math.round(Number(data.credit.replace(/,/g, '')))
+            newP.innerHTML=`
+                <td style='text-align:right;' colspan='4'>Balance Tk ${closingBalance.toLocaleString("en-IN")}</td>
+            `
+            tableBody.querySelector('tbody').appendChild(newRow);
+            tableBody.querySelector('tbody').appendChild(newP);
+
+            if(data.note.includes('Buy')){
+                newRow.style.backgroundColor = '#3766FC'
+                newP.style.backgroundColor = '#3766FC'
+                newP.style.color = '#fff';
+                
+                
+                const tdElements = newRow.getElementsByTagName('td');
+                for (let i = 0; i < tdElements.length; i++) {
+                    tdElements[i].style.borderColor = '#3766FC';
+                    tdElements[i].style.color = '#fff';
+                }
+            }
+            else if(data.note.includes('Sell')){
+                newRow.style.backgroundColor = '#8329A5'
+                newP.style.color = '#fff';
+                newP.style.backgroundColor = '#8329A5'
+                
+                const tdElements = newRow.getElementsByTagName('td');
+                for (let i = 0; i < tdElements.length; i++) {
+                    tdElements[i].style.borderColor = '#8329A5';
+                    tdElements[i].style.color = '#fff';
+                }
+            }else{
+                newP.style.backgroundColor = '#CFCDCE'
+            }
+            
         });
+        ledgerSummuryData.closing_Balance = closingBalance.toLocaleString("en-IN")
+        ledgerSummuryData.total_Credit = total_credit.toLocaleString("en-IN")
+        ledgerSummuryData.total_Debit = total_debit.toLocaleString("en-IN")
     }
 
-    
-    financialLedger()
-    document.getElementById('date-from').value = today;
-    document.getElementById('date-to').value = today;
+    await financialLedger()
+    document.getElementById('FL_date-from').value = today;
+    document.getElementById('FL_date-to').value = today;
     renderLedgerSummury()
     renderLedgerTable()
+   
+    document.querySelector('.searchLedger').addEventListener('click', async () => {
+        const date_from = document.getElementById('FL_date-from').value 
+        const date_to= document.getElementById('FL_date-to').value 
+        const fetchedData =await getFinacialLedger(user.LoggedInInvestorId, date_from, date_to)
+        
+        if(fetchedData.status === true){
+            ledgerData = fetchedData.FinancialStatement
+            openingBalance = Math.round(Number(fetchedData.OpeningBalance.replace(/,/g, '')))
+            ledgerSummuryData.opening_Balance = openingBalance
+            renderLedgerTable()
+            renderLedgerSummury()
+        }
+        
+    });
+    
     
 }
 

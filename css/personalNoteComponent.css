@@ -63,5 +63,35 @@ textarea{
     width: 40%;
 }
 .all-note-box{
-    height: 40vh;;
+    height: 45vh;
+    overflow-y: auto;
+}
+.all-note-box > div > .box{
+    margin: 10px 0px;
+}
+.box > .note-content{
+    display: flex;
+    justify-content: space-between;
+}
+.box > .note-content > .note_date {
+    width: 30%;
+    padding: 5px;
+}
+.box > .note-content > .note_body {
+    width: 70%;
+    padding: 5px;
+}
+.note_btn{
+    display: flex;
+}
+.note_btn > div {
+    width: 50%;
+    background-color: #4CB050;
+    color: #fff;
+    margin: 10px 10px;
+    padding: 8px 5px;
+    text-align: center;
+}
+.note_btn > .deleteBtn{
+    background-color: red;
 }

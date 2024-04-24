@@ -1,18 +1,10 @@
-function executechildID_Details(){ 
-    const childIdDataDetails = [
-        {
-            company: "EPGL",
-            qty:10,
-            ltp:34.70,
-            stock_Value:347
-        },
-        {
-            company: "KPL",
-            qty:34,
-            ltp:42.10,
-            stock_Value:1431.4
-        }
-    ]
+async function executechildID_Details(data){ 
+    let childIdDataDetails = []
+    const fetchedChildIdStocks = await getChildIdStocks(data)
+    if(fetchedChildIdStocks.status === true){
+        childIdDataDetails = fetchedChildIdStocks.Data
+    }
+    
 
     function childID_Details(){
         document.getElementById('mainContentSection').innerHTML = 
@@ -48,7 +40,7 @@ function executechildID_Details(){
             <tbody>
                 <tr>
                     <td>Total Stock Value</td>
-                    <td>347</td>
+                    <td>${fetchedChildIdStocks.status === true ? fetchedChildIdStocks.totalStockVal : ''}</td>
                 </tr>
             </tbody
         </table>
@@ -69,17 +61,17 @@ function executechildID_Details(){
         </table>
         `
 
-        childIdDataDetails.forEach((data, index)=>{
-            const sl = index + 1;
+        childIdDataDetails.forEach((data)=>{
             const newRow = document.createElement('tr')
             newRow.innerHTML=`
-                <td>${sl}</td>
-                <td>${data.company}</td>
-                <td>${data.qty}</td>
-                <td>${data.ltp}</td>
-                <td>${data.stock_Value}</td>
+                <td>${data.Sl}</td>
+                <td>${data.CompanyID}</td>
+                <td>${data.Quantity}</td>
+                <td>${data.LTP}</td>
+                <td>${data.StockValue}</td>
             `
             allStockBody.querySelector('tbody').appendChild(newRow)
+            newRow.style.backgroundColor = data.GainLoss >= 0 ? (data.GainLoss > 0 ? '#04A41E' : '#fff') : '#FE0000'
         })
 
     }

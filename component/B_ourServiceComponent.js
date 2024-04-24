@@ -1,34 +1,9 @@
-function executeB_OurService(){
-    const serviceContents = [
-        {
-            heading: "Stock Brokerage Service",
-            url:"#",
-        },
-        {
-            heading: "IPO Application Service",
-            url:"#",
-        },
-        {
-            heading: "DP Service",
-            url:"#",
-        },
-        {
-            heading: "Custodian Service",
-            url:"#",
-        },
-        {
-            heading: "Advisory Service",
-            url:"#",
-        },
-        {
-            heading: "Alternative Investment Service",
-            url:"#",
-        },
-        {
-            heading: "Halal/Shariah Compliant Investment Service",
-            url:"#",
-        }
-    ]
+async function executeB_OurService(){
+    let serviceContents = []
+    const fetchedData = await getCmsHome()
+    if(fetchedData.status === true){
+        serviceContents = fetchedData.service
+    }
     function B_OurService(){
         document.getElementById('page_heading').innerHTML=`Our Service`
         document.getElementById('beforeMain').innerHTML = `
@@ -48,9 +23,7 @@ function executeB_OurService(){
             newContent.classList.add('ourService_item');
     
             newContent.innerHTML = `
-            <a href=${content.url} class="ourService_item_heading">
-                <h4>${content.heading}</h4>
-            </a>
+                <h4 class="ourService_item_heading">${content.Name}</h4>
             `;
     
             why01Div.appendChild(newContent);

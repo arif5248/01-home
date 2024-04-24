@@ -1,229 +1,88 @@
-function executeTrade(){
-    let marketIntervalId;
-    stock_ticker_data = [
-        {
-            name:  'MEGHNAPET-1',
-            data: '100.0 @33.7(0.8)'
-        },
-        {
-            name:  'MEGHNAPET-2',
-            data: '100.0 @33.7(0.8)'
-        },
-        {
-            name:  'MEGHNAPET-3',
-            data: '100.0 @33.7(0.8)'
-        },
-        {
-            name:  'MEGHNAPET-4',
-            data: '100.0 @33.7(0.8)'
-        },
-        {
-            name:  'MEGHNAPET-5',
-            data: '100.0 @33.7(0.8)'
-        },
-        {
-            name:  'MEGHNAPET-6',
-            data: '100.0 @33.7(0.8)'
-        },
-        {
-            name:  'MEGHNAPET-7',
-            data: '100.0 @33.7(0.8)'
-        },
-        {
-            name:  'MEGHNAPET-8',
-            data: '100.0 @33.7(0.8)'
-        },{
-            name:  'MEGHNAPET-9',
-            data: '100.0 @33.7(0.8)'
-        },
+async function executeTrade(data){
+    let selectedScript = data
+    let companyList =[]
+    let stock_ticker_data = []
+    let tradeHour = {}
+    let cse_buySellData = []
+    let fetchedCse_buySellData = {}
+    let fetchedDse_buySellData = {}
+    let dse_buySellData = []
+    let scriptInfo = {}
+
+    const tradePageLogin = await Post_LOGIN_({
+        CMND: "_LOGIN_",
+        tid: "448",
+        inv_id: user.inv_id,
+        inv_pass: user.ngts_pass2, 
+        force: "1"
+    })
+    if(tradePageLogin.success === true){
+        sessionStorage.setItem('userData', JSON.stringify(tradePageLogin));
+
+        const fetchedData = await getCompanyList()
+        if(fetchedData.status === true){
+            companyList = fetchedData.Data
+        }
+        tradeHour = await get_THOUR_()
+    }
+
+    async function handleListItemClick(event) {
+        let companyName
+        if(event){
+            companyName = event.target.textContent;
+        }
+        selectedScript = companyName || selectedScript;
+        const allCompanyList = document.getElementById('allCompanyList');
+        allCompanyList.innerHTML = '';
+        allCompanyList.style.display = 'none'
+        document.getElementById('searchCompany').value = selectedScript
+
+        fetchedCse_buySellData = await get_OFFER_(selectedScript)
+        if(fetchedCse_buySellData.success === true){
+            cse_buySellData = fetchedCse_buySellData.Offers
+        }
+        fetchedDse_buySellData = await get_OFFERD_(selectedScript)
+        if(fetchedDse_buySellData.success === true){
+            dse_buySellData = fetchedDse_buySellData.Offers
+        }
+        scriptInfo = await get_SCRIPINFO_(selectedScript)
         
-
-
-    ]
-    const cse_buySellData = [
-        {
-            no_of_buyer: 10.0,
-            b_qty: 547000.0,
-            b_price: 5.8,
-            no_of_seller: 5.0,
-            s_qty: 24475.0,
-            s_price: 6.0,
-        },
-        {
-            no_of_buyer: 10.0,
-            b_qty: 547000.0,
-            b_price: 5.8,
-            no_of_seller: 5.0,
-            s_qty: 24475.0,
-            s_price: 6.0,
-        },
-        {
-            no_of_buyer: 10.0,
-            b_qty: 547000.0,
-            b_price: 5.8,
-            no_of_seller: 5.0,
-            s_qty: 24475.0,
-            s_price: 6.0,
-        },
-        {
-            no_of_buyer: 10.0,
-            b_qty: 547000.0,
-            b_price: 5.8,
-            no_of_seller: 5.0,
-            s_qty: 24475.0,
-            s_price: 6.0,
-        },
-        {
-            no_of_buyer: 10.0,
-            b_qty: 547000.0,
-            b_price: 5.8,
-            no_of_seller: 5.0,
-            s_qty: 24475.0,
-            s_price: 6.0,
-        },
-        {
-            no_of_buyer: 10.0,
-            b_qty: 547000.0,
-            b_price: 5.8,
-            no_of_seller: 5.0,
-            s_qty: 24475.0,
-            s_price: 6.0,
-        },
-        {
-            no_of_buyer: 10.0,
-            b_qty: 547000.0,
-            b_price: 5.8,
-            no_of_seller: 5.0,
-            s_qty: 24475.0,
-            s_price: 6.0,
-        },
-        {
-            no_of_buyer: 10.0,
-            b_qty: 547000.0,
-            b_price: 5.8,
-            no_of_seller: 5.0,
-            s_qty: 24475.0,
-            s_price: 6.0,
-        },
-        {
-            no_of_buyer: 10.0,
-            b_qty: 547000.0,
-            b_price: 5.8,
-            no_of_seller: 5.0,
-            s_qty: 24475.0,
-            s_price: 6.0,
-        },
-        {
-            no_of_buyer: 10.0,
-            b_qty: 547000.0,
-            b_price: 5.8,
-            no_of_seller: 5.0,
-            s_qty: 24475.0,
-            s_price: 6.0,
-        },
-        {
-            no_of_buyer: 22.0,
-            b_qty: 547000.0,
-            b_price: 5.8,
-            no_of_seller: 5.0,
-            s_qty: 24475.0,
-            s_price: 6.0,
+        if(cse_buySellData !== null){
+            renderCseContent()
         }
-    ]
-
-    const dse_buySellData = [
-        {
-            no_of_buyer: 25.0,
-            b_qty: 777000.0,
-            b_price: 5.3,
-            no_of_seller: 3.0,
-            s_qty: 458935.0,
-            s_price: 8.0,
-        },
-        {
-            no_of_buyer: 25.0,
-            b_qty: 777000.0,
-            b_price: 5.3,
-            no_of_seller: 3.0,
-            s_qty: 458935.0,
-            s_price: 8.0,
-        },
-        {
-            no_of_buyer: 25.0,
-            b_qty: 777000.0,
-            b_price: 5.3,
-            no_of_seller: 3.0,
-            s_qty: 458935.0,
-            s_price: 8.0,
-        },
-        {
-            no_of_buyer: 25.0,
-            b_qty: 777000.0,
-            b_price: 5.3,
-            no_of_seller: 3.0,
-            s_qty: 458935.0,
-            s_price: 8.0,
-        },
-        {
-            no_of_buyer: 25.0,
-            b_qty: 777000.0,
-            b_price: 5.3,
-            no_of_seller: 3.0,
-            s_qty: 458935.0,
-            s_price: 8.0,
-        },
-        {
-            no_of_buyer: 25.0,
-            b_qty: 777000.0,
-            b_price: 5.3,
-            no_of_seller: 3.0,
-            s_qty: 458935.0,
-            s_price: 8.0,
-        },
-        {
-            no_of_buyer: 25.0,
-            b_qty: 777000.0,
-            b_price: 5.3,
-            no_of_seller: 3.0,
-            s_qty: 458935.0,
-            s_price: 8.0,
-        },
-        {
-            no_of_buyer: 25.0,
-            b_qty: 777000.0,
-            b_price: 5.3,
-            no_of_seller: 3.0,
-            s_qty: 458935.0,
-            s_price: 8.0,
-        },
-        {
-            no_of_buyer: 25.0,
-            b_qty: 777000.0,
-            b_price: 5.3,
-            no_of_seller: 3.0,
-            s_qty: 458935.0,
-            s_price: 8.0,
-        },
-        {
-            no_of_buyer: 25.0,
-            b_qty: 777000.0,
-            b_price: 5.3,
-            no_of_seller: 3.0,
-            s_qty: 458935.0,
-            s_price: 8.0,
-        },
-        {
-            no_of_buyer: 22.0,
-            b_qty: 547000.0,
-            b_price: 5.8,
-            no_of_seller: 5.0,
-            s_qty: 24475.0,
-            s_price: 6.0,
+        if(dse_buySellData !== null){
+            renderDseContent()
         }
-    ]
+
+        document.getElementById('showScriptInfo').style.display = 'block'
+        renderSelectedStockBox()
+    }
+
+    function handleTradeBtn(case_name){
+        return function(event){
+            if(selectedScript || case_name === 'TP_halted' || case_name === 'TP_stockStatus' || case_name === 'TP_todayTrade' || case_name === 'TP_marketMover'){
+                route(`../component/${case_name}Component.js`, `../css/${case_name}Component.css`, case_name, selectedScript);
+            }else{
+                document.getElementById('overlay').style.display = 'block'
+                document.getElementById('invalidLogin').style.display = 'block'
+                document.getElementById('invalidLogin').innerHTML= `
+                    <h5>Error</h5>
+                    <p>Please Select a Script</p>
+                    <div><p id='invalidLoginCancel'>Cancel</p></div> 
+                `
+                document.getElementById('invalidLoginCancel').addEventListener('click', hideInvalidLoginDiv)
+                document.getElementById('overlay').addEventListener('click', hideInvalidLoginDiv)
+                function hideInvalidLoginDiv(){
+                    document.getElementById('overlay').style.display = 'none'
+                    document.getElementById('invalidLogin').style.display = 'none'
+                }
+            } 
+        }   
+    }
 
     function trade(){
         document.getElementById('mainContentSection').innerHTML = `
+            <div id='invalidLogin' style='display:none;'></div>
             <div class="pageHeading" id="financial-Heading">
                 <div class="heading">
                     <h1>Trade</h1>
@@ -231,7 +90,9 @@ function executeTrade(){
             </div>
 
             <div class="stock_ticker_box">
-                <div class="scrolling-content" id="scrolling-content"></div>
+                <div class="scrolling-content" id="scrolling-content">
+                    <div id="tradeMarqueeContainer"></div>
+                </div>
             </div>
 
             <div class="marketScheduale" id="marketScheduale"></div>
@@ -243,35 +104,24 @@ function executeTrade(){
             <div class="container">
                 <div class="box">
                     <div class="tradeAllBtnBox" id="tradeAllBtnBox">
-                        <div onclick="updateFooterBtnState('trade');route('../component/TP_companyInfoComponent.js','../css/TP_companyInfoComponent.css','TP_companyInfo')" class="singleBtn">COMP INFO</div>
-
-                        <div onclick="updateFooterBtnState('trade');route('../component/TP_newsComponent.js','../css/TP_newsComponent.css','TP_news')" class="singleBtn">NEWS</div>
-
-                        <div onclick="updateFooterBtnState('trade');route('../component/TP_todayTradeComponent.js','../css/TP_todayTradeComponent.css','TP_todayTrade')" class="singleBtn">ALL TRADES</div>
-
-                        <div class="singleBtn">PRICE ALERT</div>
-
+                        <div id='TP_companyInfo' class="singleBtn">COMP INFO</div>
+                        <div id='TP_news' class="singleBtn">NEWS</div>
+                        <div id='TP_todayTrade' class="singleBtn">ALL TRADES</div>
+                        <div id='TP_priceAlert' class="singleBtn">PRICE ALERT</div>
                         <div class="singleBtn" onclick="showFund()" >FUND STATUS</div>
-
-                        <div onclick="updateFooterBtnState('trade');route('../component/TP_lastTradeComponent.js','../css/TP_lastTradeComponent.css','TP_lastTrade')" class="singleBtn">LAST TRADES</div>
-                        
-                        <div onclick="updateFooterBtnState('trade');route('../component/TP_marketMoverComponent.js','../css/TP_marketMoverComponent.css','TP_marketMover')" class="singleBtn">MKT MOVER</div>
-                        
-                        <div class="singleBtn">DIVIDEND</div>
-                        
-                        <div onclick="updateFooterBtnState('trade');route('../component/TP_stockStatusComponent.js','../css/TP_stockStatusComponent.css','TP_stockStatus')" class="singleBtn">STK STATUS</div>
-
-                        <div onclick="updateFooterBtnState('trade');route('../component/TP_rateHistoryComponent.js','../css/TP_rateHistoryComponent.css','TP_rateHistory')" class="singleBtn">RATE HISTORY</div>
-                        
-                        <div onclick="updateFooterBtnState('trade');route('../component/TP_haltedComponent.js','../css/TP_haltedComponent.css','TP_halted')" class="singleBtn">HALTED COMP</div>
-
-                        <div class="singleBtn">FAVOURITES</div>
+                        <div id='TP_lastTrade' class="singleBtn">LAST TRADES</div>   
+                        <div id='TP_marketMover' class="singleBtn">MKT MOVER</div>                        
+                        <div id='TP_dividend' class="singleBtn">DIVIDEND</div>                       
+                        <div id='TP_stockStatus' class="singleBtn">STK STATUS</div>
+                        <div id='TP_rateHistory' class="singleBtn">RATE HISTORY</div>                       
+                        <div id='TP_halted' class="singleBtn">HALTED COMP</div>
+                        <div id='TP_favourit' class="singleBtn">FAVOURITES</div>
                     </div>
                 </div>
             </div>
             <div class="selectedStockSection">
                 <div class= "container">
-                    <div class= "box">
+                    <div style='display:none;' id='showScriptInfo' class= "box">
                         <div class="selectedStockBox" id="selectedStockBox"></div>
                     </div>
                 </div>
@@ -289,14 +139,14 @@ function executeTrade(){
                             <h3>Seller</h3>
                         </div>
                         <div class="buySellData">
-                            <div class="ipoContent" id="cseContent">cse</div>
-                            <div class="ipoContent" id="dseContent">dse</div>
+                            <div style='flex-direction: column; min-height:390px;' class="ipoContent" id="cseContent">cse</div>
+                            <div style='flex-direction: column; min-height:390px;' class="ipoContent" id="dseContent">dse</div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="buySellSection">
+            <div class="buySellSection" style='flex: 1 auto'>
                 <div class= "container">
                     <div class= "box">
                         <div class="btnGroup" id="btnGroup">
@@ -333,43 +183,23 @@ function executeTrade(){
                     </div>
                 </div>
             </div>
-
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
         `
     }
-
     function renderStockTicker(){
-        const stockTickerBody = document.getElementById('scrolling-content')
+        const stockTickerBody = document.getElementById('tradeMarqueeContainer')
+        stockTickerBody.innerHTML = ''
         stock_ticker_data.forEach((ticker, index) => {
             const newDiv = document.createElement('div')
             newDiv.classList.add(`ticker_item`, `ticker_item_${index}`)
             newDiv.innerHTML=`
-                <h6 class = "ticker_heading">${ticker.name}</h6>
-                <p class = "ticker_data">${ticker.data}</p>
+                <h6 class = "ticker_heading">${ticker.scrip}</h6>
+                <p class = "ticker_data">${ticker.LTP}(${ticker.Chng})</p>
             `
             stockTickerBody.appendChild(newDiv)
+            document.querySelector(`.ticker_item_${index}`).style.backgroundColor = `${ticker.chng >= 0 ? (ticker.chng > 0 ? '#04A41E' : '#0D279B') : '#FE0000' }`
         });
-        // const totalWidth = stock_ticker_data.length * 150
-        // stockTickerBody.style.width = `${totalWidth}px`;
         
     }
-
     function renderMarketScheduale(){
         document.getElementById('marketScheduale').innerHTML=`
             <div class='container'>
@@ -380,21 +210,28 @@ function executeTrade(){
                             <p id="remaining_trade_time">Remaining Trade Time</p>
                         </div>
                         <div class="remaining_time">
-                            <h4 id="trade_status">Open</h4>
+                            <h4 id="trade_status"></h4>
                             <h4 id="countdown"></h4>
                         </div>
                     </div>
                 </div>
             </div>
         `
+        tradeTimeIntervalId = setInterval(()=>{
+            updateCountdown();
+        }, 1000); 
     }
-
-    function updateCountdown() {
+    async function updateCountdown() {
+        if(tradeHour.trade === 1 || tradeHour.trade === 0){
+            stock_ticker_data = await get_TICKER_()
+            
+            renderStockTicker()
+        }
         const now = new Date().toLocaleString("en-US", {timeZone: "Asia/Dhaka"});
         const currentTime = new Date(now);
     
         const dayOfWeek = currentTime.getDay();
-        if (dayOfWeek === 5 || dayOfWeek === 6) {
+        if (dayOfWeek === 5 || dayOfWeek === 6){
             document.getElementById('countdown').innerHTML = 'No trading on Friday and Saturday.';
             document.getElementById('trade_status').innerHTML = `Closed`
             document.getElementById('trade_status').style.color = `red`
@@ -402,17 +239,21 @@ function executeTrade(){
 
             return;
         }
-        const tradeStartTime = new Date(currentTime);
-        tradeStartTime.setHours(10, 0, 0, 0);
-    
-        const tradeEndTime = new Date(currentTime);
-        tradeEndTime.setHours(14, 30, 0, 0);
-    
+        const targetTime = new Date(currentTime);
+        targetTime.setHours(10, 0, 0, 0);
+        const targetTime2 = new Date(currentTime);
+        targetTime2.setHours(14, 30, 0, 0);
+        if (currentTime.getTime() === targetTime.getTime() || currentTime.getTime() === targetTime2.getTime()) {
+            tradeHour = await get_THOUR_()
+        }
+
+        const tradeStartTime = tradeHour.trade === 0 ? new Date(tradeHour.cntm) : ''
+        const tradeEndTime = tradeHour.trade === 1 ? new Date(tradeHour.cntm) : ''
+        
         let timeDifference = tradeEndTime - currentTime;
         let beforeTimeDifference = tradeStartTime - currentTime
         
-    
-        if (timeDifference < 0) {
+        if (new Date(tradeHour.cntm).toISOString().split('T')[0] !== currentTime.toISOString().split('T')[0] && timeDifference < 0) {
             document.getElementById('countdown').innerHTML = 'Trading hours have ended for today.';
             document.getElementById('trade_status').innerHTML = `Closed`
             document.getElementById('trade_status').style.color = `red`
@@ -430,7 +271,7 @@ function executeTrade(){
         
             const seconds = Math.floor(beforeTimeDifference / 1000);
         
-            const countdownText = `${hours}h ${minutes}m ${seconds}s`;
+            const countdownText = `${hours}h ${minutes < 10 ? '0' + minutes : minutes}m ${seconds < 10 ? '0' + seconds : seconds}s`;
             document.getElementById('remaining_trade_time').innerHTML = `Trade will be Start in`
             document.getElementById('countdown').innerHTML = countdownText;
             document.getElementById('trade_status').innerHTML = `Closed`
@@ -438,6 +279,7 @@ function executeTrade(){
 
             return
         }
+        
         if(beforeTimeDifference > 0){
             document.getElementById('countdown').innerHTML = 'Trading hours will be opened at 10:00am.';
             document.getElementById('trade_status').innerHTML = `Closed`
@@ -452,54 +294,56 @@ function executeTrade(){
     
         const minutes = Math.floor(timeDifference / (1000 * 60));
         timeDifference %= (1000 * 60);
-    
+       
         const seconds = Math.floor(timeDifference / 1000);
-    
-        const countdownText = `${hours}h ${minutes}m ${seconds}s`;
+        const countdownText = `${hours}h ${minutes < 10 ? '0' + minutes : minutes}m ${seconds < 10 ? '0' + seconds : seconds}s`;
         document.getElementById('countdown').innerHTML = countdownText;
         document.getElementById('trade_status').innerHTML = `Open`
         document.getElementById('trade_status').style.color = `#0aeb0a`
         document.getElementById('remaining_trade_time').innerHTML = `Remaining Trade Time`
     }
-
     function renderTradeSearchBox(){
         document.getElementById('tradeSearchBox').innerHTML = `
         <div class="search">
-            <input type="text" name="searchBox" placeholder="Select Script">
+            <input id='searchCompany' type="text" name="searchBox" placeholder="Select Script" value='${selectedScript !== undefined ? selectedScript : ''}'>
+            <ul style='display: none' class='allCompanyList' id='allCompanyList'></ul>
         </div>
-        <div class="relaod">
+        <div class="relaod" id='reloadSearchBox'>
             <img src="../images/icons/reload.png" alt="reload" style="width: 30px;">
         </div>
         `
     }
-
     function renderSelectedStockBox(){
         document.getElementById('selectedStockBox').innerHTML = `
             <div class="innerCol">
-                <h4 id="selectedStock">KEYACOSMET (B)</h4>
-                <p id="selectedStockPrice">KEYA COSMETICS LIMITED</p>
+                <h4 id="selectedStockID">${scriptInfo.ID} (${scriptInfo.sCat})</h4>
+                <p id="selectedStockName">${scriptInfo.sNam}</p>
             </div>
             <div class="innerCol">
-                <h4 id="selectedStock">6.0</h4>
-                <p id="selectedStockPrice">TK 0 (3.3%)</p>
+                <h4 id="selectedStockPrice">${scriptInfo.sLTP}</h4>
+                <p id="selectedStockChange">TK ${scriptInfo.sChng} (${scriptInfo.sChngP}%)</p>
             </div>
         `
+        
+        document.getElementById('selectedStockPrice').style.color = `${scriptInfo.sChng >= 0 ? (scriptInfo.sChng > 0 ? '#04A41E' : '#fff') : '#FE0000' }`
+        document.getElementById('selectedStockChange').style.color = `${scriptInfo.sChng >= 0 ? (scriptInfo.sChng > 0 ? '#04A41E' : '#fff') : '#FE0000' }`
     }
-
     function renderCseContent() {
         const tableBody = document.getElementById('cseContent');
         tableBody.innerHTML =
          `
-            <table>
-                <tr>
-                    <th>No of<br>Buyer</th>
-                    <th>Qty</th>
-                    <th>Price</th>
-                    <th>No of<br>Seller</th>
-                    <th>Qty</th>
-                    <th>Price</th>
-                </tr>
-            </table>
+            <div style='flex: 1 auto'>
+                <table>
+                    <tr>
+                        <th>No of<br>Buyer</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                        <th>No of<br>Seller</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                    </tr>
+                </table>
+            </div>
             <div id="cseFooter" class="cseFooter"></div>
         `;
     
@@ -507,12 +351,12 @@ function executeTrade(){
             const newRow = document.createElement('tr');
     
             newRow.innerHTML = `
-                <td>${data.no_of_buyer}</td>
-                <td>${data.b_qty}</td>
-                <td>${data.b_price}</td>
-                <td>${data.no_of_seller}</td>
-                <td>${data.s_qty}</td>
-                <td>${data.s_price}</td>
+                <td>${data.BO}</td>
+                <td>${data.BQ}</td>
+                <td>${data.BP}</td>
+                <td>${data.SO}</td>
+                <td>${data.SQ}</td>
+                <td>${data.SP}</td>
             `;
         tableBody.querySelector('tbody').appendChild(newRow);
         });
@@ -526,7 +370,7 @@ function executeTrade(){
                         <p>:</p>
                     </div>
                     <div class="right">
-                        <p>6.0</p>
+                        <p>${fetchedCse_buySellData.success === true ? fetchedCse_buySellData.LTP : ''}</p>
                     </div>     
                 </div>
                 <div class= "item">
@@ -535,7 +379,7 @@ function executeTrade(){
                         <p>:</p>
                     </div>
                     <div class="right">
-                        <p>53030</p>
+                        <p>${fetchedCse_buySellData.success === true ? fetchedCse_buySellData.TotVolume : ''}</p>
                     </div>     
                 </div>
                 <div class= "item">
@@ -544,7 +388,7 @@ function executeTrade(){
                         <p>:</p>
                     </div>
                     <div class="right">
-                        <p>5.8</p>
+                        <p>${fetchedCse_buySellData.success === true ? fetchedCse_buySellData.dyLow : ''}</p>
                     </div>     
                 </div>
                 <div class= "item">
@@ -553,27 +397,27 @@ function executeTrade(){
                         <p>:</p>
                     </div>
                     <div class="right">
-                        <p>5.8</p>
+                        <p>${fetchedCse_buySellData.success === true ? fetchedCse_buySellData.YCP : ''}</p>
                     </div>     
                 </div>
             </div>
             <div>
                 <div class= "item">
                 <div class="left">
-                    <p>Last Trade Price</p>
+                    <p>Last Trade Qty</p>
                     <p>:</p>
                 </div>
                 <div class="right">
-                    <p>6.0</p>
+                    <p>${fetchedCse_buySellData.success === true ? fetchedCse_buySellData.LastQt : ''}</p>
                 </div>     
                 </div>
                 <div class= "item">
                     <div class="left">
-                        <p>Total Volume</p>
+                        <p>Total Value</p>
                         <p>:</p>
                     </div>
                     <div class="right">
-                        <p>53030</p>
+                        <p>${fetchedCse_buySellData.success === true ? fetchedCse_buySellData.TotValue : ''}</p>
                     </div>     
                 </div>
                 <div class= "item">
@@ -582,7 +426,7 @@ function executeTrade(){
                         <p>:</p>
                     </div>
                     <div class="right">
-                        <p>5.8</p>
+                        <p>${fetchedCse_buySellData.success === true ? fetchedCse_buySellData.dyHigh : ''}</p>
                     </div>     
                 </div>
                 <div class= "item">
@@ -591,27 +435,28 @@ function executeTrade(){
                         <p>:</p>
                     </div>
                     <div class="right">
-                        <p>5.8</p>
+                        <p>${fetchedCse_buySellData.success === true ? fetchedCse_buySellData.lowLimit+' - '+fetchedCse_buySellData.upLimit : ''}</p>
                     </div>     
                 </div>
             </div>
         `;
     }
-
     function renderDseContent() {
         const tableBody = document.getElementById('dseContent');
         tableBody.innerHTML =
          `
-            <table>
-                <tr>
-                    <th>No of<br>Buyer</th>
-                    <th>Qty</th>
-                    <th>Price</th>
-                    <th>No of<br>Seller</th>
-                    <th>Qty</th>
-                    <th>Price</th>
-                </tr>
-            </table>
+            <div style='flex: 1 auto'>
+                <table>
+                    <tr>
+                        <th>No of<br>Buyer</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                        <th>No of<br>Seller</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                    </tr>
+                </table>
+            </div>
             <div id="dseFooter" class="cseFooter"></div>
         `;
     
@@ -619,97 +464,96 @@ function executeTrade(){
             const newRow = document.createElement('tr');
     
             newRow.innerHTML = `
-                <td>${data.no_of_buyer}</td>
-                <td>${data.b_qty}</td>
-                <td>${data.b_price}</td>
-                <td>${data.no_of_seller}</td>
-                <td>${data.s_qty}</td>
-                <td>${data.s_price}</td>
+                <td>${data.BO}</td>
+                <td>${data.BQ}</td>
+                <td>${data.BP}</td>
+                <td>${data.SO}</td>
+                <td>${data.SQ}</td>
+                <td>${data.SP}</td>
             `;
         tableBody.querySelector('tbody').appendChild(newRow);
         });
         const tableFooter = document.getElementById('dseFooter');
     
         tableFooter.innerHTML = `
-            <div>
-                <div class= "item">
-                    <div class="left">
-                        <p>Last Trade Price</p>
-                        <p>:</p>
-                    </div>
-                    <div class="right">
-                        <p>7.0</p>
-                    </div>     
+        <div>
+            <div class= "item">
+                <div class="left">
+                    <p>Last Trade Price</p>
+                    <p>:</p>
                 </div>
-                <div class= "item">
-                    <div class="left">
-                        <p>Total Volume</p>
-                        <p>:</p>
-                    </div>
-                    <div class="right">
-                        <p>98437</p>
-                    </div>     
-                </div>
-                <div class= "item">
-                    <div class="left">
-                        <p>Day's Low</p>
-                        <p>:</p>
-                    </div>
-                    <div class="right">
-                        <p>9.5</p>
-                    </div>     
-                </div>
-                <div class= "item">
-                    <div class="left">
-                        <p>YCP</p>
-                        <p>:</p>
-                    </div>
-                    <div class="right">
-                        <p>2.8</p>
-                    </div>     
-                </div>
+                <div class="right">
+                    <p>${fetchedDse_buySellData.success === true ? fetchedDse_buySellData.LTP : ''}</p>
+                </div>     
             </div>
-            <div>
-                <div class= "item">
-                    <div class="left">
-                        <p>Last Trade Price</p>
-                        <p>:</p>
-                    </div>
-                    <div class="right">
-                        <p>3.9</p>
-                    </div>     
+            <div class= "item">
+                <div class="left">
+                    <p>Total Volume</p>
+                    <p>:</p>
                 </div>
-                <div class= "item">
-                    <div class="left">
-                        <p>Total Volume</p>
-                        <p>:</p>
-                    </div>
-                    <div class="right">
-                        <p>78045</p>
-                    </div>     
-                </div>
-                <div class= "item">
-                    <div class="left">
-                        <p>Day's High</p>
-                        <p>:</p>
-                    </div>
-                    <div class="right">
-                        <p>9.9</p>
-                    </div>     
-                </div>
-                <div class= "item">
-                    <div class="left">
-                        <p>Circuit</p>
-                        <p>:</p>
-                    </div>
-                    <div class="right">
-                        <p>4.8</p>
-                    </div>     
-                </div>
+                <div class="right">
+                    <p>${fetchedDse_buySellData.success === true ? fetchedDse_buySellData.TotVolume : ''}</p>
+                </div>     
             </div>
+            <div class= "item">
+                <div class="left">
+                    <p>Day's Low</p>
+                    <p>:</p>
+                </div>
+                <div class="right">
+                    <p>${fetchedDse_buySellData.success === true ? fetchedDse_buySellData.dyLow : ''}</p>
+                </div>     
+            </div>
+            <div class= "item">
+                <div class="left">
+                    <p>YCP</p>
+                    <p>:</p>
+                </div>
+                <div class="right">
+                    <p>${fetchedDse_buySellData.success === true ? fetchedDse_buySellData.YCP : ''}</p>
+                </div>     
+            </div>
+        </div>
+        <div>
+            <div class= "item">
+            <div class="left">
+                <p>Last Trade Qty</p>
+                <p>:</p>
+            </div>
+            <div class="right">
+                <p>${fetchedDse_buySellData.success === true ? fetchedDse_buySellData.LastQt : ''}</p>
+            </div>     
+            </div>
+            <div class= "item">
+                <div class="left">
+                    <p>Total Value</p>
+                    <p>:</p>
+                </div>
+                <div class="right">
+                    <p>${fetchedDse_buySellData.success === true ? fetchedDse_buySellData.TotValue : ''}</p>
+                </div>     
+            </div>
+            <div class= "item">
+                <div class="left">
+                    <p>Day's High</p>
+                    <p>:</p>
+                </div>
+                <div class="right">
+                    <p>${fetchedDse_buySellData.success === true ? fetchedDse_buySellData.dyHigh : ''}</p>
+                </div>     
+            </div>
+            <div class= "item">
+                <div class="left">
+                    <p>Circuit</p>
+                    <p>:</p>
+                </div>
+                <div class="right">
+                    <p>${fetchedDse_buySellData.success === true ? fetchedDse_buySellData.lowLimit+' - '+fetchedCse_buySellData.upLimit : ''}</p>
+                </div>     
+            </div>
+        </div>
         `;
     }
-
     function renderBuyContent() {
         document.getElementById('buyContent').innerHTML=`
         <div class="availableFund">
@@ -743,7 +587,6 @@ function executeTrade(){
         </div>
         `
     }
-
     function renderSellContent() {
         document.getElementById('sellContent').innerHTML=`
         <div class="availableFund">
@@ -788,13 +631,10 @@ function executeTrade(){
         `
     }
 
-
-    
-
     trade()
     renderStockTicker()
     renderMarketScheduale()
-    updateCountdown();
+    updateCountdown()
     renderTradeSearchBox()
     renderSelectedStockBox()
     renderCseContent()
@@ -802,20 +642,81 @@ function executeTrade(){
     renderBuyContent()
     renderSellContent() 
     document.getElementById('fundStatusBox').style.display = 'none'
-    document.getElementById('cseContent').style.display = 'block'
+    document.getElementById('cseContent').style.display = 'flex'
     document.getElementById('dseContent').style.display = 'none'
     document.getElementById('buyContent').style.display = 'block'
     document.getElementById('sellContent').style.display = 'none'
     document.getElementById('overlay').style.display = 'none';
-    
 
-    return {
-        stopMarketInterval: function () {
-            clearInterval(marketIntervalId);
-        },
-        renderMarketScheduale: renderMarketScheduale,
-        updateCountdown: updateCountdown, 
-    };
+    document.getElementById('searchCompany').addEventListener('input', async () => {
+        const existList = document.querySelectorAll('.allCompanyListItem');
+        if(existList){
+            existList.forEach(item => {
+                item.remove();
+            });
+        } 
+        document.getElementById('allCompanyList').style.display = 'block'
+        const setWidth = document.getElementById('searchCompany').offsetWidth
+        document.getElementById('allCompanyList').style.width = setWidth+'px'
+
+        const inputValue = document.getElementById('searchCompany').value;
+        companyList.forEach(item => {
+            const companyName = item.Company.toLowerCase();
+            if (companyName.includes(inputValue.toLowerCase()) && inputValue !== '') {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = item.Company
+                listItem.id = item.Company
+                listItem.classList.add('allCompanyListItem')
+                listItem.addEventListener('click', handleListItemClick);
+                document.getElementById('allCompanyList').appendChild(listItem)
+            }
+        });
+    });
+
+    if(tradePageLogin.success === false){
+        document.getElementById('overlay').style.display = 'block'
+        document.getElementById('invalidLogin').style.display = 'block'
+        document.getElementById('invalidLogin').innerHTML= `
+            <h5>Unauthorized Access</h5>
+            <p>Invalid Password or User ID</p>
+            <div><p id='invalidLoginCancel'>Cancel</p></div> 
+        `
+        document.getElementById('invalidLoginCancel').addEventListener('click', hideInvalidLoginDiv)
+        document.getElementById('overlay').addEventListener('click', hideInvalidLoginDiv)
+        function hideInvalidLoginDiv(){
+            document.getElementById('overlay').style.display = 'none'
+            document.getElementById('invalidLogin').style.display = 'none'
+            updateFooterBtnState('home');
+            route('../component/homeComponent.js','../css/homeComponent.css','home')
+        }
+    }
+              
+    document.getElementById('TP_companyInfo').addEventListener('click', handleTradeBtn('TP_companyInfo'))
+     document.getElementById('TP_dividend').addEventListener('click', handleTradeBtn('TP_dividend'))
+    document.getElementById('TP_halted').addEventListener('click', handleTradeBtn('TP_halted'))
+    document.getElementById('TP_lastTrade').addEventListener('click', handleTradeBtn('TP_lastTrade'))
+    document.getElementById('TP_marketMover').addEventListener('click', handleTradeBtn('TP_marketMover'))
+    document.getElementById('TP_news').addEventListener('click', handleTradeBtn('TP_news'))
+    document.getElementById('TP_rateHistory').addEventListener('click', handleTradeBtn('TP_rateHistory'))
+    document.getElementById('TP_stockStatus').addEventListener('click', handleTradeBtn('TP_stockStatus'))
+    document.getElementById('TP_todayTrade').addEventListener('click', handleTradeBtn('TP_todayTrade'))
+
+    // document.getElementById('TP_priceAlert').addEventListener('click', handleTradeBtn('TP_priceAlert'))
+    // document.getElementById('TP_favourit').addEventListener('click', handleTradeBtn('TP_favourit'))
+
+   document.getElementById('reloadSearchBox').addEventListener('click', ()=>{
+        // document.getElementById('searchCompany').value = ''
+        // selectedScript = undefined
+        // route('../component/tradeComponent.js','../css/tradeComponent.css','trade')
+        
+        handleListItemClick()
+   })
+    document.getElementById('overlay').addEventListener('click', ()=>{
+        closeFund()
+    })
+    if(selectedScript !== undefined){
+        handleListItemClick()
+    }
 }
 
 document.getElementById('overlay').style.display = 'none';
@@ -828,13 +729,12 @@ function closeFund(){
     document.getElementById('fundStatusBox').style.display = 'none'
     document.getElementById('overlay').style.display = 'none';
     document.body.style.overflow = 'scroll';
-
 }
 function show(content){
     document.getElementById('cseContent').style.display = 'none'
     document.getElementById('dseContent').style.display = 'none'
 
-    document.getElementById(content).style.display = 'block'
+    document.getElementById(content).style.display = 'flex'
 
     updateButtonState(content)
 }
@@ -861,16 +761,20 @@ function updateButton(activeButton) {
 
     if(activeButton === 'buyContent'){
         document.getElementById('buy').style.backgroundColor = '#4CB050'
+        document.getElementById('buy').style.color = '#fff'
         document.getElementById('buyOrderSubmit').style.backgroundColor = '#4CB050'
         document.getElementById('buyOrderSubmit').style.color = '#fff'
         document.getElementById('sell').style.backgroundColor = '#868686'
+        document.getElementById('sell').style.color = '#000'
 
     }
     if(activeButton === 'sellContent'){
         document.getElementById('sell').style.backgroundColor = '#FE0000'
+        document.getElementById('sell').style.color = '#fff'
         document.getElementById('sellOrderSubmit').style.color = '#fff'
         document.getElementById('sellOrderSubmit').style.backgroundColor = '#FE0000'
         document.getElementById('buy').style.backgroundColor = '#868686'
+        document.getElementById('buy').style.color = '#000'
 
     }
 

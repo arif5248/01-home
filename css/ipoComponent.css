@@ -1,6 +1,5 @@
 .mainContentSection{
     height: 100%;
-    padding-bottom: 30px;
 }
 .heading{
     text-align: center;
@@ -92,6 +91,9 @@ tr>td:last-child{
     margin: 5px;
     color: white;
 }
+#resultIpoContent > .ipo_item > .contentBody > table > tbody > tr > td:last-child{
+    text-align: left;
+}
 
 /*=================ipo Apply================*/
 .box{
@@ -124,9 +126,6 @@ tr>td:last-child{
     font-size: 16px;
     text-align: center;
 }
-.submit-box{
-    margin-top: 40px;
-}
 .submit-box > input{
     width: 100%;
     background-color: #000;
@@ -134,4 +133,66 @@ tr>td:last-child{
     border-radius: 10px;
     padding: 10px 0px;
     font-size: 20px;
+}
+.NoIPO{
+    background-color: #fff;
+    padding: 5px 0px;
+    margin: 5px 0px;
+    border: 1px solid #000;
+    border-radius: 5px;
+}
+.ipoContent{
+    position: relative;
+}
+#NoIpoRunning_overlay{
+    width: 100vw;
+    height: 100%;
+    background-color: #000000b3;
+    position: absolute;
+    top: 0;
+    z-index: 20;
+}
+#NoIpoRunning{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50vw;
+    height: auto;
+    transform: translateX(-50%) translateY(-50%);
+    background-color: #fff;
+    box-shadow: 0px 0px 5px 0px #000;
+    z-index: 30;
+    text-align: center;
+    padding: 10px 0px;
+    border-radius: 10px;
+    animation: animatedRunningIpo 3s ease-in;
+}
+@keyframes ananimatedRunningIpoi {
+    0% {
+        width: 70vw;
+      }
+      100% {
+        width: 50vw;
+      }
+}
+#NoIpoRunning > p:first-child{
+    font-weight: 700;
+}
+.mainContentSection{
+    position: relative;
+}
+.pageHeading{
+    flex: 0 auto;
+    width: 100vw;
+    z-index: 1;
+}
+.btnGroup{
+    flex: 0 auto;
+    width: 100vw;
+    z-index: 1;
+    background-color: #e9ecef;
+}
+.allContent{
+    flex: 1 auto;
+    overflow-y: auto;
 }

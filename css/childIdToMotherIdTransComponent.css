@@ -1,0 +1,96 @@
+.childIdListFooter{
+    display: flex;
+    background-color: #000;
+    color: #fff;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7px 10px;
+}
+.listSectionFooter{
+    position: fixed;
+    width: 100vw;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    background-color: #fff;
+    padding-top: 5px;
+}
+.allChildIdList > table{
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    background-color: #fff;
+    padding: 0px 10px;
+    border: 1px solid #000;
+    border-radius: 10px;
+}
+
+.allChildIdList > table > tbody > tr:first-child{
+    background-color: black;
+}
+.allChildIdList > table > tbody > tr:first-child > th{
+    color: #fff;
+    font-size: 20px;
+    padding: 5px 1px;
+    font-weight: 500;
+}
+.allChildIdList > table > tbody > tr:first-child > th:first-child{
+    -webkit-padding-start: 10px;
+}
+.allChildIdList > table > tbody > tr:first-child > th:nth-child(2){
+    text-align: center;
+}
+.allChildIdList > table > tbody > tr:first-child > th:last-child{
+    -webkit-padding-end: 10px;
+}
+
+.allChildIdList > table > tbody > tr > td{
+    font-weight: 600;
+    font-size: 15px;
+    padding: 10px 0px;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+}
+.allChildIdList > table > tbody > tr > td:first-child{
+    -webkit-padding-start: 10px;
+    border-left: 1px solid #000;
+    border-radius: 15px 0px 0px 15px;
+    width: 15%;
+}.allChildIdList > table > tbody > tr > td:nth-child(2){
+    width: 15%;
+    text-align: center;
+}
+.allChildIdList > table > tbody > tr > td:last-child{
+    -webkit-padding-end: 10px;
+    border-right: 1px solid #000;
+    border-radius: 0px 15px 15px 0px;
+    width: 20%;
+    text-align: right;
+}
+#submitBtn{
+    margin-top: 10px;
+    background-color: #4CB050;
+    padding: 7px 0px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    color: #fff;
+}
+#showMessage{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    background-color: #fff;
+    width: 70vw;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px 0px #000;
+    z-index: 1002;
+}
+#closePopUp{
+    background-color: #4CB050;
+    padding: 3px 0px;
+    color: #fff;
+    margin-top: 5px;
+}

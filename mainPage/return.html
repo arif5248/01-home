@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+        #failedSection{
+            position: relative;
+        }
+        .box{
+            border-radius: 10px;
+            width: 70%;
+            position: fixed;
+            top: 30vh;
+            left: 50vw;
+            transform: translateX(-50%) translateY(-50%);
+            box-shadow: 0px 0px 5px 0px #000;
+        }
+        .innerBox1{
+            background-color: #ED213A;
+            margin-bottom: -1px;
+            border-radius: 10px 10px 0px 0px;
+            height: 150px;
+            display: flex;
+            justify-content: flex-end;
+            flex-direction: column;
+            align-items: center;
+        }
+        .s_innerBox1{
+            background-color: #22A954;
+            margin-bottom: -1px;
+            border-radius: 10px 10px 0px 0px;
+            height: 150px;
+            display: flex;
+            justify-content: flex-end;
+            flex-direction: column;
+            align-items: center;
+        }
+        .innerBox2{
+            display: flex;
+            justify-content: flex-end;
+            flex-direction: column;
+            align-items: center;
+        }
+        .btnBox{
+            width: 100%;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        
+        .close{
+            border: 1px solid #ED213A;
+            background-color: #ED213A;
+            padding: 7px 30px;
+            border-radius: 20px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    
+    <div style="display: none;" id="failedSection">
+        <div class="box">
+            <div class="innerBox1">
+                <h1 style="margin: 0; color: #fff;">Whoops!</h1>
+                <img style="width: 90px;" src="../images/icons/danger.png" alt="Failed">
+            </div>
+            <svg viewBox="0 0 500 100">
+                <path d="M 0 50 C 150 150 300 0 500 80 L 500 0 L 0 0" fill="#ED213A"></path>
+            </svg>
+            <div class="innerBox2">
+                <p>It seems we have not receieved money</p>
+                <div class="btnBox">
+                    <div id="close" class="close">Close</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="display: none;" id="successSection">
+        <div class="box">
+            <div class="s_innerBox1">
+                <h1 style="margin: 0; color: #fff;">Success!</h1>
+                <img style="width: 90px;" src="../images/icons/correct.png" alt="Failed">
+            </div>
+            <svg viewBox="0 0 500 100">
+                <path d="M 0 50 C 150 150 300 0 500 80 L 500 0 L 0 0" fill="#22A954"></path>
+            </svg>
+            <div class="innerBox2">
+                <p>It seems we have not receieved money</p>
+                <div class="btnBox">
+                    <div id="close" class="close">Close</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const response = urlParams.get('res');
+        const trxId = urlParams.get('tid')
+        const bdt = urlParams.get('bdt')
+
+        if(response === 'Failed'){
+            document.getElementById('failedSection').style.display= 'block'
+        }else{
+            document.getElementById('successSection').style.display= 'block'
+        }
+
+        document.getElementById('close').addEventListener('click', ()=>{
+            window.location.href='../mainPage/home.html'
+        })
+        document.getElementById('tryAgain').addEventListener('click', ()=>{
+            window.location.href='../mainPage/home.html?case=moneyDeposit'
+        })
+    </script>
+</body>
+</html>

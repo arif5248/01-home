@@ -38,7 +38,7 @@
     border-radius: 15px 0px 0px 15px;
 }
 .BO-content > table > tbody > tr > td:last-child{
-    padding-right: 10px;
+    padding: 0px 10px;
     border-radius: 0px 15px 15px 0px;
 }
 .showBOForm{
@@ -49,4 +49,7 @@
     background-color: #000;
     color: #fff;
     margin-bottom: 10px;
+}
+.showBOForm > a > h5{
+    color: #fff;
 }

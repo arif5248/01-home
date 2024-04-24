@@ -1,33 +1,34 @@
-function executeMoneyWithdrawal(){
-    const statusData=[
-        {
-            date: "30/Dec/2023",
-            type: "Withdrawn",
-            form_to: "Withdrawn from<brID.28>",
-            purpose: "Investment",
-            taka: 10,
-            status: "Cleared",
-        },
-        {
-            date: "30/Dec/2023",
-            type: "Withdrawn",
-            form_to: "Withdrawn from<brID.28>",
-            purpose: "Investment",
-            taka: 10,
-            status: "Cleared",
-        },
-        {
-            date: "30/Dec/2023",
-            type: "Withdrawn",
-            form_to: "Withdrawn from<brID.28>",
-            purpose: "Investment",
-            taka: 10,
-            status: "Cleared",
-        },
-    ]
+async function executeMoneyWithdrawal(){
+    let statusData = []
+    const fetchedMoneReqInfo = await getMoneyReqInfo(user.LoggedInInvestorId)
+    let fetchedMoneyReqStatus = await getMoneyReqStatus(user.LoggedInInvestorId)
+    if(fetchedMoneyReqStatus.status = true){
+        statusData = fetchedMoneyReqStatus.Data
+    }
+
+    function handleDeleteMoneyReq(atn) {
+        return async function(event){
+            const result =await deleteMoneyReq(atn)
+
+            fetchedMoneyReqStatus = await getMoneyReqStatus(user.LoggedInInvestorId)
+            if(fetchedMoneyReqStatus.status = true){
+                statusData = fetchedMoneyReqStatus.Data
+            }
+            await moneyWithdrawal()
+            await renderRequisitionContent()
+            await renderStatusContent()
+
+            document.getElementById('statusContent').style.display = 'block'
+            document.getElementById('requisitionContent').style.display = 'none'
+            document.getElementById('payToMyBkash').style.display= 'none'
+            updateButtonState('statusContent')
+        };
+        
+    }
+
     const today = new Date().toISOString().split('T')[0];
 
-    function moneyWithdrawal(){
+    async function moneyWithdrawal(){
         document.getElementById('mainContentSection').innerHTML = `
             <div class="pageHeading" id="financial-Heading">
                 <div class="heading" id="heading">
@@ -53,8 +54,14 @@ function executeMoneyWithdrawal(){
         `
     }
 
-    function renderRequisitionContent(){
+    async function renderRequisitionContent(){
+        let details = []
+
+        if(fetchedMoneReqInfo.status === true){
+            details = fetchedMoneReqInfo.Data[0]
+        }
         const body = document.getElementById('requisitionContent')
+
         body.innerHTML = `
             <form action="#" method="post">
 
@@ -64,29 +71,24 @@ function executeMoneyWithdrawal(){
                         <input type="date" id="reqDate" name="reqDate" value=${today} required readonly>
                     </div>
                     <div class="box-data">
-                        <label for="id">01 ID</label>
-                        <input type="text" id="id" name="id" value="28" required readonly>
+                        <label for="userId">01 ID</label>
+                        <input type="text" id="userId" name="id" value="${user.LoggedInInvestorId}" required readonly>
                     </div>
                     <div class="box-data">
                         <label for="mobileNumber">Mobile Number</label>
-                        <input type="text" id="mobileNumber" name="mobileNumber" value="01836720974" required readonly>
+                        <input type="text" id="mobileNumber" name="mobileNumber" value="${details.Mobile}" required readonly>
                     </div>
                     <div class="box-data">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" value="kaiserctg3467@gmail.com" required readonly>
+                        <label for="userMail">Email</label>
+                        <input type="email" id="userMail" name="email" value="${details.Email}" required readonly>
                     </div>
                     <div class="box-data">
                         <label for="availableBalance">Available Balance</label>
-                        <input type="text" id="availableBalance" name="availableBalance" value="2396" required readonly>
+                        <input type="text" id="availableBalance" name="availableBalance" value="${details.Ledger}" required readonly>
                     </div>
                     <div class="box-data">
                         <label for="withdrawalType">Withdrawal Type</label>
-                        <select id="withdrawalType" name="withdrawalType" required>
-                            <option value="ipo1">--Select Type--</option>
-                            <option value="ipo2">Capital</option>
-                            <option value="ipo2">Profit</option>
-                            <option value="ipo2">Capital & Profit</option>
-                        </select>
+                        <select id="withdrawalType" name="withdrawalType" required></select>
                     </div>
                     <div class="box-data">
                         <label for="amount">Amount</label>
@@ -97,11 +99,11 @@ function executeMoneyWithdrawal(){
                 <div class="box">
                     <div class="form-box-2">
                         <div>
-                            <input id="bankCheck" type="radio" name="paymentMethod" value="payToMyBank" onclick="showMethod('payToMyBank')" checked>
+                            <input id="bankCheck" type="radio" name="paymentMethod" value="" onclick="showMethod('payToMyBank')" checked>
                             <label for="bankCheck">Pay to My Bank</label>
                         </div>
                         <div>
-                            <input id="bKashCheck" type="radio" name="paymentMethod" onclick="showMethod('payToMyBkash')" value="payToMyBkash">
+                            <input id="bKashCheck" type="radio" name="paymentMethod" onclick="showMethod('payToMyBkash')" value="bKash">
                             <label for="bKashCheck">Pay to My Bkash</label>
                         </div>
                     </div>
@@ -109,23 +111,23 @@ function executeMoneyWithdrawal(){
                         <div id="payToMyBank">
                             <div class="box-data">
                                 <label for="bankName">Bank Name</label>
-                                <input type="text" id="bankName" name="bankName" value="The City Bank Limited" required readonly>
+                                <input type="text" id="bankName" name="bankName" value="${details.Bank}" required readonly>
                             </div>
                             <div class="box-data">
                                 <label for="accNo">A/C No.</label>
-                                <input type="number" id="accNo" name="accNo" value="3468346095237" required readonly>
+                                <input type="number" id="accNo" name="accNo" value="${details.BankAccount}" required readonly>
                             </div>
                         </div>
                         <div id="payToMyBkash">
                             <div class="box-data">
                                 <label for="bKashNum">bKash Number</label>
-                                <input type="number" id="bKashNum" name="bKashNum" value="0184762901" required readonly>
+                                <input type="number" id="bKashNum" name="bKashNum" value="${details.Bkash}" required readonly>
                             </div>
                         </div>
                     </div>
                     <div class="box-data">
                         <label for="note">Note (If any)</label>
-                        <input type="text" id="note" name="note" placeholder="Enter Note"  required >
+                        <input type="text" id="note" name="note" placeholder="Enter Note">
                     </div>
                 </div>
                 <div class="box">
@@ -133,30 +135,41 @@ function executeMoneyWithdrawal(){
                         <p class="otpSelectText">Select where to send OTP</p>
                         <div class="form-box-2">
                             <div>
-                                <input id="mobileOtp" type="radio" name="otpMethod" value="01872567289" checked>
+                                <input id="mobileOtp" type="radio" name="otpMethod" value="sms" checked>
                                 <label for="mobileOtp">Mobile</label>
                             </div>
                             <div>
-                                <input id="emailOtp" type="radio" name="otpMethod" value="xyz@gmail.com">
+                                <input id="emailOtp" type="radio" name="otpMethod" value="mail">
                                 <label for="emailOtp">Email</label>
                             </div>
                         </div>
                         <div class="proceed-btn">
-                            <input type="button" value="GetOTP" >
-                            <input type="number" placeholder="Enter OTP">
+                            <input id='getOtp' type="button" value="GetOTP" >
+                            <input type="text" id='placedOtp'placeholder="Enter OTP">
                         </div>
+                        <div id='otpExpiredIn'></div>
+                        <div id='otpError'></div>
                     </div>
                     <div class="submit-box">
-                        <input type="submit" value="APPLY">
+                        <input id='moneyWihdrawSubmit' type="submit" value="APPLY">
                     </div>
                 </div>
             </form>
             `
+            if(fetchedMoneReqInfo.status === true){
+                fetchedMoneReqInfo.Type.forEach(option =>{
+                    const newOption = document.createElement('option')
+                    newOption.setAttribute('id', `${option.value}`);
+                    newOption.value = option.value;
+                    newOption.textContent = option.value;
+                    document.getElementById('withdrawalType').appendChild(newOption)
+                })
+            }
     }
-    function renderStatusContent(){
+    async function renderStatusContent(){
         
         const body = document.getElementById('statusContent')
-        statusData.forEach((status,index) => {
+        statusData.forEach((status) => {
             const newDiv = document.createElement('div')
             newDiv.classList.add('ipo_item')
             newDiv.innerHTML=`
@@ -165,7 +178,7 @@ function executeMoneyWithdrawal(){
                         <tbody>
                             <tr>
                                 <td>Date</td>
-                                <td>${status.date}</td>
+                                <td>${status.req_date}</td>
                             </tr>
                             <tr>
                                 <td>Type</td>
@@ -173,7 +186,7 @@ function executeMoneyWithdrawal(){
                             </tr>
                             <tr>
                                 <td>From/To</td>
-                                <td>${status.form_to}</td>
+                                <td>${status['frm/to']}</td>
                             </tr>
                             <tr>
                                 <td>Purpose</td>
@@ -181,21 +194,121 @@ function executeMoneyWithdrawal(){
                             </tr>
                             <tr>
                                 <td>Taka</td>
-                                <td>${status.taka}</td>
+                                <td>${status.tk}</td>
                             </tr>
                             <tr>
                                 <td>Status</td>
-                                <td>${status.status}</td>
+                                <td id='withdrawalStatus${status.atn}'>${status.status}</td>
                             </tr>
                         </tbody>
                     </table>
+                    <div class='WDcancelBtn' style='display:none;' id='${status.atn}_CancelBtn'>CANCEL</div>
                 </div>
             `
-    
             body.appendChild(newDiv)
+            document.getElementById(`withdrawalStatus${status.atn}`).style.color = document.getElementById(`withdrawalStatus${status.atn}`).innerHTML === 'Cancelled' ? 'red' : 'green'
+            if(status.status === 'Pending'){
+                document.getElementById(`${status.atn}_CancelBtn`).style.display = 'block'
+                const deleteBtn = document.getElementById(`${status.atn}_CancelBtn`);
+                deleteBtn.addEventListener('click', handleDeleteMoneyReq(status.atn));
+            }
+            
         })
     }
 
+    async function handleOtp(event){
+        const selectedValue = document.querySelector('input[name="otpMethod"]:checked').value;
+        if(selectedValue){
+            const fetchedOtp = await getOTP(user.LoggedInInvestorId, selectedValue)
+            // const fetchedOtp = {status: true, code: '5248'}
+            if(fetchedOtp.status === true){
+                sessionStorage.setItem('otp', fetchedOtp.code);
+                const expiredTime = new Date().getTime() + 121*1000
+                otpCountDownInterval = setInterval(function(){
+                    let remainingTime = expiredTime - new Date().getTime()
+                    const min = parseInt(remainingTime / (1000 * 60));
+                    remainingTime %= (1000 * 60);
+                    const sec = parseInt(remainingTime / 1000);
+
+                    document.getElementById('otpExpiredIn').innerHTML = `
+                        <p style='text-align: right; color: red;'>OTP Expired In: ${min < 10 ? '0' + min : min}:${sec < 10 ? '0' + sec : sec}</p>
+                    `
+                },1000)
+                setTimeout(function() {
+                    sessionStorage.removeItem('otp');
+                    clearInterval(otpCountDownInterval)
+                    document.getElementById('otpExpiredIn').innerHTML = ''
+                }, 120 * 1000);
+            }
+            
+        }
+    }
+    async function handleSubmit(event){
+        event.preventDefault();
+        const otpRetrived = sessionStorage.getItem('otp')
+        
+        if(otpRetrived && document.getElementById('placedOtp').value === otpRetrived && document.getElementById('amount').value !== '' && document.getElementById('withdrawalType').value !== '--Select Type--'){
+            clearInterval(otpCountDownInterval)
+            document.getElementById('otpError').innerHTML = '';
+            document.getElementById('otpExpiredIn').innerHTML = '';
+            const data = {
+                id: document.getElementById('userId').value,
+                phn: document.getElementById('mobileNumber').value,
+                email: document.getElementById('userMail').value,
+                amo: document.getElementById('amount').value,
+                purpose: document.getElementById('withdrawalType').value,
+                mode: document.querySelector('input[name="paymentMethod"]:checked').value,
+                note: document.getElementById('note').value,
+                bkash_no: document.querySelector('input[name="paymentMethod"]:checked').value === 'bKash' ? document.getElementById('bKashNum').value : '',
+    
+            }
+            const result = await postMoneyReq(data)
+
+            fetchedMoneyReqStatus = await getMoneyReqStatus(user.LoggedInInvestorId)
+            if(fetchedMoneyReqStatus.status = true){
+                statusData = fetchedMoneyReqStatus.Data
+            }
+            await moneyWithdrawal()
+            await renderRequisitionContent()
+            await renderStatusContent()
+        }else{
+            const errorBox = document.getElementById('otpError')
+                document.getElementById('withdrawalType').style.borderColor = '#000'
+                document.getElementById('amount').style.borderColor = '#000'
+                errorBox.innerHTML= ''
+            if(document.getElementById('withdrawalType').value === '--Select Type--'){
+                const newP = document.createElement('p')
+                newP.innerHTML = `Please Select a Withdrawal Type Option`
+                errorBox.appendChild(newP)
+                newP.style.textAlign = 'center'
+                newP.style.color = 'red'
+                document.getElementById('withdrawalType').style.borderColor = 'red'
+            }
+            if(document.getElementById('amount').value === ''){
+                const newP = document.createElement('p')
+                newP.innerHTML = `Pleasse Enter a  Withdrawal Amount`
+                errorBox.appendChild(newP)
+                newP.style.textAlign = 'center'
+                newP.style.color = 'red'
+                document.getElementById('amount').style.borderColor = 'red'
+            }
+            if(!otpRetrived){
+                const newP = document.createElement('p')
+                newP.innerHTML = `Please Click on GetOTP and Enter the OTP`
+                errorBox.appendChild(newP)
+                newP.style.textAlign = 'center'
+                newP.style.color = 'red'
+            }
+            if(otpRetrived && otpRetrived !== document.getElementById('placedOtp').value){
+                const newP = document.createElement('p')
+                newP.innerHTML = `OTP does not matched or expired. Please try again`
+                errorBox.appendChild(newP)
+                newP.style.textAlign = 'center'
+                newP.style.color = 'red'
+            }
+        }
+        
+    }
 
     moneyWithdrawal()
     renderRequisitionContent()
@@ -204,6 +317,9 @@ function executeMoneyWithdrawal(){
     document.getElementById('requisitionContent').style.display = 'block'
     document.getElementById('statusContent').style.display = 'none'
     document.getElementById('payToMyBkash').style.display= 'none'
+
+    document.getElementById('getOtp').addEventListener('click', handleOtp)
+    document.getElementById('moneyWihdrawSubmit').addEventListener('click', handleSubmit)
 }
 
 function showMethod(type){

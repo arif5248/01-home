@@ -1,21 +1,20 @@
-const beforeHistoryStack = [];
-// component=&
-  let beforeCurrentSection = null;
+let beforeCurrentSection = null;
 
-  const urlParams = new URLSearchParams(window.location.search);
-  const case_name = urlParams.get('case');
+const urlParams = new URLSearchParams(window.location.search);
+const case_name = urlParams.get('case');
+const data = urlParams.get('data')
 
-  isVerifiedCacse(case_name)
+isVerifiedCacse(case_name, data)
   
   
 
-  async function beforeRoute(js, case_name) {
+async function beforeRoute(js, case_name) {
+
     if (beforeCurrentSection !== null) {
         await clearMemory();
     }
 
-  
-    try {
+    try{
 
         const response = await fetch(js);
         if (!response.ok) {
@@ -30,54 +29,26 @@ const beforeHistoryStack = [];
         scriptElement.textContent = scriptCode;
         document.head.appendChild(scriptElement);
 
-        const prev_case = beforeHistoryStack[beforeHistoryStack.length - 1];
-        if (!prev_case || prev_case.case_name !== case_name) {
-            beforeHistoryStack.push({ case_name });
-        }
-
         beforeCurrentSection = case_name;
-
-        // const newUrl = window.location.origin + window.location.pathname + `#${case_name}`;
-        // history.pushState({ case_name }, null, newUrl);
-
-        // isVerifiedCacse(case_name);
-
-    } catch (error) {
+    }catch (error) {
         console.error(error);
     }
 }
 
-  async function clearMemory() {
-      return new Promise(resolve => {
-        const script = document.head.getElementsByTagName('script');
-        const scriptTagsArray = Array.from(script);
-        scriptTagsArray.forEach(scriptTag => {
-          if (scriptTag.id !== 'boots' && scriptTag.id !== 'beforeRoute' && scriptTag.id !== 'fetch' && scriptTag.id !== 'index') {
-            scriptTag.parentNode.removeChild(scriptTag);
-          }
-        });
-        resolve(); 
-      });
-    }
-
-  function goBack() {
-    if (beforeHistoryStack.length > 1) {
-        beforeHistoryStack.pop(); 
-        const prevState = beforeHistoryStack.pop(); 
-        const case_name = prevState.case_name;
-        route(`../component/${case_name}Component.js`, `../css/${case_name}Component.css`, case_name);
-    }
-}
-
-document.addEventListener('DOMContentLoaded', function () {
-    window.addEventListener('popstate', function (event) {
-        if (event.state) {
-            goBack();
+async function clearMemory() {
+    return new Promise(resolve => {
+    const script = document.head.getElementsByTagName('script');
+    const scriptTagsArray = Array.from(script);
+    scriptTagsArray.forEach(scriptTag => {
+        if (scriptTag.id !== 'boots' && scriptTag.id !== 'beforeRoute' && scriptTag.id !== 'fetch' && scriptTag.id !== 'index') {
+        scriptTag.parentNode.removeChild(scriptTag);
         }
     });
-});
+    resolve(); 
+    });
+}
 
-async function isVerifiedCacse(case_name){
+async function isVerifiedCacse(case_name, data){
     switch (case_name) {
         case 'B_marketStatus':
             await beforeRoute(`../component/${case_name}Component.js`)
@@ -115,9 +86,22 @@ async function isVerifiedCacse(case_name){
             await beforeRoute(`../component/${case_name}Component.js`)
             executeB_HowToPayUs();
             break;
-        
-
-
+        case 'B_priceHistory':
+            await beforeRoute(`../component/${case_name}Component.js`)
+            executeB_PriceHistory(data);
+            break;
+        case 'B_promotions':
+            await beforeRoute(`../component/${case_name}Component.js`)
+            executeB_Promotions();
+            break;
+        case 'B_careerWith01':
+            await beforeRoute(`../component/${case_name}Component.js`)
+            executeB_careerWith01();
+            break;
+        case 'B_jobApply':
+            await beforeRoute(`../component/${case_name}Component.js`)
+            executeB_jobApply(data);
+            break;
     }
 }
 

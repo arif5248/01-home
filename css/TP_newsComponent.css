@@ -35,6 +35,7 @@ body, html {
     margin: 0;
     padding: 0;
     margin-top: 10px;
+    width: 100%;
 }
 .homeButton{
     margin-top: 8px;
@@ -125,7 +126,8 @@ h1{
     border: solid 1px black;
     margin: 10px 0px;
     border-radius: 5px;
-    box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.273);
+    box-shadow: 0px 0px 5px 0px #000;
+    background-color: #fff;
 }
 .exchangeHeading{
     background-color: #0d6efd;
@@ -180,5 +182,48 @@ h1{
 }
 
 
-
-
+#showMediaNewsDetails {
+    margin-top: -45px;
+    z-index: 1;
+    width: 100vw;
+    flex-direction: column;
+    align-items: center;
+}
+.close {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.close_img_Box {
+    transition: all 0.3s ease;
+    margin-bottom: -10px;
+    background-color: #fff;
+    border-radius: 50%;
+    padding: 5px;
+    width: 50px;
+    height: 50px;
+    border: 1px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 0px 5px 1px #000;
+}
+.selectedNewsBody {
+    border: 0px solid #000;
+    background-color: #fff;
+    width: 95vw;
+    box-shadow: 0px 0px 5px 3px #000;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+.selectedNewsBody > .heading {
+    background-color: rgb(4 5 52);
+    border-radius: 10px 10px 0px 0px;
+    text-align: center;
+    box-shadow: 0px -3px 5px 0px #000;
+}
+.selectedNewsBody > .heading > h1 {
+    padding: 0;
+    color: #fff;
+    padding: 5px 0px;
+}

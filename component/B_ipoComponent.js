@@ -1,83 +1,5 @@
-function executeB_Ipo(){
-    const upComingIPO=[
-        {
-            ipo_heading: "NRB BANK LIMITED (NRBBANK)",
-            sub_date: "04/02/2024-08/02/2024",
-            platform: "Main Platform",
-            cut_off_Date: "18/Jan/2024",
-            price: 10,
-            minimum_app: 10000,
-            maximum_app: 100000,
-            total_share: 100000000,
-            total_value: 1000000000,
-            ipo_type: "Share",
-            quantity: 1,
-            nav: 12.72,
-            eps: 0.27,
-            eligibility: 50000,
-            companyProspectus: "#",
-            summary: "#"
-        },
-        {
-            ipo_heading: "ASIATIC LABORATORIES LIMITED (ASIATICLAB)",
-            sub_date: "04/02/2024-08/02/2024",
-            platform: "Main Platform",
-            cut_off_Date: "25/Jan/2024",
-            price: 20,
-            minimum_app: 10000,
-            maximum_app: 10000,
-            total_share: 34545455,
-            total_value: 950000000,
-            ipo_type: "Share",
-            quantity: 1,
-            quantity: 1,
-            nav: 12.72,
-            eps: 0.27,
-            eligibility: 50000,
-            companyProspectus: "#",
-            summary: "#"
-        }
-    ]
-    const historyIPO=[
-        {
-            ipo_heading: "ASIATIC LABORATORIES LIMITED (ASIATICLAB)",
-            sub_date: "04/02/2024-08/02/2024",
-            platform: "Main Platform",
-            cut_off_Date: "25/Jan/2024",
-            price: 20,
-            minimum_app: 10000,
-            maximum_app: 10000,
-            total_share: 34545455,
-            total_value: 950000000,
-            ipo_type: "Share",
-            quantity: 1,
-            quantity: 1,
-            nav: 12.72,
-            eps: 0.27,
-            eligibility: 50000,
-            companyProspectus: "#",
-            summary: "#"
-        },
-        {
-            ipo_heading: "NRB BANK LIMITED (NRBBANK)",
-            sub_date: "04/02/2024-08/02/2024",
-            platform: "Main Platform",
-            cut_off_Date: "18/Jan/2024",
-            price: 10,
-            minimum_app: 10000,
-            maximum_app: 100000,
-            total_share: 100000000,
-            total_value: 1000000000,
-            ipo_type: "Share",
-            quantity: 1,
-            nav: 12.72,
-            eps: 0.27,
-            eligibility: 50000,
-            companyProspectus: "#",
-            summary: "#"
-        },
-        
-    ]
+async function executeB_Ipo(){
+    const { fetchedUpcomingIpo, fetchedRunningIpo } = await getIpo()
     function B_sharePrice(){
         document.getElementById('page_heading').innerHTML=`Running IPO`
         document.getElementById('beforeMain').innerHTML = `
@@ -97,19 +19,30 @@ function executeB_Ipo(){
     }
 
     function renderUpcomingIpoContent(){
+        let upComingIPO = []
+        console.log(fetchedUpcomingIpo)
+        if(fetchedUpcomingIpo.status){
+            upComingIPO = fetchedUpcomingIpo.Data
+        }
         const ipoContentBody = document.getElementById('upcomingIpoContent')
-        upComingIPO.forEach((ipo,index) => {
+
+        if(upComingIPO.length === 0){
+            ipoContentBody.innerHTML = `
+                <h3>No Upcoming IPO Data Found</h3>
+            `
+        }
+        upComingIPO.forEach(async (ipo,index) => {
             const newDiv = document.createElement('div')
             newDiv.classList.add('ipo_item')
             newDiv.innerHTML=`
                 <div class="contentHeader">
-                <div class="ipoHeading" id="ipoHeading_${index}"> 
-                    <h3 class="static-heading" id="staticHeading_${index}">IPO</h3>
-                    <h3 class="headingForIPO" id="dynamicHeading_${index}">${ipo.ipo_heading}</h3>
+                <div class="ipoHeading" id="B_ipoHeading_${index}"> 
+                    <h3 class="static-heading" id="B_staticHeading_${index}">${ipo.Offer_Category}</h3>
+                    <h3 class="headingForIPO" id="B_DynamicHeading_${index}">${ipo.Company}</h3>
                 </div>
                     <div class="subscriptionDate">
                         <h5 class="date-title">Subscription Date</h5>
-                        <h5 class="date">${ipo.sub_date}</h5>
+                        <h5 class="date">${ipo.Start_Date}-${ipo.End_Date}</h5>
                     </div>
                 </div>
     
@@ -118,57 +51,65 @@ function executeB_Ipo(){
                         <tbody>
                             <tr>
                                 <td>Platform</td>
-                                <td>${ipo.platform}</td>
+                                <td>${ipo.Offer_Platform}</td>
                             </tr>
                             <tr>
                                 <td>Cut Off Date</td>
-                                <td>${ipo.cut_off_Date}</td>
+                                <td>${ipo.cut_date}</td>
                             </tr>
                             <tr>
                                 <td>Price</td>
-                                <td>${ipo.price}</td>
+                                <td>${ipo.Rate}</td>
                             </tr>
                             <tr>
                                 <td>Minimum Application<br>Amount (Tk)</td>
-                                <td>${ipo.minimum_app}</td>
+                                <td>${ipo.Minamt}</td>
                             </tr>
                             <tr>
                                 <td>Maximum Application<br>Amount (Tk)</td>
-                                <td>${ipo.maximum_app}</td>
+                                <td>${ipo.MaxAmt === 0 ? '' : ipo.MaxAmt}</td>
                             </tr>
                             <tr>
                                 <td>Total Share</td>
-                                <td>${ipo.total_share}</td>
+                                <td>${ipo.Share}</td>
                             </tr><tr>
                                 <td>Total Value</td>
-                                <td>${ipo.total_value}</td>
+                                <td>${ipo.Total_Value}</td>
                             </tr>
                             <tr>
                                 <td>IPO Type</td>
-                                <td>${ipo.ipo_type}</td>
+                                <td>${ipo.IPO_Type === 0 ? 'Share': (ipo.IPO_Type === 1 ? 'Mutual Fund': (ipo.IPO_Type === 2 ? 'Bond' : 'undefined'))}</td>
                             </tr>
                             <tr>
                                 <td>Quantity/Lot</td>
-                                <td>${ipo.quantity}</td>
+                                <td>${ipo.Qty}</td>
                             </tr>
                             <tr>
                                 <td>NAV</td>
-                                <td>${ipo.nav}</td>
+                                <td>${ipo.NAV}</td>
                             </tr>
                             <tr>
                                 <td>EPS</td>
-                                <td>${ipo.eps}</td>
+                                <td>${ipo.EPS}</td>
                             </tr>
                             <tr>
                                 <td>Eligibility</td>
-                                <td>${ipo.eligibility}</td>
+                                <td>${ipo.Offer_Eligibility}</td>
                             </tr>
                                 <td>Company Prospectus</td>
-                                <td><Button class="btn">PDF</Button></td>
+                                <td>
+                                    <Button class="btn">
+                                        <a style='text-decoration: none; color: #000;' href='${ipo.Link_Prospectus}'>PDF</a>
+                                    </Button>
+                                </td>
                             </tr>
                             </tr>
                                 <td>Summary</td>
-                                <td><Button class="btn">PDF</Button></td>
+                                <td>
+                                    <Button class="btn">
+                                        <a style='text-decoration: none; color: #000;' href='${ipo.Link_Summary}'>PDF</a>
+                                    </Button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -176,95 +117,118 @@ function executeB_Ipo(){
             `
     
             ipoContentBody.appendChild(newDiv)
-            let dynamicHeadingHeight = document.getElementById(`dynamicHeading_${index}`).offsetHeight;
-            document.getElementById(`ipoHeading_${index}`).style.height = dynamicHeadingHeight + 'px';
-            document.getElementById(`staticHeading_${index}`).style.height = '100%'
+
+            async function setHeight(){
+                let dynamicHeadingHeight = document.getElementById(`B_DynamicHeading_${index}`).offsetHeight;
+                document.getElementById(`B_ipoHeading_${index}`).style.height = dynamicHeadingHeight + 'px';
+                document.getElementById(`B_staticHeading_${index}`).style.height = '100%'
+            }
+            await setHeight()
+            
             
         }) 
     }
     function renderRunningIpoContent(){
+        let runningIPO = []
+        if(fetchedRunningIpo.status){
+            runningIPO = fetchedRunningIpo.Data
+        }
         const ipoContentBody = document.getElementById('runningIpoContent')
-        historyIPO.forEach((ipo,index) => {
+
+        if(runningIPO.length === 0){
+            ipoContentBody.innerHTML = `
+                <h3 style='text-align: center;'>No Running IPO Data Found</h3>
+            `
+        }
+        runningIPO.forEach((ipo,index) => {
             const newDiv = document.createElement('div')
             newDiv.classList.add('ipo_item')
             newDiv.innerHTML=`
-                <div class="contentHeader">
-                <div class="ipoHeading" id="historyIpoHeading_${index}"> 
-                    <h3 class="static-heading" id="history_staticHeading_${index}">IPO</h3>
-                    <h3 class="headingForIPO" id="history_dynamicHeading_${index}">${ipo.ipo_heading}</h3>
+            <div class="contentHeader"> 
+            <div class="ipoHeading" id="R_ipoHeading_${index}"> 
+                <h3 class="static-heading" id="R_staticHeading_${index}">${ipo.Offer_Category}</h3>
+                <h3 class="headingForIPO" id="R_DynamicHeading_${index}">${ipo.Company}</h3>
+            </div>
+                <div class="subscriptionDate">
+                    <h5 class="date-title">Subscription Date</h5>
+                    <h5 class="date">${ipo.Start_Date}-${ipo.End_Date}</h5>
                 </div>
-                    <div class="subscriptionDate">
-                        <h5 class="date-title">Subscription Date</h5>
-                        <h5 class="date">${ipo.sub_date}</h5>
-                    </div>
-                </div>
-    
-                <div class="contentBody">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>Platform</td>
-                                <td>${ipo.platform}</td>
-                            </tr>
-                            <tr>
-                                <td>Cut Off Date</td>
-                                <td>${ipo.cut_off_Date}</td>
-                            </tr>
-                            <tr>
-                                <td>Price</td>
-                                <td>${ipo.price}</td>
-                            </tr>
-                            <tr>
-                                <td>Minimum Application<br>Amount (Tk)</td>
-                                <td>${ipo.minimum_app}</td>
-                            </tr>
-                            <tr>
-                                <td>Maximum Application<br>Amount (Tk)</td>
-                                <td>${ipo.maximum_app}</td>
-                            </tr>
-                            <tr>
-                                <td>Total Share</td>
-                                <td>${ipo.total_share}</td>
-                            </tr><tr>
-                                <td>Total Value</td>
-                                <td>${ipo.total_value}</td>
-                            </tr>
-                            <tr>
-                                <td>IPO Type</td>
-                                <td>${ipo.ipo_type}</td>
-                            </tr>
-                            <tr>
-                                <td>Quantity/Lot</td>
-                                <td>${ipo.quantity}</td>
-                            </tr>
-                            <tr>
-                                <td>NAV</td>
-                                <td>${ipo.nav}</td>
-                            </tr>
-                            <tr>
-                                <td>EPS</td>
-                                <td>${ipo.eps}</td>
-                            </tr>
-                            <tr>
-                                <td>Eligibility</td>
-                                <td>${ipo.eligibility}</td>
-                            </tr>
-                                <td>Company Prospectus</td>
-                                <td><Button class="btn">PDF</Button></td>
-                            </tr>
-                            </tr>
-                                <td>Summary</td>
-                                <td><Button class="btn">PDF</Button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            `
-    
+            </div>
+
+            <div class="contentBody">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>Platform</td>
+                            <td>${ipo.Offer_Platform}</td>
+                        </tr>
+                        <tr>
+                            <td>Cut Off Date</td>
+                            <td>${ipo.cut_date}</td>
+                        </tr>
+                        <tr>
+                            <td>Price</td>
+                            <td>${ipo.Rate}</td>
+                        </tr>
+                        <tr>
+                            <td>Minimum Application<br>Amount (Tk)</td>
+                            <td>${ipo.Minamt}</td>
+                        </tr>
+                        <tr>
+                            <td>Maximum Application<br>Amount (Tk)</td>
+                            <td>${ipo.MaxAmt === 0 ? '' : ipo.MaxAmt}</td>
+                        </tr>
+                        <tr>
+                            <td>Total Share</td>
+                            <td>${ipo.Share}</td>
+                        </tr><tr>
+                            <td>Total Value</td>
+                            <td>${ipo.Total_Value}</td>
+                        </tr>
+                        <tr>
+                            <td>IPO Type</td>
+                            <td>${ipo.IPO_Type === 0 ? 'Share': (ipo.IPO_Type === 1 ? 'Mutual Fund': (ipo.IPO_Type === 2 ? 'Bond' : 'undefined'))}</td>
+                        </tr>
+                        <tr>
+                            <td>Quantity/Lot</td>
+                            <td>${ipo.Qty}</td>
+                        </tr>
+                        <tr>
+                            <td>NAV</td>
+                            <td>${ipo.NAV}</td>
+                        </tr>
+                        <tr>
+                            <td>EPS</td>
+                            <td>${ipo.EPS}</td>
+                        </tr>
+                        <tr>
+                            <td>Eligibility</td>
+                            <td>${ipo.Offer_Eligibility}</td>
+                        </tr>
+                            <td>Company Prospectus</td>
+                            <td>
+                                <Button class="btn">
+                                    <a style='text-decoration: none; color: #000;' href='${ipo.Link_Prospectus}'>PDF</a>
+                                </Button>
+                            </td>
+                        </tr>
+                        </tr>
+                            <td>Summary</td>
+                            <td>
+                                <Button class="btn">
+                                    <a style='text-decoration: none; color: #000;' href='${ipo.Link_Summary}'>PDF</a>
+                                </Button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        `
+          
             ipoContentBody.appendChild(newDiv)
-            let dynamicHeadingHeight = document.getElementById(`history_dynamicHeading_${index}`).offsetHeight;
-            document.getElementById(`historyIpoHeading_${index}`).style.height = dynamicHeadingHeight + 'px';
-            document.getElementById(`history_staticHeading_${index}`).style.height = '100%'
+            let dynamicHeadingHeight = document.getElementById(`R_DynamicHeading_${index}`).offsetHeight;
+            document.getElementById(`R_ipoHeading_${index}`).style.height = dynamicHeadingHeight + 'px';
+            document.getElementById(`R_staticHeading_${index}`).style.height = '100%'
 
         })
     }

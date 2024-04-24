@@ -1,6 +1,5 @@
 .mainContentSection{
     height: 100%;
-    padding-bottom: 30px;
 }
 .heading{
     text-align: center;
@@ -16,12 +15,18 @@
     border-radius: 10px 10px 0px 0px;
     background-color: #e9ecefd9;
 }
-
+.section-availableStok-btn{
+    margin-top: 5px;
+}
+.section-availableStok{
+    flex: 1;
+    overflow-y: auto;
+}
 .btnRow{
     border-radius: 10px;
     border: 1px solid #000;
     background-color: #868686;
-    padding: 8px;
+    padding: 5px 0px;
     margin-bottom: 5px;
 }
 .btnGroup{
@@ -31,13 +36,13 @@
     align-items: center;
 }
 .stockBtn{
-    padding: 8px 15px;
+    padding: 5px 10px;
     border: 3px solid #676a66e8;
     border-radius: 10px;
 }
 .btnGroup > .active{
     background-color: #5C5C5C;
-    padding: 8px 15px;
+    padding: 5px 10px;
     border-radius: 10px;
 }
 .currentBtn,.stockBtn{
@@ -52,8 +57,6 @@
 }
 .stockBody{
     background-color: #fff;
-    height: 65vh;
-    overflow-y: auto;
 }
 table{
     width: 100%;

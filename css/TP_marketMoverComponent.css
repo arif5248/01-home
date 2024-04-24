@@ -30,12 +30,12 @@
 }
 
 .dataBody > table > tbody > tr > td{
-    font-weight: 700;
+    font-weight: 400;
     font-size: 15px;
     padding: 7px 0px;
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
-    color: #000 !important;
+    color: #000 ;
     text-align: center;
 }
 .dataBody > table > tbody > tr > td:first-child{
@@ -65,13 +65,17 @@
     height: 80vh;
 }
 
-
-
+.topGainerFontColor{
+    color: #057005 !important;
+}
+.topLooserFontColor{
+    color: red !important;
+}
 .dataBody > h3{
     position: sticky;
-    top: 0px; /* Adjust this value based on the height of your page heading */
-    background-color: white; /* Ensure a background to see the sticky effect */
-    z-index: 900; /* Set a z-index lower than the page heading but higher than the table */
+    top: 0px; 
+    background-color: white; 
+    z-index: 900; 
 }
 
 

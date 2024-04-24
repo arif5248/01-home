@@ -1,205 +1,6 @@
-function executeTP_todayTrade(){
-    const todaysTrade = [
-        {
-            time: "12:29",
-            company: "INDEXAGRO",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            company: "INDEXAGRO",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            company: "INDEXAGRO",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            company: "INDEXAGRO",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            company: "INDEXAGRO",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            company: "INDEXAGRO",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            company: "INDEXAGRO",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            company: "INDEXAGRO",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            company: "INDEXAGRO",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            company: "INDEXAGRO",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            company: "INDEXAGRO",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            company: "INDEXAGRO",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            company: "INDEXAGRO",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            company: "INDEXAGRO",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            company: "INDEXAGRO",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            company: "INDEXAGRO",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            company: "INDEXAGRO",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            company: "INDEXAGRO",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            company: "INDEXAGRO",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            company: "INDEXAGRO",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            company: "INDEXAGRO",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            company: "INDEXAGRO",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            company: "INDEXAGRO",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            company: "INDEXAGRO",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            company: "INDEXAGRO",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            company: "INDEXAGRO",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            company: "INDEXAGRO",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            company: "INDEXAGRO",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            company: "INDEXAGRO",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            company: "INDEXAGRO",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            company: "INDEXAGRO",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            company: "INDEXAGRO",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            company: "INDEXAGRO",
-            price: 20,
-            volume: 400
-        },
-    ]
-
+async function executeTP_todayTrade(){
+    let todaysTrade = await get_TICKPRICE_()
+    
     function todayTrade(){
         document.getElementById('mainContentSection').innerHTML = `
         <div class="pageHeading" id="financial-Heading">
@@ -212,33 +13,26 @@ function executeTP_todayTrade(){
             <div class="tradeSearchBox" id="tradeSearchBox"></div>
         </div>
         
-        <div class='container'>
+        <div class='container' style="flex: 1  auto; height: 100%; overflow-y: auto;">
             <div class="todaysTradeBody" id="todaysTradeBody"></div>
         </div>
-        <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
+       
         `
     }
 
     function renderTradeSearchBox(){
         document.getElementById('tradeSearchBox').innerHTML = `
         <div class="search">
-            <input type="text" name="searchBox" placeholder="Select Script">
+            <input id='searchTodayPrice' type="text" name="searchBox" placeholder="Search">
         </div>
-        <div class="relaod">
+        <div id='reloadTodayPrice' class="relaod">
             <img src="../images/icons/reload.png" alt="reload" style="width: 30px;">
         </div>
         `
     }
 
     function renderTodayTrades(){
-        var tableBody = document.getElementById('todaysTradeBody')
+        const tableBody = document.getElementById('todaysTradeBody')
         tableBody.innerHTML =
          `
             <table>
@@ -252,18 +46,50 @@ function executeTP_todayTrade(){
         `;
         todaysTrade.forEach(data => {
             const newRow = document.createElement('tr');
-    
+            newRow.classList.add('todayPriceItem')
             newRow.innerHTML = `
-                <td>${data.time}</td>
-                <td>${data.company}</td>
-                <td>${data.price}</td>
-                <td>${data.volume}</td>
+                <td>${data.dt}</td>
+                <td>${data.nam}</td>
+                <td>${data.ltp}</td>
+                <td>${data.vol}</td>
             `;
         tableBody.querySelector('tbody').appendChild(newRow);
+        newRow.style.backgroundColor = `${data.chng >= 0 ? (data.chng > 0 ? '#04A41E' : '#fff') : '#FE0000'}`
         });
     }
 
     todayTrade()
     renderTradeSearchBox()
     renderTodayTrades()
+
+    document.getElementById('searchTodayPrice').addEventListener('input', async () => {
+        const existList = document.querySelectorAll('.todayPriceItem');
+        if(existList){
+            existList.forEach(item => {
+                item.remove();
+            });
+        } 
+        const inputedValue = document.getElementById('searchTodayPrice').value.toLowerCase()
+        const tableBody = document.getElementById('todaysTradeBody')
+        todaysTrade.forEach(data =>{
+            const symbol = data.nam.toLowerCase()
+            if(symbol.includes(inputedValue)){
+                const newRow = document.createElement('tr');
+                newRow.classList.add('todayPriceItem')
+                newRow.innerHTML = `
+                    <td>${data.dt}</td>
+                    <td>${data.nam}</td>
+                    <td>${data.ltp}</td>
+                    <td>${data.vol}</td>
+                `;
+                tableBody.querySelector('tbody').appendChild(newRow);
+                newRow.style.backgroundColor = `${data.chng >= 0 ? (data.chng > 0 ? '#04A41E' : '#fff') : '#FE0000'}`
+            }
+        })
+    })
+    document.getElementById('reloadTodayPrice').addEventListener('click', async () => {
+        document.getElementById('searchTodayPrice').value = ''
+        todaysTrade = await get_TICKPRICE_()
+        renderTodayTrades()
+    })
 }

@@ -1,26 +1,10 @@
-function executechildID(){ 
-    const childIdData = [
-        {
-            id:172,
-            name: "SIRAT SERENA",
-            main_balance: 467,
-            mature_balance: 467,
-            profit_balance: 0,
-            stock_value: 347,
-            portfolio_value : 814,
-            status: "Active"
-        },
-        {
-            id:535,
-            name: "MD. GOLAM RABBANI",
-            main_balance: 429,
-            mature_balance: 429,
-            profit_balance: 0,
-            stock_value: 73932,
-            portfolio_value : 74361,
-            status: "Active"
-        }
-    ]
+async function executechildID(){ 
+    let childIdData = []
+
+    const fetchedChildPortfolio = await getChildPortfolio(user.LoggedInInvestorId)
+    if(fetchedChildPortfolio.status === true){
+        childIdData = fetchedChildPortfolio.Data
+    }
 
     function childID(){
         document.getElementById('mainContentSection').innerHTML = 
@@ -34,21 +18,25 @@ function executechildID(){
             <div class="container">
                 <div class="summuryChildID" id="summuryChildID"></div>
             </div>
-            <div class="container">
+            <div class="container" style="flex: 1 auto;overflow-y: auto;">
                 <div class="allChildID" id="allChildID"></div>
             </div> 
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
         `
     }
 
     function renderSummuryChildID(){
+        let summaryData ={}
+        if(fetchedChildPortfolio.status === true){
+            summaryData = {
+                totalId : fetchedChildPortfolio.Data.length,
+                totalMainBal: fetchedChildPortfolio.totalMainBal,
+                totalMatBal: fetchedChildPortfolio.totalMatBal,
+                totalProfitBal: fetchedChildPortfolio.totalProfitBal,
+                totalStockVal: fetchedChildPortfolio.totalStockVal,
+                totalPortVal: fetchedChildPortfolio.totalPortVal,
+            }
+            
+        }
         const tableData = document.getElementById('summuryChildID')
         tableData.innerHTML =  `
 
@@ -56,23 +44,23 @@ function executechildID(){
             <tbody>
                 <tr>
                     <td>Total Id</td>
-                    <td>2</td>
+                    <td>${summaryData.totalId}</td>
                     <td>Profit <br> Balance</td>
-                    <td>74297</td>
+                    <td>${summaryData.totalProfitBal}</td>
                 </tr>
 
                 <tr>
                     <td>Main <br> Balance</td>
-                    <td>896</td>
+                    <td>${summaryData.totalMainBal}</td>
                     <td>Stock <br> Balance</td>
-                    <td>0</td>
+                    <td>${summaryData.totalStockVal}</td>
                 </tr>
 
                 <tr>
                     <td>Mature <br> Balance</td>
-                    <td>896</td>
+                    <td>${summaryData.totalMatBal}</td>
                     <td>Profolio <br> Value</td>
-                    <td>75175</td>
+                    <td>${summaryData.totalPortVal}</td>
                 </tr>
             </tbody
         </table>
@@ -90,39 +78,39 @@ function executechildID(){
                     <tbody>
                         <tr>
                             <td>Id</td>
-                            <td>${childID.id}</td>
+                            <td>${childID.InvestorID}</td>
                         </tr>
                         <tr>
                             <td>Name</td>
-                            <td>${childID.name}</td>
+                            <td>${childID.InvestorName}</td>
                         </tr>
                         <tr>
                             <td>Main Balance</td>
-                            <td>${childID.main_balance}</td>
+                            <td>${childID.MainBalance}</td>
                         </tr>
                         <tr>
                             <td>Mature Balance</td>
-                            <td>${childID.mature_balance}</td>
+                            <td>${childID.MaturedBalance}</td>
                         </tr>
                         <tr>
                             <td>Profit Balance</td>
-                            <td>${childID.profit_balance}</td>
+                            <td>${childID.ProfitBalance}</td>
                         </tr>
                         <tr>
                             <td>Stock Value</td>
-                            <td>${childID.stock_value}</td>
+                            <td>${childID.StockValue}</td>
                         </tr>
                         <tr>
                             <td>Portfolio Value</td>
-                            <td>${childID.portfolio_value}</td>
+                            <td>${childID.PortfolioValue}</td>
                         </tr>
                         <tr>
                             <td>Status</td>
-                            <td class="idStatus">${childID.status}</td>
+                            <td class="idStatus">${childID.Status}</td>
                         </tr>
                     </tbody>
                 </table>
-                <div class="detailsBtn" onclick="route('../component/childID_DetailsComponent.js','../css/childID_DetailsComponent.css', 'childID_Details')">View Details</div>
+                <div class="detailsBtn" onclick="route('../component/childID_DetailsComponent.js','../css/childID_DetailsComponent.css', 'childID_Details', ${childID.InvestorID})">View Details</div>
 
             `
             divBody.appendChild(newDiv)

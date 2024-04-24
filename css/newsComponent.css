@@ -1,3 +1,6 @@
+.navbar{
+    width: 100%;
+}
 a{
     text-decoration: none;
     color: white;
@@ -50,30 +53,28 @@ h1{
 .topSpace{
     margin-top: 70px;
 }
-.input-group{
-    padding: 10px;
-    margin-top: 10px;
-    background-color: #5555551c;
+.button_search_section{
+    background-color:#cdc9c9 ;
 }
-.input-group-append > span{
-    background-color: #55555554;
-    border: none;
-
+.button_search_section  > .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
-.input-group input{
-    background-color: #55555554;
+.searchBox{
+    position: relative;
+    padding: 10px 0px;
+}
+.searchBox > input{
+    padding-left: 35px;
     border-radius: 10px;
+    background-color: #EEEEEE;
 }
-.input-group-text > img{
-    width: 30px;
-}
-.reload{
-    margin-left: 5px;
-}
-.reload > img {
-    margin-top: 5px;
-    margin-left: 15px;
-    width: 30px;
+.N_searchIcon{
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
 }
 
 .newsSection{
@@ -120,6 +121,41 @@ h1{
     margin: 10px 0px;
     border-radius: 5px;
     box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.273);
+    background-color: #fff;
+    position: relative;
+}
+#showMediaNewsDetails{
+    margin-top: -55px;
+    z-index: 1;
+    width: 100vw;
+    flex-direction: column;
+    align-items: center;
+}
+.selectedNewsBody{
+    border: 0px solid #000;
+    background-color: #fff;
+    width: 95vw;
+    box-shadow: 0px 0px 5px 3px #000;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+.close{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.close_img_Box{
+    margin-bottom: -10px;
+    background-color: #fff;
+    border-radius: 50%;
+    padding: 5px;
+    width: 50px;
+    height: 50px;
+    border: 1px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 0px 5px 1px #000;
 }
 .exchange-news-item{
     border: solid 1px black;
@@ -131,6 +167,7 @@ h1{
     background-color: #0d6efd;
     padding: 5px;
     text-align: center;
+    border-radius: 5px 5px 0px 0px;
 }
 .exchangeHeading > h4{
     font-weight: 400;
@@ -173,10 +210,47 @@ h1{
 }
 
 .exchangeContent{
+    background-color: #fff;
     padding: 5px;
 }
 .exchangeContent > p{
     text-align: justify;
+}
+.selectedNewsBody > .heading{
+    background-color: rgb(4 5 52);
+    border-radius: 10px 10px 0px 0px;
+    text-align: center;
+    box-shadow: 0px -3px 5px 0px #000;
+}
+.selectedNewsBody > .heading > h1{
+    padding: 0;
+    color: #fff;
+    padding: 5px 0px;
+}
+.allCompanyList{
+    margin-top: 5px;
+    list-style-type: none;
+    max-height: 200px;
+    overflow-y: auto;
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px 2px #000000de;
+    padding: 0px;
+    z-index: 2;
+    top: 125px;
+    
+}
+.allCompanyList > .allCompanyListItem{
+    border-bottom: 1px solid #00000059;
+    padding: 5px 10px;
+    margin-bottom: 2px;
+}
+.close_img_Box {
+    transition: all 0.3s ease;
+}
+
+.close_img_Box.hidden {
+    transform: translateY(-50px); /* Change this value according to your needs */
 }
 
 

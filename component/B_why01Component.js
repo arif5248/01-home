@@ -1,50 +1,9 @@
-function executeB_Why01(){
-    const contents = [
-        {
-            heading: "Free 01 ID",
-            url:"#",
-        },
-        {
-            heading: "24 Hours Support Team",
-            url:"#",
-        },
-        {
-            heading: "Shariah Compliant (Interest Fee) Company",
-            url:"#",
-        },
-        {
-            heading: "Operated by Experienced Professional Team",
-            url:"#",
-        },
-        {
-            heading: "Real Time  Share Trading through Web/Api",
-            url:"#",
-        },
-        {
-            heading: "Online Money Deposit & amp; Withdrawal Facility",
-            url:"#",
-        },
-        {
-            heading: "Paper Less Company",
-            url:"#",
-        },
-        {
-            heading: "Account Manager Facility",
-            url:"#",
-        },
-        {
-            heading: "Robot Trade Facility",
-            url:"#",
-        },
-        {
-            heading: "Instant IPO Application through Web/App",
-            url:"#",
-        },
-        {
-            heading: "Trustworthy&amp; Reliable",
-            url:"#",
-        }
-    ]
+async function executeB_Why01(){
+    let contents = []
+    const fetchedData = await getCmsHome()
+    if(fetchedData.status === true){
+        contents =  fetchedData.Why
+    }
     function B_Why01(){
         document.getElementById('page_heading').innerHTML=`Why 01`
         document.getElementById('beforeMain').innerHTML = `
@@ -64,9 +23,7 @@ function executeB_Why01(){
             newContent.classList.add('why01_item');
     
             newContent.innerHTML = `
-            <a href=${content.url} class="why01_item_heading">
-                <h4>${content.heading}</h4>
-            </a>
+                <h4 class="why01_item_heading">${content.Name}</h4>
             `;
     
             why01Div.appendChild(newContent);

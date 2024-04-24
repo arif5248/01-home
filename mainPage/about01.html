@@ -9,24 +9,22 @@
     <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <section class="main-section">
-        <div class="aboutUsHeader">
+    <section style="height: 100vh;" class="main-section">
+        <div style="flex: 0 0 auto;" class="aboutUsHeader">
             <h1>About 01 LIMITED</h1>
         </div>
-        <div class="aboutUsContent">
-            <div class="container content" id="aboutUsData"></div>
-
-        </div>
-        <div class="registeredOffice">
-
-        </div>
-        <div class="businessOffice">
-
-        </div>
-        <div class="aboutUsFooter">
-            <div class="container footerContent">
-                <p>BSEC Reg No. 3.2/CSE-104/2020/332 <br> SEC/Registration/CDBL-DP-265 <br>TREC No: CSE-104</p>
+        <div style="flex: 1 1 auto; height: 100%; overflow-y: auto;">
+            <div class="aboutUsContent">
+                <div class="container content" id="aboutUsData"></div>
             </div>
+            <div style="margin-top: 15px;" class="officeLocationSection">
+                <div class="container">
+                    <div id="officeLocation"></div>
+                </div>
+            </div>
+        </div>
+        <div style="flex: 0 0 auto;" class="aboutUsFooter">
+            <div id="aboutFooter" class="container footerContent"></div>
         </div>
     </section>
     

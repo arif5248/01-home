@@ -1,3 +1,20 @@
+#overlay{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: #00000082;
+}
+#overlay{
+    animation: overlay 0.3s linear(0.54 -17.65%, 1 100%);
+}
+@keyframes overlay {
+    from {
+        top: -200vh;
+    }
+    to {
+        top: 0; 
+    }
+}
 /*====================BeforeHeading=================*/
 .beforHeading{
     height: 60px;
@@ -348,8 +365,11 @@
     justify-content: space-around;
     align-items: center;
     padding: 10px 0px;
-    margin: 10px 0px;
+    margin: 10px 10px;
     background-color: #dbd8d8;
+    border: 1px solid #000;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px 0px #000;
 }
 .btnGroup > .Btn{
     padding: 10px 10px;
@@ -441,11 +461,8 @@
     border-radius: 20px;
     box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.273);
 }
-.why01_item > a{
-    text-decoration: none;
-    color: black;
-}
-.why01_item > a > h4{
+
+.why01_item> h4{
     font-size: 12px;
     font-weight: 400;
     margin: 0;
@@ -463,11 +480,8 @@
     border-radius: 20px;
     box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.273);
 }
-.ourService_item > a{
-    text-decoration: none;
-    color: black;
-}
-.ourService_item > a > h4{
+
+.ourService_item >h4{
     font-size: 12px;
     font-weight: 400;
     margin: 0;
@@ -478,18 +492,24 @@
 .get-01-section{
     padding-top: 1px;
 }
+.get-01-content{
+    border: 1px solid #000;
+    padding: 0px 5px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    background-color: #676a6666;
+}
 .get01_item{
     padding: 10px;
     border: solid 1px black;
     margin: 10px 0px;
     border-radius: 20px;
-    box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.273);
+    box-shadow: 0px 0px 3px 1px #000;
+    background-color: #fff;
+
 }
-.get01_item > a{
-    text-decoration: none;
-    color: black;
-}
-.get01_item > a > h4{
+
+.get01_item >h4{
     font-size: 12px;
     font-weight: 400;
     margin: 0;
@@ -497,9 +517,6 @@
 /*====================End Get 01-Tech=================*/
 /*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
 /*====================Start Noti=================*/
-
-
-
 .noti-section{
     padding-top: 1px;
 }
@@ -507,6 +524,12 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+}
+.notification > .date {
+    font-size: 13px;
+}
+.notification > .headline > h4{
+    text-align: left;
 }
 .noti_item{
     padding: 10px;
@@ -520,6 +543,22 @@ hr{
     border: 1px solid black;
     color: black;
     margin-top: 0px;
+}
+#notiDetails{
+    position: fixed;
+    width: 80%;
+    top: 50vh;
+    left: 50vw;
+    transform: translateX(-50%) translateY(-50%);
+    border: 1px solid #000;
+    box-shadow: 0px 0px 4px 0px #000;
+    border-radius: 5px;
+    background-color: #fff;
+    z-index: 5;
+    padding: 5px 10px;
+}
+.notiClose > div{
+    display: inline-block;
 }
 /*====================End Noti=================*/
 /*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
@@ -642,6 +681,190 @@ hr{
 .companyCategoryBox > p,
 .price_up_down > p{
     margin: 0;
+}
+/*====================End Price History=================*/
+/*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
+/*====================Start Promotions=================*/
+.promotions_item{
+    box-shadow: 0px 0px 5px 0px #000;
+    margin: 10px 0px;
+    border-radius: 5px;
+}
+.promotionsDetailsBtn{
+    display: flex;
+    justify-content: flex-end;
+    padding: 5px 5px;
+}
+.promotionsDetailsBtnInner{
+    background-color: #3ABBF4;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 5px;
+}
+#promotionsDetails_content{
+    flex-direction: column;
+}
+.promotionDetailBox > .itemBox {
+    display: flex;
+}
+.promotionDetailBox > div > p:first-child{
+    font-weight: 600;
+    padding-right: 10px
+}
+
+/*====================End Promotions=================*/
+/*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
+/*====================Start Career With 01=================*/
+.jobBox{
+    border: 1px solid #000;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px 0px #000;
+    margin: 10px 0px;
+}
+.jobHeading > h4{
+    margin: 0;
+    padding: 10px;
+}
+.jobDetails{
+    padding: 5px 10px;
+}
+.jobDetails > .items{
+    display: flex;
+}
+.jobDetails > .items > p:first-child{
+    width: 35%;
+    font-weight: 500;
+}
+.jobDetails > .items > p:last-child{
+    width: 65%;
+}
+.jobBtn{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-bottom: 10px;
+}
+.jobApplyFormBtn{
+    padding: 6px 10px;
+    border-radius: 5px;
+    background-color: #35943A;
+    color: #fff;
+}
+.jobDetailsBtn{
+    padding: 6px 10px;
+    border-radius: 5px;
+    background-color: #07A1B5;
+    color: #fff;
+}
+.jobApplyFormBtn > a,
+.jobDetailsBtn > a{
+    color: #fff;
+    text-decoration: none;
+}
+
+/*====================End Career With 01=================*/
+/*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
+/*====================Start Job Apply=================*/
+#submitJobApply{
+    margin-top: 10px;
+}
+input,
+select{
+    margin-bottom: 10px;
+    border-radius: 5px;
+    padding: 5px 5px;
+}
+label{
+    margin-bottom: 10px;  
+}
+.form-box-3{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.form-box-3 > label{
+    width: 30%;
+}
+.form-box-3 > input{
+    width: 70%;
+}
+.fileContent{
+    border: 1px solid #000;
+    border-radius: 10px;
+    padding: 10px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.fileContent > h5 {
+    font-weight: 700;
+    font-size: 14px;
+}
+.file-box{
+    width: 100%;
+}
+.file-box > input{
+    width: 100%;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    padding: 5px 5px;
+}
+#file-input{
+    display: none;
+}
+#file-label{
+    width: 100%;
+    text-align: center;
+    border: 1px solid #000;
+    border-radius: 10px;
+    padding: 5px 5px;
+}
+#preview-container {
+    text-align: center;
+    display: none;
+    margin-top: 10px;
+    position: relative;
+  }
+  #undo-button{
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    color: red;
+  }
+
+  #preview-image {
+    max-width: 100%;
+    max-height: 100px;
+    margin-bottom: 10px;
+  }
+  .proceed-btn{
+    display: flex;
+}
+
+.proceed-btn > input{
+    width: 50%;
+    background-color: #4CB050;
+    color: #fff;
+    margin: 10px 10px;
+    padding: 8px 5px;
+}
+.proceed-btn > input:first-child{
+    background-color: red;
+}
+#showResult{
+    text-align: center;
+    position: fixed;
+    top: 80px;
+    left: 50vw;
+    width: 75%;
+    transform: translateX(-50%);
+}
+#showResult > p{
+    display: inline-block;
+    padding: 5px 10px;
+    color: #fff;
+    border-radius: 5px;
 }
 /*-----------------Bootstrap class-------------------*/
 .fixed-top{

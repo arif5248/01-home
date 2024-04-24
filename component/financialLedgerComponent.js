@@ -45,7 +45,7 @@ async function executeFinancialLedger(){
             </div>
 
             <div class="container" style="flex: 1 auto;overflow-y: auto;">
-            <div class="ledgerTable" id="ledgerTable"></div>
+                <div class="ledgerTable" id="ledgerTable"></div>
             </div>
             
         `

@@ -6,6 +6,7 @@ async function getUserIP(){
     return userIp
 }
 
+
 // =================Login API==================//
 async function investorLogin(investorId, investorPassword) {
     const url = `http://119.18.148.10/01api/kapi1.ashx?type=InvestorLoginV1&investorid=${investorId}&investorpassword=${investorPassword}`;
@@ -50,11 +51,13 @@ async function fetchDataByUrlAndFormData(url,formData){
         return error
     }
 }
-// =================Get Data With URL==================//
-async function fetchDataByUrl(url){
+// =================Get Data With Mwthod, URL, Body and Header==================//
+async function fetchDataByMethodUrlBodyDataAndHeader(url, method, headers, bodyData){
     try {
         const response = await fetch(url, {
-            method: 'GET'
+            method: method,
+            headers: headers,
+            body: bodyData,
         });
         
         if (!response.ok) {
@@ -71,10 +74,35 @@ async function fetchDataByUrl(url){
         return error
     }
 }
-
+// =================Get Data With URL==================//
+async function fetchDataByUrl(url){
+    try {
+        const response = await fetch(url, {
+            method: 'GET'
+        });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        
+        const text = await response.text();
+        const sanitizedText = text.replace(/\r?\n/g, '').replace(/[\u000A\u000D]/g, '');
+        const data = JSON.parse(sanitizedText);
+        return data;
+        
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return error
+    }
+}
+// =================Get Before Company Data==================//
+async function getCmsHome (){
+    const url = `http://119.18.148.10/01api/Kapi1.ashx?type=get_cms_home&comp_id=${c_Id}`
+    return await fetchDataByUrl(url)
+}
 //==================All Api===============//
 async function getAbout01(){
-    const url = `http://119.18.148.10/01api/japi.ashx?comp_id=${c_Id}&type=get_AboutUs`
+    const url = `http://119.18.148.10/01api/Kapi1.ashx?type=officelist&comp_id=${c_Id}`
     return await fetchDataByUrl(url)
 }
 async function getNews(){
@@ -346,5 +374,183 @@ async function deleteMoneyDeposit(inv_Id,atn){
     const url = `http://119.18.148.10/01api/kapi1.ashx?type=mr_deposit_delete&inv_id=${inv_Id}&atn=${atn}&comp_id=${c_Id}`
     return await fetchDataByUrl(url)
 }
-
-
+async function postBankDeposit(formData){
+    formData.append('comp_id', c_Id);
+    const url = `http://119.18.148.10/01api/kapi1.ashx?type=mr_depositV102`
+    return await fetchDataByUrlAndFormData(url, formData)
+}
+async function getDigitalBranchFundStatus(inv_Id,date){
+    const url = `http://119.18.148.10/01api/japi.ashx?type=get_DigitalBr_FundStatus&comp_id=${c_Id}&inv_id=${inv_Id}&start_date=${date}`
+    return await fetchDataByUrl(url)
+}
+async function getDigitalBranchFundInOut(inv_Id, date_from, date_to){
+    const url = `http://119.18.148.10/01api/japi.ashx?type=get_DigitalBr_Fund&comp_id=${c_Id}&inv_id=${inv_Id}&start_date=${date_from}&end_date=${date_to}`
+    return await fetchDataByUrl(url)
+}
+async function getDigitalBranchTotClients(inv_Id, date_from, date_to){
+    const url = `http://119.18.148.10/01api/japi.ashx?type=get_DigitalBr_TotClient&comp_id=${c_Id}&inv_id=${inv_Id}&start_date=${date_from}&end_date=${date_to}`
+    return await fetchDataByUrl(url)
+}
+async function getDigitalBranchTradedClients(inv_Id, date_from, date_to){
+    const url = `http://119.18.148.10/01api/japi.ashx?type=get_DigitalBr_TradedClient&comp_id=${c_Id}&inv_id=${inv_Id}&start_date=${date_from}&end_date=${date_to}`
+    return await fetchDataByUrl(url)
+}
+async function getDigitalBranchLoggedInClients(inv_Id, date_from, date_to){
+    const url = `http://119.18.148.10/01api/japi.ashx?type=get_DigitalBr_LoggedIn&comp_id=${c_Id}&inv_id=${inv_Id}&start_date=${date_from}&end_date=${date_to}`
+    return await fetchDataByUrl(url)
+} 
+async function getDigitalBranchWithBO(inv_Id, date_from, date_to){
+    const url = `http://119.18.148.10/01api/japi.ashx?type=get_DigitalBr_DetailsBO&comp_id=${c_Id}&inv_id=${inv_Id}&start_date=${date_from}&end_date=${date_to}`
+    return await fetchDataByUrl(url)
+}
+async function getDigitalBranchWithoutBO(inv_Id, date_from, date_to){
+    const url = `http://119.18.148.10/01api/japi.ashx?type=get_DigitalBr_DetailsWithoutBO&comp_id=${c_Id}&inv_id=${inv_Id}&start_date=${date_from}&end_date=${date_to}`
+    return await fetchDataByUrl(url)
+}
+async function getPayUsList(){
+    const url = `http://119.18.148.10/01api/Kapi1.ashx?type=get_pay_us_list&comp_id=${c_Id}`
+    return await fetchDataByUrl(url)
+}
+async function getPromotions(){
+    const url = `http://119.18.148.10/01api/Kapi1.ashx?type=get_promotion&comp_id=${c_Id}`
+    return await fetchDataByUrl(url)
+}
+async function getBoStatus(inv_Id){
+    const url = `http://119.18.148.10/01api/kapi1.ashx?type=get_bo_status&comp_id=${c_Id}&inv_id=${inv_Id}`
+    return await fetchDataByUrl(url)
+}
+async function getGeneralNotification(){
+    const url = `http://119.18.148.10/01api/japi.ashx?type=get_gen_noti&comp_id=${c_Id}`
+    return await fetchDataByUrl(url)
+}
+async function getCareer(){
+    const url = `http://119.18.148.10/01api/japi.ashx?type=get_career&comp_id=${c_Id}`
+    return await fetchDataByUrl(url)
+}
+async function postCareer(formData){
+    const url = `http://119.18.148.10/01api/japi.ashx?type=post_career&comp_id=${c_Id}`
+    return await fetchDataByUrlAndFormData(url, formData)
+}
+async function getCreateNewIDData(){
+    const url = `http://119.18.148.10/01api/japi.ashx?type=get_CreateNewIDData&comp_id=${c_Id}`
+    return await fetchDataByUrl(url)
+}
+async function getStateCity(countryName){
+    const url = `http://119.18.148.10/01api/kapi1.ashx?type=get_state_city&comp_id=${c_Id}&country=${countryName}`
+    return await fetchDataByUrl(url)
+}
+async function createNew01ID(data){
+    const userIp = await getUserIP()
+    const url = `http://119.18.148.10/01api/japi.ashx?type=post_CreateNewID&comp_id=${c_Id}&inv_Name=${data.inv_Name}&inv_Phone=${data.inv_Phone}&inv_Email=${data.inv_Email}&inv_Country=${data.inv_Country}&inv_City=${data.inv_City}&inv_CCode=${data.inv_CCode}&howto_findus=${data.howto_findus}&inv_occupation=${data.inv_occupation}&reff_id=${data.reff_id}&inv_IP=${userIp.ip}`
+   
+    return await fetchDataByUrl(url)
+}
+async function postOnlinePay01(data){
+    const url = `http://119.18.148.10/01api/kapi1.ashx?type=onlinePay01&comp_id=${c_Id}&cid=115&name=${data.name}&mobile=${data.mobile}&email=${data.email}&amount=${data.amount}&mrType=${data.mrType}&payType=${data.payType}&ret=${data.ret}`
+    return await fetchDataByUrl(url)
+}
+async function postPassChange(data){
+    const url = `http://119.18.148.10/01api/japi.ashx?type=post_PassChange&comp_id=${c_Id}&inv_id=${data.inv_id}&oldPass=${data.oldPass}&newPass=${data.newPass}`
+    return await fetchDataByUrl(url)
+}
+async function Post_LOGIN_(data){
+    const url = `https://berichbd.com/matrix/matrix.aspx?`
+    const method = 'POST'
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    const bodyData = JSON.stringify(data);
+    return await fetchDataByMethodUrlBodyDataAndHeader(url, method, headers, bodyData)
+}
+async function get_TICKPRICE_(data){
+    const url = `https://berichbd.com/matrix/matrix.aspx?CMND=_TICKPRICE_`
+    const method = 'GET'
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    headers.append("authid", JSON.parse(sessionStorage.getItem('userData')).authid);
+    const bodyData = JSON.stringify(data);
+    return await fetchDataByMethodUrlBodyDataAndHeader(url, method, headers, bodyData)
+}
+async function get_THOUR_(data){
+    const url = `https://berichbd.com/matrix/matrix.aspx?CMND=_THOUR_`
+    const method = 'GET'
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    const bodyData = JSON.stringify(data);
+    return await fetchDataByMethodUrlBodyDataAndHeader(url, method, headers, bodyData)
+}
+async function get_SCRIPNEWS_(data){
+    const url = `https://berichbd.com/matrix/matrix.aspx?CMND=_SCRIPNEWS_&scrip=${data}`
+    return await fetchDataByUrl(url)
+}
+async function get_HALTED_(data){
+    const url = `https://berichbd.com/matrix/matrix.aspx?CMND=_HALTED_`
+    const method = 'GET'
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    headers.append("authid", JSON.parse(sessionStorage.getItem('userData')).authid);
+    const bodyData = JSON.stringify(data);
+    return await fetchDataByMethodUrlBodyDataAndHeader(url, method, headers, bodyData)
+}
+async function get_SCRIPDIV_(script,data){
+    const url = `https://berichbd.com/matrix/matrix.aspx?scrip=${script}&CMND=_SCRIPDIV_`
+    const method = 'GET'
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    headers.append("authid", JSON.parse(sessionStorage.getItem('userData')).authid);
+    const bodyData = JSON.stringify(data);
+    return await fetchDataByMethodUrlBodyDataAndHeader(url, method, headers, bodyData)
+}
+async function get_OFFER_(script,data){
+    const url = `https://berichbd.com/matrix/matrix.aspx?CMND=_OFFER_&scrip=${script}`
+    const method = 'GET'
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    headers.append("authid", JSON.parse(sessionStorage.getItem('userData')).authid);
+    const bodyData = JSON.stringify(data);
+    return await fetchDataByMethodUrlBodyDataAndHeader(url, method, headers, bodyData)
+}
+async function get_OFFERD_(script,data){
+    const url = `https://berichbd.com/matrix/matrix.aspx?CMND=_OFFERD_&scrip=${script}`
+    const method = 'GET'
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    headers.append("authid", JSON.parse(sessionStorage.getItem('userData')).authid);
+    const bodyData = JSON.stringify(data);
+    return await fetchDataByMethodUrlBodyDataAndHeader(url, method, headers, bodyData)
+}
+async function get_SCRIPINFO_(script,data){
+    const url = `https://berichbd.com/matrix/matrix.aspx?CMND=_SCRIPINFO_&scrip=${script}`
+    const method = 'GET'
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    headers.append("authid", JSON.parse(sessionStorage.getItem('userData')).authid);
+    const bodyData = JSON.stringify(data);
+    return await fetchDataByMethodUrlBodyDataAndHeader(url, method, headers, bodyData)
+}
+async function get_CLIENTDET_(data){
+    const url = `https://berichbd.com/matrix/matrix.aspx?CMND=_CLIENTDET_`
+    const method = 'GET'
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    headers.append("authid", JSON.parse(sessionStorage.getItem('userData')).authid);
+    const bodyData = JSON.stringify(data);
+    return await fetchDataByMethodUrlBodyDataAndHeader(url, method, headers, bodyData)
+}
+async function get_TOPLIST_(data){
+    const url = `https://www.berichbd.com/matrix/matrix.aspx?CMND=_TOPLIST_&exch=CSE/DSE`
+    const method = 'GET'
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    headers.append("authid", JSON.parse(sessionStorage.getItem('userData')).authid);
+    const bodyData = JSON.stringify(data);
+    return await fetchDataByMethodUrlBodyDataAndHeader(url, method, headers, bodyData)
+}
+async function get_TICKER_(data){
+    const url = `https://www.berichbd.com/matrix/matrix.aspx?CMND=_TICKER_&exch=CSE`
+    const method = 'GET'
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    headers.append("authid", JSON.parse(sessionStorage.getItem('userData')).authid);
+    const bodyData = JSON.stringify(data);
+    return await fetchDataByMethodUrlBodyDataAndHeader(url, method, headers, bodyData)
+}

@@ -1,3 +1,24 @@
+.home_marquee {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    box-sizing: border-box;
+  }
+  .home_marquee >  #marqueeContainer {
+    display: inline-block;
+    padding-left: 100%;
+    animation: marquee 30s linear infinite;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-100%); }
+  }
+
+
+
+
+
+
 /*-----------------Utilities-------------------*/
 *{
     
@@ -107,6 +128,10 @@ body{
     padding: 0px 5px;
     max-height: 400px;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 300px;
+    margin-bottom: 10px;
 }
 .executedTrades > .btnRow {
     position: sticky;
@@ -226,9 +251,9 @@ table{
     padding: 0px 10px;
     border-radius: 0px 0px 10px 10px;
 }
-.executedTrades > table,
-.oldStockBody > table,
-.currentStockBody > table{
+.executedTrades > div > table,
+.oldStockBody > div > table,
+.currentStockBody > div >  table{
     width: 100%;
     border-collapse: separate;
     border-spacing: 0 10px;
@@ -236,19 +261,19 @@ table{
     max-height: 200px;
 }
 
-.executedTrades > table > tbody > tr:first-child,
-.oldStockBody > table > tbody > tr:first-child,
-.currentStockBody > table > tbody > tr:first-child{
+.executedTrades > div > table > tbody > tr:first-child,
+.oldStockBody > div >  table > tbody > tr:first-child,
+.currentStockBody > div >  table > tbody > tr:first-child{
     position: sticky;
     top: 0;
     background-color: black;
 }
-.executedTrades > table > tbody > tr:first-child{
+.executedTrades > div > table > tbody > tr:first-child{
     top: 60px !important;
 }
-.executedTrades > table > tbody > tr:first-child > th,
-.oldStockBody > table > tbody > tr:first-child > th,
-.currentStockBody > table > tbody > tr:first-child > th{
+.executedTrades > div > table > tbody > tr:first-child > th,
+.oldStockBody > div >  table > tbody > tr:first-child > th,
+.currentStockBody > div >  table > tbody > tr:first-child > th{
     
     color: #fff;
     font-size: 12px;
@@ -265,25 +290,25 @@ table{
 .currentStockBody > table > tbody > tr:first-child > th:last-child{
     -webkit-padding-end: 10px;
 } */
-.executedTrades > table > tbody > tr > td,
-.oldStockBody > table > tbody > tr > td,
-.currentStockBody > table > tbody > tr > td{
+.executedTrades > div > table > tbody > tr > td,
+.oldStockBody > div >  table > tbody > tr > td,
+.currentStockBody > div >  table > tbody > tr > td{
     font-size: 12px;
     padding: 10px 0px;
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
     text-align: center;
 }
-.executedTrades > table > tbody > tr > td:first-child,
-.oldStockBody > table > tbody > tr > td:first-child,
-.currentStockBody > table > tbody > tr > td:first-child{
+.executedTrades > div > table > tbody > tr > td:first-child,
+.oldStockBody > div >  table > tbody > tr > td:first-child,
+.currentStockBody > div >  table > tbody > tr > td:first-child{
     -webkit-padding-start: 10px;
     border-left: 1px solid #000;
     border-radius: 15px 0px 0px 15px;
 }
-.executedTrades > table > tbody > tr > td:last-child,
-.oldStockBody > table > tbody > tr > td:last-child,
-.currentStockBody > table > tbody > tr > td:last-child{
+.executedTrades > div > table > tbody > tr > td:last-child,
+.oldStockBody > div >  table > tbody > tr > td:last-child,
+.currentStockBody > div >  table > tbody > tr > td:last-child{
     -webkit-padding-end: 10px;
     border-right: 1px solid #000;
     border-radius: 0px 15px 15px 0px;
@@ -302,7 +327,7 @@ table{
 }
 .currentStockFooter > p,
 .oldStockFooter > p{
-    padding: 5px 0px;
+    padding: 5px 15px;
     padding-right: 20px
 }
 .section-ExecutedTrades > .container > .btnRow > .btnGroup{

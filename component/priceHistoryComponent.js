@@ -2,7 +2,7 @@ async function executePriceHistory(script){
     let closingPrice = []
     let totalUp = 0;
     let totalDown = 0;
-    let noChange =0;
+    let noChange = 0;
 
     const fetchedClosePriceHistory =await getClosePriceHistory(script)
     console.log(fetchedClosePriceHistory)
@@ -60,7 +60,7 @@ async function executePriceHistory(script){
             </tbody>
         </table>
         `
-        closingPrice.reverse()
+        // closingPrice.reverse()
         closingPrice.forEach(price => {
             const newRow = document.createElement('tr');
     
@@ -73,7 +73,7 @@ async function executePriceHistory(script){
 
             if (parseFloat(price.change) < 0) {
                 newRow.classList.add('negative-change');
-                totalDown -= 1
+                totalDown += 1
             }
             else if (parseFloat(price.change) > 0) {
                 newRow.classList.add('positive-change');

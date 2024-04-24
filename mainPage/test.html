@@ -4,73 +4,244 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
-        <style>
-            .main{
-                display: flex;
-                flex-direction: column;
-                height: 100vh;
-            }
-            .top {
-                flex: 0 0 auto; /* Do not grow, do not shrink */
-                background-color: red; /* Just for visibility */
-                height: 40px;
-            }
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery.Marquee/1.5.0/jquery.marquee.min.js"></script>
 
-            .mainContent {
-                flex: 1 1 auto; /* Grow, shrink, and fill available space */
-                background-color: #f0f0f0; /* Just for visibility */
-                overflow-y: auto;
-            }
 
-            .bottom {
-                flex: 0 0 auto; /* Do not grow, do not shrink */
-                background-color: green; /* Just for visibility */
-                height: 40px;
-            }
-            .testDiv{
-                background-color: yellow;
-                display: flex;
-            }
-        </style>
+
     </head>
     <body>
-        <div class="button_search_section">
-            <div class="container">
-                <div class="buttonRow">
-                    <div class="allButton">
-                        <select id='MS_selectType' class="allBtn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <option>Select type</option>
-                        </select>
-                        <select id='MS_selectSector' class="allBtn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <option>Select Sector</option>
-                        </select>
-                        <select id='MS_selectSort' class="allBtn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <option>Select Sort</option>
-                        </select>
-                    </div>
-                </div>
+       <div>
+        <div class="w3-container  w3-border" style="margin: 5 5px;  padding: 1px; background-color:rgb(255, 255, 255);">
+            <div class="d-flex">
+              <div class="marqP" id="dvMarq"
+                style="display: none; background-color: black; overflow: hidden; padding-top: 1px"></div>
+              <div style="display:none; margin:auto"><img src="#" class="logolg" /></div>
             </div>
-        
-            <div class="container">
-                <div class="searchBox">
-                    <div class="MS_searchRow">
-                        <div style="width: 90%; height:auto" class="MS_searchBox">
-                            <input id='searchSharePrice' type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="searchIcon">
-                            <img class="MS_searchIcon" style="width: 20px; height:auto" src="../images/icons/magnifying-glass.png" alt="search icon">
-                        </div>
-                        <div id='MS_Reload' class="reload">
-                            <img style="width: 30px; height:auto" src="../images/icons/reload.png" alt="Reload">
-                        </div>
-                    </div>
-                </div>
+            <div class="d-flex">
+              <div class="marqPD" id="dvMarqD"
+                style="display: none; background-color: black; overflow: hidden; padding-top: 1px"></div>
+              <div style="display:none; margin:auto"><img src="#" class="logolg" /></div>
             </div>
-        
-            <div class="companyDataSection">
-                <div class="container">
-                    <div class="MS_table" id="MS_table"></div>
-                </div>
-            </div>
-        </div>
+            <table id="ifmTick" cellspacing="0" style="color: White; width: 100%">
+              <tr>
+                <td style="width:10%;" id="s1"></td>
+                <td style="width:10%;" id="s2"></td>
+                <td style="width:10%;" id="s3"></td>
+                <td style="width:10%;" id="s4"></td>
+                <!--<td style="width:10%;" id="s5"></td>
+                <td style="width:10%;" id="s6"></td>
+                   <td style="width:10%;" id="s7"></td>
+                  <td style="width:10%;" id="s8"></td>
+                  <td style="width:10%;" id="s9"></td>
+                  <td style="width:10%;" id="s10"></td>
+                  <td style="width:10%;" id="s11"></td>
+                  <td style="width:10%;" id="s12"></td> -->
+                <td style="width:1%; text-align:right"><img style="width:30px" src="#" class="logolg" /></td>
+              </tr>
+            </table>
+            <table id="ifmTickD" cellspacing="0" style="color: White; width: 100%">
+              <tr>
+                <td style="width:10%;" id="ds1"></td>
+                <td style="width:10%;" id="ds2"></td>
+                <td style="width:10%;" id="ds3"></td>
+                <td style="width:10%;" id="ds4"></td>
+                <!--<td style="width:10%;" id="ds5"></td>
+                <td style="width:10%;" id="ds6"></td>
+                  <td style="width:10%;" id="ds7"></td>
+                  <td style="width:10%;" id="ds8"></td>
+                  <td style="width:10%;" id="ds9"></td>
+                  <td style="width:10%;" id="ds10"></td>
+                   <td style="width:10%;" id="ds11"></td>
+                  <td style="width:10%;" id="ds12"></td> -->
+                <td style="width:1%; text-align:right"><img style="width:30px" src="#" class="logolg" /></td>
+              </tr>
+            </table>
+    
+          </div>
+
+       </div>
         
     </body>
+    <script>
+        getTicker()
+        function getTicker() {
+        $.get('https://www.berichbd.com/matrix/matrix.aspx?CMND=_TICKER_&exch=CSE', function (data) {
+        var mrq1 = '<tr>';
+        var mrq2 = '<tr>';
+        $.each(data, function (i, item) {
+            console.log(item)
+          var cls = 'mqsm';
+          if (item.Chng > 0) {
+            cls = 'mqup';
+          }
+          else if (item.Chng < 0) {
+            cls = 'mqdn';
+          }
+          mrq1 += '<td class="' + cls + '" style="cursor:pointer;" onclick="selscrip(\'' + item.scrip + '\');">' + item.scrip + '</td>';
+          mrq2 += '<td class="' + cls + '">' + item.LTP + '&nbsp;(' + item.Chng.toFixed(1) + ')</td>';
+        });
+        mrq1 += '</tr>';
+        mrq2 += '</tr>';
+        var fins = '<table style="text-align: center; color: white; border-collapse: separate; border-spacing: 1px 0px; font-size: xx-small;">' + mrq1 + mrq2 + '</table>';
+        $("#dvMarq").html(fins);
+        $('.marqP').marquee({ speed: 100, direction: 'left', pauseOnHover: true });
+      }, "json").fail(function () {
+      });
+
+      $.get('https://www.berichbd.com/matrix/matrix.aspx?CMND=_TICKER_&exch=CSE', function (data) {
+        var mrq1 = '<tr>';
+        var mrq2 = '<tr>';
+        $.each(data, function (i, item) {
+          var cls = 'mqsm';
+          if (item.Chng > 0) {
+            cls = 'mqup';
+          }
+          else if (item.Chng < 0) {
+            cls = 'mqdn';
+          }
+          mrq1 += '<td class="' + cls + '" style="cursor:pointer;" onclick="selscrip(\'' + item.scrip + '\');">' + item.scrip + '</td>';
+          mrq2 += '<td class="' + cls + '">' + item.LTP + '&nbsp;(' + item.Chng.toFixed(1) + ')</td>';
+        });
+        mrq1 += '</tr>';
+        mrq2 += '</tr>';
+        var fins = '<table style="text-align: center; color: white; border-collapse: separate; border-spacing: 1px 0px; font-size: xx-small;">' + mrq1 + mrq2 + '</table>';
+        $("#dvMarqD").html(fins);
+        $('.marqPD').marquee({ speed: 100, direction: 'left', pauseOnHover: true });
+      }, "json").fail(function () {
+      });
+    }
+
+    function fillRTTicker(jsnG) {
+      var jsn = JSON.parse(jsnG);
+      $.each(jsn, function (i, item) {
+        if (item.Exch == 'DSE') {
+          try {
+            var Fn = '<tr><td>' + item.CNam + '</td></tr><tr><td>' + item.CVol + ' @ ' + item.CLTP.toFixed(1) + " (" + item.Chng.toFixed(1) + ")</td></tr>";
+            var bkcol = "url('imgri/BlueBar.png')";
+            if (Number(item.Chng) < 0) {
+              bkcol = "url('imgri/RedBar.png')";
+            }
+            else if (Number(item.Chng) > 0) {
+              bkcol = "url('imgri/GreenBar.png')";
+            }
+            $('#ds1').html($('#ds2').html());
+            $('#ds2').html($('#ds3').html());
+            $('#ds3').html($('#ds4').html());
+            // $('#ds4').html($('#ds5').html());
+            //$('#ds5').html($('#ds6').html());
+            // $('#ds6').html($('#ds7').html());
+            // $('#ds7').html($('#ds8').html());
+            // $('#ds8').html($('#ds9').html());
+            // $('#ds9').html($('#ds10').html());
+            var Ht = '<table class="tktbl" style="text-align:center; width:100%; font-size:7px; padding:0px; background-image:' + bkcol + '; background-size:cover; cursor:pointer;" onclick="selscrip(\'' + item.CNam + '\');">' + Fn + '</table>';
+            $('#ds4').html(Ht);
+
+          }
+          catch (err) { }
+        } else {
+          try {
+            var Fn = '<tr><td>' + item.CNam + '</td></tr><tr><td>' + item.CVol + ' @ ' + item.CLTP.toFixed(1) + " (" + item.Chng.toFixed(1) + ")</td></tr>";
+            var bkcol = "url('imgri/BlueBar.png')";
+            if (Number(item.Chng) < 0) {
+              bkcol = "url('imgri/RedBar.png')";
+            }
+            else if (Number(item.Chng) > 0) {
+              bkcol = "url('imgri/GreenBar.png')";
+            }
+            $('#s1').html($('#s2').html());
+            $('#s2').html($('#s3').html());
+            $('#s3').html($('#s4').html());
+            // $('#s4').html($('#s5').html());
+            // $('#s5').html($('#s6').html());
+            //$('#s6').html($('#s7').html());
+            // $('#s7').html($('#s8').html());
+            // $('#s8').html($('#s9').html());
+            // $('#s9').html($('#s10').html());
+            var Ht = '<table class="tktbl" style="text-align:center; width:100%; font-size:7px; padding:0px; background-image:' + bkcol + '; background-size:cover; cursor:pointer;" onclick="selscrip(\'' + item.CNam + '\');">' + Fn + '</table>';
+            $('#s4').html(Ht);
+
+          }
+          catch (err) { }
+        }
+
+
+      });
+    }
+    //
+    // TRade Time Check
+
+    var tikonce = 0;
+    var cntdn;
+    function getTradeTime() {
+      clearInterval(cntdn);
+      $.get('https://www.berichbd.com/matrix/matrix.aspx' + '?CMND=THOUR', function (data) {
+        if (data.trade == '1') {
+
+          // For Ticker+News Marquee
+          var sgUrl = "https://ticker.berichbd.com:8088/signalr";
+          if (window.location.hostname == 'localhost') {
+            sgUrl = "http://localhost:8088/signalr";
+          }
+
+          $.getScript(sgUrl + "/hubs", function () {
+            $.connection.hub.url = sgUrl;
+            simpleHubProxy = $.connection.simpleHub;
+            simpleHubProxy.client.addMessage = function (name, jsnF) {
+              fillRTTicker(jsnF);
+            };
+            $.connection.hub.start().done(function () {
+              simpleHubProxy.server.setUserName($('#hdus').val());
+            });
+          });
+
+
+          $("#ifmTick").show();
+          $("#ifmTickD").show();
+          $("#dvMarq").hide();
+          $("#dvMarqD").hide();
+          $("#dvMarq").next().hide();
+          $("#dvMarqD").next().hide();
+          // $('#mktOpen').html("OPEN");
+          // $('#mktOpen').css('color', 'green');
+          // $("#trdtmcap").html('Remaining Trade Time');
+          tikonce = 0;
+        }
+        else {
+          if (tikonce == 0) {
+            getTicker();
+            tikonce = 1;
+            // $('#mktOpen').html("CLOSED");
+            // $('#mktOpen').css('color', '#ff0000');
+            // $("#trdtmcap").html('Trade Will Start');
+          }
+          $("#ifmTick").hide();
+          $("#dvMarq").show();
+          $("#ifmTickD").hide();
+          $("#dvMarqD").show();
+          $("#dvMarq").next().show();
+          $("#dvMarqD").next().show();
+        }
+        var countDownDate = new Date(data.cntm).getTime();
+        cntdn = setInterval(function () {
+          var now = new Date().getTime();
+          var distance = countDownDate - now;
+          var hours = Math.floor(distance / (1000 * 60 * 60));
+          var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+          $("#trdtmval").html(NmPad(hours, 2) + ":" + NmPad(minutes, 2) + ":" + NmPad(seconds, 2));
+          if (distance < 0) {
+            clearInterval(cntdn);
+            $("#trdtmval").html('');
+          }
+        }, 1000);
+      }, "json").fail(function () {
+      });
+      /* setTimeout(function () { getTradeTime(); }, 90000);*/
+    }
+    //
+    function NmPad(num, size) {
+      var s = "000000000" + num; return s.substr(s.length - size);
+    }
+    </script>
 </html>

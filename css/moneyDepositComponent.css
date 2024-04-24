@@ -150,7 +150,7 @@ form > p{
     background-color: #4CB050;
     color: #fff;
     border-radius: 10px;
-    padding: 5px 0px;
+    padding: 10px 0px;
     font-weight: 500;
 }
 .box_item{
@@ -191,5 +191,18 @@ form > p{
     color: #fff;
     font-weight: 500;
     padding: 4px 0px;
+    border-radius: 5px;
+}
+#showPopUp{
+    display: block;
+    position: fixed;
+    width: 100%;
+    top: 125px;
+    left: 0px;
+    background-color: #4CB050;
+    text-align: center;
+    padding: 5px 0px;
+    color: #fff;
+    z-index: 1002;
     border-radius: 5px;
 }

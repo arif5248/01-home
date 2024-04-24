@@ -1,4 +1,15 @@
-function executeB_HowToPayUs(){
+async function executeB_HowToPayUs(){
+    let  mobile = []
+    let  card = []
+    let  bank = []
+
+    const fetchedData = await getPayUsList()
+    if(fetchedData.status === true){
+        mobile = fetchedData.Mobile
+        card = fetchedData.Card
+        bank = fetchedData.Bank
+    }
+
     function B_HowToPayUs(){
         document.getElementById('page_heading').innerHTML=`How To Pay Us`
         document.getElementById('beforeMain').innerHTML = `
@@ -8,58 +19,63 @@ function executeB_HowToPayUs(){
                     <div class="payUsMobile">
                         <div class="payUsHeading">
                             <h4>Mobile</h4>
-                            <hr>
+                            <hr style='opacity: 1;'>
                         </div>
-                        <div class="payUs">
-                            <button class="payUsType">
-                                <img src="../images/payment-img/bkash.png" alt="bkash">
-                            </button>
-                            <button class="payUsType">
-                                <img src="../images/payment-img/nagad.png" alt="Nagad">
-                            </button>
-                        </div>
+                        <div id ='payUsMobile' class="payUs"></div>
                     </div>
                     <div class="payUsCard">
                         <div class="payUsHeading">
                             <h4>Card</h4>
-                            <hr>
+                            <hr style='opacity: 1;'>
                         </div>
-                        <div class="payUs">
-                            <button class="payUsType">
-                                <img src="../images/payment-img/visa.png" alt="Visa">
-                            </button>
-                            <button class="payUsType">
-                                <img src="../images/payment-img/mastarcard.png" alt="Mastar Card">
-                            </button>
-                            <button class="payUsType">
-                                <img src="../images/payment-img/americanExpress.png" alt="American Express">
-                            </button>
-                        </div>
+                        <div id ='payUsCard' class="payUs"></div>
                     </div>
                     <div class="payUsBank">
                         <div class="payUsHeading">
                             <h4>Bank</h4>
-                            <hr>
+                            <hr style='opacity: 1;'>
                         </div>
-                        <div class="payUs">
-                            <button class="payUsType">
-                                <img src="../images/payment-img/cityBank.png" alt="City Bank">
-                            </button>
-                            <button class="payUsType">
-                                <img src="../images/payment-img/dutch.png" alt="Dutch Bangla Bank">
-                            </button>
-                            <button class="payUsType">
-                                <img src="../images/payment-img/eastern.png" alt="Eastern Bank">
-                            </button>
-                        </div>
+                        <div id ='payUsBank' class="payUs"></div>
                     </div>
                 </div>
             </div>
         </div>
     `
+   
     }
     
+function renderAllImage(){
+    const mobileSection = document.getElementById('payUsMobile')
+    mobile.forEach(item => {
+        const newDiv = document.createElement('div')
+        newDiv.classList.add('payUsType')
+        newDiv.innerHTML=`
+            <img style='width: 70px; height: aut0;' src='${item.Image}' alt='${item.Name}'>
+        `
+        mobileSection.appendChild(newDiv)
+    })
 
+    const cardSection = document.getElementById('payUsCard')
+    card.forEach(item => {
+        const newDiv = document.createElement('div')
+        newDiv.classList.add('payUsType')
+        newDiv.innerHTML=`
+            <img style='width: 70px; height: aut0;' src='${item.Image}' alt='${item.Name}'>
+        `
+        cardSection.appendChild(newDiv)
+    })
+
+    const bankSection = document.getElementById('payUsBank')
+    bank.forEach(item => {
+        const newDiv = document.createElement('div')
+        newDiv.classList.add('payUsType')
+        newDiv.innerHTML=`
+            <img style='width: 70px; height: aut0;' src='${item.Image}' alt='${item.Name}'>
+        `
+        bankSection.appendChild(newDiv)
+    })
+}
 
     B_HowToPayUs()
+    renderAllImage()
 }

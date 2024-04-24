@@ -99,7 +99,7 @@ async function executeB_Ipo(){
                                 <td>Company Prospectus</td>
                                 <td>
                                     <Button class="btn">
-                                        <a href='${ipo.Link_Prospectus}'>PDF</a>
+                                        <a style='text-decoration: none; color: #000;' href='${ipo.Link_Prospectus}'>PDF</a>
                                     </Button>
                                 </td>
                             </tr>
@@ -107,7 +107,7 @@ async function executeB_Ipo(){
                                 <td>Summary</td>
                                 <td>
                                     <Button class="btn">
-                                        <a href='${ipo.Link_Summary}'>PDF</a>
+                                        <a style='text-decoration: none; color: #000;' href='${ipo.Link_Summary}'>PDF</a>
                                     </Button>
                                 </td>
                             </tr>
@@ -144,10 +144,10 @@ async function executeB_Ipo(){
             const newDiv = document.createElement('div')
             newDiv.classList.add('ipo_item')
             newDiv.innerHTML=`
-            <div class="contentHeader">
-            <div class="ipoHeading" id="B_ipoHeading_${index}"> 
-                <h3 class="static-heading" id="B_staticHeading_${index}">${ipo.Offer_Category}</h3>
-                <h3 class="headingForIPO" id="B_DynamicHeading_${index}">${ipo.Company}</h3>
+            <div class="contentHeader"> 
+            <div class="ipoHeading" id="R_ipoHeading_${index}"> 
+                <h3 class="static-heading" id="R_staticHeading_${index}">${ipo.Offer_Category}</h3>
+                <h3 class="headingForIPO" id="R_DynamicHeading_${index}">${ipo.Company}</h3>
             </div>
                 <div class="subscriptionDate">
                     <h5 class="date-title">Subscription Date</h5>
@@ -208,7 +208,7 @@ async function executeB_Ipo(){
                             <td>Company Prospectus</td>
                             <td>
                                 <Button class="btn">
-                                    <a href='${ipo.Link_Prospectus}'>PDF</a>
+                                    <a style='text-decoration: none; color: #000;' href='${ipo.Link_Prospectus}'>PDF</a>
                                 </Button>
                             </td>
                         </tr>
@@ -216,7 +216,7 @@ async function executeB_Ipo(){
                             <td>Summary</td>
                             <td>
                                 <Button class="btn">
-                                    <a href='${ipo.Link_Summary}'>PDF</a>
+                                    <a style='text-decoration: none; color: #000;' href='${ipo.Link_Summary}'>PDF</a>
                                 </Button>
                             </td>
                         </tr>
@@ -224,11 +224,11 @@ async function executeB_Ipo(){
                 </table>
             </div>
         `
-    
+          
             ipoContentBody.appendChild(newDiv)
-            let dynamicHeadingHeight = document.getElementById(`history_dynamicHeading_${index}`).offsetHeight;
-            document.getElementById(`historyIpoHeading_${index}`).style.height = dynamicHeadingHeight + 'px';
-            document.getElementById(`history_staticHeading_${index}`).style.height = '100%'
+            let dynamicHeadingHeight = document.getElementById(`R_DynamicHeading_${index}`).offsetHeight;
+            document.getElementById(`R_ipoHeading_${index}`).style.height = dynamicHeadingHeight + 'px';
+            document.getElementById(`R_staticHeading_${index}`).style.height = '100%'
 
         })
     }

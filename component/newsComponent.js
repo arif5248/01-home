@@ -33,47 +33,41 @@ async function executeNews(){
     function news(){
         document.getElementById('mainContentSection').innerHTML =
          `
-            <div class="mainNewsSection" id="mainNewsSection">
-                <div class="button_search_section  ">
-                    <div class="container">
-                        <div id='searchBox' style="width: 90%; height:auto" class="searchBox">
-                            <input id='searchCompanyForNews' type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="searchIcon">
-                            <img class="N_searchIcon" style="width: 20px; height:auto" src="../images//icons/magnifying-glass.png" alt="search icon">
-                        </div>
-                        <div id='reloadBox' class="reload">
-                            <img style="width: 30px; height:auto" src="../images/icons/reload.png" alt="Reload">
-                        </div>
+            <div class="button_search_section  ">
+                <div class="container">
+                    <div id='searchBox' style="width: 90%; height:auto" class="searchBox">
+                        <input id='searchCompanyForNews' type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="searchIcon">
+                        <img class="N_searchIcon" style="width: 20px; height:auto" src="../images//icons/magnifying-glass.png" alt="search icon">
                     </div>
-                    <div class= 'container'>
-                        <ul style='display: none' class='allCompanyList' id='allCompanyList'></ul>
+                    <div id='reloadBox' class="reload">
+                        <img style="width: 30px; height:auto" src="../images/icons/reload.png" alt="Reload">
                     </div>
                 </div>
-                
-                <div class="newsSection">
-                    <div class="container newsContainer">
-                        <div class="btnwrapper">
-                            <div class="newsBtnGroup">
-                                <button type="button" class="btn active" onclick="showNews('mediaNews')">
-                                    MEDIA NEWS
-                                </button>
-                                <button type="button" class="btn" onclick="showNews('exchangeNews')">
-                                    EXCHANGE NEWS
-                                </button>
-                                <button type="button" class="btn" onclick="showNews('miscNews')">
-                                    MISC NEWS
-                                </button>
-                            </div>
-    
-                            <div class="newsBody">
-                                <div class="mediaNews" id="mediaNews"></div>
-                                <div style='display: none;' id='showMediaNewsDetails'></div> 
-                                <div class="exchangeNews" id="exchangeNews"></div>
-                                <div class="miscNews" id="miscNews"></div>
-                            </div>
-                        </div>
-                    </div>
+                <div class= 'container'>
+                    <ul style='display: none' class='allCompanyList' id='allCompanyList'></ul>
                 </div>
             </div>
+            
+            <div class="newsBtnGroup">
+                <button type="button" class="btn active" onclick="showNews('mediaNews')">
+                    MEDIA NEWS
+                </button>
+                <button type="button" class="btn" onclick="showNews('exchangeNews')">
+                    EXCHANGE NEWS
+                </button>
+                <button type="button" class="btn" onclick="showNews('miscNews')">
+                    MISC NEWS
+                </button>
+            </div>
+            <div class="newsBody" style="flex: 1 auto; overflow-y: auto;">
+                <div class='container'>
+                    <div class="mediaNews" id="mediaNews"></div>
+                    <div class="exchangeNews" id="exchangeNews"></div>
+                    <div class="miscNews" id="miscNews"></div>
+                </div>
+            </div>
+            <div style='display: none;' id='showMediaNewsDetails'></div> 
+            
         `
     }
     
@@ -157,15 +151,15 @@ async function executeNews(){
 
     function showNewsDetails(newsItem){
         return function(event){
-            document.getElementById('showMediaNewsDetails').style.display = 'block'
+            document.getElementById('showMediaNewsDetails').style.display = 'flex'
             document.getElementById('showMediaNewsDetails').innerHTML = `
                 <div class='close'>
-                    <div class='close_img_Box' onclick='closeNewsDetails()'>
+                    <div class='close_img_Box' id='closeButton' onclick='closeNewsDetails()'>
                         <img style='width:30px; height: auto' src='../images/icons/icons8-cross.gif'>
                     </div>
                     <p style='display: inline-block; font-weight: 900; font-size: 25px'>|</p>
                 </div>
-                <div class='selectedNewsBody'>
+                <div class='selectedNewsBody' id='selectedNewsBody'>
                     <div class="heading">
                         <h1>News Details</h1>
                     </div>
@@ -227,10 +221,13 @@ async function executeNews(){
     });
 
     document.getElementById('reloadBox').addEventListener('click', ()=>{
+        document.getElementById('searchCompanyForNews').value = ''
         companyName = undefined
         populatedMediaNews(companyName, storeAllMediaNews)
     })
+    
 }
+
 function showNews(newsType) {
     document.getElementById('mediaNews').style.display = 'none';
     document.getElementById('exchangeNews').style.display = 'none';

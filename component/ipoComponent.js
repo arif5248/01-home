@@ -81,8 +81,8 @@ async function executeIpo(){
         `
     }
 
-    function renderAllIpoContent(){
-        function renderRunningIpoContent(){
+    async function renderAllIpoContent(){
+        async function renderRunningIpoContent(){
             let runningIPO = []
             if(fetchedRunningIpo.status === true){
                 runningIPO = fetchedRunningIpo.Data
@@ -99,9 +99,9 @@ async function executeIpo(){
                 newDiv.classList.add('ipo_item')
                 newDiv.innerHTML=`
                 <div class="contentHeader">
-                <div class="ipoHeading" id="B_ipoHeading_${index}"> 
-                    <h3 class="static-heading" id="B_staticHeading_${index}">${ipo.Offer_Category}</h3>
-                    <h3 class="headingForIPO" id="B_DynamicHeading_${index}">${ipo.Company}</h3>
+                <div class="ipoHeading" id="R_ipoHeading_${index}"> 
+                    <h3 class="static-heading" id="R_staticHeading_${index}">${ipo.Offer_Category}</h3>
+                    <h3 class="headingForIPO" id="R_DynamicHeading_${index}">${ipo.Company}</h3>
                 </div>
                     <div class="subscriptionDate">
                         <h5 class="date-title">Subscription Date</h5>
@@ -177,22 +177,21 @@ async function executeIpo(){
                         </tbody>
                     </table>
                 </div>
-            `
+            `   
         
                 ipoContentBody.appendChild(newDiv)
-                let dynamicHeadingHeight = document.getElementById(`history_dynamicHeading_${index}`).offsetHeight;
-                document.getElementById(`historyIpoHeading_${index}`).style.height = dynamicHeadingHeight + 'px';
-                document.getElementById(`history_staticHeading_${index}`).style.height = '100%'
+                let dynamicHeadingHeight = document.getElementById(`R_DynamicHeading_${index}`).offsetHeight;
+                document.getElementById(`R_ipoHeading_${index}`).style.height = dynamicHeadingHeight + 'px';
+                document.getElementById(`R_staticHeading_${index}`).style.height = '100%'
     
             })
         }
-        function renderUpcomingIpoContent(){
+        async function renderUpcomingIpoContent(){
             let upComingIPO = []
             if(fetchedUpcomingIpo.status === true){
                 upComingIPO = fetchedUpcomingIpo.Data
             }
             const upcomingIpoContentBody = document.getElementById('upcomingIPO')
-            console.log('=======',upComingIPO)
             if(upComingIPO.length === 0){
                 upcomingIpoContentBody.innerHTML = `
                     <h3 class='NoIPO' style='text-align: center;'>No Upcoming IPO Found</h3>
@@ -203,9 +202,9 @@ async function executeIpo(){
                 newDiv.classList.add('ipo_item')
                 newDiv.innerHTML=`
                     <div class="contentHeader">
-                    <div class="ipoHeading" id="B_ipoHeading_${index}"> 
-                        <h3 class="static-heading" id="B_staticHeading_${index}">${ipo.Offer_Category}</h3>
-                        <h3 class="headingForIPO" id="B_DynamicHeading_${index}">${ipo.Company}</h3>
+                    <div class="ipoHeading" id="U_ipoHeading_${index}"> 
+                        <h3 class="static-heading" id="U_staticHeading_${index}">${ipo.Offer_Category}</h3>
+                        <h3 class="headingForIPO" id="U_DynamicHeading_${index}">${ipo.Company}</h3>
                     </div>
                         <div class="subscriptionDate">
                             <h5 class="date-title">Subscription Date</h5>
@@ -285,19 +284,15 @@ async function executeIpo(){
         
                 upcomingIpoContentBody.appendChild(newDiv)
     
-                async function setHeight(){
-                    let dynamicHeadingHeight = document.getElementById(`B_DynamicHeading_${index}`).offsetHeight;
-                    document.getElementById(`B_ipoHeading_${index}`).style.height = dynamicHeadingHeight + 'px';
-                    document.getElementById(`B_staticHeading_${index}`).style.height = '100%'
-                }
-                setHeight()
-                
+                let dynamicHeadingHeight = document.getElementById(`U_DynamicHeading_${index}`).offsetHeight;
+                document.getElementById(`U_ipoHeading_${index}`).style.height = dynamicHeadingHeight + 'px';
+                document.getElementById(`U_staticHeading_${index}`).style.height = '100%'
                 
             }) 
         } 
         
-        renderRunningIpoContent()
-        renderUpcomingIpoContent()
+       await renderRunningIpoContent()
+       await renderUpcomingIpoContent()
         
     }
     function renderHistoryIpoContent(){
@@ -397,7 +392,6 @@ async function executeIpo(){
                     </table>
                 </div>
             `
-    
             historyIpoContentBody.appendChild(newDiv)
             let dynamicHeadingHeight = document.getElementById(`history_dynamicHeading_${index}`).offsetHeight;
             document.getElementById(`historyIpoHeading_${index}`).style.height = dynamicHeadingHeight + 'px';

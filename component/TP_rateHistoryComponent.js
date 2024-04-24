@@ -1,188 +1,18 @@
-function executeTP_rateHistory(){
-
-    const rateHistoryData = [
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-    ]
+async function executeTP_rateHistory(data){
+    const fetchedScriptInfo = await get_SCRIPINFO_(data)
+    const rateHistoryData = fetchedScriptInfo.prclist
 
     function rateHistory(){
         document.getElementById('mainContentSection').innerHTML = `
-        <div class="pageHeading" id="financial-Heading">
+        <div class="pageHeading" id="financial-Heading" style="flex: 0 auto;">
             <div class="heading">
-                <h1>Price History: (---) </h1>
+                <h1>Price History: ${data}</h1>
             </div>
         </div>
 
-        <div class='container'>
+        <div class='container' style="flex: 1 auto;height: 100%;overflow-y: auto;">
             <div class="tp_rate_history" id="tp_rate_history"></div>
         </div>
-        <br>
-        <br>
-        <br>
-        <br>
         
         `
     }
@@ -193,7 +23,7 @@ function executeTP_rateHistory(){
          `
             <table>
                 <tr>
-                    <th>Time</th>
+                    <th>Date</th>
                     <th>Price</th>
                     <th>Volume</th>
                 </tr>
@@ -203,11 +33,12 @@ function executeTP_rateHistory(){
             const newRow = document.createElement('tr');
     
             newRow.innerHTML = `
-                <td>${data.time}</td>
-                <td>${data.price}</td>
-                <td>${data.volume}</td>
+                <td>${data.Dt}</td>
+                <td>${data.CP}</td>
+                <td>${data.CVol}</td>
             `;
-        tableBody.querySelector('tbody').appendChild(newRow);
+            tableBody.querySelector('tbody').appendChild(newRow);
+            newRow.style.backgroundColor = `${data.Chng >= 0 ? (data.Chng > 0 ? '#04A41E' : '#fff') : '#FE0000' }`
         });
     }
     rateHistory()

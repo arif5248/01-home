@@ -39,6 +39,7 @@ async function executeBankDeposit(data){
     }
 
     function moneyDeposit(){
+        const today = new Date().toISOString().split('T')[0];
         document.getElementById('mainContentSection').innerHTML =`
             <div class="pageHeading" id="financial-Heading">
                 <div class="heading">
@@ -53,12 +54,12 @@ async function executeBankDeposit(data){
                             Share Bank Details
                         </div>
                     </div>
-                    <form action="#">
+                    <form id='submitBankDeposit'>
                         <div class="form-box-1">
-                            <input type="text" value='${bank['Account Name']}' readonly>
-                            <input type="text" value='${bank['Account Number']}' readonly>
-                            <input type="text" value='${bank['Bank Name']}' readonly>
-                            <input type="text" value='${bank.Branch}' readonly>
+                            <input id='accountName' type="text" value='${bank['Account Name']}' readonly>
+                            <input id='accountNumber' type="text" value='${bank['Account Number']}' readonly>
+                            <input id='bankName' type="text" value='${bank['Bank Name']}' readonly>
+                            <input id='bankBranch' type="text" value='${bank.Branch}' readonly>
                         </div>
 
                         <div class="form-box-3">
@@ -67,7 +68,7 @@ async function executeBankDeposit(data){
                         </div>
                         <div class="form-box-3">
                             <label for="date">Deposit Date</label>
-                            <input type="date" id="date" name="date" required>
+                            <input type="date" id="date" name="date" value=${today} required>
                         </div>
                         <div class="form-box-3">
                             <label for="bank_purpose">Purpose</label>
@@ -93,11 +94,11 @@ async function executeBankDeposit(data){
                         <div id='chequeMode' style='display: none;'>
                             <div class="form-box-3">
                                 <label for="chequeNo">Cheque No.</label>
-                                <input type="text" id="chequeNo" name="chequeNo" placeholder="Enter Cheque Number" required>
+                                <input type="text" id="chequeNo" name="chequeNo" placeholder="Enter Cheque Number">
                             </div>
                             <div class="form-box-3">
                                 <label for="chequeBankName">Select Bank</label>
-                                <select id="chequeBankName" name="chequeBankName" required>
+                                <select id="chequeBankName" name="chequeBankName">
                                     <option>--Select a Bank--</option>
                                 </select>
                             </div>
@@ -105,7 +106,7 @@ async function executeBankDeposit(data){
                         <div class="fileContent">
                             <div class="file-box">
                                 <label for="file-input" id="file-label">Browse</label>
-                                <input type="file" id="file-input" onchange="previewFile()">
+                                <input type="file" id="file-input" name='file' onchange="previewFile()">
                             </div>
                             <h5>Attach your Deposit Proof here</h5>
                             <div id="preview-container">
@@ -115,7 +116,7 @@ async function executeBankDeposit(data){
                                 </div>
                             </div>
                         </div>
-
+                        <div id='formValidationError'></div>
                         <div class="proceed-btn">
                             <input type="button" value="Cancel" onclick="removeFooterBtnState(); route('../component/moneyDepositComponent.js','../css/moneyDepositComponent.css', 'moneyDeposit')">
                             <input type="submit" value="PROCEED">
@@ -270,6 +271,111 @@ async function executeBankDeposit(data){
     document.getElementById('overlay').addEventListener('click', ()=>{
         document.getElementById('shareBankDetailsBox').style.display = 'none'
         document.getElementById('overlay').style.display = 'none'
+    })
+
+    document.getElementById('submitBankDeposit').addEventListener('submit', async (event) => {
+        event.preventDefault()
+        const InvId = user.LoggedInInvestorId
+        const DepMode = document.querySelector('input[name="paymentMethod"]:checked').value
+        const BankName = document.getElementById('bankName').value;
+        const BranchName = document.getElementById('bankBranch').value;
+        const AccName = document.getElementById('accountName').value;
+        const AccNumber = document.getElementById('accountNumber').value;
+        const DepAmo = document.getElementById('amount').value;
+        const DepDate = document.getElementById('date').value;
+        const InvName = user.LoggedInInvestorName;
+        const Purpose = document.getElementById('bank_purpose').value;
+        let ChqNo = ''
+        let ChqBank = ''
+        if(DepMode === 'Cheque'){
+            ChqNo = document.getElementById('chequeNo').value;
+            ChqBank = document.getElementById('chequeBankName').value;
+        }
+        const Note = document.getElementById('dynamic-textbox').value;
+        const messageFile = document.getElementById('file-input').files[0];
+        if((DepMode === 'Cheque' && ChqNo !== '' && ChqBank !== '--Select a Bank--' && messageFile) || (DepMode !== 'Cheque' && messageFile)){
+            document.getElementById('chequeNo').style.borderColor = '#000'
+            document.getElementById('chequeBankName').style.borderColor = '#000'
+            document.getElementById('file-label').style.borderColor = '#000'
+            document.getElementById('formValidationError').innerHTML=''
+
+            const formData = new FormData();
+        
+            formData.append('InvId', InvId);
+            formData.append('DepMode', DepMode);
+            formData.append('BankName', BankName);
+            formData.append('BranchName', BranchName);
+            formData.append('AccName', AccName);
+            formData.append('AccNumber', AccNumber);
+            formData.append('DepAmo', DepAmo);
+            formData.append('DepDate', DepDate);
+            formData.append('InvName', InvName);
+            formData.append('Purpose', Purpose);
+            formData.append('ChqNo', ChqNo);
+            formData.append('ChqBank', ChqBank);
+            formData.append('Note', Note);
+            if(messageFile){
+                formData.append('profile_image', messageFile);
+            }
+            const result = await postBankDeposit(formData)
+            if(result.status === true){
+                document.getElementById('shareBankDetailsMsg').style.display = 'block'
+                document.getElementById('shareBankDetailsMsg').innerHTML= ''
+                document.getElementById('shareBankDetailsMsg').innerHTML= `
+                    <p>${result.message}</p>
+                `
+                undoSelection()
+                document.getElementById('amount').value=''
+                document.getElementById('dynamic-textbox').value=''
+                setTimeout(() => {
+                    document.getElementById('shareBankDetailsMsg').style.display = 'none'
+                    document.getElementById('shareBankDetailsMsg').innerHTML= ''
+                }, 3000);
+            }else{
+                document.getElementById('shareBankDetailsMsg').style.display = 'block'
+                document.getElementById('shareBankDetailsMsg').innerHTML= ''
+                document.getElementById('shareBankDetailsMsg').innerHTML= `
+                    <p>${result.message}</p>
+                `
+                document.getElementById('shareBankDetailsMsg').style.backgroundColor = 'red'
+                setTimeout(() => {
+                    document.getElementById('shareBankDetailsMsg').style.display = 'none'
+                    document.getElementById('shareBankDetailsMsg').innerHTML= ''
+                }, 3000);
+            }
+        }else{
+            document.getElementById('chequeNo').style.borderColor = '#000'
+            document.getElementById('chequeBankName').style.borderColor = '#000'
+            document.getElementById('file-label').style.borderColor = '#000'
+            document.getElementById('formValidationError').innerHTML=''
+
+            if(DepMode === 'Cheque' && ChqNo === ''){
+                const newP = document.createElement('p')
+                newP.innerHTML = 'Enter your Cheque No.'
+                document.getElementById('formValidationError').appendChild(newP)
+                newP.style.textAlign = 'right'
+                newP.style.color = 'red'
+                document.getElementById('chequeNo').style.borderColor = 'red'
+            }
+            if(DepMode === 'Cheque' && ChqBank === '--Select a Bank--'){
+                const newP = document.createElement('p')
+                newP.innerHTML = 'Select the bank name of your Cheque'
+                document.getElementById('formValidationError').appendChild(newP)
+                newP.style.textAlign = 'right'
+                newP.style.color = 'red'
+                document.getElementById('chequeBankName').style.borderColor = 'red'
+            }
+            if(!messageFile){
+                const newP = document.createElement('p')
+                newP.innerHTML = 'Please upload the necessary Documents'
+                document.getElementById('formValidationError').appendChild(newP)
+                newP.style.textAlign = 'right'
+                newP.style.color = 'red'
+                document.getElementById('file-label').style.borderColor = 'red'
+
+            }
+        }
+        
     })
 }
 function resizeTextbox(textarea) {

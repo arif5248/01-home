@@ -1,25 +1,73 @@
-.haltedSection{
-    margin-top: 10px;
+.btnSection{
+    margin-top: 5px;
 }
-.haltedSection > .container > .box >.btnGroup{
+.btnSection > .container > .box >.btnGroup{
     display: flex;
     justify-content: space-around;
     align-items: center;
     padding: 10px 0px;
-    margin: 10px 0px;
     background-color: #868686;
     border-radius: 10px;
 }
-.haltedSection > .container > .box > .btnGroup > .Btn{
-    padding: 10px 10px;
+.btnSection > .container > .box > .btnGroup > .Btn{
+    padding: 10px 15px;
     border: 1px solid #0000005b;
     border-radius: 10px;
-    font-size: 16px;
+    font-size: 13px;
     font-weight: 700;
     text-align: center;
-    width: 40%;
 }
-.haltedSection > .container > .box > .btnGroup > .active{
+.btnSection > .container > .box > .btnGroup > .active{
     background-color: #5C5C5C;
     color: #fff;
+}
+/* ===================table==================== */
+.no_buyer,
+.no_seller{
+    background-color: #fff;
+    padding: 0px 5px;
+}
+.no_buyer > table,
+.no_seller > table{
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    
+}
+.no_buyer > table > tbody > tr:first-child,
+.no_seller > table > tbody > tr:first-child{
+    background-color: black;
+    position: sticky;
+    top: 0;
+    
+}
+.no_buyer > table > tbody > tr:first-child > th,
+.no_seller > table > tbody > tr:first-child > th{
+    color: #fff;
+    font-size: 14px;
+    padding: 5px 1px;
+    text-align: center;
+    
+}
+.no_buyer > table > tbody > tr > td,
+.no_seller > table > tbody > tr > td{
+    font-weight: 700;
+    font-size: 12px;
+    padding: 10px 0px;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    color: #000 !important;
+    text-align: center;
+}
+.no_buyer > table > tbody > tr > td:first-child,
+.no_seller > table > tbody > tr > td:first-child{
+    -webkit-padding-start: 10px;
+    border-left: 1px solid #000;
+    border-radius: 15px 0px 0px 15px;
+}
+.no_buyer > table > tbody > tr > td:last-child,
+.no_seller > table > tbody > tr > td:last-child{
+    -webkit-padding-end: 10px;
+    border-right: 1px solid #000;
+    border-radius: 0px 15px 15px 0px;
 }

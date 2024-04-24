@@ -1,26 +1,32 @@
 const historyStack = [];
-let otpCountDownInterval
-let marketIntervalId;
+let otpCountDownInterval;
+let tradeTimeIntervalId;
+let currentSection = null;
+let page_name = null;
+let selectedScript =  null;
+const urlParams = new URLSearchParams(window.location.search);
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('overlay').style.display = 'none';
     document.getElementById('settings').style.display = 'none';
     closeSupportTeam();
     closeSendMessage();
     closeVideoChat();
-    route('../component/homeComponent.js', '../css/homeComponent.css', 'home');
-    
+    if(currentSection === null){
+        route('../component/homeComponent.js', '../css/homeComponent.css', 'home');
+    }else{
+        route(`../component/${currentSection}Component.js`, `../css/${currentSection}Component.css`, `${currentSection}`);
+    }
     
   });
   
-  let currentSection = null;
+  
   
   async function route(js, css, case_name, data) {
     async function executeRoute(data){
         if (currentSection !== null) {
-            await clearMemory();
+           clearMemory();
         }
         try {
-            // Inject the new link tag for styles
             const styleElement = document.createElement('link');
             styleElement.id = `style-${case_name}`;
             styleElement.rel = 'stylesheet';
@@ -31,23 +37,12 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!response.ok) {
                 throw new Error(`Error loading ${case_name}.js`);
             }
-    
             const scriptCode = await response.text();
     
-            // Inject the new script
             const scriptElement = document.createElement('script');
             scriptElement.id = case_name;
             scriptElement.textContent = scriptCode;
             document.head.appendChild(scriptElement);
-    
-            // const styleResponse = await fetch(css);
-            // if (!styleResponse.ok) {
-            //     throw new Error(`Error loading ${case_name}.css`);
-            // }
-    
-            // const styleCode = await styleResponse.text();
-    
-            
     
             const prev_case = historyStack[historyStack.length - 1];
             if (!prev_case || prev_case.case_name !== case_name) {
@@ -59,38 +54,38 @@ document.addEventListener('DOMContentLoaded', function () {
             const newUrl = window.location.origin + window.location.pathname + `#${case_name}`;
             history.pushState({ case_name : case_name }, null, newUrl);
             
-            isVerifiedCacse(case_name, data);
-            if(case_name !== 'moneyWithdrawal'){
+            await isVerifiedCacse(case_name, data);
+            scrollToTop()
+            if(case_name !== 'moneyWithdrawal' && otpCountDownInterval !== undefined){
                 clearInterval(otpCountDownInterval)
             }
-            if (case_name === 'trade') {
-                if (prev_case.case_name !== case_name) {
-                    const executeTradeResult = executeTrade();
-                    let updateCountdown = executeTradeResult.updateCountdown;
-                    marketIntervalId = setInterval(updateCountdown, 1000);
-                }
-            } else {
-                clearInterval(marketIntervalId);
+            
+            if (case_name !== 'trade' && tradeTimeIntervalId !== undefined) {
+                clearInterval(tradeTimeIntervalId);
+                
+            }
+            if(case_name && typeof case_name === 'string' && case_name.startsWith('TP_')){
+                selectedScript = data;
+            }
+            if(case_name !== 'trade' && !case_name.startsWith('TP_')){
+                sessionStorage.removeItem('userData');
             }
         } catch (error) {
             console.error(error);
         }
     }
-    async function displayNone(){
+    function displayNone(){
         document.getElementById('loadingApi').style.display = 'block'
         document.getElementById('mainContentSection').style.display = 'none'
     }
-    async function displayBlock(){
+    function displayBlock(){
         document.getElementById('mainContentSection').style.display = 'flex'
         document.getElementById('mainContentSection').style.flexDirection = 'column'
-
     }
 
-    await displayNone()
-    await executeRoute(data)
-    await displayBlock()
-    
-
+    displayNone()
+    executeRoute(data)
+    displayBlock()
 }
 
   async function clearMemory() {
@@ -112,17 +107,25 @@ document.addEventListener('DOMContentLoaded', function () {
           }
         });
     }  
-    await clearScript()
-    await clearStyle()  
+    clearScript()
+    clearStyle()  
     }
 
   function goBack() {
+    document.getElementById('overlay').style.display = 'none'
     if (historyStack.length > 1) {
         historyStack.pop(); 
         const prevState = historyStack.pop(); 
         const case_name = prevState.case_name;
-        route(`../component/${case_name}Component.js`, `../css/${case_name}Component.css`, case_name);
+        if(case_name && case_name === 'trade' && selectedScript !== null){
+            route(`../component/${case_name}Component.js`, `../css/${case_name}Component.css`, case_name, selectedScript);
+        }else{
+            if(!case_name.startsWith('TP_')){
+                route(`../component/${case_name}Component.js`, `../css/${case_name}Component.css`, case_name);
+            }
+        }
         if(case_name && typeof case_name === 'string' && case_name.startsWith('TP_')){
+            route(`../component/tradeComponent.js`, `../css/tradeComponent.css`, 'trade', selectedScript);
             updateFooterBtnState('trade');
         }else{
             updateFooterBtnState(case_name);
@@ -130,7 +133,12 @@ document.addEventListener('DOMContentLoaded', function () {
         
     }
 }
-
+function scrollToTop() {
+        mainContentSection.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
 document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('popstate', function (event) {
         if (event.state) {
@@ -138,6 +146,14 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+
+page_name = urlParams.get('case');
+if(page_name ==='moneyDeposit'){
+    route(`../component/${page_name}Component.js`, `../css/${page_name}Component.css`, `${page_name}`);
+    page_name = null
+}
+
 async function isVerifiedCacse(case_name, data){
     switch (case_name) {
         case 'marketStatus':
@@ -225,7 +241,7 @@ async function isVerifiedCacse(case_name, data){
             document.getElementById('loadingApi').style.display = 'none'
             break;
         case 'trade':
-            await executeTrade();
+            await executeTrade(data);
             document.getElementById('loadingApi').style.display = 'none'
             break;
         case 'TP_companyInfo':
@@ -233,19 +249,23 @@ async function isVerifiedCacse(case_name, data){
             document.getElementById('loadingApi').style.display = 'none'
             break;
         case 'TP_news':
-            await executeTP_News();
+            await executeTP_News(data);
             document.getElementById('loadingApi').style.display = 'none'
             break;
         case 'TP_todayTrade':
-            await executeTP_todayTrade();
+            await executeTP_todayTrade(data);
             document.getElementById('loadingApi').style.display = 'none'
             break;
         case 'TP_lastTrade':
-            await executeTP_lastTrade();
+            await executeTP_lastTrade(data);
             document.getElementById('loadingApi').style.display = 'none'
             break;
         case 'TP_marketMover':
             await executeTP_marketMover();
+            document.getElementById('loadingApi').style.display = 'none'
+            break;
+        case 'TP_dividend':
+            await executeTP_dividend(data);
             document.getElementById('loadingApi').style.display = 'none'
             break;
         case 'personalNote':
@@ -265,7 +285,7 @@ async function isVerifiedCacse(case_name, data){
             document.getElementById('loadingApi').style.display = 'none'
             break;
         case 'TP_rateHistory':
-            await executeTP_rateHistory();
+            await executeTP_rateHistory(data);
             document.getElementById('loadingApi').style.display = 'none'
             break;
         case 'TP_halted':
@@ -298,6 +318,10 @@ async function isVerifiedCacse(case_name, data){
             break;
         case 'scheduleCharges':
             await executeScheduleCharges();
+            document.getElementById('loadingApi').style.display = 'none'
+            break;
+        case 'digitalBranch':
+            await executeDigitalBranch();
             document.getElementById('loadingApi').style.display = 'none'
             break;
     }

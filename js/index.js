@@ -1,3 +1,4 @@
+let fetchedData = {}
 document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.querySelector('#logInDetails form');
     const saveMeCheckbox = document.getElementById('saveMe');
@@ -52,18 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-const countryCityCodeinfo = [
-    {
-        country: "Bangladesh",
-        cities: ["Dhaka", "Chittagong", "Naogaon", "Rajshahi"],
-        countryCode: "+880"
-    },
-    {
-        country: "United States",
-        cities: ["New York", "Deer Park", "New Jersey"],
-        countryCode: "+1"
-    }
-];
+
 function hidePassword(){
     document.getElementById('showPass').style.display = 'block'
     document.getElementById('hidePass').style.display = 'none'
@@ -127,9 +117,54 @@ function videoChat(){
    `
 }
 
-function showGetNew01Id(){
+async function showGetNew01Id(){
     document.getElementById('logInDetails').style.display = 'none'
     document.getElementById('get-new-01-ID').style.display = 'block'
+    fetchedData =  await getCreateNewIDData()
+    selectCountryCityCode()
+    
+    fetchedData.occupationList.forEach(item => {
+        const newOption = document.createElement('option')
+        newOption.setAttribute('id', `${item.Occupation}`);
+        newOption.value = item.Occupation;
+        newOption.textContent = item.Occupation;
+        document.getElementById('occupation').appendChild(newOption)
+    });
+    fetchedData.howToList.forEach(item => {
+        const newOption = document.createElement('option')
+        newOption.setAttribute('id', `${item.HowToFind}`);
+        newOption.value = item.HowToFind;
+        newOption.textContent = item.HowToFind;
+        document.getElementById('howFindUs').appendChild(newOption)
+    });
+    document.getElementById('createNew01Id').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const data = {
+            inv_Name: document.getElementById('new_user_nid').value,
+            inv_Phone: document.getElementById('mobile').value,
+            inv_Email: document.getElementById('new_user_email').value,
+            inv_Country: document.getElementById('country').value,
+            inv_City: document.getElementById('city').value,
+            inv_CCode: document.getElementById('countryCode').innerHTML,
+            howto_findus: document.getElementById('howFindUs').value,
+            inv_occupation: document.getElementById('occupation').value,
+            reff_id : document.getElementById('userReference').value,
+        }        
+        const result = await createNew01ID(data)
+        if(result.status === true){
+            document.getElementById('logInDetails').style.display = 'block'
+            document.getElementById('get-new-01-ID').style.display = 'none'
+            document.getElementById('showResult').style.display = 'block'
+            document.getElementById('showResult').innerHTML = `
+                <p id='resultMessage'>${result.message}</p>
+            `
+            setTimeout(() => {
+                document.getElementById('showResult').style.display = 'none'
+                document.getElementById('showResult').innerHTML = ''
+            }, 3000);
+
+        }
+    })
 }
 function closeGetNew01Id(){
     document.getElementById('get-new-01-ID').style.display = 'none'
@@ -151,29 +186,33 @@ function selectCountryCityCode() {
 
     selectCity.disabled = true;
     selectCountryCode.disabled = true;
-
-    for (let countryObject of countryCityCodeinfo) {
-        selectCountry.options[selectCountry.options.length] = new Option(countryObject.country, countryObject.countryCode);
-    }
-
-    selectCountry.onchange = function () {
-        const selectedCountryCode = this.value;
-        const selectedCountry = countryCityCodeinfo.find(country => country.countryCode === selectedCountryCode);
-
-        if (selectedCountry) {
-            selectCity.innerHTML = "";
-            for (let city of selectedCountry.cities) {
-                selectCity.options[selectCity.options.length] = new Option(city, city);
+    const countryCityCodeinfo = fetchedData.countryList
+    countryCityCodeinfo.forEach(item => {
+        const newOption = document.createElement('option')
+        newOption.setAttribute('id', `${item.Country}`);
+        newOption.value = item.Country;
+        newOption.textContent = item.Country;
+        selectCountry.appendChild(newOption)
+    });
+    selectCountry.addEventListener('change', async ()=>{
+        countryCityCodeinfo.forEach(async (item) =>{
+            if(item.Country === selectCountry.value){
+                selectCountryCode.innerHTML = item.DialCode
+                const fetchedCity = await getStateCity(item.Country)
+                if(fetchedCity.status === true){
+                    selectCity.disabled = false;
+                    selectCity.innerHTML = ''
+                    fetchedCity.cityListAll.forEach(item => {
+                        const newOption = document.createElement('option')
+                        newOption.setAttribute('id', `${item.Country}`);
+                        newOption.value = item.City;
+                        newOption.textContent = item.City;
+                        selectCity.appendChild(newOption)
+                    });
+                }            
             }
-
-            selectCountryCode.innerHTML = selectedCountry.countryCode;
-
-            selectCity.disabled = false;
-            selectCountryCode.disabled = false;
-        } else {
-            console.error("Selected country not found in the data.");
-        }
-    };
+        })
+    })
 }
 function showSupportTeam(){
     document.getElementById('support-slide').style.display = 'block'
@@ -200,14 +239,12 @@ function existUser(){
     }
 }
 
-
 window.onload = function() {
     existUser()
     closeForgotPasswordModal();
     closeGetNew01Id();
     closeSendMessage();
     closeVideoChat();
-    selectCountryCityCode();
     closeSupportTeam();
     videoChat();
     sendMessage();

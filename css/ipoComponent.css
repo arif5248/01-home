@@ -1,6 +1,5 @@
 .mainContentSection{
     height: 100%;
-    padding-bottom: 30px;
 }
 .heading{
     text-align: center;
@@ -147,7 +146,7 @@ tr>td:last-child{
 }
 #NoIpoRunning_overlay{
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     background-color: #000000b3;
     position: absolute;
     top: 0;
@@ -179,26 +178,21 @@ tr>td:last-child{
 #NoIpoRunning > p:first-child{
     font-weight: 700;
 }
-#historyIpoContent{
-    /* height: 90vh;
-    overflow-y: auto; */
-}
 .mainContentSection{
     position: relative;
 }
 .pageHeading{
-    position: fixed;
-    top: 70px;
+    flex: 0 auto;
     width: 100vw;
     z-index: 1;
 }
 .btnGroup{
-    position: fixed;
-    top: 105px;
+    flex: 0 auto;
     width: 100vw;
     z-index: 1;
     background-color: #e9ecef;
 }
 .allContent{
-    margin-top: 120px;
+    flex: 1 auto;
+    overflow-y: auto;
 }

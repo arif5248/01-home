@@ -334,6 +334,7 @@ async function executeB_MarketStatus(){
                 `;
                 tableBody.querySelector('tbody').appendChild(newRow);
                 newRow.style.backgroundColor =parseFloat(data.change) >= 0 ? (parseFloat(data.change) > 0 ? '#04A41E' : '#fff' ): '#FE0000'
+                newRow.addEventListener('click', handleClick(data.symbol))
             }
         })
     })
@@ -358,6 +359,7 @@ async function executeB_MarketStatus(){
             `;
             tableBody.querySelector('tbody').appendChild(newRow);
             newRow.style.backgroundColor =parseFloat(data.change) >= 0 ? (parseFloat(data.change) > 0 ? '#04A41E' : '#fff' ): '#FE0000'
+            newRow.addEventListener('click', handleClick(data.symbol))
         })
     })
 }

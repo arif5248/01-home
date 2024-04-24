@@ -1,191 +1,19 @@
-function executeTP_lastTrade(){
-    const lastTrade = [
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-        {
-            time: "12:29",
-            price: 20,
-            volume: 400
-        },
-    ]
+async function executeTP_lastTrade(data){
+    const fetchedScriptInfo = await get_SCRIPINFO_(data)
+    const lastTrade = fetchedScriptInfo.prclisti
+
 
     function todayTrade(){
         document.getElementById('mainContentSection').innerHTML = `
-        <div class="pageHeading" id="financial-Heading">
-            <div class="heading">
-                <h1>LAST TRADE:</h1>
+            <div class="pageHeading" id="financial-Heading" style="flex: 0 auto;">
+                <div class="heading">
+                    <h1>LAST TRADE: ${data}</h1>
+                </div>
             </div>
-        </div>
-        
-        <div class='container'>
-            <div class="lastTradeBody" id="lastTradeBody"></div>
-        </div>
-        <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
+            
+            <div class='container' style="flex: 1 auto;height: 100%;overflow-y: auto;">
+                <div class="lastTradeBody" id="lastTradeBody"></div>
+            </div>
         `
     }
 
@@ -204,13 +32,13 @@ function executeTP_lastTrade(){
         `;
         lastTrade.forEach(data => {
             const newRow = document.createElement('tr');
-    
             newRow.innerHTML = `
-                <td>${data.time}</td>
-                <td>${data.price}</td>
-                <td>${data.volume}</td>
+                <td>${data.Dt}</td>
+                <td>${data.CP}</td>
+                <td>${data.CVol}</td>
             `;
         tableBody.querySelector('tbody').appendChild(newRow);
+        newRow.style.backgroundColor = `${data.Chng >= 0 ? (data.Chng > 0 ? '#04A41E' : '#fff') : '#FE0000' }`
         });
     }
 

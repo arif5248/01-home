@@ -3,12 +3,15 @@ async function executeMoneyDeposit(){
     let allBankList = []
     let msgList = []
     let purposeOptions = []
+    let paycutmssg = []
     const fetchedMoneyDepositData = await getMoneyDepositData()
+    console.log(fetchedMoneyDepositData)
     if(fetchedMoneyDepositData.status === true){
         bankList = fetchedMoneyDepositData.bankListNew
         msgList = fetchedMoneyDepositData.msgList
         purposeOptions = fetchedMoneyDepositData.Data
         allBankList = fetchedMoneyDepositData.bankListAll
+        paycutmssg = fetchedMoneyDepositData.paycutmssg
     }
     
     function moneyDeposit(){
@@ -93,7 +96,7 @@ async function executeMoneyDeposit(){
                 </div>
             </div>
             <div class='container'>
-                <div id='showPopUp'></div>
+                <div style='display: none;' id='showPopUp'></div>
             </div>
             
             
@@ -128,6 +131,9 @@ async function executeMoneyDeposit(){
         
     }
     function renderCard(){
+        
+        let charge = Number(paycutmssg.find(item => 'bank' in item) ? paycutmssg.find(item => 'bank' in item).bank : null);
+
         const body = document.getElementById('card-more')
         const msg = msgList.find(item => item.Type === 'Card')
         body.innerHTML=`
@@ -140,7 +146,7 @@ async function executeMoneyDeposit(){
                 </div>
             </div>
             <div class="bottomBox">
-            <form action="#">
+            <form id='cardForm'>
                 <div class="form-box-1">
                     <input type="text" value="${user.LoggedInInvestorId}" readonly>
                     <input type="text" value="${user.LoggedInInvestorName}" readonly>
@@ -168,7 +174,7 @@ async function executeMoneyDeposit(){
                     <input type="number" id="charge" name="charge" placeholder="Tk" readonly required>
                 </div>
                 <div class="form-box-3">
-                    <label for="card_purpose">IPO Name</label>
+                    <label for="card_purpose">Purpose</label>
                     <select id="card_purpose" name="purpose" required></select>
                 </div>
                 <div class="proceed-btn">
@@ -184,8 +190,25 @@ async function executeMoneyDeposit(){
             newOption.textContent = option.name;
             selectElement.appendChild(newOption)
         })
+        const paymentMethodRadios = document.querySelectorAll('input[name="paymentMethod"]');
+        paymentMethodRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                if (radio.checked) {
+                    const key = radio.value === 'visa_master' ? 'bank' : 'bank_amex';
+                    charge = Number(paycutmssg.find(item => key in item)?.[key]);
+                    if(document.getElementById('amount').value !== ''){
+                        document.getElementById('charge').value = Number(document.getElementById('amount').value) + (Number(document.getElementById('amount').value) * (charge/100))
+                    }
+                }
+            });
+        });
+        document.getElementById('amount').addEventListener('input', (event)=>{
+            document.getElementById('charge').value = Number(event.target.value) + (Number(event.target.value) * (charge/100))
+        })
     }
     function renderBkash(){
+        let charge = Number(paycutmssg.find(item => 'bkash' in item) ? paycutmssg.find(item => 'bkash' in item).bkash : null);
+
         const body = document.getElementById('bKash-more')
         const msg = msgList.find(item => item.Type === 'bKash')
         body.innerHTML=`
@@ -196,7 +219,7 @@ async function executeMoneyDeposit(){
                 </div>
             </div>
             <div class="bottomBox">
-            <form action="#">
+            <form id='bkash_submit'>
                 <div class="form-box-1">
                     <input type="text" value="${user.LoggedInInvestorId}" readonly>
                     <input type="text" value="${user.LoggedInInvestorName}" readonly>
@@ -205,20 +228,20 @@ async function executeMoneyDeposit(){
                 </div>
 
                 <div class="form-box-3">
-                    <label for="amount">Payment Amount</label>
-                    <input type="number" id="amount" name="amount" placeholder="Enter Taka" required>
+                    <label for="bkash_amount">Payment Amount</label>
+                    <input type="number" id="bkash_amount" name="amount" placeholder="Enter Taka" required>
                 </div>
                 <div class="form-box-3">
-                    <label for="charge">Chargeable Amount</label>
-                    <input type="number" id="charge" name="charge" placeholder="Tk" readonly required>
+                    <label for="bkash_charge">Chargeable Amount</label>
+                    <input type="number" id="bkash_charge" name="charge" placeholder="Tk" readonly required>
                 </div>
                 <div class="form-box-3">
-                    <label for="bkash_purpose">IPO Name</label>
+                    <label for="bkash_purpose">Purpose</label>
                     <select id="bkash_purpose" name="purpose" required></select>
                 </div>
                 <p>( bkash verification code will be sent to your bkash registered bKash number )</p>
                 <div class="proceed-btn">
-                    <input type="submit" value="VERIFY">
+                    <input  type="submit" value="VERIFY">
                 </div>
             </form>
             </div>
@@ -230,8 +253,12 @@ async function executeMoneyDeposit(){
             newOption.textContent = option.name;
             selectElement.appendChild(newOption)
         })
+        document.getElementById('bkash_amount').addEventListener('input', (event)=>{
+            document.getElementById('bkash_charge').value = Number(event.target.value) + (Number(event.target.value) * (charge/100))
+        })
     }
     function renderNagad(){
+        let charge = Number(paycutmssg.find(item => 'nagad' in item) ? paycutmssg.find(item => 'nagad' in item).nagad : null);
         const body = document.getElementById('nagad-more')
         const msg = msgList.find(item => item.Type === 'Nagad')
         body.innerHTML=`
@@ -242,7 +269,7 @@ async function executeMoneyDeposit(){
                 </div>
             </div>
             <div class="bottomBox">
-                <form action="#">
+                <form id='nagad_submit'>
                     <div class="form-box-1">
                         <input type="text" value="${user.LoggedInInvestorId}" readonly>
                         <input type="text" value="${user.LoggedInInvestorName}" readonly>
@@ -251,20 +278,20 @@ async function executeMoneyDeposit(){
                     </div>
 
                     <div class="form-box-3">
-                        <label for="amount">Payment Amount</label>
-                        <input type="number" id="amount" name="amount" placeholder="Enter Taka" required>
+                        <label for="nagad_amount">Payment Amount</label>
+                        <input type="number" id="nagad_amount" name="nagad_amount" placeholder="Enter Taka" required>
                     </div>
                     <div class="form-box-3">
-                        <label for="charge">Chargeable Amount</label>
-                        <input type="number" id="charge" name="charge" placeholder="Tk" readonly required>
+                        <label for="nagad_charge">Chargeable Amount</label>
+                        <input type="number" id="nagad_charge" name="nagad_charge" placeholder="Tk" readonly required>
                     </div>
                     <div class="form-box-3">
-                        <label for="nagad_purpose">IPO Name</label>
+                        <label for="nagad_purpose">Purpose</label>
                         <select id="nagad_purpose" name="purpose" required></select>
                     </div>
                     <p>( bkash verification code will be sent to your bkash registered bKash number )</p>
                     <div class="proceed-btn">
-                        <input type="submit" value="VERIFY">
+                        <input  type="submit" value="VERIFY">
                     </div>
                 </form>
             </div>
@@ -276,6 +303,9 @@ async function executeMoneyDeposit(){
             newOption.textContent = option.name;
             selectElement.appendChild(newOption)
         })
+        document.getElementById('nagad_amount').addEventListener('input', (event)=>{
+            document.getElementById('nagad_charge').value = Number(event.target.value) + (Number(event.target.value) * (charge/100))
+        })
     }
     async function renderDepositHistory(event){
         document.getElementById('depositHistorySection').style.display = 'block'
@@ -286,6 +316,7 @@ async function executeMoneyDeposit(){
             history = fetchedDepositHistory.Data
         }
         const hisBody = document.getElementById('historyBody')
+        hisBody.innerHTML = ''
         history.forEach(data =>{
             const newDiv = document.createElement('div')
             newDiv.classList.add('box')
@@ -308,7 +339,7 @@ async function executeMoneyDeposit(){
                 </div>
                 <div class='box_item'>
                     <p>Status</p>
-                    <p>${data.Status}</p>
+                    <p id='status${data.atn}'>${data.Status}</p>
                 </div>
                 <div style='display: none;' class='viewPdf' id='viewPdf${data.atn}'></div>
             `
@@ -316,6 +347,16 @@ async function executeMoneyDeposit(){
             if(data.Status === 'Posted'){
                 document.getElementById(`viewPdf${data.atn}`).style.display = 'block'
                 document.getElementById(`viewPdf${data.atn}`).innerHTML = `VIEW PDF`
+                document.getElementById(`status${data.atn}`).style.color = '#4CB050'
+                document.getElementById(`status${data.atn}`).style.fontSize = '18px'
+                document.getElementById(`status${data.atn}`).style.fontWeight = 500
+            }
+            if(data.Status === 'Cancelled'){
+                document.getElementById(`status${data.atn}`).style.color = 'red'
+                document.getElementById(`status${data.atn}`).style.fontSize = '18px'
+                document.getElementById(`status${data.atn}`).style.fontWeight = 500
+
+
             }
             if(data.Status === 'Pending'){
                 document.getElementById(`viewPdf${data.atn}`).innerHTML = `DELETE`
@@ -326,6 +367,12 @@ async function executeMoneyDeposit(){
                     if(result.status){
                         document.getElementById('showPopUp').innerHTML = ''
                         document.getElementById('showPopUp').innerHTML = result.message
+                        document.getElementById('showPopUp').style.display = 'block'
+                        setTimeout(() => {
+                            document.getElementById('showPopUp').innerHTML = ''
+                            document.getElementById('showPopUp').style.display = 'none'
+                        }, 3000);
+                        reCallMoneyDepositHistory()
                     }
                 })
             }
@@ -355,8 +402,63 @@ async function executeMoneyDeposit(){
     document.getElementById('close_img_Box').addEventListener('click', ()=>{
         document.getElementById('depositHistorySection').style.display = 'none'
         document.getElementById('overlay').style.display = 'none'
-
-
+    })
+    async function reCallMoneyDepositHistory(){
+        await renderDepositHistory()
+    }
+    document.getElementById('cardForm').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const returnPageurl = window.location.origin + '/mainPage/return.html'
+        const data = {
+            name: user.LoggedInInvestorName,
+            mobile: user.phone,
+            email: user.email,
+            amount: document.getElementById('amount').value,
+            mrType: document.getElementById('card_purpose').value,
+            payType: 'Card',
+            ret: returnPageurl,
+        }
+        
+        const result = await postOnlinePay01(data)
+        if(result.status === true){
+            window.location.href = result.Data;
+        }
+    })
+    document.getElementById('bkash_submit').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const returnPageurl = window.location.origin + '/mainPage/return.html'
+        const data = {
+            name: user.LoggedInInvestorName,
+            mobile: user.phone,
+            email: user.email,
+            amount: document.getElementById('bkash_amount').value,
+            mrType: document.getElementById('bkash_purpose').value,
+            payType: 'bkash',
+            ret: returnPageurl,
+        }
+        
+        const result = await postOnlinePay01(data)
+        if(result.status === true){
+            window.location.href = result.Data;
+        }
+    })
+    document.getElementById('nagad_submit').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const returnPageurl = window.location.origin + '/mainPage/return.html'
+        const data = {
+            name: user.LoggedInInvestorName,
+            mobile: user.phone,
+            email: user.email,
+            amount: document.getElementById('nagad_amount').value,
+            mrType: document.getElementById('nagad_purpose').value,
+            payType: 'nagad',
+            ret: returnPageurl,
+        }
+        
+        const result = await postOnlinePay01(data)
+        if(result.status === true){
+            window.location.href = result.Data;
+        }
     })
 }
 

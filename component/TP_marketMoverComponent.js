@@ -1,213 +1,28 @@
-function executeTP_marketMover(){
-
-    const topGainerData=[
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-    ]
-    const topLooserData=[
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-    ]
-    const topValueData=[
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-    ]
-    const topVolumeData=[
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-        {
-            company: "NAVANACNG",
-            ltp: 29.70,
-            change: 10.00
-        },
-    ]
+async function executeTP_marketMover(){
+    const fetchedMarketMover = await get_TOPLIST_()
+    let upArray = [];
+    let dnArray = [];
+    let valArray = [];
+    let volArray = [];
+    
+    fetchedMarketMover.forEach(item => {
+        switch(item.sTyp) {
+            case 'UP':
+                upArray.push(item);
+                break;
+            case 'DN':
+                dnArray.push(item);
+                break;
+            case 'VAL':
+                valArray.push(item);
+                break;
+            case 'VOL':
+                volArray.push(item);
+                break;
+            default:
+                break;
+        }
+    });
 
     function TP_marketMover(){
         document.getElementById('mainContentSection').innerHTML = `
@@ -241,7 +56,7 @@ function executeTP_marketMover(){
         const contentBody = document.getElementById('topGainerBody')
         contentBody.innerHTML= `
             <div class="dataBody">
-                <h3>Top Gainer</h3>
+                <h3 class='topGainerFontColor'>Top Gainer</h3>
                 <table>
                     <tbody>
                         <tr id="h1">
@@ -257,13 +72,13 @@ function executeTP_marketMover(){
         
         createSticky(contentBody);
 
-        topGainerData.forEach((data, index)=>{
+        upArray.forEach((data, index)=>{
             const newRow = document.createElement('tr')
             newRow.innerHTML=`
-                <td>${index + 1}</td>
-                <td>${data.company}</td>
-                <td>${data.ltp}</td>
-                <td>${data.change}</td>
+                <td class='topGainerFontColor'>${index + 1}</td>
+                <td class='topGainerFontColor'>${data.sNam}</td>
+                <td class='topGainerFontColor'>${data.LTP}</td>
+                <td class='topGainerFontColor'>${data.sData}</td>
             `
             contentBody.querySelector('tbody').appendChild(newRow)
         })
@@ -274,7 +89,7 @@ function executeTP_marketMover(){
         
         contentBody.innerHTML= `
             <div class="dataBody">
-                <h3>Top Looser</h3>
+                <h3 class='topLooserFontColor'>Top Looser</h3>
                 <table>
                     <tbody>
                         <tr id="h2">
@@ -290,13 +105,13 @@ function executeTP_marketMover(){
         
         createSticky(contentBody);
         
-        topLooserData.forEach((data, index)=>{
+        dnArray.forEach((data, index)=>{
             const newRow = document.createElement('tr')
             newRow.innerHTML=`
-                <td>${index + 1}</td>
-                <td>${data.company}</td>
-                <td>${data.ltp}</td>
-                <td>${data.change}</td>
+                <td class='topLooserFontColor'>${index + 1}</td>
+                <td class='topLooserFontColor'>${data.sNam}</td>
+                <td class='topLooserFontColor'>${data.LTP}</td>
+                <td class='topLooserFontColor'>${data.sData}</td>
             `
             contentBody.querySelector('tbody').appendChild(newRow)
         })
@@ -321,13 +136,13 @@ function executeTP_marketMover(){
         `
         createSticky(contentBody);
 
-        topValueData.forEach((data, index)=>{
+        valArray.forEach((data, index)=>{
             const newRow = document.createElement('tr')
             newRow.innerHTML=`
                 <td>${index + 1}</td>
-                <td>${data.company}</td>
-                <td>${data.ltp}</td>
-                <td>${data.change}</td>
+                <td>${data.sNam}</td>
+                <td>${data.LTP}</td>
+                <td>${data.sData}</td>
             `
             contentBody.querySelector('tbody').appendChild(newRow)
         })
@@ -349,21 +164,18 @@ function executeTP_marketMover(){
                     </tbody>
                 </table>         
             </div>
-            <br>
-            <br>
-            <br>
         `
         
 
         createSticky(contentBody);
 
-        topVolumeData.forEach((data, index)=>{
+        volArray.forEach((data, index)=>{
             const newRow = document.createElement('tr')
             newRow.innerHTML=`
                 <td>${index + 1}</td>
-                <td>${data.company}</td>
-                <td>${data.ltp}</td>
-                <td>${data.change}</td>
+                <td>${data.sNam}</td>
+                <td>${data.LTP}</td>
+                <td>${data.sData}</td>
             `
             contentBody.querySelector('tbody').appendChild(newRow)
         })

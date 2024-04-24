@@ -7,14 +7,20 @@
     background-color: rgba(0, 0, 0, 0.5); 
     z-index: -1;
 }
-
+#showResult{
+    text-align: center;
+}
+#resultMessage{
+    display: inline-block;
+    background-color: green;
+    padding: 10px 15px;
+    color: #fff;
+    border-radius: 5px;
+}
 /*===============Top Section=============*/
 .topSection{
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 16vh;
-    z-index: 1000;
+    flex: 0 0 auto;
+    height: 120px;
 }
 
 .btn-login-get01{
@@ -29,8 +35,9 @@
     color: white;
 }
 .homeContent{
-    /* position: relative; */
-    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
 /* .homeContent{
     display: flex;
@@ -52,12 +59,12 @@
 
 /*===============HomeMain Section=============*/
 .homeMainSection{
-    position: fixed;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 100vw;
-    height: 80vh;
+    flex: 1 1 auto;
+    height: 100%;
     overflow-y: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 /*===============Login Section=============*/
 .logInSection {
@@ -125,13 +132,7 @@
 .instructionLine{
     color: #fff;
 }
-.getNew01Section{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
-    width: 90%;
-}
+
 .get-new-01-ID{
     background-color: rgba(0, 0, 0, 0.154);
     padding: 10px;
@@ -209,19 +210,6 @@ option{
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* a{
     text-decoration: none;
     color: white;
@@ -241,13 +229,6 @@ body {
     width: 100vw;
     height: 100vh;
 }
-
-
-
-
-
-
-
 
 .sendMessageSection,
 .videoChatSection{
@@ -312,7 +293,7 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 100%;
+    width: 90%;
     background-color: #fff; 
     z-index: 10;
 }
@@ -434,10 +415,8 @@ body {
 }
 /*-----------------Support Team-------------------*/
 .support{
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    z-index: 999;
+    flex: 0 0 auto;
+    text-align: right;
 }
 .support-slide {
     position: absolute;

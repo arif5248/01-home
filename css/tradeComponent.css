@@ -1,30 +1,61 @@
-
+#invalidLogin{
+    position: fixed;
+    background-color: #e9ecef;
+    width: 60%;
+    top: 50vh;
+    left: 50vw;
+    transform: translateX(-50%) translateY(-50%);
+    border-radius: 10px;
+    z-index: 1003;
+    text-align: center;
+}
+#invalidLogin > h5{
+    text-align: center;
+    padding: 5px 0px;
+    background-color: #d4d7db;
+    border-radius: 10px 10px 0px 0px;
+    font-weight: 500;
+}
+#invalidLogin > p {
+    padding: 10px 0px;
+}
+#invalidLogin > div{
+    border-top: 1px solid #000;
+    padding: 5px 0px;
+}
+#invalidLogin > div > p{
+    display: inline-block;
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 3px 10px;
+    background-color: #212529;
+    color: #fff;
+}
 #mainContentSection{
     background-color :#111111;
 }
 h6{
     margin: 0px;
 }
-.stock_ticker_box {
+/* .stock_ticker_box {
     width: 100%;
     overflow: hidden;
     white-space: nowrap;
-}
+} */
 
 .scrolling-content > marquee > div{
-    display: flex;
-    align-items: center;
+    display: inline-block;
 }
 .ticker_item{
     background-color: green;
     color: #fff;
-    margin: 5px;
+    margin: 5px 5px 0px 5px;
     padding: 10px;
     text-align: center;
 }
 /* ============ allcompany list============= */
 .allCompanyList{
-    margin-top: -10px;
+    margin-top: 5px;
     list-style-type: none;
     max-height: 200px;
     overflow-y: auto;
@@ -42,11 +73,8 @@ h6{
 
 
 /*============Schedual market============*/
-.marketScheduale{
-    margin-top: 10px;
-}
+
 .box{
-    border: 1px solid #000;
     padding: 5px 10px;
     border-radius: 10px;
     box-shadow: 0px 0px 5px 2px #111;
@@ -88,6 +116,7 @@ h6{
 #tradeSearchBox > .search{
     width: 85%;
     margin-right: 10px;
+    position: relative;
 }
 #tradeSearchBox > .search > input{
     width: 100%;
@@ -177,46 +206,59 @@ h6{
     height: 390px;
     overflow-y: auto;
 }
-.buySellData > .ipoContent > table{
+.buySellData > .ipoContent > div > table{
     margin-top: 5px;
     width: 100%;
     border-collapse: separate;
     border-spacing: 0 2px;
 }
-.buySellData > .ipoContent > table > tbody >tr > th{
+.buySellData > .ipoContent > div > table > tbody >tr > th{
     background-color: #5C5C5C;
     position: sticky;
     top: 0;
     color: #fff;
-    font-weight: 400;
     text-align: center;
     padding-top: 0;
     font-size: 14px;
     font-weight: 600;
+    width: 16.6667%;
 }
-.buySellData > .ipoContent > table > tbody >tr > td:nth-child(3){
+.buySellData > .ipoContent > div > table > tbody >tr > td:nth-child(3){
     border-right: 4px solid #5C5C5C;
 }
-.buySellData > .ipoContent > table > tbody >tr > td:nth-child(4){
+.buySellData > .ipoContent > div > table > tbody >tr > td:nth-child(4){
     border-left: 4px solid #5C5C5C;
 }
-.buySellData > .ipoContent > table > tbody >tr > td{
+.buySellData > .ipoContent > div > table > tbody >tr > td{
     text-align: center;
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
     padding: 5px 0px;
     font-size: 12px;
+    width: 16.6667%;
+    text-align: center;
 }
-.buySellData > .ipoContent > table > tbody >tr > td:first-child{
+.buySellData > .ipoContent > div > table > tbody >tr > td:first-child{
     -webkit-padding-start: 10px;
-    text-align: left;
     border-left: 1px solid #000;
     border-radius: 15px 0px 0px 15px;
 }
-.buySellData > .ipoContent > table > tbody >tr > td:last-child{
+.buySellData > .ipoContent > div > table > tbody >tr > td:last-child{
     -webkit-padding-end: 10px;
     border-right: 1px solid #000;
     border-radius: 0px 15px 15px 0px;
+}
+.buySellData > .ipoContent > div > table > tbody >tr > td:nth-child(1),
+.buySellData > .ipoContent > div > table > tbody >tr > td:nth-child(2),
+.buySellData > .ipoContent > div > table > tbody >tr > td:nth-child(3){
+    color: #4CB050;
+    font-weight: 700;
+}
+.buySellData > .ipoContent > div > table > tbody >tr > td:nth-child(4),
+.buySellData > .ipoContent > div > table > tbody >tr > td:nth-child(5),
+.buySellData > .ipoContent > div > table > tbody >tr > td:nth-child(6){
+    color: red;
+    font-weight: 700;
 }
 .cseFooter,
 .dseFooter{
@@ -326,6 +368,7 @@ h6{
     padding: 5px 10px;
     border-radius: 5px;
     text-align: right;
+    color: #fff;
 }
 .orderSubmit{
     margin-top: 15px;
@@ -336,8 +379,6 @@ h6{
     padding: 10px 10px;
     border-radius: 5px;
 }
-
-
 
 .fundStatusBox {
     transform: translateY(-50%) translateX(-40vw);
@@ -374,18 +415,19 @@ h6{
     color: #000;
     padding: 0;
 }
-.fundStatusBox > .container > .box > .footer,
 .fundStatusBox > .container > .box > .head{
     text-align: center;
     background-color: #000;
     padding: 5px 0px;
     color: #fff;
+    border-radius: 10px 10px 0px 0px;
 }
 .fundStatusBox > .container > .box > .footer{
     text-align: center;
     background-color: #5c5c5cad;
     padding: 5px 0px;
     color: #fff;
+    border-radius: 0px 0px 10px 10px;
 }
 .fundStatusBox > .container > .box > .body > .item{
     display: flex;
@@ -395,3 +437,18 @@ h6{
     padding-left: 10px;
     
 }
+.scrolling-content {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    box-sizing: border-box;
+  }
+  .scrolling-content >  #tradeMarqueeContainer {
+    display: inline-flex;
+    padding-left: 100%;
+    animation: marquee 800s linear infinite;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-100%); }
+  }

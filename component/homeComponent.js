@@ -47,7 +47,6 @@ async function executeHome(){
             value: dashBoardData.reward
         },
     ]
-    
     const table2 = [
         {
             fieldName: "Investment",
@@ -74,7 +73,6 @@ async function executeHome(){
             value: dashBoardData.NetProfit
         },
     ]
-    
     function handleClick(script){
         return function(event){
             removeFooterBtnState();
@@ -91,7 +89,7 @@ async function executeHome(){
         <div id='home_marquee_section' class='home_marquee_section'>
             <div class='container'>
                 <div class='home_marquee'>
-                    <marquee behavior="scroll" direction="left" scrollamount="5" id="marqueeContainer"></marquee>
+                    <div id="marqueeContainer"></div>
                 </div>
             </div>
         </div>
@@ -154,7 +152,7 @@ async function executeHome(){
         document.getElementById('profile-content').innerHTML = `
         <div class="leftSide">
             <div class="userImage">
-                <img style="width:75px" src=${user.ProfileImage} alt=${user.LoggedInInvestorName}'s Image>
+                <img style="width:75px" src=${user.ProfileImage !== null ? user.ProfileImage : '../images/icons/userIcon.png'} alt="${user.LoggedInInvestorName}'s Image">
             </div>
             <div class="profileBtn">
                 <div onclick='removeFooterBtnState(); getUserDetails(${user.LoggedInInvestorId})'>PROFILE</div>
@@ -206,8 +204,6 @@ async function executeHome(){
             }
         })
     }
-
-    
     function renderTable2(){
         var tableContent = document.getElementById('table-2Content')
         var table= tableContent.appendChild(document.createElement('table'))
@@ -235,15 +231,17 @@ async function executeHome(){
         const tableBody = document.getElementById('currentStockBody');
         tableBody.innerHTML =
          `
-            <table>
-                <tr>
-                    <th>Company</th>
-                    <th>Stock<br>Qty</th>
-                    <th>Avg<br>Cost</th>
-                    <th>Last<br>Price</th>
-                    <th>Total<br>Price</th>
-                </tr>
-            </table>
+           <div style='flex: 1 auto ; '>
+                <table>
+                    <tr>
+                        <th>Company</th>
+                        <th>Stock<br>Qty</th>
+                        <th>Avg<br>Cost</th>
+                        <th>Last<br>Price</th>
+                        <th>Total<br>Price</th>
+                    </tr>
+                </table>
+           </div>
             <div id="currentStockFooter" class="currentStockFooter"></div>
         `;
         loginDashData.Stock.forEach(stock => {
@@ -275,15 +273,17 @@ async function executeHome(){
         const tableBody = document.getElementById('oldStockBody');
         tableBody.innerHTML =
          `
-            <table>
-                <tr>
-                    <th>Company</th>
-                    <th>Stock<br>Qty</th>
-                    <th>Avg<br>Cost</th>
-                    <th>Last<br>Price</th>
-                    <th>Total<br>Price</th>
-                </tr>
-            </table>
+            <div style='flex: 1 auto ; '>
+                <table>
+                    <tr>
+                        <th>Company</th>
+                        <th>Stock<br>Qty</th>
+                        <th>Avg<br>Cost</th>
+                        <th>Last<br>Price</th>
+                        <th>Total<br>Price</th>
+                    </tr>
+                </table>
+            </div>
             <div id="oldStockFooter" class="oldStockFooter"></div>
         `;
         loginDashData.OldStock.forEach(stock => {
@@ -327,19 +327,20 @@ async function executeHome(){
                     </div>
                 </div>
             </div>
-            <table>
-                <tr>
-                    <th>Company</th>
-                    <th>B/S</th>
-                    <th>Qty</th>
-                    <th>Rate</th>
-                    <th>Amount</th>
-                </tr>
-            </table>
+            <div style='flex: 1 auto; height: 100%'>
+                <table>
+                    <tr>
+                        <th>Company</th>
+                        <th>B/S</th>
+                        <th>Qty</th>
+                        <th>Rate</th>
+                        <th>Amount</th>
+                    </tr>
+                </table>
+            </div>
             <div id="executionStockFooter" class="oldStockFooter"></div>
         `;
     }
-    
     
     homeComponent()
     renderProfile()
@@ -350,12 +351,11 @@ async function executeHome(){
     renderCurrentStockTable()
     renderOldStockTable()
     renderExecutionTrades() 
-    document.getElementById('currentStockBody').style.display = 'block';
+    document.getElementById('currentStockBody').style.display = 'flex';
+    document.getElementById('currentStockBody').style.flexDirection = 'column';
+    document.getElementById('currentStockBody').style.minHeight = '300px';
     document.getElementById('oldStockBody').style.display = 'none';
     allExecuteTrades(user.LoggedInInvestorId)
-
-   
-
 }
 async function allExecuteTrades(inv_Id) {
     
@@ -528,7 +528,9 @@ function showStockData(stockType) {
     document.getElementById('currentStockBody').style.display = 'none';
     document.getElementById('oldStockBody').style.display = 'none';
 
-    document.getElementById(stockType).style.display = 'block';
+    document.getElementById(stockType).style.display = 'flex';
+    document.getElementById(stockType).style.flexDirection = 'column';
+    document.getElementById(stockType).style.minHeight = '300px';
     updateButtonState(stockType);
 
 }

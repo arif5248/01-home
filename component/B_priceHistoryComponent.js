@@ -1,5 +1,4 @@
 async function executeB_PriceHistory(script){
-    console.log('hiiiiiiiiiiiiii')
     let closingPrice = []
     let totalUp = 0;
     let totalDown = 0;

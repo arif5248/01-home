@@ -125,11 +125,11 @@ h1{
     position: relative;
 }
 #showMediaNewsDetails{
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-
+    margin-top: -55px;
+    z-index: 1;
+    width: 100vw;
+    flex-direction: column;
+    align-items: center;
 }
 .selectedNewsBody{
     border: 0px solid #000;
@@ -137,6 +137,7 @@ h1{
     width: 95vw;
     box-shadow: 0px 0px 5px 3px #000;
     border-radius: 10px;
+    margin-bottom: 10px;
 }
 .close{
     display: flex;
@@ -244,6 +245,14 @@ h1{
     padding: 5px 10px;
     margin-bottom: 2px;
 }
+.close_img_Box {
+    transition: all 0.3s ease;
+}
+
+.close_img_Box.hidden {
+    transform: translateY(-50px); /* Change this value according to your needs */
+}
+
 
 
 

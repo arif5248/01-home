@@ -8,13 +8,60 @@ async function executeTrade(data){
     let fetchedDse_buySellData = {}
     let dse_buySellData = []
     let scriptInfo = {}
+    let activeBuy = false
+    let activeSell = false
+    let fetchedClientDetails = {}
+    let availableShare
+    let availableFund
+    const openOrderData = [ 
+        {
+            type: 'BUY',
+            script: 'ALI',
+            status: 'SUBMITTED',
+            qty: 100,
+            rate: 14,
+            excQty: 0,
+            taka: 1249,
+            date: '25-Apr-24 10:25'
+        },
+        {
+            type: 'SELL',
+            script: 'ALI',
+            status: 'SUBMITTED',
+            qty: 100,
+            rate: 14,
+            excQty: 0,
+            taka: 1249,
+            date: '25-Apr-24 10:25'
+        },
+        {
+            type: 'BUY',
+            script: 'ALI',
+            status: 'CANCELLED',
+            qty: 100,
+            rate: 14,
+            excQty: 0,
+            taka: 1249,
+            date: '25-Apr-24 10:25'
+        },
+        {
+            type: 'BUY',
+            script: 'ALI',
+            status: 'SUBMITTED',
+            qty: 100,
+            rate: 14,
+            excQty: 0,
+            taka: 1249,
+            date: '25-Apr-24 10:25'
+        },
+    ]
 
     const tradePageLogin = await Post_LOGIN_({
         CMND: "_LOGIN_",
-        tid: "448",
+        tid: "447",
         inv_id: user.inv_id,
         inv_pass: user.ngts_pass2, 
-        force: "1"
+        force: "0"
     })
     if(tradePageLogin.success === true){
         sessionStorage.setItem('userData', JSON.stringify(tradePageLogin));
@@ -24,6 +71,7 @@ async function executeTrade(data){
             companyList = fetchedData.Data
         }
         tradeHour = await get_THOUR_()
+        fetchedClientDetails = await get_CLIENTDET_()
     }
 
     async function handleListItemClick(event) {
@@ -53,36 +101,48 @@ async function executeTrade(data){
         if(dse_buySellData !== null){
             renderDseContent()
         }
-
+        renderBuyContent()
+        renderSellContent()
         document.getElementById('showScriptInfo').style.display = 'block'
         renderSelectedStockBox()
     }
-
+    function handlePopUpMessage(heading, errorMessage, case_name){
+        document.getElementById('overlay').style.display = 'block'
+        document.getElementById('popupDiv').style.display = 'block'
+        document.getElementById('popupDiv').innerHTML= `
+            <h5>${heading}</h5>
+            <p>${errorMessage}</p>
+            <div><p id='invalidLoginCancel'>Cancel</p></div> 
+        `
+        document.getElementById('invalidLoginCancel').addEventListener('click', hidepopupDiv)
+        document.getElementById('overlay').addEventListener('click', hidepopupDiv)
+        function hidepopupDiv(){
+            document.getElementById('overlay').style.display = 'none'
+            document.getElementById('popupDiv').style.display = 'none'
+            if (case_name){
+                updateFooterBtnState('case_name');
+                route(`../component/${case_name}Component.js`,`../css/${case_name}Component.css`,`${case_name}`)
+            }
+        }
+    }
     function handleTradeBtn(case_name){
         return function(event){
             if(selectedScript || case_name === 'TP_halted' || case_name === 'TP_stockStatus' || case_name === 'TP_todayTrade' || case_name === 'TP_marketMover'){
                 route(`../component/${case_name}Component.js`, `../css/${case_name}Component.css`, case_name, selectedScript);
             }else{
-                document.getElementById('overlay').style.display = 'block'
-                document.getElementById('invalidLogin').style.display = 'block'
-                document.getElementById('invalidLogin').innerHTML= `
-                    <h5>Error</h5>
-                    <p>Please Select a Script</p>
-                    <div><p id='invalidLoginCancel'>Cancel</p></div> 
-                `
-                document.getElementById('invalidLoginCancel').addEventListener('click', hideInvalidLoginDiv)
-                document.getElementById('overlay').addEventListener('click', hideInvalidLoginDiv)
-                function hideInvalidLoginDiv(){
-                    document.getElementById('overlay').style.display = 'none'
-                    document.getElementById('invalidLogin').style.display = 'none'
-                }
+                const heading = 'Error'
+                const errorMessage = 'Please Select a Script'
+                handlePopUpMessage(heading, errorMessage)
             } 
         }   
     }
 
     function trade(){
         document.getElementById('mainContentSection').innerHTML = `
-            <div id='invalidLogin' style='display:none;'></div>
+            <div id='popupDiv' style='display:none;'></div>
+            <div id='confirmBuy' style='display:none;'></div>
+            <div id='confirmSell' style='display:none;'></div>
+            <div id='modifyOrder' style='display:none;'></div>
             <div class="pageHeading" id="financial-Heading">
                 <div class="heading">
                     <h1>Trade</h1>
@@ -107,7 +167,7 @@ async function executeTrade(data){
                         <div id='TP_companyInfo' class="singleBtn">COMP INFO</div>
                         <div id='TP_news' class="singleBtn">NEWS</div>
                         <div id='TP_todayTrade' class="singleBtn">ALL TRADES</div>
-                        <div id='TP_priceAlert' class="singleBtn">PRICE ALERT</div>
+                        <div style='background-color: #73737366; color: #ffffff87;' id='TP_priceAlert' class="singleBtn">PRICE ALERT</div>
                         <div class="singleBtn" onclick="showFund()" >FUND STATUS</div>
                         <div id='TP_lastTrade' class="singleBtn">LAST TRADES</div>   
                         <div id='TP_marketMover' class="singleBtn">MKT MOVER</div>                        
@@ -115,7 +175,7 @@ async function executeTrade(data){
                         <div id='TP_stockStatus' class="singleBtn">STK STATUS</div>
                         <div id='TP_rateHistory' class="singleBtn">RATE HISTORY</div>                       
                         <div id='TP_halted' class="singleBtn">HALTED COMP</div>
-                        <div id='TP_favourit' class="singleBtn">FAVOURITES</div>
+                        <div style='background-color: #73737366; color: #ffffff87;' id='TP_favourit' class="singleBtn">FAVOURITES</div>
                     </div>
                 </div>
             </div>
@@ -146,17 +206,25 @@ async function executeTrade(data){
                 </div>
             </div>
 
-            <div class="buySellSection" style='flex: 1 auto'>
+            <div class="buySellSection">
                 <div class= "container">
                     <div class= "box">
                         <div class="btnGroup" id="btnGroup">
-                            <div onclick="render('buyContent')" class="Btn" id="buy">BUY</div>
-                            <div onclick="render('sellContent')" class="Btn" id="sell">SELL</div>
+                            <div  class="Btn" id="buy">BUY</div>
+                            <div  class="Btn" id="sell">SELL</div>
                         </div>
                         <div class="buySellOrder">
                             <div class="ipoContent" id="buyContent"></div>
                             <div class="ipoContent" id="sellContent"></div>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="openOrderSection" style='flex: 1 auto'>
+                <div class= "container">
+                    <div class= "box">
+                        <div id='openOrderContent'></div>
                     </div>
                 </div>
             </div>
@@ -184,6 +252,54 @@ async function executeTrade(data){
                 </div>
             </div>
         `
+        document.getElementById('TP_companyInfo').addEventListener('click', handleTradeBtn('TP_companyInfo'))
+        document.getElementById('TP_dividend').addEventListener('click', handleTradeBtn('TP_dividend'))
+        document.getElementById('TP_halted').addEventListener('click', handleTradeBtn('TP_halted'))
+        document.getElementById('TP_lastTrade').addEventListener('click', handleTradeBtn('TP_lastTrade'))
+        document.getElementById('TP_marketMover').addEventListener('click', handleTradeBtn('TP_marketMover'))
+        document.getElementById('TP_news').addEventListener('click', handleTradeBtn('TP_news'))
+        document.getElementById('TP_rateHistory').addEventListener('click', handleTradeBtn('TP_rateHistory'))
+        document.getElementById('TP_stockStatus').addEventListener('click', handleTradeBtn('TP_stockStatus'))
+        document.getElementById('TP_todayTrade').addEventListener('click', handleTradeBtn('TP_todayTrade'))
+
+        // document.getElementById('TP_priceAlert').addEventListener('click', handleTradeBtn('TP_priceAlert'))
+        // document.getElementById('TP_favourit').addEventListener('click', handleTradeBtn('TP_favourit'))
+
+        document.getElementById('buy').addEventListener('click', render('buyContent'))
+        document.getElementById('sell').addEventListener('click', render('sellContent'))
+
+        function render(content){
+            return function(event){
+                document.getElementById('buyContent').style.display = 'none'
+                document.getElementById('sellContent').style.display = 'none'
+    
+                document.getElementById(content).style.display = 'block'
+    
+                updateButton(content)
+            }
+        }
+        function updateButton(activeButton) {
+            activeBuy = false
+            activeSell = false
+            if(activeButton === 'buyContent'){
+                document.getElementById('buy').style.backgroundColor = '#4CB050'
+                document.getElementById('buy').style.color = '#fff'
+                document.getElementById('buyOrderSubmit').style.backgroundColor = '#4CB050'
+                document.getElementById('buyOrderSubmit').style.color = '#fff'
+                document.getElementById('sell').style.backgroundColor = '#868686'
+                document.getElementById('sell').style.color = '#000'
+                activeBuy = true
+            }
+            if(activeButton === 'sellContent'){
+                document.getElementById('sell').style.backgroundColor = '#FE0000'
+                document.getElementById('sell').style.color = '#fff'
+                document.getElementById('sellOrderSubmit').style.color = '#fff'
+                document.getElementById('sellOrderSubmit').style.backgroundColor = '#FE0000'
+                document.getElementById('buy').style.backgroundColor = '#868686'
+                document.getElementById('buy').style.color = '#000'
+                activeSell = true
+            }
+        }
     }
     function renderStockTicker(){
         const stockTickerBody = document.getElementById('tradeMarqueeContainer')
@@ -312,6 +428,30 @@ async function executeTrade(data){
             <img src="../images/icons/reload.png" alt="reload" style="width: 30px;">
         </div>
         `
+        document.getElementById('searchCompany').addEventListener('input', async () => {
+        const existList = document.querySelectorAll('.allCompanyListItem');
+        if(existList){
+            existList.forEach(item => {
+                item.remove();
+            });
+        } 
+        document.getElementById('allCompanyList').style.display = 'block'
+        const setWidth = document.getElementById('searchCompany').offsetWidth
+        document.getElementById('allCompanyList').style.width = setWidth+'px'
+
+        const inputValue = document.getElementById('searchCompany').value;
+        companyList.forEach(item => {
+            const companyName = item.Company.toLowerCase();
+            if (companyName.includes(inputValue.toLowerCase()) && inputValue !== '') {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = item.Company
+                listItem.id = item.Company
+                listItem.classList.add('allCompanyListItem')
+                listItem.addEventListener('click', handleListItemClick);
+                document.getElementById('allCompanyList').appendChild(listItem)
+            }
+        });
+    });
     }
     function renderSelectedStockBox(){
         document.getElementById('selectedStockBox').innerHTML = `
@@ -555,16 +695,17 @@ async function executeTrade(data){
         `;
     }
     function renderBuyContent() {
+        availableFund = fetchedClientDetails.success === true ? fetchedClientDetails.freeCash : 'invalid'
         document.getElementById('buyContent').innerHTML=`
         <div class="availableFund">
             <p>Available Fund</p>
-            <p>Tk 0</p>
+            <p>Tk ${availableFund}</p>
         </div>
         <div class="buySellFormContent">
-            <form action="#">
+            <form id='buyFormSubmit'>
                 <div class="rowForm rowForm-1">
                     <div class="rowItem">
-                        <input id="marketPrice" type="checkbox" name="marketPrice" >
+                        <input id="b_marketPrice" type="checkbox" name="marketPrice" >
                         <label for="marketPrice">Market Price</label>
                     </div>
                 </div>
@@ -586,19 +727,81 @@ async function executeTrade(data){
             </form>
         </div>
         `
+        function goConfirmBuy(){
+            document.getElementById('overlay').style.display = 'block'
+            document.getElementById('confirmBuy').style.display = 'block'
+            document.getElementById('confirmBuy').innerHTML= `
+                <h5>BUY CONFIRMATION</h5>
+                <p>
+                    <span>Are you sure to BUY ${selectedScript}?</span>
+                    <br>
+                    Quantity: ${document.getElementById('b_quantity').value} @ Rate: ${document.getElementById('b_marketPrice').checked ? 'Market Price' : document.getElementById('b_rate').value }
+                </p>
+                <div>
+                    <p style='background-color: #000;' id='cancelBtn'>CANCEL</p>
+                    <p style='background-color: #4CB050;' id='buyConfirmBtn'>CONFIRM</p>
+                </div> 
+            `
+            function cancelConfirmBuy(){
+                document.getElementById('overlay').style.display = 'none'
+                document.getElementById('confirmBuy').style.display = 'none'
+            }
+            document.getElementById('cancelBtn').addEventListener('click', cancelConfirmBuy)
+            document.getElementById('overlay').addEventListener('click', cancelConfirmBuy)
+        }
+        function handleCalcQuantityAndRate(){
+            if(document.getElementById('b_quantity').value !== '' && document.getElementById('b_rate').value !== ''){
+                document.getElementById('estimatedTotal').value = Number(document.getElementById('b_quantity').value) * Number(document.getElementById('b_rate').value)
+            }
+        }
+        document.getElementById('b_quantity').addEventListener('input', handleCalcQuantityAndRate)
+        document.getElementById('b_rate').addEventListener('input', handleCalcQuantityAndRate)
+        document.getElementById('b_marketPrice').addEventListener('change', function() {
+            if(this.checked){
+                document.getElementById('b_rate').setAttribute('readonly' , 'true')
+                document.getElementById('b_rate').style.backgroundColor = '#98989A'
+                document.getElementById('estimatedTotal').setAttribute('readonly' , 'true')
+                document.getElementById('estimatedTotal').style.backgroundColor = '#98989A'
+            }else{
+                document.getElementById('b_rate').removeAttribute('readonly' , 'false')
+                document.getElementById('b_rate').style.backgroundColor = 'unset'
+                document.getElementById('estimatedTotal').removeAttribute('readonly' , 'false')
+                document.getElementById('estimatedTotal').style.backgroundColor = 'unset'
+            }
+        })
+        document.getElementById('buyFormSubmit').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            if(activeBuy){
+                if(selectedScript !== undefined){
+                    goConfirmBuy()
+                }else{
+                    const heading = 'Error'
+                    const errorMessage = 'Please Select a Script'
+                    handlePopUpMessage(heading, errorMessage)
+                }
+            }else{
+                const heading = 'Error'
+                const errorMessage = 'Please Select Buy or Sell'
+                handlePopUpMessage(heading, errorMessage,)
+            }
+        })
     }
     function renderSellContent() {
+        if(fetchedClientDetails.success === true){
+            availableShare = fetchedClientDetails.Stocks.find(obj => obj.Scrip === selectedScript) ? fetchedClientDetails.Stocks.find(obj => obj.Scrip === selectedScript).Qt : 0
+        }
+        
         document.getElementById('sellContent').innerHTML=`
         <div class="availableFund">
-            <p>Available Fund</p>
-            <p>Tk 0</p>
+            <p>Available Shares</p>
+            <p>${availableShare}</p>
         </div>
         <div class="buySellFormContent">
-            <form action="#">
+            <form id="sellFormSubmit">
                 <div class="rowForm rowForm-1">
                     <div class="rowItem">
-                        <input id="sellMarketPrice" type="checkbox" name="sellMarketPrice" >
-                        <label for="sellMarketPrice">Market Price</label>
+                        <input id="s_marketPrice" type="checkbox" name="s_marketPrice" >
+                        <label for="s_marketPrice">Market Price</label>
                     </div>
                     <div class="box">
                         <div>
@@ -610,7 +813,7 @@ async function executeTrade(data){
                             <label for="fullSell">Full</label>
                         </div>
                     </div>
-                </div>
+                </div> 
                 <div class="rowForm">
                     <label for="s_quantity">Quantity</label>
                     <input type="number" id="s_quantity" name="s_quantity" placeholder="Enter Qty" required>
@@ -629,6 +832,179 @@ async function executeTrade(data){
             </form>
         </div>
         `
+        function goConfirmSell(){
+            document.getElementById('overlay').style.display = 'block'
+            document.getElementById('confirmSell').style.display = 'block'
+            document.getElementById('confirmSell').innerHTML= `
+                <h5>Sell CONFIRMATION</h5>
+                <p>
+                    <span>Are you sure to Sell ${selectedScript}?</span>
+                    <br>
+                    Quantity: ${document.getElementById('s_quantity').value} @ Rate: ${document.getElementById('s_marketPrice').checked ? 'Market Price' : document.getElementById('s_rate').value }
+                </p>
+                <div>
+                    <p style='background-color: #000;' id='cancelBtn'>CANCEL</p>
+                    <p style='background-color: red;' id='buyConfirmBtn'>CONFIRM</p>
+                </div> 
+            `
+            function cancelConfirmSell(){
+                document.getElementById('overlay').style.display = 'none'
+                document.getElementById('confirmSell').style.display = 'none'
+            }
+            document.getElementById('cancelBtn').addEventListener('click', cancelConfirmSell)
+            document.getElementById('overlay').addEventListener('click', cancelConfirmSell)
+        }
+        document.querySelectorAll('input[name="sellType"]').forEach(radio => {
+            let stockQuantity = availableShare;
+            console.log(availableShare)
+            radio.addEventListener('change', function() {
+                if (this.value === 'half') {
+                    const halfStockQuantity = stockQuantity/2
+                    document.getElementById('s_quantity').value = Math.floor(halfStockQuantity)
+                    handleCalcQuantityAndRate()
+                } else {
+                    document.getElementById('s_quantity').value = Math.floor(stockQuantity)
+                    handleCalcQuantityAndRate()
+                }
+            });
+        });
+        function handleCalcQuantityAndRate(){
+            let stockQuantity = availableShare;
+            if(stockQuantity !== 0 && (Number(document.getElementById('s_quantity').value) === Math.floor(stockQuantity/2))){
+                document.getElementById('halfSell').checked = true;
+            }
+            else if(stockQuantity !== 0 && (Number(document.getElementById('s_quantity').value) === stockQuantity)){
+                document.getElementById('fullSell').checked = true;
+            }else{
+                document.getElementById('halfSell').checked = false;
+                document.getElementById('fullSell').checked = false;
+            }
+            
+            if(document.getElementById('s_quantity').value !== '' && document.getElementById('s_rate').value !== ''){
+                document.getElementById('sellTotal').value = Number(document.getElementById('s_quantity').value) * Number(document.getElementById('s_rate').value)
+            }
+        }
+        document.getElementById('s_quantity').addEventListener('input', handleCalcQuantityAndRate)
+        document.getElementById('s_rate').addEventListener('input', handleCalcQuantityAndRate)
+        document.getElementById('s_marketPrice').addEventListener('change', function() {
+            if(this.checked){
+                document.getElementById('s_rate').setAttribute('readonly' , 'true')
+                document.getElementById('s_rate').style.backgroundColor = '#98989A'
+                document.getElementById('sellTotal').setAttribute('readonly' , 'true')
+                document.getElementById('sellTotal').style.backgroundColor = '#98989A'
+            }else{
+                document.getElementById('s_rate').removeAttribute('readonly' , 'false')
+                document.getElementById('s_rate').style.backgroundColor = 'unset'
+                document.getElementById('sellTotal').removeAttribute('readonly' , 'false')
+                document.getElementById('sellTotal').style.backgroundColor = 'unset'
+            }
+        })
+        document.getElementById('sellFormSubmit').addEventListener('submit', async (event) => {
+            event.preventDefault();
+      
+            if(selectedScript !== undefined){
+                goConfirmSell()
+            }else{
+                const heading = 'Error'
+                const errorMessage = 'Please Select a Script'
+                handlePopUpMessage(heading, errorMessage)
+            }
+            
+        })
+    }
+    function renderModifyOrder(){
+        document.getElementById('overlay').style.display = 'block'
+        document.getElementById('modifyOrder').style.display = 'block'
+        document.getElementById('modifyOrder').innerHTML= `
+            <h5>MODIFY CONFIRMATION</h5>
+            <p>
+                <span>Are you sure to BUY ${selectedScript}?</span>
+                <br>
+                Quantity: ${document.getElementById('b_quantity').value} @ Rate: ${document.getElementById('b_marketPrice').checked ? 'Market Price' : document.getElementById('b_rate').value }
+            </p>
+            <div>
+                <p style='background-color: #000;' id='cancelBtn'>CANCEL</p>
+                <p style='background-color: red;' id='modifyConfirmBtn'>CONFIRM</p>
+            </div> 
+        `
+        function cancelModifyBuy(){
+            document.getElementById('overlay').style.display = 'none'
+            document.getElementById('modifyOrder').style.display = 'none'
+        }
+        document.getElementById('cancelBtn').addEventListener('click', cancelModifyBuy)
+        document.getElementById('overlay').addEventListener('click', cancelModifyBuy)
+        
+    }
+    function renderOperOrder(){
+        document.getElementById('openOrderContent').innerHTML=`
+            <div class='openOrderHeading'>
+                <h3>Open Orders</h3>
+            </div>
+            <div id='openOrderList'></div>    
+        `
+        const contentBody = document.getElementById('openOrderList')
+        openOrderData.forEach((data, index)=> {
+            const newDiv = document.createElement('div');
+            newDiv.classList.add('openOrderItem');
+            newDiv.innerHTML = `
+                <div id='heading${index}' class='heading'>
+                    <h5>${data.type}</h5>
+                    <div class='script_status'>
+                        <h5>${data.script}</h5>
+                        <h5>${data.status}</h5>
+                    </div>
+                </div>
+                <div class='body'>
+                    <div class='openOrderDetails'>
+                        <div class='openOrderColumn'>
+                            <p>Qty</p>
+                            <p>${data.qty}</p>
+                        </div>
+                        <div class='openOrderColumn'>
+                            <p>Rate</p>
+                            <p>${data.rate}</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class='openOrderDetails'>
+                        <div class='openOrderColumn'>        
+                            <p>Exec Qty</p>
+                            <p>${data.excQty}</p>
+                        </div>
+                        <div class='openOrderColumn'>
+                            <p>Taka</p>
+                            <p>${data.taka}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class='footerBtn'>
+                    <div class='openOrderDate'>
+                        <p>${data.date}</p>
+                    </div>
+                    <div class='openOrderBtn'>
+                        <p class='openOrderCancele' id='openOrderCancele${index}'>CANCEL</p>
+                        <p class='openOrderModify' id='openOrderModify${index}'>MODIFY</p>
+                    </div>
+                </div>
+            `
+            contentBody.appendChild(newDiv)
+            document.getElementById(`openOrderModify${index}`).addEventListener('click', async ()=>{
+                renderModifyOrder()
+            })
+            if(data.status === 'CANCELLED'){
+                document.getElementById(`heading${index}`).style.backgroundColor = '#120181'
+                document.getElementById(`heading${index}`).style.color = '#fff'
+                document.getElementById(`openOrderCancele${index}`).style.display = 'none'
+                document.getElementById(`openOrderModify${index}`).style.display = 'none'
+            }
+            if(data.status === 'SUBMITTED'){
+                document.getElementById(`heading${index}`).style.backgroundColor = '#DFE1DC'
+                document.getElementById(`heading${index}`).style.color = '#4CB050'
+            }
+
+            
+        })
+        
     }
 
     trade()
@@ -641,75 +1017,32 @@ async function executeTrade(data){
     renderDseContent()
     renderBuyContent()
     renderSellContent() 
+    renderOperOrder()
     document.getElementById('fundStatusBox').style.display = 'none'
     document.getElementById('cseContent').style.display = 'flex'
     document.getElementById('dseContent').style.display = 'none'
     document.getElementById('buyContent').style.display = 'block'
     document.getElementById('sellContent').style.display = 'none'
     document.getElementById('overlay').style.display = 'none';
+ 
+    
+    
 
-    document.getElementById('searchCompany').addEventListener('input', async () => {
-        const existList = document.querySelectorAll('.allCompanyListItem');
-        if(existList){
-            existList.forEach(item => {
-                item.remove();
-            });
-        } 
-        document.getElementById('allCompanyList').style.display = 'block'
-        const setWidth = document.getElementById('searchCompany').offsetWidth
-        document.getElementById('allCompanyList').style.width = setWidth+'px'
-
-        const inputValue = document.getElementById('searchCompany').value;
-        companyList.forEach(item => {
-            const companyName = item.Company.toLowerCase();
-            if (companyName.includes(inputValue.toLowerCase()) && inputValue !== '') {
-                const listItem = document.createElement('li');
-                listItem.innerHTML = item.Company
-                listItem.id = item.Company
-                listItem.classList.add('allCompanyListItem')
-                listItem.addEventListener('click', handleListItemClick);
-                document.getElementById('allCompanyList').appendChild(listItem)
-            }
-        });
-    });
+    
 
     if(tradePageLogin.success === false){
-        document.getElementById('overlay').style.display = 'block'
-        document.getElementById('invalidLogin').style.display = 'block'
-        document.getElementById('invalidLogin').innerHTML= `
-            <h5>Unauthorized Access</h5>
-            <p>Invalid Password or User ID</p>
-            <div><p id='invalidLoginCancel'>Cancel</p></div> 
-        `
-        document.getElementById('invalidLoginCancel').addEventListener('click', hideInvalidLoginDiv)
-        document.getElementById('overlay').addEventListener('click', hideInvalidLoginDiv)
-        function hideInvalidLoginDiv(){
-            document.getElementById('overlay').style.display = 'none'
-            document.getElementById('invalidLogin').style.display = 'none'
-            updateFooterBtnState('home');
-            route('../component/homeComponent.js','../css/homeComponent.css','home')
-        }
+        const heading = 'Unauthorized Access'
+        const errorMessage = 'Invalid Password or User ID for Trade Page'
+        const case_name = 'home'
+        handlePopUpMessage(heading, errorMessage, case_name)
     }
               
-    document.getElementById('TP_companyInfo').addEventListener('click', handleTradeBtn('TP_companyInfo'))
-     document.getElementById('TP_dividend').addEventListener('click', handleTradeBtn('TP_dividend'))
-    document.getElementById('TP_halted').addEventListener('click', handleTradeBtn('TP_halted'))
-    document.getElementById('TP_lastTrade').addEventListener('click', handleTradeBtn('TP_lastTrade'))
-    document.getElementById('TP_marketMover').addEventListener('click', handleTradeBtn('TP_marketMover'))
-    document.getElementById('TP_news').addEventListener('click', handleTradeBtn('TP_news'))
-    document.getElementById('TP_rateHistory').addEventListener('click', handleTradeBtn('TP_rateHistory'))
-    document.getElementById('TP_stockStatus').addEventListener('click', handleTradeBtn('TP_stockStatus'))
-    document.getElementById('TP_todayTrade').addEventListener('click', handleTradeBtn('TP_todayTrade'))
-
-    // document.getElementById('TP_priceAlert').addEventListener('click', handleTradeBtn('TP_priceAlert'))
-    // document.getElementById('TP_favourit').addEventListener('click', handleTradeBtn('TP_favourit'))
+    
 
    document.getElementById('reloadSearchBox').addEventListener('click', ()=>{
-        // document.getElementById('searchCompany').value = ''
-        // selectedScript = undefined
-        // route('../component/tradeComponent.js','../css/tradeComponent.css','trade')
-        
-        handleListItemClick()
+        if(selectedScript !== undefined){
+            handleListItemClick()
+        } 
    })
     document.getElementById('overlay').addEventListener('click', ()=>{
         closeFund()
@@ -717,6 +1050,8 @@ async function executeTrade(data){
     if(selectedScript !== undefined){
         handleListItemClick()
     }
+
+    
 }
 
 document.getElementById('overlay').style.display = 'none';
@@ -748,34 +1083,4 @@ function updateButtonState(activeButton) {
     if (activeButtonElement) {
         activeButtonElement.classList.add('active');
     }
-}
-function render(content){
-    document.getElementById('buyContent').style.display = 'none'
-    document.getElementById('sellContent').style.display = 'none'
-
-    document.getElementById(content).style.display = 'block'
-
-    updateButton(content)
-}
-function updateButton(activeButton) {
-
-    if(activeButton === 'buyContent'){
-        document.getElementById('buy').style.backgroundColor = '#4CB050'
-        document.getElementById('buy').style.color = '#fff'
-        document.getElementById('buyOrderSubmit').style.backgroundColor = '#4CB050'
-        document.getElementById('buyOrderSubmit').style.color = '#fff'
-        document.getElementById('sell').style.backgroundColor = '#868686'
-        document.getElementById('sell').style.color = '#000'
-
-    }
-    if(activeButton === 'sellContent'){
-        document.getElementById('sell').style.backgroundColor = '#FE0000'
-        document.getElementById('sell').style.color = '#fff'
-        document.getElementById('sellOrderSubmit').style.color = '#fff'
-        document.getElementById('sellOrderSubmit').style.backgroundColor = '#FE0000'
-        document.getElementById('buy').style.backgroundColor = '#868686'
-        document.getElementById('buy').style.color = '#000'
-
-    }
-
 }

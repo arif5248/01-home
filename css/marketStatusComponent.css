@@ -78,7 +78,7 @@
 .MS_table > table > tbody > tr:first-child > th{
   
   color: #fff;
-  font-size: 20px;
+  font-size: 15px;
   padding: 5px 1px;
   text-align: center;
 }
@@ -90,7 +90,7 @@
 }
 .MS_table > table > tbody > tr > td{
   font-weight: 700;
-  font-size: 15px;
+  font-size: 13px;
   padding: 10px 0px;
   border-top: 1px solid #000;
   border-bottom: 1px solid #000;

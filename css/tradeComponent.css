@@ -1,4 +1,7 @@
-#invalidLogin{
+#modifyOrder,
+#confirmSell,
+#confirmBuy,
+#popupDiv{
     position: fixed;
     background-color: #e9ecef;
     width: 60%;
@@ -9,21 +12,63 @@
     z-index: 1003;
     text-align: center;
 }
-#invalidLogin > h5{
+#popupDiv > h5{
     text-align: center;
     padding: 5px 0px;
     background-color: #d4d7db;
     border-radius: 10px 10px 0px 0px;
     font-weight: 500;
 }
-#invalidLogin > p {
+#modifyOrder > h5,
+#confirmSell > h5 {
+    background-color: red;
+    padding: 5px 0px;
+    color: #fff;
+    border-radius: 10px 10px 0px 0px;
+}
+#confirmBuy > h5{
+    background-color: #4CB050;
+    padding: 5px 0px;
+    color: #fff;
+    border-radius: 10px 10px 0px 0px;
+}
+#popupDiv > p {
     padding: 10px 0px;
 }
-#invalidLogin > div{
+#popupDiv > div{
     border-top: 1px solid #000;
     padding: 5px 0px;
 }
-#invalidLogin > div > p{
+#modifyOrder > p,
+#confirmSell > p,
+#confirmBuy > p {
+    padding-top: 5px;
+    font-size: 12px;
+}
+#confirmSell > p > span,
+#confirmBuy > p > span{
+    font-weight: 500;
+    font-size: 16px;
+}
+#modifyOrder > div,
+#confirmSell > div,
+#confirmBuy > div{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px solid #000;
+    margin-top: 10px;
+    padding: 5px 0px;
+}
+#modifyOrder > div > p,
+#confirmSell > div > p,
+#confirmBuy > div > p{
+    border: 1px solid #000;
+    padding: 3px 10px;
+    border-radius: 5px;
+    color: #fff;
+}
+#popupDiv > div > p{
     display: inline-block;
     border: 1px solid #000;
     border-radius: 5px;
@@ -452,3 +497,79 @@ h6{
     from { transform: translateX(0); }
     to { transform: translateX(-100%); }
   }
+  /* =====================open Order=================== */
+  .openOrderHeading > h3{
+    text-align: center;
+    padding: 10px 0px;
+    color: #fff;
+    margin-bottom: 15px;
+  }
+.openOrderSection > .container > .box{
+padding: 0;
+}
+.openOrderItem{
+    margin: 0px 10px;
+    color: #000;
+    background-color: #fff;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.openOrderItem  > .heading{
+    display: flex;
+    align-items: center;
+    background-color: #98989A;
+    border-radius: 10px 10px 0px 0px;
+}
+.openOrderItem  > .heading > h5{
+    width: 15%;
+    border-right: 1px solid #fff;
+    padding: 10px 10px;
+    font-weight: 600;
+}
+.script_status{
+    display: flex;
+    justify-content: space-between;
+    width: 85%;
+    padding: 10px 10px;
+}
+.script_status > h5{
+    font-weight: 600;
+}
+.openOrderDetails{
+    display: flex;
+}
+.openOrderColumn{
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 5px;
+}
+.openOrderItem > .footerBtn{
+    display: flex;
+    align-items: center;
+    padding: 10px 5px;
+}
+.openOrderDate{
+    width: 40%;
+    padding: 0px 5px;
+}
+.openOrderBtn{
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 5px;
+}
+.openOrderCancele{
+    background-color: red;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #fff;
+}
+.openOrderModify{
+    background-color: #4CB050;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #fff;
+}

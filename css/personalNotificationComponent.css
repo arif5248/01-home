@@ -22,7 +22,7 @@
 .details_row > h4{
     margin-top: 6px;
     margin-bottom: 5px;
-    font-size: 18px;
+    font-size: 14px;
 }
 .title_row > p,
 .details_row > p{
@@ -32,14 +32,16 @@
 }
 .readBtnRow{
     margin-top: 5px;
+    margin-right: 5px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
 }
 .readBtn{
-    border: 1px solid #000;
     padding: 7px 10px;
-    background-color: #0BAC28;
     border-radius: 5px;
     color: #fff;
+}
+.date_status_row > p{
+    font-size: 14px;
 }

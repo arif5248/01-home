@@ -8,15 +8,14 @@ async function executeB_MarketStatus(){
 
     function handleClick(script){
         return function (event){
-            // route('../component/priceHistoryComponent.js', '../css/priceHistoryComponent.css', 'priceHistory', script)
             window.location.href = `../mainPage/template.html?case=B_priceHistory&data=${script}`
         }
     }
 
     function B_marketStatus(){
-        document.getElementById('page_heading').innerHTML=`Market Status`
         document.getElementById('beforeMain').innerHTML = `
-        <div class="marketMainSection" id="marketMainSection">
+        <h3 id="page_heading">Market Status</h3>
+        <div class="marketMainSection" id="marketMainSection" style="flex: 1 auto;height: 100%;overflow-y: auto;">
         <div class="cseSection" id="cseSection">
             <div class="container">
                 <div class="table-responsive">
@@ -27,33 +26,32 @@ async function executeB_MarketStatus(){
                                     <img src="../images/cse_logo.jpg" alt="Chittagong Stock Exchange">
                                 </div>
                             </th>
-                            <th colspan="2">Today-${fetchedCseData.Data[0].Date1}</th>
+                            <th colspan="2">As on - ${fetchedCseData.Data[0].Date1}</th>
                         </tr>
                         <tr> 
                             <td>
                                 <div class="dataBox">
-                                    <div id='td_cse_index1' class="data">${fetchedCseData.Data[0].Index1}</div>
-                                    <div class="data"><span id='td_cse_IndexChv1'>${fetchedCseData.Data[0].IndexChv1}</span> <br> <span>${fetchedCseData.Data[0].IndexChp1}</span></div>
+                                    <div id='td_cse_index1' class="data">${parseFloat(fetchedCseData.Data[0].Index1).toLocaleString("en-IN")}</div>
+                                    <div id='td_cse_IndexChv1'>${fetchedCseData.Data[0].IndexChv1}</div>
+                                    <div id='td_cse_IndexChp1'>${fetchedCseData.Data[0].IndexChp1}</div>
                                 </div>
+                                <div style="margin-top: 15px;">BDT ${fetchedCseData.Data[0].Value1}</div>
                             </td>
                         </tr>
+                        
                         <tr>
-                            <td colspan="2">BDT ${fetchedCseData.Data[0].Value1}</td>
-                        </tr>
-                        <tr>
-                            <th colspan="2">Yesterday-${fetchedCseData.Data[0].Date2}</th>
+                            <th colspan="2">As on - ${fetchedCseData.Data[0].Date2}</th>
                         </tr>
                         <tr>
                             <td>
                                 <div class="dataBox">
-                                    <div id='td_cse_index2' class="data">${fetchedCseData.Data[0].Index2}</div>
-                                    <div class="data"><span id='td_cse_IndexChv2'>${fetchedCseData.Data[0].IndexChv2}</span> <br> <span>${fetchedCseData.Data[0].IndexChp2}</span></div>
+                                    <div id='td_cse_index2' class="data">${parseFloat(fetchedCseData.Data[0].Index2).toLocaleString("en-IN")}</div>
+                                    <div id='td_cse_IndexChv2'>${fetchedCseData.Data[0].IndexChv2}</div>  <div id='td_cse_IndexChp2'>${fetchedCseData.Data[0].IndexChp2}</div>
                                 </div>
+                                <div style="margin-top: 15px;">BDT ${fetchedCseData.Data[0].Value2}</div>
                             </td>
                         </tr>
-                        <tr>
-                            <td colspan="2">BDT ${fetchedCseData.Data[0].Value2}</td>
-                        </tr>
+                        
                     </table>
                 </div>
             </div>
@@ -69,32 +67,29 @@ async function executeB_MarketStatus(){
                                     <img src="../images/dse_logo.jpg" alt="Chittagong Stock Exchange">
                                 </div>
                             </th>
-                            <th colspan="2">Today-${fetchedDseData.Data[0].Date1}</th>
+                            <th colspan="2">As on - ${fetchedDseData.Data[0].Date1}</th>
                         </tr>
                         <tr>
                             <td >
                                 <div class="dataBox">
-                                    <div id='td_dse_index1' class="data">${fetchedDseData.Data[0].Index1}</div>
-                                    <div class="data"> <span id='td_dse_IndexChv1'>${fetchedDseData.Data[0].IndexChv1}</span> <br> <span>${fetchedDseData.Data[0].IndexChp1}</span></div>
+                                    <div id='td_dse_index1' class="data">${parseFloat(fetchedDseData.Data[0].Index1).toLocaleString("en-IN")}</div>
+                                    <div id='td_dse_IndexChv1'>${fetchedDseData.Data[0].IndexChv1}</div>  <div id='td_dse_IndexChp1'>${fetchedDseData.Data[0].IndexChp1}</div>
                                 </div>
+                                <div style="margin-top: 15px;">BDT ${fetchedDseData.Data[0].Value1}</div>
                             </td>
                         </tr>
+                        
                         <tr>
-                            <td colspan="2">BDT ${fetchedDseData.Data[0].Value1}</td>
-                        </tr>
-                        <tr>
-                            <th colspan="2">Yesterday-${fetchedDseData.Data[0].Date2}</th>
+                            <th colspan="2">As on - ${fetchedDseData.Data[0].Date2}</th>
                         </tr>
                         <tr>
                             <td >
                                 <div class="dataBox">
-                                    <div id='td_dse_index2' class="data">${fetchedDseData.Data[0].Index2}</div>
-                                    <div class="data"><span id='td_dse_IndexChv2'>${fetchedDseData.Data[0].IndexChv2}</span> <br> <span>${fetchedDseData.Data[0].IndexChp2}</span></div>
+                                    <div id='td_dse_index2' class="data">${parseFloat(fetchedDseData.Data[0].Index2).toLocaleString("en-IN")}</div>
+                                    <div id='td_dse_IndexChv2'>${fetchedDseData.Data[0].IndexChv2}</div>  <div id='td_dse_IndexChp2'>${fetchedDseData.Data[0].IndexChp2}</div>
                                 </div>
+                                <div style="margin-top: 15px;">BDT ${fetchedDseData.Data[0].Value2}</div>
                             </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">BDT ${fetchedDseData.Data[0].Value2}</td>
                         </tr>
                     </table>
                 </div>
@@ -106,7 +101,7 @@ async function executeB_MarketStatus(){
                 <div class="buttonRow">
                     <div class="allButton">
                         <select id='MS_selectType' class=" allBtn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <option>Select type</option>
+                            <option>Select Type</option>
                         </select>
                         <select id='MS_selectSector'  class=" allBtn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <option>Select Sector</option>
@@ -144,35 +139,43 @@ async function executeB_MarketStatus(){
     if(fetchedCseData.Data[0].IndexChv1 < 0){ 
         document.getElementById('td_cse_index1').style.color = '#FE0000'
         document.getElementById('td_cse_IndexChv1').style.color = '#FE0000'
+        document.getElementById('td_cse_IndexChp1').style.color = '#FE0000'
     }
     if(fetchedCseData.Data[0].IndexChv1 > 0){
         document.getElementById('td_cse_index1').style.color = '#04A41E'
         document.getElementById('td_cse_IndexChv1').style.color = '#04A41E'
+        document.getElementById('td_cse_IndexChp1').style.color = '#04A41E'
     }
     if(fetchedCseData.Data[0].IndexChv2 < 0){ 
         document.getElementById('td_cse_index2').style.color = '#FE0000'
         document.getElementById('td_cse_IndexChv2').style.color = '#FE0000'
+        document.getElementById('td_cse_IndexChp2').style.color = '#FE0000'
     }
     if(fetchedCseData.Data[0].IndexChv2 > 0){
         document.getElementById('td_cse_index2').style.color = '#04A41E'
         document.getElementById('td_cse_IndexChv2').style.color = '#04A41E'
+        document.getElementById('td_cse_IndexChp2').style.color = '#04A41E'
     }
 
     if(fetchedDseData.Data[0].IndexChv1 < 0){ 
         document.getElementById('td_dse_index1').style.color = '#FE0000'
         document.getElementById('td_dse_IndexChv1').style.color = '#FE0000'
+        document.getElementById('td_dse_IndexChp1').style.color = '#FE0000'
     }
     if(fetchedDseData.Data[0].IndexChv1 > 0){
         document.getElementById('td_dse_index1').style.color = '#04A41E'
         document.getElementById('td_dse_IndexChv1').style.color = '#04A41E'
+        document.getElementById('td_dse_IndexChp1').style.color = '#04A41E'
     }
     if(fetchedDseData.Data[0].IndexChv2 < 0){ 
         document.getElementById('td_dse_index2').style.color = '#FE0000'
         document.getElementById('td_dse_IndexChv2').style.color = '#FE0000'
+        document.getElementById('td_dse_IndexChp2').style.color = '#FE0000'
     }
     if(fetchedDseData.Data[0].IndexChv2 > 0){
         document.getElementById('td_dse_index2').style.color = '#04A41E'
         document.getElementById('td_dse_IndexChv2').style.color = '#04A41E'
+        document.getElementById('td_dse_IndexChp2').style.color = '#04A41E'
     }
     }
 
@@ -213,22 +216,25 @@ async function executeB_MarketStatus(){
                     <th>+/-</th>
                 </tr>
             </table>
-            <br>
-            <br>
-            <br>
-            <br>
+            
         `;
         dataArray.forEach(data => {
             const newRow = document.createElement('tr');
             newRow.classList.add('MS_sharePrice')
             newRow.innerHTML = `
-                <td>${data.symbol}</td>
-                <td>${data.ltp}</td>
-                <td>${data.ycp}</td>
+                <td style='text-align: left;'>${data.symbol}</td>
+                <td>${parseFloat(data.ltp).toLocaleString("en-IN")}</td>
+                <td>${parseFloat(data.ycp).toLocaleString("en-IN")}</td>
                 <td>${data.change}</td>
             `;
         tableBody.querySelector('tbody').appendChild(newRow);
         newRow.style.backgroundColor =parseFloat(data.change) >= 0 ? (parseFloat(data.change) > 0 ? '#04A41E' : '#fff' ): '#FE0000'
+        if(parseFloat(data.change) !== 0){
+            const cells = newRow.getElementsByTagName("td");
+            for (let i = 0; i < cells.length; i++) {
+                cells[i].style.color = "#fff"; 
+            }
+        }
         newRow.addEventListener('click', handleClick(data.symbol))
     });
     }
@@ -244,13 +250,13 @@ async function executeB_MarketStatus(){
         let selectSort = document.getElementById('MS_selectSort').value
         let selectSector = document.getElementById('MS_selectSector').value
 
-        if(selectType !== 'Select type' || selectSort !== 'Select Sort' || selectSector !== 'Select Sector'){
+        if(selectType !== 'Select Type' || selectSort !== 'Select Sort' || selectSector !== 'Select Sector'){
             if(selectSort !== 'Select Sort'){
                 const sortedMS_tableData = await getSharePrice(selectSort)
                 MS_tableData = sortedMS_tableData.status === true ? sortedMS_tableData.CurrentSharePrice : []
                 
                 
-                if(selectType !== 'Select type' && selectSector !== 'Select Sector'){
+                if(selectType !== 'Select Type' && selectSector !== 'Select Sector'){
                     if(selectType === 'CSE Shariah Shares'){
                         MS_sortedTableData = MS_tableData.filter(function(item) {
                             return item.shariah === '1';
@@ -263,7 +269,7 @@ async function executeB_MarketStatus(){
                     });
                     
                 }
-                else if(selectType !== 'Select type'){
+                else if(selectType !== 'Select Type'){
                     if(selectType === 'CSE Shariah Shares'){
                         MS_sortedTableData = MS_tableData.filter(function(item) {
                             return item.shariah === '1';
@@ -279,7 +285,7 @@ async function executeB_MarketStatus(){
                 }
                 renderMS_table()
             }else{
-                if(selectType !== 'Select type' && selectSector !== 'Select Sector'){
+                if(selectType !== 'Select Type' && selectSector !== 'Select Sector'){
                     if(selectType === 'CSE Shariah Shares'){
                         MS_sortedTableData = MS_tableData.filter(function(item) {
                             return item.shariah === '1';
@@ -292,7 +298,7 @@ async function executeB_MarketStatus(){
                     });
                     
                 }
-                else if(selectType !== 'Select type'){
+                else if(selectType !== 'Select Type'){
                     if(selectType === 'CSE Shariah Shares'){
                         MS_sortedTableData = MS_tableData.filter(function(item) {
                             return item.shariah === '1';
@@ -327,9 +333,9 @@ async function executeB_MarketStatus(){
                 const newRow = document.createElement('tr');
                 newRow.classList.add('MS_sharePrice')
                 newRow.innerHTML = `
-                    <td>${data.symbol}</td>
-                    <td>${data.ltp}</td>
-                    <td>${data.ycp}</td>
+                    <td style='text-align: left;'>${data.symbol}</td>
+                    <td>${parseFloat(data.ltp).toLocaleString("en-IN")}</td>
+                    <td>${parseFloat(data.ycp).toLocaleString("en-IN")}</td>
                     <td>${data.change}</td>
                 `;
                 tableBody.querySelector('tbody').appendChild(newRow);
@@ -352,9 +358,9 @@ async function executeB_MarketStatus(){
             const newRow = document.createElement('tr');
             newRow.classList.add('MS_sharePrice')
             newRow.innerHTML = `
-                <td>${data.symbol}</td>
-                <td>${data.ltp}</td>
-                <td>${data.ycp}</td>
+                <td style='text-align: left;'>${data.symbol}</td>
+                <td>${parseFloat(data.ltp).toLocaleString("en-IN")}</td>
+                <td>${parseFloat(data.ycp).toLocaleString("en-IN")}</td>
                 <td>${data.change}</td>
             `;
             tableBody.querySelector('tbody').appendChild(newRow);

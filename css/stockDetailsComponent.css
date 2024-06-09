@@ -10,7 +10,7 @@
 }
 /* ========================Search box====================== */
 .searchContent{
-    padding: 10px 5px;
+    padding: 5px 5px;
     border: 1px solid #000;
     border-radius: 10px;
     background-color: #fff;
@@ -18,22 +18,25 @@
 .input-box{
     padding: 0px 5px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
+    flex-wrap: wrap;
 }
 .input-box > input{
-    padding: 10px;
+    padding: 10px 2px;
     background-color: #676a6666;
     border-radius: 10px;
-    height: 50px;
-    font-weight: 700;
+    font-weight: 500;
+    width: 105px;
+    text-align: center;
+    font-size: 14px;
 }
 .input-box > span{
-    font-weight: 800;
-    font-size: 20px;
+    font-weight: 500;
+    font-size: 14px;
 }
 .searchLedger{
-    margin-top: 20px;
+    margin-top: 5px;
     border-radius: 11px;
     text-align: center;
     padding: 10px 0px;
@@ -63,13 +66,16 @@
     text-align: right;
     width: 70%;
 }
-
+.item > .right > p,
+.item > .left > p{
+    font-size: 14px;
+}
 .ledgerTable > table{
     width: 100%;
     border-collapse: separate;
-    border-spacing: 0 10px;
+    border-spacing: 0 5px;
     background-color: #fff;
-    padding: 0px 10px;
+    padding: 0px 5px;
     border: 1px solid #000;
     border-radius: 10px;
 }
@@ -79,31 +85,28 @@
 }
 .ledgerTable > table > tbody > tr:first-child > th{
     color: #fff;
-    font-size: 20px;
-    padding: 5px 3px;
-}
-.ledgerTable > table > tbody > tr:first-child > th:first-child{
-    -webkit-padding-start: 10px;
-}
-.ledgerTable > table > tbody > tr:first-child > th:last-child{
-    -webkit-padding-end: 10px;
+    font-size: 14px;
+    padding: 5px 5px;
+    text-align: center;
 }
 
 
 .ledgerTable > table > tbody > tr > td{
-    font-weight: 600;
-    font-size: 15px;
-    padding: 5px 3px;
+    font-size: 13px;
+    padding: 5px 5px;
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
+    overflow-wrap: break-word;
+    text-align: right;
 }
 .ledgerTable > table > tbody > tr > td:first-child{
-    -webkit-padding-start: 10px;
+    padding-left: 10px;
+    text-align: left !important;
     border-left: 1px solid #000;
     border-radius: 15px 0px 0px 15px;
 }
 .ledgerTable > table > tbody > tr > td:last-child{
-    -webkit-padding-end: 10px;
+    padding-right: 10px;
     border-right: 1px solid #000;
     border-radius: 0px 15px 15px 0px;
 }

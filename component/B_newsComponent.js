@@ -30,51 +30,45 @@ async function executeB_News(){
     }
     
     function news(){
-        document.getElementById('page_heading').innerHTML=`News`
         document.getElementById('beforeMain').innerHTML = `
-            <div class="mainNewsSection" id="mainNewsSection">
-                <div class="N_button_search_section">
-                    <div class="container">
-                        <div class="N_searchRow">
-                            <div id='searchBox' style="width: 90%; height:auto" class="N_searchBox">
-                                <input id='searchCompanyForNews' type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="searchIcon">
-                                <img class="N_searchIcon" style="width: 20px; height:auto" src="../images//icons/magnifying-glass.png" alt="search icon">
-                            </div>
-                            <div id='reloadBox' class="reload">
-                                <img style="width: 30px; height:auto" src="../images/icons/reload.png" alt="Reload">
-                            </div>
+            <h3 id="page_heading">News</h3>
+            <div class="N_button_search_section">
+                <div class="container">
+                    <div class="N_searchRow">
+                        <div id='searchBox' style="width: 90%; height:auto" class="N_searchBox">
+                            <input id='searchCompanyForNews' type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="searchIcon">
+                            <img class="N_searchIcon" style="width: 20px; height:auto" src="../images//icons/magnifying-glass.png" alt="search icon">
                         </div>
-                        <div class= 'container'>
-                            <ul style='display: none' class='allCompanyList' id='allCompanyList'></ul>
+                        <div id='reloadBox' class="reload">
+                            <img style="width: 30px; height:auto" src="../images/icons/reload.png" alt="Reload">
                         </div>
                     </div>
-                </div>
-                
-                <div class="newsSection">
-                    <div class="container newsContainer">
-                        <div class="btnwrapper">
-                            <div class="newsBtnGroup">
-                                <button type="button" class="btn active" onclick="showNews('mediaNews')">
-                                    MEDIA NEWS
-                                </button>
-                                <button type="button" class="btn" onclick="showNews('exchangeNews')">
-                                    EXCHANGE NEWS
-                                </button>
-                                <button type="button" class="btn" onclick="showNews('miscNews')">
-                                    MISC NEWS
-                                </button>
-                            </div>
-    
-                            <div class="newsBody">
-                                <div class="mediaNews" id="mediaNews"></div>
-                                <div style='display: none;' id='showMediaNewsDetails'></div> 
-                                <div class="exchangeNews" id="exchangeNews"></div>
-                                <div class="miscNews" id="miscNews"></div>
-                            </div>
-                        </div>
+                    <div class= 'container'>
+                        <ul style='display: none' class='allCompanyList' id='allCompanyList'></ul>
                     </div>
                 </div>
             </div>
+            <div class="newsBtnGroup">
+                <div type="button" class="btn active" onclick="showNews('mediaNews')">
+                    MEDIA NEWS
+                </div>
+                <div type="button" class="btn" onclick="showNews('exchangeNews')">
+                    EXCHANGE NEWS
+                </div>
+                <div type="button" class="btn" onclick="showNews('miscNews')">
+                    MISC NEWS
+                </div>
+            </div>
+            
+            <div class='container' style="flex: 1 auto; height: 100%; overflow-y: auto;">
+                <div class="newsBody">
+                    <div class="mediaNews" id="mediaNews"></div>
+                    <div class="exchangeNews" id="exchangeNews"></div>
+                    <div class="miscNews" id="miscNews"></div>
+                    <div style='display: none;' id='showMediaNewsDetails'></div> 
+                </div>
+            </div>
+            
         `
     }
     
@@ -94,7 +88,8 @@ async function executeB_News(){
                     <h4>${newsItem.Head}</h4>
                 </div>
                 <div class="exchangeContent">
-                    <div class="exchangeContent"><p>${newsItem.News}</p></div>
+                    <div class="exchangeContent" style="
+                    word-wrap: break-word;"><p>${newsItem.News}</p></div>
                 </div>
             `;
     
@@ -129,7 +124,7 @@ async function executeB_News(){
     }
 
     function populatedMediaNews(companyName, storeAllMediaNews) {
-        if(storeAllMediaNews.length !== 0 && !companyName){
+        if(storeAllMediaNews.length !== 0 && companyName === undefined){
             allMediaNews = storeAllMediaNews
         }
         let meadiaNewsDiv = document.getElementById('mediaNews');
@@ -144,8 +139,8 @@ async function executeB_News(){
                 </div>
                 <div class="newsContent">
                     <div class="date-source">
-                        <div class="date">${newsItem.news_date}</div>
-                        <div class="source">${newsItem.news_source}</div>
+                        <div class="date">Date: ${customDateConverter(newsItem.news_date, 'defaultToCustom')}</div>
+                        <div class="source">Source: ${newsItem.news_source}</div>
                     </div>
                     <div class="headline"><h4>${newsItem.heading}</h4></div>
                     <button class="btn btn-primary btn-details">Details</button>
@@ -158,35 +153,45 @@ async function executeB_News(){
 
     function showNewsDetails(newsItem){
         return function(event){
+            document.getElementById('popupOverlay').style.display =  'block'
             document.getElementById('showMediaNewsDetails').style.display = 'block'
             document.getElementById('showMediaNewsDetails').innerHTML = `
-                <div class='close'>
-                    <div class='close_img_Box' onclick='closeNewsDetails()'>
-                        <img style='width:30px; height: auto' src='../images/icons/icons8-cross.gif'>
-                    </div>
-                    <p style='display: inline-block; font-weight: 900; font-size: 25px'>|</p>
-                </div>
                 <div class='selectedNewsBody'>
-                    <div class="heading">
-                        <h1>News Details</h1>
+                    <div class='newsDetailsHeading'>
+                        <h5>News Details</h5>
                     </div>
-                    <div class='container'>
+                    <div  style="flex: 1 auto; height: 100%; overflow-y: auto;" class='container'>
                         <div style="margin-top: 10px;" class='imgBox'>
                             <img style='width: 100%; height: auto;' src=${newsItem.ImgLink} alt='news details picture'>
                         </div>
                         <div class='newsSourceDate'>
-                            <p>Date: ${newsItem.news_date}</p>
+                            <p>Date: ${customDateConverter(newsItem.news_date, 'defaultToCustom')}</p>
                             <p>Source: ${newsItem.news_source}</p>
                         </div>
                         <div style="margin: 10px 0px;" class='selectedNewsHeading'>
-                            <h3 style="text-align: center; margin: 10px 0px; font-weight: 600;"> ${newsItem.heading} </h3>
+                            <h3 style="text-align: center; margin: 10px 0px; font-weight: 600; font-size: 18px;"> ${newsItem.heading} </h3>
                         </div>
                         <div class='selectedNewsBodyDetails'>
                             <p>${newsItem.news_body}</p>
                         </div>
                     </div>
+                    <div id='closeNewsDetails'>
+                        <p>CLOSE</p>
+                    </div>
                 </div>
             `
+            
+            document.getElementById('closeNewsDetails').addEventListener('click', ()=>{
+                document.getElementById('showMediaNewsDetails').style.display = 'none'
+                document.getElementById('popupOverlay').style.display =  'none'
+        
+            })
+            
+            document.getElementById('popupOverlay').addEventListener('click', ()=>{
+                document.getElementById('showMediaNewsDetails').style.display = 'none'
+                document.getElementById('popupOverlay').style.display =  'none'
+        
+            })
         }
     }
     function renderAllNews(){
@@ -202,6 +207,7 @@ async function executeB_News(){
     document.getElementById('exchangeNews').style.display = 'none';
     document.getElementById('miscNews').style.display = 'none';
 
+    
     document.getElementById('searchCompanyForNews').addEventListener('input', async () => {
         const existList = document.querySelectorAll('.allCompanyListItem');
         if(existList){
@@ -228,6 +234,7 @@ async function executeB_News(){
     });
 
     document.getElementById('reloadBox').addEventListener('click', ()=>{
+        document.getElementById('searchCompanyForNews').value = ''
         companyName = undefined
         populatedMediaNews(companyName, storeAllMediaNews)
     })
@@ -251,7 +258,4 @@ function updateBtnState(activeButton) {
     if (activeButtonElement) {
         activeButtonElement.classList.add('active');
     }
-}
-function closeNewsDetails(){
-    document.getElementById('showMediaNewsDetails').style.display = 'none'
 }

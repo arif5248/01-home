@@ -5,9 +5,9 @@ async function executeB_Why01(){
         contents =  fetchedData.Why
     }
     function B_Why01(){
-        document.getElementById('page_heading').innerHTML=`Why 01`
         document.getElementById('beforeMain').innerHTML = `
-        <div class="why-01-section" id="why-01-section">
+        <h3 id="page_heading">Why 01</h3>
+        <div class="why-01-section" id="why-01-section" style="flex: 1 auto;height: 100%;overflow-y: auto;">
             <div class="container">
                 <div class="why-01-content" id="why-01-content"></div>
             </div>
@@ -18,7 +18,6 @@ async function executeB_Why01(){
         const why01Div = document.getElementById('why-01-content');
     
         contents.forEach(content=> {
-            console.log(content)
             const newContent = document.createElement('div');
             newContent.classList.add('why01_item');
     

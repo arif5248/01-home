@@ -7,7 +7,7 @@ async function executeBrokeragePlan(){
         return function(event) {
             document.getElementById(`${planId}${package.pack_id}`).checked = true
             document.getElementById('selectedPackageName').innerHTML = package.pack_title
-            document.getElementById('selectedPackageBill').innerHTML = package.pack_amount
+            document.getElementById('selectedPackageBill').innerHTML =parseFloat(package.pack_amount).toLocaleString("en-IN")
             document.getElementById('selectedPackageReward').innerHTML = package.pack_reward ? package.pack_reward : 0 
             document.getElementById('selectedPackageValidity').innerHTML = package.pack_expire_date
 
@@ -27,13 +27,53 @@ async function executeBrokeragePlan(){
     function selectAccount(event){
         if(event.target.value === 'Account'){
             document.getElementById('selectedAccount').innerHTML = ``
-            document.getElementById('selectedAccount').innerHTML = fetcheAllBrokeragePlandData.status === true ? fetcheAllBrokeragePlandData.MainBalance : ''
+            document.getElementById('selectedAccount').innerHTML = fetcheAllBrokeragePlandData.status === true ? parseFloat(fetcheAllBrokeragePlandData.MainBalance).toLocaleString("en-IN") : ''
             availableBalance = document.getElementById('selectedAccount').innerHTML
         }else{
             document.getElementById('selectedAccount').innerHTML = ``
-            document.getElementById('selectedAccount').innerHTML = fetcheAllBrokeragePlandData.status === true ? fetcheAllBrokeragePlandData.RewardPointBalance : ''
+            document.getElementById('selectedAccount').innerHTML = fetcheAllBrokeragePlandData.status === true ? parseFloat(fetcheAllBrokeragePlandData.RewardPointBalance).toLocaleString("en-IN") : ''
             availableBalance = document.getElementById('selectedAccount').innerHTML
         }
+    }
+    async function confirmationPopUp(){
+        document.getElementById('overlay').style.display = 'block'
+            document.getElementById('confirmationPopUpDiv').style.display = 'block'
+            document.getElementById('confirmationPopUpDiv').innerHTML = `
+                <div class='popUpHeader'>
+                    <h5>Confirmation</h5>
+                </div>
+                <div class='popUpBody'>
+                    <p>Are you sure to Pay & Save this plan?</p>
+                </div>
+                <div class='popUpFooter'>
+                    <p class='btn btn-danger' id='cancelPopUp'>Cancel</p>
+                    <p class='btn btn-success' id='submitPopUp'>Ok</p>
+                </div>
+            `
+            document.getElementById('submitPopUp').addEventListener('click', async ()=>{
+                document.getElementById('overlay').style.display = 'none'
+                document.getElementById('confirmationPopUpDiv').style.display = 'none'
+                const params = {
+                    inv_id: user.LoggedInInvestorId,
+                    mobile: user.phone,
+                    country: user.country,
+                    plan_id: selectedPlanId,
+                    package_name: selectedPackName,
+                    auto_renew: autoRenew,
+                    amount: selectedPackAmount,
+                    inv_name: user.LoggedInInvestorName,
+                    ip_addr: userIp.ip
+                }
+                const result = await postPayAndSavePlan(params)
+            })
+            document.getElementById('cancelPopUp').addEventListener('click', ()=>{
+                document.getElementById('overlay').style.display = 'none'
+                document.getElementById('confirmationPopUpDiv').style.display = 'none'
+            })
+            document.getElementById('overlay').addEventListener('click', ()=>{
+                document.getElementById('overlay').style.display = 'none'
+                document.getElementById('confirmationPopUpDiv').style.display = 'none'
+            })
     }
    async function payAndSavePlan(){
         if (document.getElementById('autoRenew').checked === true){
@@ -60,25 +100,13 @@ async function executeBrokeragePlan(){
                     document.getElementById('errorMessageForPackage').innerHTML=``
                 }, 3000);
             }else{
-                const params = {
-                    inv_id: user.LoggedInInvestorId,
-                    mobile: user.phone,
-                    country: user.country,
-                    plan_id: selectedPlanId,
-                    package_name: selectedPackName,
-                    auto_renew: autoRenew,
-                    amount: selectedPackAmount,
-                    inv_name: user.LoggedInInvestorName,
-                    ip_addr: userIp.ip
-                }
-                const result = await postPayAndSavePlan(params)
-                console.log(result)
+                await confirmationPopUp()
             }
             
         }else{
             document.getElementById('errorMessageForPackage').innerHTML=``
             document.getElementById('errorMessageForPackage').innerHTML=`
-                Please select a package and  your account
+                Please select a package and method, would you like to pay.
             `
             setTimeout(() => {
                 document.getElementById('errorMessageForPackage').innerHTML=``
@@ -94,7 +122,7 @@ async function executeBrokeragePlan(){
                 <h1>Brokerage Plan</h1>
             </div>
         </div>
-        <div class="activePlanSection">
+        <div id='activePlanSection' class="activePlanSection" style='display: none;'>
             <div class="container">
                 <div class='activePlan' id='activePlan'></div>
             </div>
@@ -114,10 +142,8 @@ async function executeBrokeragePlan(){
                 <div class='termsCondition' id='termsCondition'></div>
             </div>
         </div>
-        <br>
-        <br>
-        <br>
-        <br>
+        <div style='display: none;' id='confirmationPopUpDiv'></div>
+       
         `
     }
 
@@ -146,7 +172,9 @@ async function executeBrokeragePlan(){
                 </div>
                 <div class='planPackagesBody' id='planPackage${index}'></div>
                `
+               
                allPlanBody.appendChild(newDiv)
+               document.getElementById(`planPackage${index}`).addEventListener('scroll', resetLogoutTimer);
                const planpackageBody = document.getElementById(`planPackage${index}`)
                data.Packages.forEach(package =>{
                     const planPackageDiv = document.createElement('div')
@@ -209,10 +237,10 @@ async function executeBrokeragePlan(){
                 <input type="checkbox" id="autoRenew" name="autoRenew" >
                 <label for="autoRenew">Auto Renew</label>
             </div>
-            <p id='selectedPackageValidity' class='validity' style='font-weight: bold;'></p>
+            <p id='selectedPackageValidity' class='validity' style='font-weight: bold; font-size: 14px;'></p>
             <div class='terms_conditions'>
                 <input type="checkbox" id="terms_conditions" name="terms_conditions" value=true>
-                <label id='showTermsCondition' style='color:#0d6efd;'>I Agree to Terms & Conditions</label>
+                <label id='showTermsCondition' style='color:#0d6efd;margin-bottom: 10px;border-bottom: 1px solid #0d6efd;'>I Agree to Terms & Conditions</label>
             </div>
             <div id='errorMessageForTC'></div>
             <div id='submitForPlan' class='submit_plan'>PAY & SAVE MY PLAN</div>
@@ -220,6 +248,10 @@ async function executeBrokeragePlan(){
         document.getElementById('fromRewardClicked').addEventListener('click', selectAccount)
         document.getElementById('fromAccClicked').addEventListener('click', selectAccount)
         document.getElementById('showTermsCondition').addEventListener('click', renderTermsAndCondition)
+        document.getElementById('submitForPlan').addEventListener('click', ()=>{
+            payAndSavePlan()
+
+        })
         
     }
     function renderTermsAndCondition(){
@@ -240,12 +272,10 @@ async function executeBrokeragePlan(){
     brokeragePlan()
     if(existPlan.status === true){
         renderActivePlan(existPlan.Data)
+        document.getElementById('activePlanSection').style.display='block'
     }
     renderAllPlan()
     renderPaymentOption()
     document.getElementById('termsCondition').style.display = 'none'
-    document.getElementById('overlay').addEventListener('click', closeTermsConditions)
-    document.getElementById('submitForPlan').addEventListener('click', payAndSavePlan)
-    
-    
+    document.getElementById('overlay').addEventListener('click', closeTermsConditions)  
 }

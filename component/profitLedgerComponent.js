@@ -8,9 +8,13 @@ async function executeProfitLedger(){
         closing_Balance: 0,               
     }
     const today = new Date().toISOString().split('T')[0];
+    let oneMonthAgo = new Date();
+    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+    oneMonthAgo = oneMonthAgo.toISOString().split('T')[0]
+
     let ledgerData = []
 
-    const fetchedData =await getProfitLedger(user.LoggedInInvestorId, today, today)  
+    const fetchedData = await getProfitLedger(user.LoggedInInvestorId, oneMonthAgo, today)  
     if(fetchedData.status === true){
         ledgerData = fetchedData.FinancialStatement
         openingBalance = Math.round(Number(fetchedData.OpeningBalance.replace(/,/g, '')))
@@ -29,9 +33,9 @@ async function executeProfitLedger(){
             <div style='margin-top: 5px' class="container">
                 <div class="searchContent">
                     <div class="input-box">
-                        <input type="date" id="PL_date-from" >
+                        <input type="text" id="PL_date-from" readonly>
                         <span>To</span>
-                        <input type="date" id="PL_date-to">
+                        <input type="text" id="PL_date-to" readonly>
                     </div>
                     <div class="PL_searchLedger">
                         <h5>SEARCH</h5>
@@ -43,10 +47,21 @@ async function executeProfitLedger(){
                 <div class="ledgerSummury" id="PL_ledgerSummury"></div>
             </div>
 
-            <div class="container" style="flex: 1 auto;overflow-y: auto;">
+            <div onscroll="resetLogoutTimer()" class="container" style="flex: 1 auto;overflow-y: auto;min-height: 300px;">
                 <div class="ledgerTable" id="PL_ledgerTable"></div>
             </div>
         `
+        $("#PL_date-from").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: "dd/M/yy"
+        });
+    
+        $("#PL_date-to").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: "dd/M/yy"
+        });
     }
 
     function renderLedgerSummury(){
@@ -58,7 +73,7 @@ async function executeProfitLedger(){
                     <p>:</p>
                 </div>
                 <div class="right">
-                    <p>${ledgerSummuryData.opening_Balance}</p>
+                    <p>${parseInt(ledgerSummuryData.opening_Balance).toLocaleString("en-IN")}</p>
                 </div>     
             </div>
             <div class= "item">
@@ -110,12 +125,11 @@ async function executeProfitLedger(){
             const newRow = document.createElement('tr');
             const newP = document.createElement('tr')
             newP.classList.add('balanceRow')
-
             newRow.innerHTML = `
                 <td>${data.date}</td>
                 <td>${data.note}</td>
-                <td>${data.debit}</td>
-                <td>${data.credit}</td>
+                <td style='text-align: right;'>${Math.floor(Number(data.debit.replace(/,/g, ''))).toLocaleString("en-IN")}</td>
+                <td style='text-align: right;'>${Math.floor(Number(data.credit.replace(/,/g, ''))).toLocaleString("en-IN")}</td>
             `;
             closingBalance = openingBalance + Math.round(Number(data.credit.replace(/,/g, '')))
             closingBalance = closingBalance - Math.round(Number(data.debit.replace(/,/g, '')))
@@ -138,8 +152,8 @@ async function executeProfitLedger(){
 
     
     financialLedger()
-    document.getElementById('PL_date-from').value = today;
-    document.getElementById('PL_date-to').value = today;
+    document.getElementById('PL_date-from').value = customDateConverter(oneMonthAgo, 'defaultToCustom');
+    document.getElementById('PL_date-to').value = customDateConverter(today, 'defaultToCustom');
     renderLedgerSummury()
     renderLedgerTable()
 

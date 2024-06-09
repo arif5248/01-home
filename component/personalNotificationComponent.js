@@ -8,15 +8,11 @@ function executePersonalNotification(){
             </div>
         </div>
 
-        <div class='noticeBodySection'>
+        <div style="flex: 1 auto;height: 100%;overflow-y: auto;" class='noticeBodySection'>
             <div class="container">
                 <div class='noticeBody' id='noticeBody'></div>
             </div>
         </div>
-        <br>
-        <br>
-        <br>
-        <br>
         `
     }
     async function renderNotifications(){
@@ -32,8 +28,7 @@ function executePersonalNotification(){
                         <p>${notification.status}</p>
                     </div>
                     <div class='title_row'>
-                        <h4>Title</h4>
-                        <p>${notification.title}</P>
+                        <h4>${notification.title}</h4>
                     </div>
                     <hr>
                     <div class='details_row'>
@@ -41,7 +36,7 @@ function executePersonalNotification(){
                         <p>${notification.body}</P>
                     </div>
                     <div class='readBtnRow' id=${notification.id}>
-                        <div onclick='executeNotificationStatus(${user.LoggedInInvestorId},${notification.id}, ${allPersonalNotification.unread})' class='readBtn'>Mark as Read</div>
+                        <div onclick='executeNotificationStatus(${user.LoggedInInvestorId},${notification.id}, ${allPersonalNotification.unread})' class='btn btn-primary readBtn'>Mark as Read</div>
                     </div>
                     
                 `

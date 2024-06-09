@@ -1,18 +1,17 @@
 async function executeRefer01(){
     let referListData = []
     let referDetailsInfo={}
-    const currentDate = new Date();
-    const oneYearAgo = new Date();
-    oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
 
-    const formattedCurrentDate = currentDate.toISOString().split('T')[0];
-    const formattedOneYearAgo = oneYearAgo.toISOString().split('T')[0];
+    const today = new Date().toISOString().split('T')[0];
+    let oneMonthAgo = new Date();
+    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+    oneMonthAgo = oneMonthAgo.toISOString().split('T')[0]
 
     const fetchedRefer01Data = await getRefer01Data(user.LoggedInInvestorId)
-    const fetchedRefer01Details = await getRefer01Details(user.LoggedInInvestorId, formattedOneYearAgo, formattedCurrentDate )
-    if(fetchedRefer01Data.status === true){
-        referDetailsInfo = fetchedRefer01Data.RewardData[0]
-    }
+    const fetchedRefer01Details = await getRefer01Details(user.LoggedInInvestorId, oneMonthAgo, today )
+  
+    referDetailsInfo = fetchedRefer01Data.RewardData[0]
+   
     if(fetchedRefer01Details.status === true){
         referListData = fetchedRefer01Details.ReferDetails
     }
@@ -35,11 +34,7 @@ async function executeRefer01(){
             </div>
             <div class="referredList" id="referredList"></div>
         </div>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
+        
         `
     }
 
@@ -61,22 +56,39 @@ async function executeRefer01(){
                 </div>
                 <div class="link-box">
                     <p>Please Share Your Referral Link with Your Friends & Family Member</p>
-                    <p>${referDetailsInfo.ReferLink}</p>
+                    <p id='copied' style='display: none;'>Copied</p>
+                    <p id='referLink'>${referDetailsInfo.ReferLink}</p>
                 </div>
             </div>
         `
+        document.getElementById('referLink').addEventListener('click',()=>{
+            const tempTextarea = document.createElement('textarea');
+            tempTextarea.value = referLink.textContent.trim();
+            document.body.appendChild(tempTextarea);
+
+            tempTextarea.select();
+            document.execCommand('copy');
+
+            document.body.removeChild(tempTextarea);
+            document.getElementById('copied').style.display ='block'
+            setTimeout(() => {
+                document.getElementById('copied').style.display ='none'
+            }, 3000);
+            
+            
+        })
     }
     function renderReferredList(){
         const body = document.getElementById('referredList')
         body.innerHTML = ''
         document.getElementById('referredList').innerHTML = `
-            <div class="box">
-                <div class="btnRow">
+            <div style="display: flex; flex-direction: column;" class="box">
+                <div style="flex: 0 auto;" class="btnRow">
                     <div class="searchContent">
                         <div class="input-box">
-                            <input type="date" id="date-from">
+                            <input type="text" id="date-from" readonly>
                             <span>To</span>
-                            <input type="date" id="date-to">
+                            <input type="text" id="date-to" readonly>
                             <div id='searchReferList' class="searchImg">
                                 <img style="width: 20px;" src="../images/icons/magnifying-glass.png" alt="search">
                             </div>
@@ -89,7 +101,7 @@ async function executeRefer01(){
                             <tr>
                                 <th>Sl</th>
                                 <th>Name</th>
-                                <th>01 Id</th>
+                                <th>01 ID</th>
                                 <th>Trade Amount</th>
                                 <th>Last Trade</th>
                             </tr>
@@ -102,33 +114,42 @@ async function executeRefer01(){
             </div>
             
         `
-
+        $("#date-from").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: "dd/M/yy"
+        });
+    
+        $("#date-to").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: "dd/M/yy"
+        });
+        let totalValue = 0
         referListData.forEach((data) => {
             const newRow = document.createElement('tr');
-    
             newRow.innerHTML = `
                 <td>${data.SlNo}</td>
-                <td>${data.Name}</td>
+                <td style='text-align: left;'>${data.Name}</td>
                 <td>${data['01ID']}</td>
                 <td>${data.TradeAmount}</td>
-                <td>${data.LastTradeDate}</td>
+                <td style='text-align: left;'>${data.LastTradeDate}</td>
             `;
             body.querySelector('tbody').appendChild(newRow);
+            totalValue = totalValue + Number(data.TradeAmount.replace(/,/g, ''))
         });
         const tableFooter = document.getElementById('referredListFooter');
-        const totalValue = referListData.reduce((total, data) => total + data.trade_amount, 0);
-    
         tableFooter.innerHTML = `
             <p>Total Value:</p>
-            <p>${totalValue}</p>
+            <p>${totalValue.toLocaleString("en-IN")}</p>
         `;
     }
 
     refer01()
     renderReferDetails()
     renderReferredList()
-    document.getElementById('date-from').value = formattedOneYearAgo
-    document.getElementById('date-to').value = formattedCurrentDate
+    document.getElementById('date-from').value = customDateConverter(oneMonthAgo, 'defaultToCustom');
+    document.getElementById('date-to').value = customDateConverter(today, 'defaultToCustom');
 
     document.getElementById('searchReferList').addEventListener('click', async (event)=>{
         const dateFrom = document.getElementById('date-from').value
@@ -136,7 +157,6 @@ async function executeRefer01(){
         const fetchedRefer01Details = await getRefer01Details(user.LoggedInInvestorId, dateFrom, dateTo)
         if(fetchedRefer01Details.status === true){
             referListData = fetchedRefer01Details.ReferDetails
-            console.log(referListData)
             renderReferredList()
             document.getElementById('date-from').value = dateFrom
             document.getElementById('date-to').value = dateTo

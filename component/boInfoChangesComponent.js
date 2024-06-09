@@ -25,10 +25,6 @@ async function executeBoInfoChanges(){
             </div>
         </div>
         <div id='errorDiv'></div>
-        <br>
-        <br>
-        <br>
-        <br>
         `
     }
 
@@ -45,7 +41,7 @@ async function executeBoInfoChanges(){
                     <div class="box-data">
                         <label for="changeType">Change Type</label>
                         <select id="changeType" name="changeType" required>
-                            <option>--Select a  Option--</option>.
+                            <option>--Select Change Type--</option>.
                         </select>
                     </div>
                     <div class="box-data">
@@ -65,7 +61,7 @@ async function executeBoInfoChanges(){
                             <label for="file-input" id="file-label">Browse</label>
                             <input type="file" id="file-input">
                         </div>
-                        <h5>Attach your Deposit Proof here</h5>
+                        <h5>Attach your Document here</h5>
                         <div id="preview-container" style="display: none;">
                             <iframe id="preview-iframe" style="width:50%; height:auto; border:none;"></iframe>
                             <img id="preview-image" alt="File Preview" style="max-width:100%; max-height:auto; display: none;">
@@ -76,7 +72,7 @@ async function executeBoInfoChanges(){
 
                     </div>
                     <div class='submitButton'>
-                        <input id='boChangeSubmit' type='submit' value='Submit'>
+                        <input class='btn btn-primary' id='boChangeSubmit' type='submit' value='Submit'>
                     </div>
                 </div>
             </form>
@@ -95,7 +91,12 @@ async function executeBoInfoChanges(){
                     if(item.title === document.getElementById('changeType').value){
                         document.getElementById('existingInfo').value = item.value
                         document.getElementById('newInfo').value = ''
-                        document.getElementById('newInfo').setAttribute('placeholder', `Enter New ${item.title}`);
+                        
+                        if(item.title === 'Close BO ID'){
+                            document.getElementById('newInfo').setAttribute('placeholder', `Enter BO Closing Cause`);
+                        }else{
+                            document.getElementById('newInfo').setAttribute('placeholder', `Enter New ${item.title}`);
+                        }
                     }
                 })
             })
@@ -116,6 +117,10 @@ async function executeBoInfoChanges(){
                 const newTable = document.createElement('table')
                 newTable.innerHTML = `
                             <tr>
+                                <td>ID</td>
+                                <td>${data.InvestorID}</td>
+                            </tr>
+                            <tr>
                                 <td>Req Date</td>
                                 <td>${data.ReqDate}</td>
                             </tr>
@@ -124,8 +129,8 @@ async function executeBoInfoChanges(){
                                 <td>${data.ReqType}</td>
                             </tr>
                             <tr>
-                                <td>ID</td>
-                                <td>${data.InvestorID}</td>
+                                <td>New Info</td>
+                                <td>${data.NewInfo}</td>
                             </tr>
                             <tr>
                                 <td>Remarks</td>
@@ -192,7 +197,7 @@ async function executeBoInfoChanges(){
     document.getElementById('boChangeRequestForm').addEventListener('submit', async (event) => {
         event.preventDefault()
 
-        if( document.getElementById('newInfo').value && document.getElementById('changeType').value  !== '--Select a Option--'){
+        if( document.getElementById('newInfo').value && document.getElementById('changeType').value  !== '--Select Change Type--'){
             const service_type = document.getElementById('changeType').value;
             const old_data = document.getElementById('existingInfo').value;
             const new_data = document.getElementById('newInfo').value;
@@ -210,24 +215,35 @@ async function executeBoInfoChanges(){
             if(file){
                 formData.append('file', file);
             }
-            if(service_type === 'Bank Info' && service_type === 'Student ID Card' && service_type === 'Tin'){
-                const result = await postBoInfoChangeRequest(formData)
-                console.log(result)
+            console.log(service_type)
+            if(service_type === 'Bank Info' || service_type === 'Student ID Card' || service_type === 'TIN'){
+                if(file){
+                    // console.log('action')
+                    const result = await postBoInfoChangeRequest(formData)
+                }else{
+                    const displayBox = document.getElementById('errorDiv')
+                    document.getElementById('overlay').style.display = 'block' 
+                    displayBox.style.display = 'block'
+                    displayBox.innerHTML = ''
+                    displayBox.innerHTML = `
+                        <p style='font-weight: 700; padding-bottom: 10px; background-color: #000; color: #fff;border-radius: 10px 10px 0px 0px;'>Error</p>
+                        <p style='color: red;padding: 10px 0px;font-size: 14px;'>Please upload the necessary documents</p>
+                        <hr style='opacity:1;'>
+                        <div id='closePopUp'>OK</div>
+                    `
+                    document.getElementById('closePopUp').addEventListener('click', ()=>{
+                        document.getElementById('overlay').style.display = 'none' 
+                        document.getElementById('errorDiv').style.display = 'none' 
+                    })
+                    document.getElementById('overlay').addEventListener('click', ()=>{
+                        document.getElementById('overlay').style.display = 'none' 
+                        document.getElementById('errorDiv').style.display = 'none'
+                    })
+                }
+                
             }else{
-                const displayBox = document.getElementById('errorDiv')
-                document.getElementById('overlay').style.display = 'block' 
-                displayBox.style.display = 'block'
-                displayBox.innerHTML = ''
-                displayBox.innerHTML = `
-                    <p style='font-weight: 700; padding-bottom: 10px;'>Error:</p>
-                    <p style='color: red; font-weight: 600; padding-bottom: 10px;'>Please upload the necessary documents</p>
-                    <hr style='opacity:1;'>
-                    <div id='closePopUp'>OK</div>
-                `
-                document.getElementById('closePopUp').addEventListener('click', ()=>{
-                    document.getElementById('overlay').style.display = 'none' 
-                    route('../component/boInfoChangesComponent.js', '../css/boInfoChangesComponent.css', 'boInfoChanges')
-                })
+                // console.log('action')
+                const result = await postBoInfoChangeRequest(formData)
             }
             
         }else{
@@ -236,14 +252,18 @@ async function executeBoInfoChanges(){
             displayBox.style.display = 'block'
             displayBox.innerHTML = ''
             displayBox.innerHTML = `
-                <p style='font-weight: 700; padding-bottom: 10px;'>Error:</p>
+                <p style='font-weight: 700; padding-bottom: 10px;background-color: #000; color: #fff;'>Error:</p>
                 <p style='color: red; font-weight: 600; padding-bottom: 10px;'>Please Choose a Change Type</p>
                 <hr style='opacity:1;'>
                 <div id='closePopUp'>OK</div>
             `
             document.getElementById('closePopUp').addEventListener('click', ()=>{
                 document.getElementById('overlay').style.display = 'none' 
-                route('../component/boInfoChangesComponent.js', '../css/boInfoChangesComponent.css', 'boInfoChanges')
+                document.getElementById('errorDiv').style.display = 'none' 
+            })
+            document.getElementById('overlay').addEventListener('click', ()=>{
+                document.getElementById('overlay').style.display = 'none' 
+                document.getElementById('errorDiv').style.display = 'none'
             })
         }
     })

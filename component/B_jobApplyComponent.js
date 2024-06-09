@@ -2,8 +2,8 @@ async function executeB_jobApply(data){
     const today = new Date().toISOString().split('T')[0];
     const obj = data.split('_')
     function B_jobApply(){
-        document.getElementById('page_heading').innerHTML=`Job Apply`
         document.getElementById('beforeMain').innerHTML = `
+            <h3 id="page_heading">Job Apply</h3>
             <div class='heading'>
                 <h5 style='font-size: 15px; margin: 0;'>${obj[1]}</h5>
             </div>

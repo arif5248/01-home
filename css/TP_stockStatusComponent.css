@@ -6,7 +6,8 @@
 /*==============table==============*/
 .tp_stock_status{
     background-color: #fff;
-    padding: 0px 10px;
+    padding: 10px 10px;
+    
 }
 .tp_stock_status > table{
     width: 100%;
@@ -23,10 +24,10 @@
 }
 .tp_stock_status > table > tbody > tr:first-child > th{
     color: #fff;
-    font-size: 20px;
-    padding: 5px 1px;
+    font-size: 13px;
+    padding: 5px 10px;
     text-align: center;
-    
+    overflow-wrap: anywhere;
 }
 .tp_stock_status > table > tbody > tr:first-child > th:first-child{
     -webkit-padding-start: 10px;
@@ -36,13 +37,14 @@
 }
 
 .tp_stock_status > table > tbody > tr > td{
-    font-weight: 700;
-    font-size: 15px;
-    padding: 10px 0px;
+   
+    font-size: 13px;
+    padding: 10px 10px;
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
     color: #000 !important;
     text-align: center;
+    overflow-wrap: anywhere;
 }
 .tp_stock_status > table > tbody > tr > td:first-child{
     -webkit-padding-start: 10px;

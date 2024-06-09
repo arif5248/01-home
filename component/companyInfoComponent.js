@@ -1,4 +1,4 @@
-async function executeCompanyInfo(){
+async function executeCompanyInfo(data){
     const fetchedData = await getCompanyList()
     let companyList =[]
     
@@ -14,7 +14,13 @@ async function executeCompanyInfo(){
     let tempDayData = []
 
     async function handleListItemClick(event) {
-        const companyName = event.target.textContent;
+        let companyName
+        if(event){
+            companyName = event.target.textContent ;
+        }
+        if(companyName === undefined && data){
+            companyName = data
+        }
         
         const allCompanyList = document.getElementById('allCompanyList');
         allCompanyList.innerHTML = '';
@@ -40,6 +46,10 @@ async function executeCompanyInfo(){
             if(closingPrice && priceData && basicInfoData){
                 renderClosingPrice(companyName)
             }
+            document.getElementById('basic-more').style.display = 'block'
+            document.getElementById('basic-up').style.display = 'block'
+            document.getElementById('basic-down').style.display = 'none'
+
         }
         const fetched365ClosingPriceData = await getGraphdata(companyName, 365)
         if(fetched365ClosingPriceData.status === true){
@@ -53,8 +63,7 @@ async function executeCompanyInfo(){
                 
                 tempDayData.push(obj)
             })
-            console.log(tempDayData)
-            renderPriceGraph(tempDayData)
+           // renderPriceGraph(tempDayData)
         }
         
     }
@@ -63,30 +72,31 @@ async function executeCompanyInfo(){
         document.getElementById('mainContentSection').innerHTML =`
             <div class="pageHeading" id="financial-Heading">
                 <div class="heading">
-                    <h1>Company Info</h1>
+                    <h1>Listed Company Info</h1>
                 </div>
             </div>
 
-            <div class= 'container'>
+            <div class= 'container' style="position: relative;">
                 <div class="search-reload" id="search-reload">
-                    <input id='searchCompany' type="text" class="form-control" placeholder="Select Script" aria-label="Search" aria-describedby="searchIcon">                
+                    <input id='searchCompany' type="text" class="form-control" placeholder="Select Company" aria-label="Search" aria-describedby="searchIcon">                
                     <div class="reload" onclick="removeFooterBtnState(); route('../component/companyInfoComponent.js','../css/companyInfoComponent.css', 'companyInfo')">
-                        <img src="../images/icons/reload.png" alt="Reload">
+                        <img style='width:35px' src="../images/icons/reload.png" alt="Reload">
                     </div>
                 </div>
+                <div class= 'container' style="position: absolute;z-index: 1;padding-left:0px;">
+                    <ul style='display: none' class='allCompanyList' id='allCompanyList'></ul>
+                </div>
             </div>
 
-            <div class= 'container'>
-                <ul style='display: none' class='allCompanyList' id='allCompanyList'></ul>
-            </div>
+            
 
             <div class="container">
                 <div class='box basic_info' id='basic_info'>
                     <div class="heading_box">
                         <h5>Basic Information</h5>
                         <div class="drop-box">
-                            <img onclick="show_details('basic-more','basic-up','basic-down')" id="basic-down" src="../images/icons/down-arrow.png" alt="Down Arrow">
-                            <img onclick="hide_details('basic-up','basic-down')" id="basic-up" src="../images/icons/down-arrow.png" alt="Down UP">
+                            <img style='width:25px' onclick="show_details('basic-more','basic-up','basic-down')" id="basic-down" src="../images/icons/down-arrow.png" alt="Down Arrow">
+                            <img style='width:25px' onclick="hide_details('basic-up','basic-down')" id="basic-up" src="../images/icons/down-arrow.png" alt="Down UP">
                         </div>
                     </div>
                     <div class="box-more" id="basic-more"></div>
@@ -98,11 +108,11 @@ async function executeCompanyInfo(){
                     <div class="heading_box">
                         <h5>Financial Pereformance</h5>
                         <div class="drop-box">
-                            <img onclick="show_details('finance-more','finance-up','finance-down')" id="finance-down" src="../images/icons/down-arrow.png" alt="Down Arrow">
-                            <img onclick="hide_details('finance-up','finance-down')" id="finance-up" src="../images/icons/down-arrow.png" alt="Down UP">
+                            <img style='width:25px' onclick="show_details('finance-more','finance-up','finance-down')" id="finance-down" src="../images/icons/down-arrow.png" alt="Down Arrow">
+                            <img style='width:25px' onclick="hide_details('finance-up','finance-down')" id="finance-up" src="../images/icons/down-arrow.png" alt="Down UP">
                         </div>
                     </div>
-                    <div class="box-more" id="finance-more"></div>
+                    <div onscroll="resetLogoutTimer()" class="box-more" id="finance-more"></div>
                 </div>
             </div>
 
@@ -111,11 +121,11 @@ async function executeCompanyInfo(){
                     <div class="heading_box">
                         <h5>Dividend Record Date & AGM</h5>
                         <div class="drop-box">
-                            <img onclick="show_details('dividend-more','dividend-up','dividend-down')" id="dividend-down" src="../images/icons/down-arrow.png" alt="Down Arrow">
-                            <img onclick="hide_details('dividend-up','dividend-down')" id="dividend-up" src="../images/icons/down-arrow.png" alt="Down UP">
+                            <img style='width:25px' onclick="show_details('dividend-more','dividend-up','dividend-down')" id="dividend-down" src="../images/icons/down-arrow.png" alt="Down Arrow">
+                            <img style='width:25px' onclick="hide_details('dividend-up','dividend-down')" id="dividend-up" src="../images/icons/down-arrow.png" alt="Down UP">
                         </div>
                     </div>
-                    <div class="box-more" id="dividend-more"></div>
+                    <div onscroll="resetLogoutTimer()" class="box-more" id="dividend-more"></div>
                 </div>
             </div>
 
@@ -124,24 +134,24 @@ async function executeCompanyInfo(){
                     <div class="heading_box">
                         <h5>Closing Price History</h5>
                         <div class="drop-box">
-                            <img onclick="show_details('priceHistory-more','price_his-up','price_his-down')" id="price_his-down" src="../images/icons/down-arrow.png" alt="Down Arrow">
-                            <img onclick="hide_details('price_his-up','price_his-down')" id="price_his-up" src="../images/icons/down-arrow.png" alt="Down UP">
+                            <img style='width:25px' onclick="show_details('priceHistory-more','price_his-up','price_his-down')" id="price_his-down" src="../images/icons/down-arrow.png" alt="Down Arrow">
+                            <img style='width:25px' onclick="hide_details('price_his-up','price_his-down')" id="price_his-up" src="../images/icons/down-arrow.png" alt="Down UP">
                         </div>
                     </div>
-                    <div class="box-more" id="priceHistory-more"></div>
+                    <div onscroll="resetLogoutTimer()" class="box-more" id="priceHistory-more"></div>
                 </div>
             </div>
 
-            <div class="container" style='flex: 1 auto'>
+            <div class="container" style='flex: 1 auto;display:none'>
                 <div class='box price_graph' id='price_grraph'>
                     <div class="heading_box">
                         <h5>Closing Price Graph</h5>
                         <div class="drop-box">
-                            <img onclick="show_details('priceGraph-more','price_graph-up','price_graph-down')" id="price_graph-down" src="../images/icons/down-arrow.png" alt="Down Arrow">
-                            <img onclick="hide_details('price_graph-up','price_graph-down')" id="price_graph-up" src="../images/icons/down-arrow.png" alt="Down UP">
+                            <img style='width:25px' onclick="show_details('priceGraph-more','price_graph-up','price_graph-down')" id="price_graph-down" src="../images/icons/down-arrow.png" alt="Down Arrow">
+                            <img style='width:25px' onclick="hide_details('price_graph-up','price_graph-down')" id="price_graph-up" src="../images/icons/down-arrow.png" alt="Down UP">
                         </div>
                     </div>
-                    <div class="box-more" id="priceGraph-more">
+                    <div onscroll="resetLogoutTimer()" class="box-more" id="priceGraph-more">
                         <div id="myChart"></div>
                     </div>
                 </div>
@@ -190,8 +200,8 @@ async function executeCompanyInfo(){
             <table>
                 <tr>
                     <th>Period</th>
-                    <th>Turnover<br>(Tk in<br>Cr)</th>
-                    <th>Net<br>Profit(Tk<br>in Cr)</th>
+                    <th>Turnover (Cr.)</th>
+                    <th>Net Profit (Cr.)</th>
                     <th>NAV</th>
                     <th>EPS</th>
                 </tr>
@@ -203,10 +213,10 @@ async function executeCompanyInfo(){
     
             newRow.innerHTML = `
             <td>${finance.Period}</td>
-            <td>${finance["Turnover (Tk in Cr.)"]}</td>
-            <td>${finance["Net Profit (Tk in Cr.)"]}</td>
-            <td>${finance.NAV}</td>
-            <td>${finance.EPS}</td>
+            <td>${parseFloat(finance["Turnover (Tk in Cr.)"]).toLocaleString("en-IN")}</td>
+            <td>${parseFloat(finance["Net Profit (Tk in Cr.)"]).toLocaleString("en-IN")}</td>
+            <td>${parseFloat(finance.NAV).toLocaleString("en-IN")}</td>
+            <td>${parseFloat(finance.EPS).toLocaleString("en-IN")}</td>
             `;
         tableBody.querySelector('tbody').appendChild(newRow);
         });
@@ -222,7 +232,7 @@ async function executeCompanyInfo(){
                     <th>Record</th>
                     <th>AGM</th>
                     <th>Dividend</th>
-                    <th>Year</th>
+                    <th style="text-align:right">Year</th>
                 </tr>
             </table>
         `;
@@ -234,7 +244,7 @@ async function executeCompanyInfo(){
                 <td>${dividend["Record Date"]}</td>
                 <td>${dividend.AGM}</td>
                 <td>${dividend.Dividend}</td>
-                <td>${dividend.DividendYear}</td>
+                <td style="text-align:right">${dividend.DividendYear}</td>
             `;
         tableBody.querySelector('tbody').appendChild(newRow);
         });
@@ -261,7 +271,7 @@ async function executeCompanyInfo(){
         const tableBody = document.getElementById('priceHistory-more');
         tableBody.innerHTML =
          `
-            <div class="companyInfoBox">
+            <div class="companyInfoBox border">
                 <div class="companyHeaderBox">
                     <h3>${companyName ? companyName : ''}</h3>
                     <h3>${priceData.cp ? priceData.cp : ''}</h3>
@@ -269,7 +279,7 @@ async function executeCompanyInfo(){
                 <div class="companyCategoryBox">
                     <p>${priceData.name ? priceData.name : ''}  ${basicInfoData.cdbl_cat ? '('+basicInfoData.cdbl_cat+' Category)' : ''}</p>
                 </div>
-                <div class="price_up_down">
+                <div class="price_up_down" style="font-size:12px">
                     <p> ${companyName ? 'Total Up: '+totalUp : ''} </p>
                     <p>${companyName ? 'Total Down: '+totalDown : ''}</p>
                     <p>${companyName ? 'No Change: '+noChange : ''}</p>
@@ -300,6 +310,12 @@ async function executeCompanyInfo(){
             }
             else if (parseFloat(price.Change) > 0) {
                 newRow.classList.add('positive-change');
+            }
+            if(parseFloat(price.Change) !== 0){
+                const cells = newRow.getElementsByTagName("td");
+                for (let i = 0; i < cells.length; i++) {
+                    cells[i].style.color = "#fff"; 
+                }
             }
             tableBody.querySelector('tbody').appendChild(newRow);
         });
@@ -755,7 +771,25 @@ async function executeCompanyInfo(){
     renderPriceGraph()
 
     hide_All_details()
-
+    document.getElementById('searchCompany').addEventListener('click', async () => {
+        const existList = document.querySelectorAll('.allCompanyListItem');
+        if(existList){
+            existList.forEach(item => {
+                item.remove();
+            });
+        }
+        document.getElementById('allCompanyList').style.display = 'block'
+        const setWidth = document.getElementById('searchCompany').offsetWidth
+        document.getElementById('allCompanyList').style.width = setWidth+'px'
+        companyList.forEach(item => {
+            const listItem = document.createElement('li');
+            listItem.innerHTML = item.Company
+            listItem.id = item.Company
+            listItem.classList.add('allCompanyListItem')
+            listItem.addEventListener('click', handleListItemClick);
+            document.getElementById('allCompanyList').appendChild(listItem)
+        });
+    })
     document.getElementById('searchCompany').addEventListener('input', async () => {
         const existList = document.querySelectorAll('.allCompanyListItem');
         if(existList){
@@ -778,8 +812,19 @@ async function executeCompanyInfo(){
                 listItem.addEventListener('click', handleListItemClick);
                 document.getElementById('allCompanyList').appendChild(listItem)
             }
+            if(inputValue === ''){
+                const listItem = document.createElement('li');
+                listItem.innerHTML = item.Company
+                listItem.id = item.Company
+                listItem.classList.add('allCompanyListItem')
+                listItem.addEventListener('click', handleListItemClick);
+                document.getElementById('allCompanyList').appendChild(listItem)
+            }
         });
     });
+    if(data){
+        handleListItemClick()
+    }
 }
 
 function show_details(id,up,down){

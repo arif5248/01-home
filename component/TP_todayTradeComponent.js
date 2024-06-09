@@ -5,7 +5,7 @@ async function executeTP_todayTrade(){
         document.getElementById('mainContentSection').innerHTML = `
         <div class="pageHeading" id="financial-Heading">
             <div class="heading">
-                <h1>TODAY'S ALL PRICE</h1>
+                <h1>Today's All Price</h1>
             </div>
         </div>
 
@@ -48,14 +48,22 @@ async function executeTP_todayTrade(){
             const newRow = document.createElement('tr');
             newRow.classList.add('todayPriceItem')
             newRow.innerHTML = `
-                <td>${data.dt}</td>
-                <td>${data.nam}</td>
-                <td>${data.ltp}</td>
-                <td>${data.vol}</td>
+                <td style='text-align: left;'>${data.dt}</td>
+                <td style='text-align: left;'>${data.nam}</td>
+                <td>${parseFloat(data.ltp).toLocaleString("en-IN")}</td>
+                <td>${parseFloat(data.vol).toLocaleString("en-IN")}</td>
             `;
-        tableBody.querySelector('tbody').appendChild(newRow);
-        newRow.style.backgroundColor = `${data.chng >= 0 ? (data.chng > 0 ? '#04A41E' : '#fff') : '#FE0000'}`
-        });
+            tableBody.querySelector('tbody').appendChild(newRow);
+
+            newRow.style.backgroundColor = `${data.chng >= 0 ? (data.chng > 0 ? '#04A41E' : '#fff') : '#FE0000'}`
+            if(parseFloat(data.chng) !== 0){
+                const cells = newRow.getElementsByTagName("td");
+                for (let i = 0; i < cells.length; i++) {
+                    cells[i].style.color = "#fff"; 
+                }
+            }
+         });
+        
     }
 
     todayTrade()
@@ -84,6 +92,13 @@ async function executeTP_todayTrade(){
                 `;
                 tableBody.querySelector('tbody').appendChild(newRow);
                 newRow.style.backgroundColor = `${data.chng >= 0 ? (data.chng > 0 ? '#04A41E' : '#fff') : '#FE0000'}`
+
+                if(parseFloat(data.chng) !== 0){
+                    const cells = newRow.getElementsByTagName("td");
+                    for (let i = 0; i < cells.length; i++) {
+                        cells[i].style.color = "#fff"; 
+                    }
+                }
             }
         })
     })

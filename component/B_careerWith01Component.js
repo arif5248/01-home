@@ -5,8 +5,8 @@ async function executeB_careerWith01(){
         careerData = fetchedData.jobList
     }
     function B_careerWith01(){
-        document.getElementById('page_heading').innerHTML=`Career With 01`
         document.getElementById('beforeMain').innerHTML = `
+        <h3 id="page_heading">Career With 01</h3>
             <div class="career-section">
                 <div class="container">
                     <div class="noti-content" id="careerContent"></div>

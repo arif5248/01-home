@@ -17,24 +17,27 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: nowrap;
 }
 .input-box > input{
-    padding: 10px;
     background-color: #676a6666;
     border-radius: 10px;
+    font-weight: 500;
+    width: 40%;
+    text-align: center;
+    font-size: 14px;
     height: 50px;
-    font-weight: 700;
 }
 .input-box > span{
-    font-weight: 800;
-    font-size: 20px;
+    font-weight: 600;
+    font-size: 14px;
 }
 .searchLedger{
     margin-top: 20px;
     border-radius: 11px;
     text-align: center;
     padding: 10px 0px;
-    background-color: #000;
+    background-color: #0d6efd;
     color: #fff;
 }
 
@@ -54,25 +57,24 @@
 .item > .left{
     display: flex;
     justify-content: space-between;
-    width: 45%;
+    width: 60%;
+    font-size: 14px;
 }
 .item > .right{
     text-align: right;
-    width: 55%;
+    width: 40%;
+    font-size: 14px;
+
 }
 
 .ledgerTable > table{
     width: 100%;
     border-collapse: separate;
-    border-spacing: 0 10px;
+    border-spacing: 0 5px;
     background-color: #fff;
-    padding: 0px 10px;
+    padding: 0px 5px;
     border: 1px solid #000;
     border-radius: 10px;
-}
-.ledgerTable > table > tbody{
-    position: relative !important;
-    overflow-y: auto !important;
 }
 .ledgerTable > table > tbody > tr:first-child{
     position: sticky;
@@ -81,57 +83,31 @@
 }
 .ledgerTable > table > tbody > tr:first-child > th{
     color: #fff;
-    font-size: 20px;
-    padding: 5px 3px;
-}
-.ledgerTable > table > tbody > tr:first-child > th:first-child{
-    -webkit-padding-start: 10px;
-    text-align: center;
-    width: 15%;
-}
-.ledgerTable > table > tbody > tr:first-child > th:last-child{
-    -webkit-padding-end: 10px;
-    text-align: center;
-    width: 15%;
-}
-.ledgerTable > table > tbody > tr:first-child > th:nth-child(2){
-    text-align: center;
-    width: 55%;
-}
-.ledgerTable > table > tbody > tr:first-child > th:nth-child(3){
-    width: 15%;
+    font-size: 14px;
+    padding: 5px 5px;
     text-align: center;
 }
 
+
 .ledgerTable > table > tbody > tr > td{
-    font-weight: 600;
-    font-size: 15px;
-    padding: 5px 3px;
+    /* font-weight: 600; */
+    font-size: 13px;
+    padding: 2px 5px;
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
+    text-align: left;
 }
 .ledgerTable > table > tbody > tr > td:first-child{
-    -webkit-padding-start: 10px;
+    padding-left: 7px;
     border-left: 1px solid #000;
     border-radius: 15px 0px 0px 15px;
-    text-align: center;
-    width: 15%;
 }
 .ledgerTable > table > tbody > tr > td:last-child{
-    -webkit-padding-end: 10px;
     border-right: 1px solid #000;
     border-radius: 0px 15px 15px 0px;
-    text-align: center;
-    width: 15%;
+    padding-right: 7px;
 }
-.ledgerTable > table > tbody > tr > td:nth-child(3){
-    text-align: center;
-    width: 55%;
-}
-.ledgerTable > table > tbody > tr > td:nth-child(4){
-    text-align: center;
-    width: 15%;
-}
+
 
 .balanceRow > td{ 
     border-color: #CFCDCE !important;

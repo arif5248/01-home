@@ -7,7 +7,7 @@ async function executeTP_lastTrade(data){
         document.getElementById('mainContentSection').innerHTML = `
             <div class="pageHeading" id="financial-Heading" style="flex: 0 auto;">
                 <div class="heading">
-                    <h1>LAST TRADE: ${data}</h1>
+                    <h1>LAST TRADE of: ${data}</h1>
                 </div>
             </div>
             
@@ -25,8 +25,8 @@ async function executeTP_lastTrade(data){
             <table>
                 <tr>
                     <th>Time</th>
-                    <th>Price</th>
-                    <th>Volume</th>
+                    <th style="text-align:right">Price</th>
+                    <th style="text-align:right">Volume</th>
                 </tr>
             </table>
         `;
@@ -34,8 +34,8 @@ async function executeTP_lastTrade(data){
             const newRow = document.createElement('tr');
             newRow.innerHTML = `
                 <td>${data.Dt}</td>
-                <td>${data.CP}</td>
-                <td>${data.CVol}</td>
+                <td style="text-align:right">${data.CP}</td>
+                <td style="text-align:right">${parseInt(data.CVol).toLocaleString("en-IN")}</td>
             `;
         tableBody.querySelector('tbody').appendChild(newRow);
         newRow.style.backgroundColor = `${data.Chng >= 0 ? (data.Chng > 0 ? '#04A41E' : '#fff') : '#FE0000' }`

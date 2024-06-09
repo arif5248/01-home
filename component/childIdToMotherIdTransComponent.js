@@ -11,11 +11,11 @@ async function executeChildIdToMotherIdTrans(){
         document.getElementById('mainContentSection').innerHTML = `
         <div class="pageHeading pageHeading_2" id="financial-Heading">
             <div class="heading">
-                <h1>CHILD ID TO MOTHER ID (MAIN LEDGER)</h1>
+                <h1>Child ID To Mother ID (Main Ledger)</h1>
             </div>
         </div>
 
-        <div class='listSection' style="margin-top: 5px;">
+        <div onscroll="resetLogoutTimer()" class='listSection' style="flex: 1 auto; height: 100%; overflow-y: auto;">
             <div class="container">
                 <div id='allChildIdList' class='allChildIdList'></div>
             </div>
@@ -49,55 +49,57 @@ async function executeChildIdToMotherIdTrans(){
                    <th>Balance</th>
                </tr>
            </table>
-           <br>
-           <br>
-           <br>
-           <br>
            
        `;
-       Data.forEach((data) => {
-           const newRow = document.createElement('tr');
+        Data.forEach((data) => {
+            const newRow = document.createElement('tr');
    
-           newRow.innerHTML = `
+            newRow.innerHTML = `
                <td><input type="checkbox" name="user-select" class="user-select" data-id="${data.id}" data-balance="${data.amount}"></td>
                <td>${data.id}</td>
                <td>${data.name}</td>
                <td>${data.amount}</td>
-           `;
-           listBody.querySelector('tbody').appendChild(newRow);
-       })
+            `;
+            listBody.querySelector('tbody').appendChild(newRow);
+        })
 
-       const selectAllCheckbox = document.getElementById('select-all');
-       selectAllCheckbox.addEventListener('change', function () {
+        const selectAllCheckbox = document.getElementById('select-all');
+        selectAllCheckbox.addEventListener('change', function () {
             const checkboxes = document.querySelectorAll('.user-select');
             checkboxes.forEach((checkbox) => {
                 checkbox.checked = false;
                 selectedIds = [];
             })
             checkboxes.forEach((checkbox) => {
-               if (checkbox.dataset.balance !== '0') {
-                   checkbox.checked = selectAllCheckbox.checked;
-                   if (selectAllCheckbox.checked && !selectedIds.includes(checkbox.dataset.id)) {
+                if (checkbox.dataset.balance !== '0') {
+                    checkbox.checked = selectAllCheckbox.checked;
+                    if (selectAllCheckbox.checked && !selectedIds.includes(checkbox.dataset.id)) {
                        selectedIds.push(checkbox.dataset.id);
-                   } else if (!selectAllCheckbox.checked && selectedIds.includes(checkbox.dataset.id)) {
+                    } else if (!selectAllCheckbox.checked && selectedIds.includes(checkbox.dataset.id)) {
                        selectedIds.splice(selectedIds.indexOf(checkbox.dataset.id), 1);
-                   }
-               }
+                    }
+                }
             });
-           updateSelectedInfo();
+            updateSelectedInfo();
        });
 
-       const userCheckboxes = document.querySelectorAll('.user-select');
-       userCheckboxes.forEach((checkbox) => {
-           checkbox.addEventListener('change', function () {
-               if (this.checked && !selectedIds.includes(this.dataset.id)) {
-                   selectedIds.push(this.dataset.id);
-               } else if (!this.checked && selectedIds.includes(this.dataset.id)) {
-                   selectedIds.splice(selectedIds.indexOf(this.dataset.id), 1);
-               }
-               updateSelectedInfo();
-           });
-       });
+        const userCheckboxes = document.querySelectorAll('.user-select');
+        let allChecked = false
+        userCheckboxes.forEach((checkbox) => {
+            checkbox.addEventListener('change', function () {
+                
+                if (this.checked && !selectedIds.includes(this.dataset.id)) {
+                    selectedIds.push(this.dataset.id);
+                } else if (!this.checked && selectedIds.includes(this.dataset.id)) {
+                    selectedIds.splice(selectedIds.indexOf(this.dataset.id), 1);
+                    document.getElementById('select-all').checked = false
+                }
+                updateSelectedInfo();
+            });
+        });
+        
+        
+        
    
     }
     function renderChildIdListFooter(){
@@ -113,15 +115,19 @@ async function executeChildIdToMotherIdTrans(){
         `
     }
     function updateSelectedInfo() {
+        const allcheckedBox = document.querySelectorAll('.user-select');
         const selectedCheckboxes = document.querySelectorAll('.user-select:checked');
         const totalSelectedIds = selectedCheckboxes.length;
+        if(totalSelectedIds === allcheckedBox.length){
+            document.getElementById('select-all').checked = true
+        }
         let totalSelectedAmount = 0;
         selectedCheckboxes.forEach((checkbox) => {
             totalSelectedAmount += parseFloat(checkbox.getAttribute('data-balance').replace(/,/g, ''));
         });
 
         document.getElementById('total-selected-ids').textContent = totalSelectedIds;
-        document.getElementById('total-selected-amount').textContent = totalSelectedAmount.toLocaleString();
+        document.getElementById('total-selected-amount').textContent = totalSelectedAmount.toLocaleString("en-IN");
    
     }
     async function handleSubmitRequest(event){

@@ -9,7 +9,7 @@ function executeRewardPoints(){
         </div>
 
         <div class="container">
-            <div >Coming Soon...</div>
+            <div >Coming Soon..</div>
         </div>
         
         `

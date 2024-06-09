@@ -1,8 +1,20 @@
+a{
+    text-decoration: none;
+}
 #overlay{
     position: fixed;
     width: 100vw;
     height: 100vh;
     background-color: #00000082;
+}
+.popupOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 10;
 }
 #overlay{
     animation: overlay 0.3s linear(0.54 -17.65%, 1 100%);
@@ -14,6 +26,215 @@
     to {
         top: 0; 
     }
+}
+/* ===================support div ================= */
+.support-content{
+    text-align: center;
+}
+.support-slide {
+    position: absolute;
+    bottom: 0; 
+    left: 0;
+    width: 100%;
+    background-color: #f2f2f2;
+    padding: 5px 20px 2px 20px;
+    box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.2);
+    transition:  0.5s ease-in-out;
+    z-index: 10;
+}
+.supportHeadingText{
+    margin: 0;
+    font-size: 18px;
+}
+.supportHeading,
+.sendMessageHeading{
+display: flex;
+justify-content: space-between;
+align-items: center;
+border-bottom: 1px solid #000;
+padding-bottom: 5px;
+}
+.supportHeading > span{
+    padding-right: 5px;
+    width: 30px;
+    height: auto;
+}
+.supportHeading > .heading{
+    margin: 0;
+    font-size: 18px;
+}
+.supportCall{
+    border-bottom: 1px solid #000;
+    padding: 10px 0px;
+}
+.supportCall > a{
+    font-weight: 700;
+    font-size: 16px;
+    color: #007bff;
+}
+.support-content > div > a{
+    font-weight: 700;
+    font-size: 16px;
+    color: #007bff;
+}
+.supportIcon{
+    width: 35px;
+    height: auto;
+}
+.supportIconGroup{
+    padding: 10px 0px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border-bottom: 1px solid #000;
+}
+.innerIconGroup{
+    display: flex;
+}
+.innerElement{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.innerElement > span{
+    color: #000;
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.socialIcon > .icon > a > img{
+    width: 30px;
+    height: auto;
+}
+/* ===========send msg and video chat====== */
+.sendMessageBody > form >select {
+    width: 100%;
+    color: #000;
+    margin-bottom: 10px;
+    height: 45px;
+    border-radius: 5px;
+}
+.sendMessageBody > form > textarea {
+    border-color: #000;
+    width: 100%;
+    padding: 5px 20px;
+    border-radius: 10px;
+}
+#video_req_mobileContainer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#video_req_mobileContainer > select{
+    width: 22%;
+    height: 45px;
+    margin-bottom: 10px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    color: #000;
+    /* padding-left: 20px; */
+}
+#video_req_mobileContainer > input{
+    width: 75%;
+    height: 45px;
+    margin-bottom: 10px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding-left: 20px;
+    color: #000;
+}
+.sendMessageSection,
+.videoChatSection{
+    height: 100%;
+    z-index: 1035;
+    position: absolute;
+    bottom: 0; 
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    padding: 20px;
+    transition:  0.5s ease-in-out;
+}
+.sendMessageHeading{
+    background-color: #2e0339;
+}
+.sendMessageHeading > h3{
+    color: white;
+    margin: 0;
+    padding: 10px 0px;
+    font-size: 16px;
+}
+.sendMessageBody > form{
+    margin-top: 10px;
+}
+.sendMessageBody > form .inputStyle{
+    width: 100%;
+    height: 45px;
+    margin-bottom: 10px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding-left: 20px;
+}
+.submitSendMsg {
+    margin-top: 15px;
+    margin-bottom: 20px;
+    background-color: #0d6efd;
+    border-radius: 10px;
+    width: 100%;
+    color: #fff !important;
+    font-size: 20px;
+}
+#popUpSection{
+    z-index: 1036;
+    position: absolute;
+    top: 50vh;
+    left: 50vw;
+    transform: translateX(-50%) translateY(-50%);
+    background-color: #fff;
+    width: 85%;
+    border-radius: 10px;
+    box-shadow: 0px 0px 3px 1px #000;
+}
+#popUpSection > .head{
+    background-color: #000;
+    text-align: center;
+    color: #fff;
+    padding: 7px 0px;
+    border-radius: 10px 10px 0px 0px;
+}
+#popUpSection > .footer{
+    border-top: 1px solid #000;
+    padding: 3px 0px;
+    display: flex;
+    justify-content: center;
+}
+#popUpSection > .footer > p{
+    width: 98%;
+    padding: 5px 0px;
+    border: 1px solid #000;
+    border-radius: 10px;
+    text-align: center;
+    margin: 5px 0px;
+}
+#popUpSection > .body{
+    font-size: 14px;
+    text-align: center;
+    padding: 10px 5px;
+}
+#reqTimeValidationSpan{
+    margin-bottom: 3px;
+    text-align: right;
+    margin-top: -5px;
+    color: red;
+}
+#overlayVideoChat{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 1036;
 }
 /*====================BeforeHeading=================*/
 .beforHeading{
@@ -28,7 +249,28 @@
 .beforeMian{
     margin-top: 60px;
 }
-
+.footerBtn{
+    display: flex;
+    align-items: center;
+    box-shadow: 0px 0px 7px 1px #000;
+}
+.footerBtn > div{
+    width: 50%;
+    text-align: center;
+    color: #000;
+    padding: 10px 0px;
+    border-top: 1px solid #000;
+    font-weight: bold;
+}
+#page_heading{
+    text-align: center;
+    background-color: #000;
+    color: #fff;
+    font-size: 18px;
+    margin: 0;
+    padding: 10px 0px;
+    margin-bottom: 5px;
+}
 
   /*====================Start Market Status=================*/
   .cseSection,
@@ -47,10 +289,12 @@
   .customTable > tbody > tr > th{
     text-align: center;
     color: #000 !important;
+    font-size: 14px;
   }
   .customTable > tbody > tr > td{
     color: #000 !important;
     text-align: center !important;
+    font-size: 14px;
   }
   .verticaclAlign{
     vertical-align: middle !important;
@@ -67,8 +311,9 @@
 .allBtn{
     border: 1px solid black;
     border-radius: 5px;
-    width: 30%;
+    width: 33%;
     height: 35px;
+    font-size: 13px;
 }
 .MS_searchRow{
     display: flex;
@@ -77,12 +322,12 @@
 }
 .MS_searchBox{
     position: relative;
-    padding: 10px 0px;
 }
 .MS_searchBox > input{
     padding-left: 35px;
     border-radius: 10px;
     background-color: #EEEEEE;
+    margin: 0;
 }
 .MS_searchIcon{
     position: absolute;
@@ -110,39 +355,37 @@
 }
 .SP_table > table > tbody > tr:first-child > th,
 .MS_table > table > tbody > tr:first-child > th{
-    
     color: #fff;
-    font-size: 20px;
-    padding: 5px 1px;
+    font-size: 14px;
+    padding: 5px 5px;
     text-align: center;
 }
-.SP_table > table > tbody > tr:first-child > th:first-child,
+/* .SP_table > table > tbody > tr:first-child > th:first-child,
 .MS_table > table > tbody > tr:first-child > th:first-child{
     -webkit-padding-start: 10px;
-}
-.SP_table > table > tbody > tr:first-child > th:last-child
+} */
+/* .SP_table > table > tbody > tr:first-child > th:last-child
 .MS_table > table > tbody > tr:first-child > th:last-child{
     -webkit-padding-end: 10px;
-}
+} */
 .SP_table > table > tbody > tr > td,
 .MS_table > table > tbody > tr > td{
-    font-weight: 700;
-    font-size: 15px;
-    padding: 10px 0px;
+    font-size: 13px;
+    padding: 5px 5px;
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
-    color: #000 !important;
-    text-align: center;
+    text-align: right;
+    overflow-wrap: break-word;
 }
 .SP_table > table > tbody > tr > td:first-child,
 .MS_table > table > tbody > tr > td:first-child{
-    -webkit-padding-start: 10px;
+    padding-left: 10px;
     border-left: 1px solid #000;
     border-radius: 15px 0px 0px 15px;
 }
 .SP_table > table > tbody > tr > td:last-child,
 .MS_table > table > tbody > tr > td:last-child{
-    -webkit-padding-end: 10px;
+    padding-right: 10px;
     border-right: 1px solid #000;
     border-radius: 0px 15px 15px 0px;
 }
@@ -191,6 +434,7 @@
     padding-left: 35px;
     border-radius: 10px;
     background-color: #EEEEEE;
+    margin: 0;
 }
 .N_searchIcon{
     position: absolute;
@@ -208,8 +452,7 @@
     height: 100%;
 }
 .btnwrapper{
-    overflow-y: auto; 
-    height: 350px; 
+    overflow-y: auto;  
     height: 100%;
 }
 /*-----------------Button-------------------*/
@@ -224,6 +467,7 @@
     flex-wrap: wrap;
     border-radius: 5px;
     justify-content: space-evenly;
+    margin-top: 5px;
 }
 .active{
     background-color: white;
@@ -251,8 +495,8 @@
     text-align: center;
 }
 .exchangeHeading > h4{
-    font-weight: 400;
-    font-size: 22px;
+    font-weight: 500;
+    font-size: 14px;
     color: white;
 }
 .newsImage{
@@ -295,6 +539,7 @@
 }
 .exchangeContent > p{
     text-align: justify;
+    font-size: 14px;
 }
 .allCompanyList{
     margin-top: 5px;
@@ -316,10 +561,36 @@
 }
 #showMediaNewsDetails{
     position: absolute;
-    top: 20px;
+    top: 50px;
     left: 50%;
     transform: translateX(-50%);
-
+    z-index: 20;
+    height: 75vh;
+}
+#closeNewsDetails{
+    text-align: center;
+    flex: 0 auto;
+    border-top: 1px solid #000;
+    padding: 5px 0px;
+    box-shadow: 0px 0px 5px 1px #000;
+}
+#closeNewsDetails > p{
+    background-color: red;
+    color: #fff;
+    margin: 0px 10px;
+    border-radius: 5px;
+    padding: 5px 0px;
+    font-size: 14px;
+}
+.newsDetailsHeading{
+    text-align: center;
+    background-color: #000;
+    color: #fff;
+    border-radius: 10px 10px 0px 0px;
+    padding: 7px 0px;
+}
+.newsDetailsHeading  > h5{
+    font-size: 16px;
 }
 .selectedNewsBody{
     border: 0px solid #000;
@@ -327,6 +598,9 @@
     width: 95vw;
     box-shadow: 0px 0px 5px 3px #000;
     border-radius: 10px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 .close{
     display: flex;
@@ -345,6 +619,22 @@
     align-items: center;
     justify-content: center;
     box-shadow: 0px 0px 5px 1px #000;
+}
+.newsBtnGroup > div {
+    border: 1px solid #0000005b;
+    border-radius: 10px;
+    font-size: 12px;
+    padding: 8px 0px;
+    width: 32%;
+    text-align: center;
+    font-weight: 500;
+}
+.newsSourceDate > p{
+    margin: 0;
+}
+.newsBtnGroup > .active{
+    background-color: #030333;
+    color: #fff;
 }
 /*====================End News=================*/
 /*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
@@ -365,18 +655,20 @@
     justify-content: space-around;
     align-items: center;
     padding: 10px 0px;
-    margin: 10px 10px;
+    margin: 5px 5px;
     background-color: #dbd8d8;
     border: 1px solid #000;
     border-radius: 5px;
     box-shadow: 0px 0px 5px 0px #000;
 }
 .btnGroup > .Btn{
-    padding: 10px 10px;
+    padding: 10px 0px;
     border: 1px solid #0000005b;
-    border-radius: 10px;
+    border-radius: 5px;
     font-size: 16px;
     font-weight: 700;
+    width: 49%;
+    text-align: center;
 }
 .btnGroup > .active{
     background-color: rgb(3, 3, 51);
@@ -406,7 +698,7 @@
 .ipoHeading>h3{
     margin: 0;
     padding: 10px 0px;
-    font-size: 18px;
+    font-size: 15px;
 }
 .static-heading{
     display: flex;
@@ -430,6 +722,7 @@
 .subscriptionDate >h5{
     padding: 10px 0px;
     margin: 0;
+    font-size: 14px;
 }
 .ipo_item > .contentBody > table{
     width: 100%;
@@ -437,15 +730,77 @@
 .ipo_item > .contentBody > table > tbody > tr > td:first-child{
     text-align: left;
     width: 50%;
+    font-size: 14px;
 }
 .ipo_item > .contentBody > table > tbody > tr> td:last-child{
     text-align: right;
     width: 50%;
+    font-size: 14px;
 }
 .ipo_item > .contentBody > table > tbody > tr> td > .btn{
     background-color: #A4B799;
     margin: 5px;
     color: white;
+}
+/* =========pdf viewr============== */
+.beforeMian{
+    position: relative;
+}
+.pdf-modal {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50vw;
+    transform: translateX(-50%) translateY(-50%);
+    width: 95%;
+    height: 95%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.pdf-modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.docHeading{
+    flex: 0 auto;    
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    padding: 8px 0px;
+}
+.docBody{
+    flex: 1 auto;
+    height: 100%;
+    overflow-y: auto;
+}
+.close {
+    font-size: 14px;
+    flex: 0 auto;
+    text-align: center;
+    color: #fff;
+    background-color: red;
+    margin: 5px 0px;
+    border-radius: 5px;
+    padding: 3px 0px;
+}
+.close > p{
+    margin: 0;
+}
+.pdfViewBtn{
+    width: 100%;
+    background-color: #0d6efd;
+    color: #fff;
+    text-align: center;
+    padding: 3px 0px;
+    border-radius: 5px;
+    margin-bottom: 2px;
 }
 
 /*====================End IPO=================*/
@@ -546,19 +901,42 @@ hr{
 }
 #notiDetails{
     position: fixed;
-    width: 80%;
+    width: 90%;
     top: 50vh;
     left: 50vw;
     transform: translateX(-50%) translateY(-50%);
     border: 1px solid #000;
     box-shadow: 0px 0px 4px 0px #000;
-    border-radius: 5px;
+    border-radius: 10px;
     background-color: #fff;
     z-index: 5;
+}
+.notiDetails{
     padding: 5px 10px;
+    text-align: justify;
+    font-size: 13px;
+    max-height: 300px;
+    overflow-y: auto;
 }
 .notiClose > div{
     display: inline-block;
+}
+.popUpHeading{
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    padding: 10px 0px;
+    border-radius: 10px 10px 0px 0px
+}
+.notiClose{
+    text-align: center;
+    padding: 3px 0px;
+    border: 1px solid #000;
+    box-shadow: 0px 0px 3px 1px #000;
+}
+.notiClose > div{
+    font-size: 14px;
 }
 /*====================End Noti=================*/
 /*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
@@ -616,6 +994,9 @@ hr{
     padding: 0px 10px;
     justify-content: space-between;
 }
+.companyHeaderBox > h3{
+    font-size: 20px;
+}
 #priceHisTable{
     background-color: #fff;
     padding: 5px 5px;
@@ -633,42 +1014,35 @@ hr{
 #priceHisTable > table > tbody > tr:first-child{
     position: sticky;
     top: 0;
-    background-color: #6200ED;
+    background-color: #000;
 }
 #priceHisTable > table > tbody > tr:first-child > th{
     color: #fff;
     font-size: 14px;
-    padding: 5px 1px;
-    text-align: right;
-}
-#priceHisTable > table > tbody > tr:first-child > th:first-child{
-    -webkit-padding-start: 10px;
+    padding: 5px 5px;
     text-align: center;
+    overflow-wrap: break-word;
 }
-#priceHisTable > table > tbody > tr:first-child > th:last-child{
-    -webkit-padding-end: 10px;
-}
-#priceHisTable > table > tbody > tr > th{
+
+/* #priceHisTable > table > tbody > tr > th{
     width: 20% !important;
-}
+} */
 #priceHisTable > table > tbody > tr > td{
-    width: 20%;
-    font-weight: 700;
     font-size: 13px;
-    padding: 10px 0px;
+    padding: 5px 5px;
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
-    color: #000 !important;
     text-align: right;
+    
 }
 #priceHisTable > table > tbody > tr > td:first-child{
-    -webkit-padding-start: 10px;
+    padding-left: 10px;
     border-left: 1px solid #000;
     border-radius: 15px 0px 0px 15px;
-    text-align: left;
+    text-align: left !important;
 }
 #priceHisTable > table > tbody > tr > td:last-child{
-    -webkit-padding-end: 10px;
+    padding-right: 10px;
     border-right: 1px solid #000;
     border-radius: 0px 15px 15px 0px;
 }
@@ -681,6 +1055,10 @@ hr{
 .companyCategoryBox > p,
 .price_up_down > p{
     margin: 0;
+    font-size: 14px;
+}
+.price_up_down > p{
+    font-weight: 500;
 }
 /*====================End Price History=================*/
 /*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
@@ -710,6 +1088,44 @@ hr{
 .promotionDetailBox > div > p:first-child{
     font-weight: 600;
     padding-right: 10px
+}
+#promotionsDetailsSection{
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 90%;
+    height: 70vh;
+    overflow-y: auto;
+    background-color: #fff;
+    border-radius: 10px;
+    z-index: 15;
+}
+#closePromotionDetails{
+    text-align: center;
+    flex: 0 auto;
+    border-top: 1px solid #000;
+    padding: 5px 0px;
+    box-shadow: 0px 0px 5px 1px #000;
+}
+#closePromotionDetails > p{
+    background-color: red;
+    color: #fff;
+    margin: 0px 10px;
+    border-radius: 5px;
+    padding: 5px 0px;
+    font-size: 14px;
+}
+.promotionsDetailsHeading{
+    text-align: center;
+    background-color: #000;
+    color: #fff;
+    border-radius: 10px 10px 0px 0px;
+    padding: 7px 0px;
+}
+.promotionsDetailsHeading  > h5{
+    font-size: 16px;
 }
 
 /*====================End Promotions=================*/
@@ -866,7 +1282,55 @@ label{
     color: #fff;
     border-radius: 5px;
 }
+
+/*====================End Job Apply=================*/
+/*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
+/*====================Start About Us =================*/
+.aboutUsFooter{
+    width: 100%;
+}
+.footerContent{
+    width: 100%;
+}
+
+#aboutUsData > p {
+    border: 1px solid #000;
+    color: #000;
+    margin: 0;
+    padding: 10px 10px;
+    text-align: justify;
+    font-size: 14px;
+} 
+.footerContent > p{
+    border: 1px solid #000;
+    color: #000;
+    margin: 0;
+    padding: 10px 10px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+.officaLocationItem{
+    margin: 10px 0px;
+    box-shadow: 0px 0px 3px 1px #000;
+    border-radius: 5px;
+    padding: 0px 10px;
+}
 /*-----------------Bootstrap class-------------------*/
+.navbar-toggler:focus{
+    box-shadow: none !important;
+}
+.nav-item > a:active {
+    background-color: #0000ff66;
+    /* font-size: 16px; */
+
+}
+.nav-item > a{
+    font-size: 13px;
+}
+.nav-item {
+    border-bottom: 1px solid #000;
+}
 .fixed-top{
     z-index: 8 !important;
 }
@@ -875,6 +1339,7 @@ label{
 }
 .navbar-toggler{
     background-color: #A4B799 !important;
+    padding: 2px 5px !important;
 }
 
 .navbar-light .navbar-toggler-icon,
@@ -882,7 +1347,8 @@ label{
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e")
 }
 .offcanvas-title {
-    width: 20%;
+    width: 70px;
+    height: auto;
 }
 .offcanvas-start {
     width: 80%; 

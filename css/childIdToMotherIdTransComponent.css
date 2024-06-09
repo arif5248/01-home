@@ -7,11 +7,10 @@
     padding: 7px 10px;
 }
 .listSectionFooter{
-    position: fixed;
-    width: 100vw;
-    bottom: 80px;
-    left: 50%;
-    transform: translateX(-50%);
+    /* width: 100vw; */
+    /* bottom: 80px; */
+    /* left: 50%; */
+    /* transform: translateX(-50%); */
     text-align: center;
     background-color: #fff;
     padding-top: 5px;
@@ -19,7 +18,7 @@
 .allChildIdList > table{
     width: 100%;
     border-collapse: separate;
-    border-spacing: 0 10px;
+    border-spacing: 0 5px;
     background-color: #fff;
     padding: 0px 10px;
     border: 1px solid #000;
@@ -31,9 +30,9 @@
 }
 .allChildIdList > table > tbody > tr:first-child > th{
     color: #fff;
-    font-size: 20px;
+    font-size: 14px;
     padding: 5px 1px;
-    font-weight: 500;
+    overflow-wrap: break-word;
 }
 .allChildIdList > table > tbody > tr:first-child > th:first-child{
     -webkit-padding-start: 10px;
@@ -46,11 +45,11 @@
 }
 
 .allChildIdList > table > tbody > tr > td{
-    font-weight: 600;
-    font-size: 15px;
+    font-size: 14px;
     padding: 10px 0px;
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
+    overflow-wrap: break-word;
 }
 .allChildIdList > table > tbody > tr > td:first-child{
     -webkit-padding-start: 10px;

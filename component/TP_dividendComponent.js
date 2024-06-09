@@ -1,11 +1,10 @@
 async function executeTP_dividend(data){
     const  upComingDividend = await get_SCRIPDIV_(data)
-    
     function dividend(){
         document.getElementById('mainContentSection').innerHTML = `
             <div class="pageHeading" id="financial-Heading">
                 <div class="heading" id="heading">
-                    <h1>Dividend</h1>
+                    <h1>Dividend of: ${data}</h1>
                 </div>
             </div>
             <div style='flex: 1 auto; overflow-y: auto;' class="dividendContentSection">

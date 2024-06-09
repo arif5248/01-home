@@ -21,21 +21,14 @@ async function executeDividend_Record(){
                 </div>
             </div>
             <div class="btnGroup" id="btnGroup">
-                <div onclick="show('upcomingDividendContent')" class="Btn active" id="upcomimg">Upcomimg</div>
+                <div onclick="show('upcomingDividendContent')" class="Btn active" id="upcomig">Upcoming</div>
                 <div onclick="show('passedDividendContent')" class="Btn" id="history">Passed</div>
             </div>
-            <div class="container">
+            <div style="flex: 1 auto;height: 100%;overflow-y: auto;" class="container">
                 <div class="ipoContent" id="upcomingDividendContent"></div>
                 <div class="ipoContent" id="passedDividendContent"></div>
             </div>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
+            
         `
     }
 
@@ -44,22 +37,48 @@ async function executeDividend_Record(){
         contentBody.innerHTML =
          `
             <table>
-                <tr>
-                    <th>Name</th>
-                    <th>Record Date</th>
-                    <th>AGM</th>
-                    <th>Dividend</th>
-                </tr>
+                <tbody></tbody>
             </table>
         `;
         upComingDividend.forEach((data) => {
             const newRow = document.createElement('tr');
-    
+                
             newRow.innerHTML = `
-                <td>${data.Company}</td>
-                <td>${data.RecordDate}</td>
-                <td>${data.AGM}</td>
-                <td>${data.Dividend}</td>
+                <div class='boxItem'>
+                    <div class='headingRow innerRow'>
+                        <div class='innerCol1'>
+                            <h5 class='itemHeading'>${data.Company}</h5>
+                        </div>
+                        <div class='itemDeclarationDate innerCol2'>
+                            <p>Declaration Date:</p>
+                            <p>${data.DeclarationDate}</p>
+                        </div>
+                    </div>
+                    <div class='innerRow'>
+                        <div class='innerCol1'>
+                            <p>Record Date: </p>
+                        </div>
+                        <div class='innerCol2'>
+                            <p>${data.RecordDate}</p>
+                        </div>
+                    </div>
+                    <div class='innerRow'>
+                        <div class='innerCol1'>
+                            <p>AGM: </p>
+                        </div>
+                        <div class='innerCol2'>
+                            <p>${data.AGM}</p>
+                        </div>
+                    </div>
+                    <div class='footerRow innerRow'>
+                        <div class='innerCol1'>
+                            <p>Dividend: </p>
+                        </div>
+                        <div class='innerCol2'>
+                            <p>${data.Dividend}</p>
+                        </div>
+                    </div>
+                </div>
             `;
             contentBody.querySelector('tbody').appendChild(newRow);
         }) 
@@ -69,22 +88,48 @@ async function executeDividend_Record(){
         contentBody.innerHTML =
          `
             <table>
-                <tr>
-                    <th>Name</th>
-                    <th>Record Date</th>
-                    <th>AGM</th>
-                    <th>Dividend</th>
-                </tr>
+                <tbody></tbody>
             </table>
         `;
         passedDividend.forEach((data) => {
             const newRow = document.createElement('tr');
     
             newRow.innerHTML = `
-                <td>${data.Company}</td>
-                <td>${data.RecordDate}</td>
-                <td>${data.AGM}</td>
-                <td>${data.Dividend}</td>
+            <div class='boxItem'>
+                <div class='headingRow innerRow'>
+                    <div class='innerCol1'>
+                        <h5 class='itemHeading'>${data.Company}</h5>
+                    </div>
+                    <div class='itemDeclarationDate innerCol2'>
+                        <p>Declaration Date:</p>
+                        <p>${data.DeclarationDate}</p>
+                    </div>
+                </div>
+                <div class='innerRow'>
+                    <div class='innerCol1'>
+                        <p>Record Date: </p>
+                    </div>
+                    <div class='innerCol2'>
+                        <p>${data.RecordDate}</p>
+                    </div>
+                </div>
+                <div class='innerRow'>
+                    <div class='innerCol1'>
+                        <p>AGM: </p>
+                    </div>
+                    <div class='innerCol2'>
+                        <p>${data.AGM}</p>
+                    </div>
+                </div>
+                <div class='footerRow innerRow'>
+                    <div class='innerCol1'>
+                        <p>Dividend: </p>
+                    </div>
+                    <div class='innerCol2'>
+                        <p>${data.Dividend}</p>
+                    </div>
+                </div>
+            </div>
             `;
             contentBody.querySelector('tbody').appendChild(newRow);
         }) 

@@ -15,22 +15,13 @@ async function executechildID_Details(data){
                 </div>
             </div>
 
-            <div class="container">
+            <div style='margin-bottom: 5px;' class="container">
                 <div class="total_stock" id="total_stock"></div>
             </div>
 
-            <div class="container">
+            <div onscroll="resetLogoutTimer()" class="container" style="flex: 1 auto;overflow-y: auto;">
                 <div class="allStock" id="allStock"></div>
             </div>
-
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
         `
     }
 
@@ -40,7 +31,7 @@ async function executechildID_Details(data){
             <tbody>
                 <tr>
                     <td>Total Stock Value</td>
-                    <td>${fetchedChildIdStocks.status === true ? fetchedChildIdStocks.totalStockVal : ''}</td>
+                    <td style='text-align: right;'>${fetchedChildIdStocks.status === true ? fetchedChildIdStocks.totalStockVal : ''}</td>
                 </tr>
             </tbody
         </table>
@@ -54,8 +45,8 @@ async function executechildID_Details(data){
                     <th>Sl</th>
                     <th>Company</th>
                     <th>Qty</th>
-                    <th>Ltp</th>
-                    <th>Stock<br>Value</th>
+                    <th>LTP</th>
+                    <th>Stock Value</th>
                 </tr>
             </tbody
         </table>
@@ -64,14 +55,20 @@ async function executechildID_Details(data){
         childIdDataDetails.forEach((data)=>{
             const newRow = document.createElement('tr')
             newRow.innerHTML=`
-                <td>${data.Sl}</td>
-                <td>${data.CompanyID}</td>
+                <td style='text-align: left;'>${data.Sl}</td>
+                <td style='text-align: left;'>${data.CompanyID}</td>
                 <td>${data.Quantity}</td>
                 <td>${data.LTP}</td>
-                <td>${data.StockValue}</td>
+                <td style="text-align:right">${data.StockValue}</td>
             `
             allStockBody.querySelector('tbody').appendChild(newRow)
             newRow.style.backgroundColor = data.GainLoss >= 0 ? (data.GainLoss > 0 ? '#04A41E' : '#fff') : '#FE0000'
+            if(parseFloat(data.GainLoss) !== 0){
+                const cells = newRow.getElementsByTagName("td");
+                for (let i = 0; i < cells.length; i++) {
+                    cells[i].style.color = "#fff"; 
+                }
+            }
         })
 
     }

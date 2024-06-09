@@ -12,7 +12,7 @@ async function executeScheduleCharges(){
             </div>
         </div>
 
-        <div class="chargeSection">
+        <div style='flex: 1 auto; height: 100%; overflow-y: auto;' class="chargeSection">
             <div class="container">
                 <div id='scheduleChargesItem'></div>
             </div>
@@ -22,9 +22,7 @@ async function executeScheduleCharges(){
 
     function renderAllCharges(){
         const contentBody = document.getElementById('scheduleChargesItem')
-        console.log(contentBody)
         data.forEach((item, index)=> {
-            console.log(item)
             const newDiv = document.createElement('div')
             newDiv.innerHTML=`
             <p style='padding: 5px' id='item1${index}'>${item.title}</p>

@@ -9,7 +9,7 @@ isVerifiedCacse(case_name, data)
   
 
 async function beforeRoute(js, case_name) {
-
+    
     if (beforeCurrentSection !== null) {
         await clearMemory();
     }
@@ -28,7 +28,10 @@ async function beforeRoute(js, case_name) {
         scriptElement.id = case_name;
         scriptElement.textContent = scriptCode;
         document.head.appendChild(scriptElement);
-
+        if(case_name){
+            const result = await saveLog('', 'index_'+case_name);
+            console.log(result,'============', 'index_'+case_name)
+         }
         beforeCurrentSection = case_name;
     }catch (error) {
         console.error(error);
@@ -40,7 +43,7 @@ async function clearMemory() {
     const script = document.head.getElementsByTagName('script');
     const scriptTagsArray = Array.from(script);
     scriptTagsArray.forEach(scriptTag => {
-        if (scriptTag.id !== 'boots' && scriptTag.id !== 'beforeRoute' && scriptTag.id !== 'fetch' && scriptTag.id !== 'index') {
+        if (scriptTag.id !== 'boots' && scriptTag.id !== 'beforeRoute' && scriptTag.id !== 'fetch' && scriptTag.id !== 'index' && scriptTag.id !== 'pdfJs1' && scriptTag.id !== 'pdfJs2') {
         scriptTag.parentNode.removeChild(scriptTag);
         }
     });
@@ -53,10 +56,12 @@ async function isVerifiedCacse(case_name, data){
         case 'B_marketStatus':
             await beforeRoute(`../component/${case_name}Component.js`)
             executeB_MarketStatus();
+            // await saveLog('', 'Index-Market Status')
             break;
         case 'B_sharePrice':
             await beforeRoute(`../component/${case_name}Component.js`)
             executeB_SharePrice();
+            // await saveLog('', 'Index-Share Price')
             break;
         case 'B_news':
             await beforeRoute(`../component/${case_name}Component.js`)
@@ -101,6 +106,10 @@ async function isVerifiedCacse(case_name, data){
         case 'B_jobApply':
             await beforeRoute(`../component/${case_name}Component.js`)
             executeB_jobApply(data);
+            break;
+        case 'B_aboutUs':
+            await beforeRoute(`../component/${case_name}Component.js`)
+            executeB_aboutUs();
             break;
     }
 }

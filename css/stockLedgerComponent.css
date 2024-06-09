@@ -15,9 +15,6 @@
     border-radius: 10px 10px 0px 0px;
     background-color: #e9ecefd9;
 }
-.section-availableStok-btn{
-    margin-top: 5px;
-}
 .section-availableStok{
     flex: 1;
     overflow-y: auto;
@@ -36,24 +33,33 @@
     align-items: center;
 }
 .stockBtn{
+    width: 48%;
+    text-align: center;
     padding: 5px 10px;
-    border: 3px solid #676a66e8;
+    border: 1px solid #676a66e8;
     border-radius: 10px;
 }
 .btnGroup > .active{
-    background-color: #5C5C5C;
-    padding: 5px 10px;
+    background-color: #030333;
+    padding: 5px 0px;
     border-radius: 10px;
 }
 .currentBtn,.stockBtn{
-    font-size: 16px;
+    font-size: 13px;
     color: white;
     font-family: sans-serif;
 }
 .currentStockBody,
 .oldStockBody{
-    position: relative;
-    padding: 0px 10px;
+    flex-direction: column;
+    height: 100%;
+}
+.currentStockBody > div:first-child,
+.oldStockBody > div:first-child{
+    background-color: #fff;
+    height: 100%;
+    overflow-y: auto;
+    padding: 0px 5px;
 }
 .stockBody{
     background-color: #fff;
@@ -61,7 +67,7 @@
 table{
     width: 100%;
     border-collapse: separate;
-    border-spacing: 0 10px;
+    border-spacing: 0 5px;
 }
 
 table > tbody > tr:first-child{
@@ -70,47 +76,40 @@ table > tbody > tr:first-child{
     background-color: black;
 }
 table > tbody > tr:first-child > th{
-    
+    overflow-wrap: break-word;
     color: #fff;
-    font-size: 16px;
-    padding: 5px 1px;
-}
-table > tbody > tr:first-child > th:first-child{
-    -webkit-padding-start: 10px;
-}
-table > tbody > tr:first-child > th:last-child{
-    -webkit-padding-end: 10px;
+    font-size: 14px;
+    padding: 5px 5px;
+    text-align: center;
 }
 
 table > tbody > tr > td{
-    font-weight: 700;
-    font-size: 15px;
-    padding: 10px 0px;
+    font-size: 13px;
+    padding: 5px 5px;
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
-    color: #000 !important;
+    color: #000 ;
+    overflow-wrap: break-word;
+    text-align: right;
 }
 table > tbody > tr > td:first-child{
-    -webkit-padding-start: 10px;
     border-left: 1px solid #000;
     border-radius: 15px 0px 0px 15px;
 }
 table > tbody > tr > td:last-child{
-    -webkit-padding-end: 10px;
     border-right: 1px solid #000;
     border-radius: 0px 15px 15px 0px;
 }
 .currentStockFooter,
 .oldStockFooter{
-    position: sticky;
-    bottom: 0;
     display: flex;
     background-color: #000;
     color: #fff;
     justify-content: space-between;
+    padding: 0px 5px;
 }
 .currentStockFooter > p,
 .oldStockFooter > p{
     padding: 5px 0px;
-    padding-right: 20px
+    font-size: 14px;
 }

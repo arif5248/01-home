@@ -10,113 +10,194 @@
     <script id="beforeRoute" src="../route//beforeRoute.js"></script>
     <script id="template" src="../js/template.js"></script>
     <script id="boots" src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script id="pdfJs1" src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+    <script id="pdfJs2" src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.worker.min.js"></script>
 
     <title>Document</title>
+    <script id="jQuery" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script id="jQueryUi" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link id='jQueryStyle' rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    
 </head>
 <body>
+    <div style="display: none;" id='overlayVideoChat' class="overlay"></div>
     <section class="beforeMainSection" style="height: 100vh; display: flex; flex-direction: column;" >
+        <div style="display: none;" id='popupOverlay' class="popupOverlay"></div>
+        <div style="display: none;" id="popUpSection" class=" popUpSection"></div>
+        <div style="display: none;" id="support-slide" class="support-slide">
+            <div class="support-content">
+                <div class="container supportHeading">
+                    <span></span>
+                    <h3 class="supportHeadingText">Support Team</h3>
+                    <span></span>
+                    <!-- <img style="width: 30px;" onclick="closeSupportTeam()" src="../images/icons/remove.png" alt="Close"> -->
+                </div>
+                <div class="container supportCall">
+                    <a href="tel:+8809678781212"><img src="../images/icons/call.jpg" alt="Call" class="supportIcon"> Call +88 096 7878 1212</a>
+                </div>
+                <div class="container ">
+                    <a href="tel:+8801810031200">+88 018 1003 1200</a>
+                </div>
+                <div class="container supportIconGroup">
+                    <a href="#"><img src="../images/icons/call.jpg" alt="Messenger" class="supportIcon"></a>
+                    <a href="#"><img src="../images/icons/messenger.png" alt="Messenger" class="supportIcon"></a>
+                    <a href="#"><img src="../images/icons/whatsapp.png" alt="WhatsApp" class="supportIcon"></a>
+                    <a href="#"><img src="../images/icons/viber.png" alt="Viber" class="supportIcon"></a>
+                    <a href="#"><img src="../images/icons/telegram.png" alt="Telegram" class="supportIcon"></a>
+                </div>
+                <div class="container supportCall">
+                    <a href="mailto:support@01.limited"><img src="../images/icons/email.png" alt="Call" class="supportIcon"> Email: support@01.limited</a>
+                </div>
+                <div class="container supportIconGroup">
+                    <div class="innerIconGroup" onclick="showSendMessage()">
+                        <a href="#" class="innerElement"><img src="../images/icons/comments.png" alt="Message" class="supportIcon"><span>Message</span></a>
+                    </div>
+                    <div class="innerIconGroup" onclick="showVideoChat()">
+                        <a href="#" class="innerElement"><img src="../images/icons/video-call.png" alt="Video Chat" class="supportIcon"><span>Video Chat</span></a>
+                    </div>
+                    <div class="innerIconGroup" onclick="window.open('https://tawk.to/chat/610a438bd6e7610a49ae8021/default/?$_tawk_popout=true' )">
+                        <a href="#" class="innerElement"><img src="../images/icons/live-chat.png" alt="Live Chat" class="supportIcon"><span>Live Chat</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="beforHeading" style="flex: 0 0 auto;">
             <nav class="navbar navbar-light bg-light fixed-top">
                 <div class="container-fluid">
                     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"     data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
                     <span class="navbar-toggler-icon"></span>
                     </button>
-                    <h3 id="page_heading"></h3>
-                    <div class="beforeHomeIcon" >
-                       <a href="../index.html">
-                            <img style="width: 35px; height: auto;" src="../images/icons/home-button.png" alt="Home">
-                       </a>
+                    <div onclick="window.location.href='../index.html'" class="logo-01" >
+                        <img style="width: 40px; height: auto;" src="../images/01.gif" alt="01">
+                    </div>
+                    <div onclick="showSupportTeam()" id="supportTeam" class="support-team-area" >
+                        <img style="width: 30px; height: auto;" src="../images/icons/customer-service.png" alt="Customer Service">
                     </div>
                 
                         <div class="offcanvas offcanvas-start" tabindex="1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                             <div class="offcanvas-header">
                                 <img class="offcanvas-title" id="offcanvasNavbarLabel" src="../images/01.gif" alt="01 ltd">
         
-                                <div class="appInfo" >
-                                        <span style="font-weight: bold;"> 01 APP </span>  <br> V 1.0.3 <br> 01 Limited
-                                        <div class="about01">
-                                        <h5><a style='text-decoration: none; color: #000;' href="./about01.html">About 01</a></h5>
-                                        </div>
+                                <div class="appInfo" style="text-align: left;">
+                                    <span style="font-weight: bold;"> 01 APP </span>  <br> V: 24.05.01 <br> 01 Limited
                                 </div>
                             </div>
                             <div class="offcanvas-body">
                                 <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" aria-current="page" href="../index.html">Login</a>
-                                        <hr>
+                                    
+                                    <li>Company
+                                        <ul style="list-style-type: none;">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" aria-current="page" href="template.html?case=B_aboutUs">About 01</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link active" aria-current="page" href="template.html?case=B_ourService">01 Services</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link active" aria-current="page" href="template.html?case=B_why01">Why 01</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link active" aria-current="page" href="template.html?case=B_payUs">How to Pay 01</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link active" aria-current="page" href="template.html?case=B_get01">Get 01 Technology</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link active" aria-current="page" href="template.html?case=B_careerWith01">Career With 01</a>
+                                            </li>
+                                        </ul>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link active" aria-current="page" href="template.html?case=B_marketStatus">Market Staus</a>
-                                        <hr>
+                                    <li>Market
+                                        <ul style="list-style-type: none;">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" aria-current="page" href="template.html?case=B_marketStatus">Market Status</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link active" aria-current="page" href="template.html?case=B_sharePrice">Share Price</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link active" aria-current="page" href="template.html?case=B_news">News</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link active" aria-current="page" href="template.html?case=B_ipo">IPO Information</a>
+                                            </li>
+                                        </ul>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link active" aria-current="page" href="template.html?case=B_sharePrice">Share Price</a>
-                                        <hr>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link active" aria-current="page" href="template.html?case=B_news">News</a>
-                                        <hr>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link active" aria-current="page" href="template.html?case=B_ipo">IPO Status</a>
-                                        <hr>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link active" aria-current="page" href="template.html?case=B_why01">Why 01</a>
-                                        <hr>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link active" aria-current="page" href="template.html?case=B_ourService">Our Service</a>
-                                        <hr>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link active" aria-current="page" href="template.html?case=B_payUs">How to Pay Us</a>
-                                        <hr>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link active" aria-current="page" href="template.html?case=B_get01">Get 01 Technology</a>
-                                        <hr>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link active" aria-current="page" href="template.html?case=B_promotions">Promotions</a>
-                                        <hr>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link active" aria-current="page" href="template.html?case=B_careerWith01">Career With 01</a>
-                                        <hr>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link active" aria-current="page" href="template.html?case=B_noti">Notifications</a>
-                                        <hr>
+                                    <li>Miscellaneous
+                                        <ul style="list-style-type: none;">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" aria-current="page" href="template.html?case=B_promotions">Promotions</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link active" aria-current="page" href="template.html?case=B_noti">Notifications</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link active" aria-current="page" href="#">Update App</a>
+                                            </li>
+                                        </ul>
                                     </li>
                                 </ul>
     
                             <div class="nav-socialIcon">
                                 <div class="icon">
-                                    <a href="#">
+                                    <a href="fb://profile/your_profile_id" onclick="openLink(event, 'https://www.facebook.com/01LimitedOfficial/')">
                                         <img style="width: 40px;  height: auto;" src="../images/icons/facebook.png" alt="facebook">
                                     </a>
                                 </div>
                                 <div class="icon">
-                                    <a href="#">
-                                        <img style="width: 40px;  height: auto;" src="../images/icons/instagram.png" alt="instagram">
+                                    <a href="instagram://user?username=01limited.official" onclick="openLink(event, 'https://www.instagram.com/01limited.official')">
+                                        <img style="width: 40px; height: auto;" src="../images/icons/instagram.png" alt="instagram">
                                     </a>
+                                    
                                 </div>
                                 <div class="icon">
-                                    <a href="#">
+                                    <a href="vnd.youtube://channel/UC9HG6DdFf9PBhpkqzTkp1Vw" target="_blank" rel="external">
                                         <img style="width: 40px;  height: auto;" src="../images/icons/youtube.png" alt="youtube">
                                     </a>
                                 </div>
                                 <div class="icon">
-                                    <a href="#">
+                                    <a href="https://www.linkedin.com/company/14480691/">
+                                        <img style="width: 40px; height: auto;" src="../images/icons/linkedin.png" alt="linkedin">
+                                    </a> 
+                                    <!-- <a href="linkedin://company/14480691" onclick="openLink(event, 'https://www.linkedin.com/company/14480691/')">
+                                        <img style="width: 40px; height: auto;" src="../images/icons/linkedin.png" alt="linkedin">
+                                    </a>                                     -->
+                                </div>
+                                <div class="icon">
+                                    <a href="https://twitter.com/01LimitedOfc" >
+                                        <img style="width: 40px;  height: auto;" src="../images/icons/twitter.png" alt="twitter">
+                                    </a>
+                                    <!-- <a href="twitter://user?screen_name=01LimitedOfc" onclick="openLink(event, 'https://twitter.com/01LimitedOfc')">
+                                        <img style="width: 40px;  height: auto;" src="../images/icons/twitter.png" alt="twitter">
+                                    </a> -->
+                                </div>
+
+
+                                <!-- <div class="icon">
+                                    <a href="https://www.facebook.com/01LimitedOfficial/" target="_blank">
+                                        <img style="width: 40px;  height: auto;" src="../images/icons/facebook.png" alt="facebook">
+                                    </a>
+                                </div>
+                                <div class="icon">
+                                    <a href="https://www.instagram.com/01limited.official/" target="_blank">
+                                        <img style="width: 40px;  height: auto;" src="../images/icons/instagram.png" alt="instagram">
+                                    </a>
+                                </div>
+                                <div class="icon">
+                                    <a href="https://www.youtube.com/channel/UC9HG6DdFf9PBhpkqzTkp1Vw" target="_blank">
+                                        <img style="width: 40px;  height: auto;" src="../images/icons/youtube.png" alt="youtube">
+                                    </a>
+                                </div>
+                                <div class="icon">
+                                    <a href="https://www.linkedin.com/company/14480691/" target="_blank">
                                         <img style="width: 40px;  height: auto;" src="../images/icons/linkedin.png" alt="linkedIn">
                                     </a>
                                 </div>
                                 <div class="icon">
-                                    <a href="#">
+                                    <a href="https://twitter.com/01LimitedOfc" target="_blank">
                                         <img style="width: 40px;  height: auto;" src="../images/icons/twitter.png" alt="twitter">
                                     </a>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -125,6 +206,43 @@
 
         </div>
         <div class="beforeMian" id="beforeMain" style="display: flex; flex-direction: column; flex: 1 1 auto; overflow-y: auto; height: 100%;"></div>
+        <div style="display: none;" class="sendMessageSection" id="sendMessageSection"></div>
+        <div style="display: none;" class="videoChatSection" id="videoChatSection"></div>
+        <div class="footerBtn" style="flex: 0 0 auto;">
+            <div style="border-right: 1px solid #000;" onclick="window.location.href = '../../index.html'" id="footerLoginBtn" class="footerLoginBtn">Log In</div>
+            <div onclick="window.location.href = '../../index.html?case=get01'" id="footerGet01Btn" class="footerGet01Btn">Get New ID</div>
+        </div>
     </section>
+    <!-- <a href="#" target="_parent"></a> -->
 </body>
+<script>
+    document.getElementById('popupOverlay').addEventListener('click', ()=>{
+        closeSupportTeam()
+    })
+    function openLink(event, fallbackUrl) {
+            // event.preventDefault();
+            // const link = event.currentTarget;
+            // const appUrl = link.getAttribute('href');
+
+            // // Try to open the app link
+            // window.location = appUrl;
+
+            // // If the app is not installed, open the fallback URL in the browser after a short delay
+            // setTimeout(() => {
+            //     window.location = fallbackUrl;
+            // }, 200);
+            const now = Date.now();
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
+            iframe.src = appUrl;
+
+            setTimeout(() => {
+                document.body.removeChild(iframe);
+                if (Date.now() - now < 1500) {
+                    window.location = fallbackUrl;
+                }
+            }, 1000);
+        }
+</script>
 </html>

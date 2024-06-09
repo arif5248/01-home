@@ -11,7 +11,7 @@
     display: flex;
     justify-content: space-between;
     padding: 5px 15px;
-    font-size: 16px;
+    font-size: 14px;
     color: #000;
     background-color: #e9ecef;
     margin-bottom: 5px;
@@ -23,6 +23,7 @@
     padding: 5px 10px;
     margin-bottom: 5px;
     border-radius: 5px;
+    font-size: 14px;
 }
 .profitLossSummary > .itemRow{
     display: flex;
@@ -44,19 +45,24 @@
     align-items: center;
 }
 .stockBtn{
-    padding: 8px 15px;
-    border: 3px solid #676a66e8;
+    padding: 8px 0px;
+    border: 1px solid #676a66e8;
     border-radius: 10px;
 }
 .btnGroup > .active{
-    background-color: #5C5C5C;
-    padding: 8px 15px;
+    background-color: #030333;
+    padding: 8px 0px;
     border-radius: 10px;
 }
-.currentBtn,.stockBtn{
+/* .currentBtn, */
+.stockBtn{
     font-size: 14px;
     color: white;
     font-family: sans-serif;
+    width: 48%;
+}
+.stockBtn > div{
+    text-align: center;
 }
 .currentStockBody,
 .oldStockBody{
@@ -75,12 +81,13 @@ table{
 
 table > tbody > tr > td{
     box-shadow: 0px 0px 5px 0px #000;
-    font-weight: 700;
-    font-size: 15px;
+    /* font-weight: 700; */
+    font-size: 13px;
     padding: 10px;
     border: 1px solid #000;
     border-radius: 10px;
     color: #000 !important;
+    overflow-wrap: anywhere;
 }
 
 .currentStockFooter,
@@ -101,6 +108,10 @@ table > tbody > tr > td{
 .top{
     border-bottom: 2px solid #000;
     margin-bottom: 15px;
+    padding: 0 10px;
+}
+.bottom{    
+    padding: 0 10px;
 }
 .topHead,
 .profit-loss,
@@ -110,17 +121,20 @@ table > tbody > tr > td{
     justify-content: space-between;
     align-items: center;
 }
+.bottom > div > p:first-child{
+    width: 10%;
+}
 .bottom > div > p{
     text-align: center;
-    width: 25%;
+    width: 30%;
 }
 .topHead{
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 .topHead>h2{
     margin: 0;
     font-weight: 700;
-    font-size: 20px;
+    font-size: 16px;
 
 }
 .profit-loss{
@@ -128,5 +142,7 @@ table > tbody > tr > td{
 }
 .bottom > div > p,
 .profit-loss > p{
-    font-weight: 600;
+    /* font-weight: 600; */
+    text-align: right;
+    
 }

@@ -1,4 +1,5 @@
-async function executeIpo(){
+async function executeIpo(data){
+    console.log(data)
     const { fetchedUpcomingIpo, fetchedRunningIpo, fetchedHistoryIpo } = await getIpo()
     const fetchedIpoName = await getIpoName(user.LoggedInInvestorId)
     const fetchedResultIpo = await getIpoResult(user.LoggedInInvestorId)
@@ -46,30 +47,110 @@ async function executeIpo(){
             
         })
     }
+    async function renderPDF(pdfUrl, containerId) {
+            var container = document.getElementById(containerId);
+            async function showLoader(){
+                document.getElementById('docBody').style.alignContent = 'center'
+                document.getElementById('docBody').style.backgroundColor = '#F1F2F3'
+                document.getElementById('pdfPreviewer').style.display = 'none'
+                document.getElementById('pdfLoader').style.display = 'block'
+                document.getElementById('pdfLoader').style.textAlign = 'center'
+                console.log('show loader')
+            }
+            async function hideLoader(){
+                document.getElementById('docBody').style.alignContent = 'center'
+                document.getElementById('docBody').style.backgroundColor = '#fff'
+                document.getElementById('pdfLoader').style.display = 'none'
+                document.getElementById('pdfPreviewer').style.display = 'block'
+                document.getElementById('pdfLoader').style.textAlign = 'center'
+                console.log('hide loader')
+
+            }
+            async function setUpPdf(){
+                await pdfjsLib.getDocument(pdfUrl).promise.then(function(pdf) {
+                    // Loop through each page
+                    for (var pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                      (function(pageNum) {
+                        pdf.getPage(pageNum).then(function(page) {
+                          var scale = 1;
+                          var viewport = page.getViewport({ scale: scale });
+                
+                          // Create a canvas element to render the PDF page
+                          var canvas = document.createElement('canvas');
+                          var context = canvas.getContext('2d');
+                
+                          // Set canvas dimensions
+                          canvas.height = viewport.height;
+                          canvas.width = viewport.width;
+                
+                          // Append canvas to the container
+                          container.appendChild(canvas);
+                
+                          // Render the page into the canvas context
+                          var renderContext = {
+                            canvasContext: context,
+                            viewport: viewport
+                          };
+                          page.render(renderContext).promise.then(function() {
+                            // Convert canvas to an image
+                            var img = new Image();
+                            img.src = canvas.toDataURL();
+                
+                            // Append the image to the container
+                            container.appendChild(img);
+                
+                            // Optionally, you can remove the canvas if you don't need it anymore
+                            canvas.remove();
+                          });
+                        });
+                      })(pageNum);
+                    }
+                  });
+            }
+            await showLoader()
+            await setUpPdf()
+            await hideLoader()
+            // Clear the container
+            // container.innerHTML = '';
+           
+            
+    }
     function ipo(){
         document.getElementById('mainContentSection').innerHTML = `
+            <div class="modal" id="PDFModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div id="imga" class="modal-body">
+                            <canvas id="pdfCanvas" style="width: 100%; height: 90vh;"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="pageHeading" id="financial-Heading">
                 <div class="heading" id="heading">
-                    <h1>Upcomimg & Running IPO</h1>
+                    <h1>${data}</h1>
                 </div>
             </div>
             <div class="btnGroup" id="btnGroup">
-                <div onclick="show('upcomingIpoContent')" class="Btn active" id="upcomimg">All IPO</div>
+                <div onclick="show('upcomingIpoContent')" class="Btn" id="Upcoming">All IPO</div>
                 <div onclick="show('historyIpoContent')" class="Btn" id="history">History</div>
                 <div onclick="show('applyIpoContent')" class="Btn" id="apply">Apply</div>
                 <div onclick="show('resultIpoContent')" class="Btn" id="result">Result</div>
             </div>
-            <div class="container allContent">
+            <div onscroll="resetLogoutTimer()" class="container allContent">
                 <div class="ipoContent" id='upcomingIpoContent'>
                     <div>
-                        <div class="heading" id="heading">
-                            <h1>Running IPO</h1>
+                        <div class="innerHeading">
+                            <h3>Running IPO</h3>
                         </div>
                         <div id='runningIPO'></div>
                     </div>
                     <div>
-                        <div class="heading" id="heading">
-                            <h1>Upcomimg IPO</h1>
+                        <div class="innerHeading">
+                            <h3>Upcoming IPO</h3>
                         </div>
                         <div id='upcomingIPO'></div>
                     </div>
@@ -78,7 +159,36 @@ async function executeIpo(){
                 <div class="ipoContent" id="applyIpoContent"></div>
                 <div class="ipoContent" id="resultIpoContent"></div>
             </div>
+            <div id="pdfModal" class="pdf-modal">
+                <div class="pdf-modal-content">
+                    <div class='docHeading'>
+                        <h5>Document Viewer</h5>
+                    </div>
+                    <div id='docBody' class='docBody'>
+                        
+                        <iframe id='pdfPreviewer'style="width: 100% !important; min-width: 100% !important; *width: 100% !important; max-width: 100% !important;  border: none; height: 100% !important; min-height: 100% !important; *height: 100% !important; max-height: 100% !important; "onload="window.parent.scrollTo(0,0)" allowtransparency="true" allowfullscreen="true" allow="geolocation; microphone; camera" frameborder="0" scrolling="yes"> </iframe>
+                        <div style='display: none;' id='pdfLoader'>
+                            <img style='width: 50px; height: auto;' src='../images/loading.gif' alt='loader'>
+                        </div>
+                    </div>
+                    <div id="closeModal" class="close"><p>CLOSE</p></div>
+                </div>
+            </div>
         `
+        if(data === 'IPO Application'){
+            document.getElementById('Upcoming').style.display = 'none';
+            document.getElementById('history').style.display = 'none';
+            document.getElementById('apply').classList.add('active');
+
+        }else{
+            document.getElementById('apply').style.display = 'none';
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('Upcoming').classList.add('active');
+
+        }
+        document.getElementById('closeModal').addEventListener('click', function () {
+            document.getElementById('pdfModal').style.display = 'none';
+        });
     }
 
     async function renderAllIpoContent(){
@@ -122,22 +232,22 @@ async function executeIpo(){
                             </tr>
                             <tr>
                                 <td>Price</td>
-                                <td>${ipo.Rate}</td>
+                                <td>${ipo.Rate.toLocaleString("en-IN")}</td>
                             </tr>
                             <tr>
                                 <td>Minimum Application<br>Amount (Tk)</td>
-                                <td>${ipo.Minamt}</td>
+                                <td>${ipo.Minamt.toLocaleString("en-IN")}</td>
                             </tr>
                             <tr>
                                 <td>Maximum Application<br>Amount (Tk)</td>
-                                <td>${ipo.MaxAmt === 0 ? '' : ipo.MaxAmt}</td>
+                                <td>${ipo.MaxAmt === 0 ? '' : ipo.MaxAmt.toLocaleString("en-IN")}</td>
                             </tr>
                             <tr>
                                 <td>Total Share</td>
-                                <td>${ipo.Share}</td>
+                                <td>${ipo.Share.toLocaleString("en-IN")}</td>
                             </tr><tr>
                                 <td>Total Value</td>
-                                <td>${ipo.Total_Value}</td>
+                                <td>${ipo.Total_Value.toLocaleString("en-IN")}</td>
                             </tr>
                             <tr>
                                 <td>IPO Type</td>
@@ -145,41 +255,54 @@ async function executeIpo(){
                             </tr>
                             <tr>
                                 <td>Quantity/Lot</td>
-                                <td>${ipo.Qty}</td>
+                                <td>${ipo.Qty.toLocaleString("en-IN")}</td>
                             </tr>
                             <tr>
                                 <td>NAV</td>
-                                <td>${ipo.NAV}</td>
+                                <td>${ipo.NAV.toLocaleString("en-IN")}</td>
                             </tr>
                             <tr>
                                 <td>EPS</td>
-                                <td>${ipo.EPS}</td>
+                                <td>${ipo.EPS.toLocaleString("en-IN")}</td>
                             </tr>
                             <tr>
                                 <td>Eligibility</td>
-                                <td>${ipo.Offer_Eligibility}</td>
+                                <td>${Number(ipo.Offer_Eligibility).toLocaleString("en-IN")}</td>
                             </tr>
                                 <td>Company Prospectus</td>
                                 <td>
-                                    <Button class="btn">
-                                        <a href='${ipo.Link_Prospectus}'>PDF</a>
-                                    </Button>
+                                    <div class='pdfViewBtn' id='RunningPdfViewerSum${index}'>View File</div>
                                 </td>
                             </tr>
                             </tr>
                                 <td>Summary</td>
                                 <td>
-                                    <Button class="btn">
-                                        <a href='${ipo.Link_Summary}'>PDF</a>
-                                    </Button>
+                                    <div class='pdfViewBtn' id='RunningPdfViewerSum${index}'>View File</div>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
+                    <div id='applyRunningIpo${index}' class='applyRunningIpo'><p>Apply IPO</p></div>
                 </div>
             `   
-        
                 ipoContentBody.appendChild(newDiv)
+                document.getElementById(`applyRunningIpo${index}`).addEventListener('click', ()=>{
+                    executeIpo('IPO Application')
+                })
+                document.getElementById(`RunningPdfViewerPros${index}`).addEventListener('click', ()=>{
+                    var pdfUrl = ipo.Link_Prospectus;
+                    // var pdfUrl = '../images/123.pdf';
+                    renderPDF(pdfUrl, 'pdfPreviewer');
+                    // document.getElementById('pdfIframe').setAttribute('src', pdfUrl);
+                    document.getElementById('pdfModal').style.display = 'block';
+                })
+                document.getElementById(`RunningPdfViewerSum${index}`).addEventListener('click', ()=>{
+                    var pdfUrl = ipo.Link_Summary;
+                    // var pdfUrl = '../images/123.pdf';
+                    renderPDF(pdfUrl, 'pdfPreviewer');
+                    // document.getElementById('pdfIframe').setAttribute('src', pdfUrl);
+                    document.getElementById('pdfModal').style.display = 'block';
+                })
                 let dynamicHeadingHeight = document.getElementById(`R_DynamicHeading_${index}`).offsetHeight;
                 document.getElementById(`R_ipoHeading_${index}`).style.height = dynamicHeadingHeight + 'px';
                 document.getElementById(`R_staticHeading_${index}`).style.height = '100%'
@@ -225,22 +348,22 @@ async function executeIpo(){
                                 </tr>
                                 <tr>
                                     <td>Price</td>
-                                    <td>${ipo.Rate}</td>
+                                    <td>${ipo.Rate.toLocaleString("en-IN")}</td>
                                 </tr>
                                 <tr>
                                     <td>Minimum Application<br>Amount (Tk)</td>
-                                    <td>${ipo.Minamt}</td>
+                                    <td>${ipo.Minamt.toLocaleString("en-IN")}</td>
                                 </tr>
                                 <tr>
                                     <td>Maximum Application<br>Amount (Tk)</td>
-                                    <td>${ipo.MaxAmt === 0 ? '' : ipo.MaxAmt}</td>
+                                    <td>${ipo.MaxAmt === 0 ? '' : ipo.MaxAmt.toLocaleString("en-IN")}</td>
                                 </tr>
                                 <tr>
                                     <td>Total Share</td>
-                                    <td>${ipo.Share}</td>
+                                    <td>${ipo.Share.toLocaleString("en-IN")}</td>
                                 </tr><tr>
                                     <td>Total Value</td>
-                                    <td>${ipo.Total_Value}</td>
+                                    <td>${ipo.Total_Value.toLocaleString("en-IN")}</td>
                                 </tr>
                                 <tr>
                                     <td>IPO Type</td>
@@ -248,42 +371,68 @@ async function executeIpo(){
                                 </tr>
                                 <tr>
                                     <td>Quantity/Lot</td>
-                                    <td>${ipo.Qty}</td>
+                                    <td>${ipo.Qty.toLocaleString("en-IN")}</td>
                                 </tr>
                                 <tr>
                                     <td>NAV</td>
-                                    <td>${ipo.NAV}</td>
+                                    <td>${ipo.NAV.toLocaleString("en-IN")}</td>
                                 </tr>
                                 <tr>
                                     <td>EPS</td>
-                                    <td>${ipo.EPS}</td>
+                                    <td>${ipo.EPS.toLocaleString("en-IN")}</td>
                                 </tr>
                                 <tr>
                                     <td>Eligibility</td>
-                                    <td>${ipo.Offer_Eligibility}</td>
+                                    <td>${Number(ipo.Offer_Eligibility).toLocaleString("en-IN")}</td>
                                 </tr>
+                                <tr>
                                     <td>Company Prospectus</td>
                                     <td>
-                                        <Button class="btn">
-                                            <a href='${ipo.Link_Prospectus}'>PDF</a>
-                                        </Button>
+                                        <div class='pdfViewBtn' id='upPdfViewerPros${index}'>View File</div>
                                     </td>
                                 </tr>
-                                </tr>
+                                <tr>
                                     <td>Summary</td>
                                     <td>
-                                        <Button class="btn">
-                                            <a href='${ipo.Link_Summary}'>PDF</a>
-                                        </Button>
+                                        <div class='pdfViewBtn' id='upPdfViewerSum${index}'>View File</div>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
+                        
                     </div>
                 `
-        
                 upcomingIpoContentBody.appendChild(newDiv)
-    
+                
+                document.getElementById(`upPdfViewerPros${index}`).addEventListener('click', ()=>{
+                    // var pdfUrl = ipo.Link_Prospectus;
+                    // // var pdfUrl = '../images/123.pdf';
+                    // renderPDF(pdfUrl, 'pdfPreviewer');
+                    // // document.getElementById('pdfIframe').setAttribute('src', pdfUrl);
+                    // document.getElementById('pdfModal').style.display = 'block';
+
+                    let url = ipo.Link_Prospectus
+                    const lastSlashIndex = url.lastIndexOf('/');
+
+                    // Split the URL into two parts
+                    const part1 = url.substring(0, lastSlashIndex + 1);
+                    const part2 = url.substring(lastSlashIndex + 1);
+
+                    
+                    var pdfUrl =part1+encodeURIComponent(part2);
+                    console.log(pdfUrl)
+                    // var pdfUrl = '../images/123.pdf';
+                    // renderPDF(pdfUrl, 'pdfPreviewer');
+                    document.getElementById('pdfPreviewer').setAttribute('src', pdfUrl);
+                    document.getElementById('pdfModal').style.display = 'block';
+                })
+                document.getElementById(`upPdfViewerSum${index}`).addEventListener('click', ()=>{
+                    var pdfUrl = ipo.Link_Summary;
+                    // var pdfUrl = '../images/123.pdf';
+                    renderPDF(pdfUrl, 'pdfPreviewer');
+                    // document.getElementById('pdfIframe').setAttribute('src', pdfUrl);
+                    document.getElementById('pdfModal').style.display = 'block';
+                })
                 let dynamicHeadingHeight = document.getElementById(`U_DynamicHeading_${index}`).offsetHeight;
                 document.getElementById(`U_ipoHeading_${index}`).style.height = dynamicHeadingHeight + 'px';
                 document.getElementById(`U_staticHeading_${index}`).style.height = '100%'
@@ -336,22 +485,22 @@ async function executeIpo(){
                             </tr>
                             <tr>
                                 <td>Price</td>
-                                <td>${ipo.Rate}</td>
+                                <td>${ipo.Rate.toLocaleString("en-IN")}</td>
                             </tr>
                             <tr>
                                 <td>Minimum Application<br>Amount (Tk)</td>
-                                <td>${ipo.Minamt}</td>
+                                <td>${ipo.Minamt.toLocaleString("en-IN")}</td>
                             </tr>
                             <tr>
                                 <td>Maximum Application<br>Amount (Tk)</td>
-                                <td>${ipo.MaxAmt === 0 ? '' : ipo.MaxAmt}</td>
+                                <td>${ipo.MaxAmt === 0 ? '' : ipo.MaxAmt.toLocaleString("en-IN")}</td>
                             </tr>
                             <tr>
                                 <td>Total Share</td>
-                                <td>${ipo.Share}</td>
+                                <td>${ipo.Share.toLocaleString("en-IN")}</td>
                             </tr><tr>
                                 <td>Total Value</td>
-                                <td>${ipo.Total_Value}</td>
+                                <td>${ipo.Total_Value.toLocaleString("en-IN")}</td>
                             </tr>
                             <tr>
                                 <td>IPO Type</td>
@@ -359,50 +508,66 @@ async function executeIpo(){
                             </tr>
                             <tr>
                                 <td>Quantity/Lot</td>
-                                <td>${ipo.Qty}</td>
+                                <td>${ipo.Qty.toLocaleString("en-IN")}</td>
                             </tr>
                             <tr>
                                 <td>NAV</td>
-                                <td>${ipo.NAV}</td>
+                                <td>${ipo.NAV.toLocaleString("en-IN")}</td>
                             </tr>
                             <tr>
                                 <td>EPS</td>
-                                <td>${ipo.EPS}</td>
+                                <td>${ipo.EPS.toLocaleString("en-IN")}</td>
                             </tr>
                             <tr>
                                 <td>Eligibility</td>
-                                <td>${ipo.Offer_Eligibility}</td>
+                                <td>${Number(ipo.Offer_Eligibility).toLocaleString("en-IN")}</td>
                             </tr>
                                 <td>Company Prospectus</td>
                                 <td>
-                                    <Button class="btn">
-                                        <a href='${ipo.Link_Prospectus}'>PDF</a>
-                                    </Button>
+
+                                    <div class='pdfViewBtn' id='pdfViewer${index}'>View File</div>
                                 </td>
                             </tr>
                             </tr>
                                 <td>Summary</td>
                                 <td>
-                                    <Button class="btn">
-                                        <a href='${ipo.Link_Summary}'>PDF</a>
-                                    </Button>
+                                    <div onclick="GetPDF('${ipo.Link_Summary}')" class='pdfViewBtn'>View File</div>
+                               
+                                    <div style="display:none" class='pdfViewBtn' id='pdfViewerSum${index}'>View File</div>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             `
+            
+
             historyIpoContentBody.appendChild(newDiv)
             let dynamicHeadingHeight = document.getElementById(`history_dynamicHeading_${index}`).offsetHeight;
             document.getElementById(`historyIpoHeading_${index}`).style.height = dynamicHeadingHeight + 'px';
             document.getElementById(`history_staticHeading_${index}`).style.height = '100%'
 
+            document.getElementById(`pdfViewer${index}`).addEventListener('click', ()=>{
+                var pdfUrl = ipo.Link_Prospectus;
+                // var pdfUrl = '../images/123.pdf';
+                renderPDF(pdfUrl, 'pdfPreviewer');
+                // document.getElementById('pdfIframe').setAttribute('src', pdfUrl);
+                document.getElementById('pdfModal').style.display = 'block';
+            })
+            document.getElementById(`pdfViewerSum${index}`).addEventListener('click', ()=>{
+                var pdfUrl = ipo.Link_Summary;
+                // var pdfUrl = '../images/123.pdf';
+                renderPDF(pdfUrl, 'pdfPreviewer');
+                // document.getElementById('pdfIframe').setAttribute('src', pdfUrl);
+                document.getElementById('pdfModal').style.display = 'block';
+            })
         })
     }
     function renderApplyIpoContent(){
-        const today =  new Date().toISOString().split('T')[0];
+        let today = new Date().toISOString().split('T')[0];
+        today = customDateConverter(today, 'defaultToCustom');
         
-        const ipoContentBody = document.getElementById('applyIpoContent')
+        const ipoContentBody = document.getElementById('applyIpoContent');
         ipoContentBody.innerHTML = `
             <div style='display: none' id = 'NoIpoRunning_overlay'> </div>
             <div style='display: none' id='NoIpoRunning'></div>
@@ -415,7 +580,7 @@ async function executeIpo(){
                     </div>
                     <div class="box-data">
                         <label for="appDate">Application Date</label>
-                        <input type="date" id="appDate" name="appDate" value= '${today}' required readonly>
+                        <input type="text" id="appDate" name="appDate" value= '${today}' required readonly>
                     </div>
                 </div>
 
@@ -427,7 +592,7 @@ async function executeIpo(){
                     <div class="box-data">
                         <label for="ipoName">IPO Name</label>
                         <select id="ipoName" name="ipoName" required>
-                            <option value="default">--Choose Ipo--</option>
+                            <option value="default">--Choose IPO--</option>
                         </select>
                     </div>
                     <div class="box-data">
@@ -450,8 +615,10 @@ async function executeIpo(){
                     </div>
                     <div class="box-data">
                         <label for="confirmation">Confirmation</label>
-                        <input class="checkbox" type="checkbox" id="confirmation" name="confirmation" required>
-                        <label for="confirmation">I Agree</label>
+                        <div>
+                            <input class="checkbox" type="checkbox" id="confirmation" name="confirmation" required>
+                            <label for="confirmation">I Agree</label>
+                        </div>
                     </div>
                     <div style='text-align: center; height: 40px;' id='showErrorInIpoApply'></div>
                     <div class="submit-box">
@@ -464,12 +631,11 @@ async function executeIpo(){
                 document.getElementById('NoIpoRunning_overlay').style.display = 'block'
                 document.getElementById('NoIpoRunning').style.display = 'block'
                 document.getElementById('NoIpoRunning').innerHTML=`
-                    <p>Error</p>
-                    <p>${fetchedIpoName.message}</P>
-                    <hr style='opacity: 1;'>
-                    <div style='margin-top: 5px;color: #0f0f87;font-weight: 600;' id='cancelBtn' onclick='closeNoError()'>OK</div>
+                    <h5>Information</h5>
+                    <p style="padding: 10px 0px;">${fetchedIpoName.message}</P>
+                    <div class='cancelBtn' onclick='closeNoError()'> <p>OK</p></div>
                 `
-                
+                document.getElementById('NoIpoRunning_overlay').addEventListener('click', closeNoError)
 
             }
             const ipoNameElement = document.getElementById('ipoName')
@@ -504,7 +670,7 @@ async function executeIpo(){
                                 <td>${ipo.ipo}</td>
                             </tr>
                             <tr>
-                                <td>Applicant Id</td>
+                                <td>Applicant ID</td>
                                 <td>${ipo.id}</td>
                             </tr>
                             <tr>
@@ -544,11 +710,18 @@ async function executeIpo(){
     renderHistoryIpoContent()
     renderApplyIpoContent()
     renderResultIpoContent()
-
-    document.getElementById('upcomingIpoContent').style.display = 'block'
     document.getElementById('historyIpoContent').style.display = 'none'
-    document.getElementById('applyIpoContent').style.display = 'none'
     document.getElementById('resultIpoContent').style.display = 'none'
+    document.getElementById('applyIpoContent').style.display = 'none'
+    document.getElementById('upcomingIpoContent').style.display = 'none'
+
+    if(data === 'IPO Application'){
+        document.getElementById('applyIpoContent').style.display = 'block'
+    }else{
+        document.getElementById('upcomingIpoContent').style.display = 'block'
+    }
+    
+    
 
     document.getElementById('ipoApplyForm').addEventListener('submit', async (event) => {
         event.preventDefault();
@@ -594,11 +767,11 @@ async function executeIpo(){
                 document.getElementById('NoIpoRunning_overlay').style.display = 'block';
                 document.getElementById('NoIpoRunning').style.display = 'block';
                 document.getElementById('NoIpoRunning').innerHTML=`
-                    <p>Error</p>
-                    <p>Insufficient IPO Balance</p>
-                    <hr style='opacity: 1;'>
-                    <div style='margin-top: 5px;color: #0f0f87;font-weight: 600;' id='cancelBtn' onclick='closeNoError()'>OK</div>
+                    <h5>Information</h5>
+                    <p style="padding: 10px 0px;">Insufficient IPO Balance</p>
+                    <div class='cancelBtn' onclick='closeNoError()'> <p>OK</p></div>
                 `;    
+                document.getElementById('NoIpoRunning_overlay').addEventListener('click', closeNoError)
             }
         }
     })
@@ -655,6 +828,28 @@ function closeNoError(){
     document.getElementById('applyIpoContent').style.overflowY = 'auto'
     document.getElementById('applyIpoContent').style.overscrollBehaviorY = 'auto'
 }
+function GetPDF(pdfUrl) {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.worker.min.js';
+             
+    var loadingTask = pdfjsLib.getDocument(pdfUrl);
+          loadingTask.promise.then(function(pdf) {
+              pdf.getPage(1).then(function(page) {
+                  var scale = .7;
+                  var viewport = page.getViewport({ scale: scale });
 
+                  var canvas = document.getElementById('pdfCanvas');
+                  var context = canvas.getContext('2d');
+                  canvas.height = viewport.height;
+                  canvas.width = viewport.width;
+
+                  var renderContext = {
+                      canvasContext: context,
+                      viewport: viewport
+                  };
+                  page.render(renderContext);
+              });
+          });
+          $('#PDFModal').modal('show');
+      }
 
 

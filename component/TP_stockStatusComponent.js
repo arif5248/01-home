@@ -1,7 +1,6 @@
 async function executeTP_StockStatus(data){
     const fetchedClientDetails = await get_CLIENTDET_()
-    let TP_stockStatus
-    
+    let TP_stockStatus = []
     if(fetchedClientDetails.success === true){
         TP_stockStatus = fetchedClientDetails.Stocks
     }
@@ -33,10 +32,10 @@ async function executeTP_StockStatus(data){
          `
             <table>
                 <tr>
-                    <th>Company</th>
-                    <th>Stock</th>
-                    <th>LTP</th>
-                    <th>Value</th>
+                    <th style="text-align:left">Company</th>
+                    <th style="text-align:right">Stock</th>
+                    <th style="text-align:right">LTP</th>
+                    <th style="text-align:right">Value</th>
                 </tr>
             </table>
         `;
@@ -44,10 +43,10 @@ async function executeTP_StockStatus(data){
             const newRow = document.createElement('tr');
     
             newRow.innerHTML = `
-                <td>${data.Scrip}</td>
-                <td>${data.Qt}</td>
-                <td>${data.LTP}</td>
-                <td>${data.Valu}</td>
+                <td style="text-align:left">${data.Scrip}</td>
+                <td style="text-align:right">${parseInt(data.Qt).toLocaleString("en-IN")}</td>
+                <td style="text-align:right">${data.LTP}</td>
+                <td style="text-align:right">${parseInt(data.Valu).toLocaleString("en-IN")}</td>
             `;
         tableBody.querySelector('tbody').appendChild(newRow);
         newRow.addEventListener('click', handleClick(data.Scrip))

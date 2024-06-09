@@ -75,8 +75,8 @@ async function executeTP_marketMover(){
         upArray.forEach((data, index)=>{
             const newRow = document.createElement('tr')
             newRow.innerHTML=`
-                <td class='topGainerFontColor'>${index + 1}</td>
-                <td class='topGainerFontColor'>${data.sNam}</td>
+                <td style='text-align:left;' class='topGainerFontColor'>${index + 1}</td>
+                <td style='text-align:left; class='topGainerFontColor'>${data.sNam}</td>
                 <td class='topGainerFontColor'>${data.LTP}</td>
                 <td class='topGainerFontColor'>${data.sData}</td>
             `
@@ -108,8 +108,8 @@ async function executeTP_marketMover(){
         dnArray.forEach((data, index)=>{
             const newRow = document.createElement('tr')
             newRow.innerHTML=`
-                <td class='topLooserFontColor'>${index + 1}</td>
-                <td class='topLooserFontColor'>${data.sNam}</td>
+                <td style='text-align:left; class='topLooserFontColor'>${index + 1}</td>
+                <td style='text-align:left; class='topLooserFontColor'>${data.sNam}</td>
                 <td class='topLooserFontColor'>${data.LTP}</td>
                 <td class='topLooserFontColor'>${data.sData}</td>
             `
@@ -139,8 +139,8 @@ async function executeTP_marketMover(){
         valArray.forEach((data, index)=>{
             const newRow = document.createElement('tr')
             newRow.innerHTML=`
-                <td>${index + 1}</td>
-                <td>${data.sNam}</td>
+                <td style='text-align:left;'>${index + 1}</td>
+                <td style='text-align:left;'>${data.sNam}</td>
                 <td>${data.LTP}</td>
                 <td>${data.sData}</td>
             `
@@ -172,8 +172,8 @@ async function executeTP_marketMover(){
         volArray.forEach((data, index)=>{
             const newRow = document.createElement('tr')
             newRow.innerHTML=`
-                <td>${index + 1}</td>
-                <td>${data.sNam}</td>
+                <td style='text-align:left;'>${index + 1}</td>
+                <td style='text-align:left;'>${data.sNam}</td>
                 <td>${data.LTP}</td>
                 <td>${data.sData}</td>
             `

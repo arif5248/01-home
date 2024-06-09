@@ -15,17 +15,19 @@
 .customTable > tbody > tr > th{
   text-align: center;
   color: #000 !important;
+  font-size: 14px;
 }
 .customTable > tbody > tr > td{
   color: #000 !important;
   text-align: center !important;
+  font-size: 14px;
 }
 .verticaclAlign{
   vertical-align: middle !important;
 }
 .dataBox{
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 }
 .allButton{
@@ -35,8 +37,10 @@
 .allBtn{
   border: 1px solid black;
   border-radius: 5px;
-  width: 30%;
+  width: 32%;
   height: 35px;
+  font-size: 14px;
+  text-align: center;
 }
 .MS_searchRow{
   display: flex;
@@ -67,7 +71,7 @@
 .MS_table > table{
   width: 100%;
   border-collapse: separate;
-  border-spacing: 0 10px;
+  border-spacing: 0 5px;
   overflow-y: auto;
 }
 .MS_table > table > tbody > tr:first-child{
@@ -76,34 +80,29 @@
   background-color: black;
 }
 .MS_table > table > tbody > tr:first-child > th{
-  
   color: #fff;
-  font-size: 15px;
-  padding: 5px 1px;
+  font-size: 14px;
+  padding: 5px 5px;
   text-align: center;
+  overflow-wrap: break-word;
 }
-.MS_table > table > tbody > tr:first-child > th:first-child{
-  -webkit-padding-start: 10px;
-}
-.MS_table > table > tbody > tr:first-child > th:last-child{
-  -webkit-padding-end: 10px;
-}
+
 .MS_table > table > tbody > tr > td{
-  font-weight: 700;
   font-size: 13px;
-  padding: 10px 0px;
+  padding: 5px 5px;
   border-top: 1px solid #000;
   border-bottom: 1px solid #000;
-  color: #000 !important;
-  text-align: center;
+  color: #000 ;
+  text-align: right;
+  overflow-wrap: break-word;
 }
 .MS_table > table > tbody > tr > td:first-child{
-  -webkit-padding-start: 10px;
+  padding-left: 10px;
   border-left: 1px solid #000;
   border-radius: 15px 0px 0px 15px;
 }
 .MS_table > table > tbody > tr > td:last-child{
-  -webkit-padding-end: 10px;
+  padding-right: 10px;
   border-right: 1px solid #000;
   border-radius: 0px 15px 15px 0px;
 }
@@ -111,7 +110,7 @@
 
 
 /*-----------------Bootstrap class-------------------*/
-.fixed-top{
+/* .fixed-top{
     z-index: 8 !important;
 }
 .bg-light{
@@ -135,4 +134,4 @@
 .offcanvas-start.show {
     transform: translateX(0);
     width: 80%; 
-}
+} */

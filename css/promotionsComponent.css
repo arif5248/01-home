@@ -1,0 +1,65 @@
+.promotions_item{
+    box-shadow: 0px 0px 5px 0px #000;
+    margin: 10px 0px;
+    border-radius: 5px;
+    background-color: #fff;
+}
+.promotionsDetailsBtn{
+    display: flex;
+    justify-content: flex-end;
+    padding: 5px 5px;
+}
+.promotionsDetailsBtnInner{
+    background-color: #3ABBF4;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 5px;
+}
+#promotionsDetails_content{
+    flex-direction: column;
+}
+.promotionDetailBox > .itemBox {
+    display: flex;
+}
+.promotionDetailBox > div > p:first-child{
+    font-weight: 600;
+    padding-right: 10px
+}
+#promotionsDetailsSection{
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 90%;
+    height: 70vh;
+    overflow-y: auto;
+    background-color: #fff;
+    border-radius: 10px;
+    z-index: 1001;
+}
+#closePromotionDetails{
+    text-align: center;
+    flex: 0 auto;
+    border-top: 1px solid #000;
+    padding: 5px 0px;
+    box-shadow: 0px 0px 5px 1px #000;
+}
+#closePromotionDetails > p{
+    background-color: red;
+    color: #fff;
+    margin: 0px 10px;
+    border-radius: 5px;
+    padding: 5px 0px;
+    font-size: 14px;
+}
+.promotionsDetailsHeading{
+    text-align: center;
+    background-color: #000;
+    color: #fff;
+    border-radius: 10px 10px 0px 0px;
+    padding: 7px 0px;
+}
+.promotionsDetailsHeading  > h5{
+    font-size: 16px;
+}

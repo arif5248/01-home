@@ -6,51 +6,48 @@ async function executeB_SharePrice(){
 
     function handleClick(script){
         return function (event){
-            // route('../component/priceHistoryComponent.js', '../css/priceHistoryComponent.css', 'priceHistory', script)
             window.location.href = `../mainPage/template.html?case=B_priceHistory&data=${script}`
         }
     }
 
     function B_marketStatus(){
-        document.getElementById('page_heading').innerHTML=`Share Price`
         document.getElementById('beforeMain').innerHTML = `
-            <div class="container">
-                <div class="buttonRow">
-                    <div class="allButton">
-                        <select id='MS_selectType' class="allBtn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <option>Select type</option>
-                        </select>
-                        <select id='MS_selectSector' class="allBtn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <option>Select Sector</option>
-                        </select>
-                        <select id='MS_selectSort' class="allBtn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <option>Select Sort</option>
-                        </select>
+        <h3 id="page_heading">Share Price</h3>
+        <div class="container">
+            <div class="buttonRow">
+                <div class="allButton">
+                    <select id='MS_selectType' class="allBtn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <option>Select Type</option>
+                    </select>
+                    <select id='MS_selectSector' class="allBtn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <option>Select Sector</option>
+                    </select>
+                    <select id='MS_selectSort' class="allBtn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <option>Select Sort</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="searchBox">
+                <div class="MS_searchRow">
+                    <div style="width: 90%; height:auto" class="MS_searchBox">
+                        <input id='searchSharePrice' type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="searchIcon">
+                        <img class="MS_searchIcon" style="width: 20px; height:auto" src="../images/icons/magnifying-glass.png" alt="search icon">
+                    </div>
+                    <div id='MS_Reload' class="reload">
+                        <img style="width: 30px; height:auto" src="../images/icons/reload.png" alt="Reload">
                     </div>
                 </div>
             </div>
+        </div>
 
+        <div class="companyDataSection" style='flex: 1 auto; overflow-y: auto'>
             <div class="container">
-                <div class="searchBox">
-                    <div class="MS_searchRow">
-                        <div style="width: 90%; height:auto" class="MS_searchBox">
-                            <input id='searchSharePrice' type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="searchIcon">
-                            <img class="MS_searchIcon" style="width: 20px; height:auto" src="../images/icons/magnifying-glass.png" alt="search icon">
-                        </div>
-                        <div id='MS_Reload' class="reload">
-                            <img style="width: 30px; height:auto" src="../images/icons/reload.png" alt="Reload">
-                        </div>
-                    </div>
-                </div>
+                <div class="SP_table" id="MS_table"></div>
             </div>
-
-            <div class="companyDataSection" style='flex: 1 auto; overflow-y: auto'>
-                <div class="container">
-                    <div class="SP_table" id="MS_table"></div>
-                </div>
-            </div>
-       
-
+        </div>
     `
     }
 
@@ -96,7 +93,7 @@ async function executeB_SharePrice(){
             const newRow = document.createElement('tr');
             newRow.classList.add('MS_sharePrice')
             newRow.innerHTML = `
-                <td>${data.symbol}</td>
+                <td style='text-align: left;'>${data.symbol}</td>
                 <td>${data.ltp}</td>
                 <td>${data.ycp}</td>
                 <td>${data.change}</td>
@@ -104,6 +101,12 @@ async function executeB_SharePrice(){
         tableBody.querySelector('tbody').appendChild(newRow);
         newRow.style.backgroundColor =parseFloat(data.change) >= 0 ? (parseFloat(data.change) > 0 ? '#04A41E' : '#fff' ): '#FE0000'
         newRow.addEventListener('click', handleClick(data.symbol))
+        if(parseFloat(data.change) !== 0){
+            const cells = newRow.getElementsByTagName("td");
+            for (let i = 0; i < cells.length; i++) {
+                cells[i].style.color = "#fff"; 
+            }
+        }
     });
     }
     B_marketStatus()
@@ -118,13 +121,13 @@ async function executeB_SharePrice(){
         let selectSort = document.getElementById('MS_selectSort').value
         let selectSector = document.getElementById('MS_selectSector').value
 
-        if(selectType !== 'Select type' || selectSort !== 'Select Sort' || selectSector !== 'Select Sector'){
+        if(selectType !== 'Select Type' || selectSort !== 'Select Sort' || selectSector !== 'Select Sector'){
             if(selectSort !== 'Select Sort'){
                 const sortedMS_tableData = await getSharePrice(selectSort)
                 MS_tableData = sortedMS_tableData.status === true ? sortedMS_tableData.CurrentSharePrice : []
                 
                 
-                if(selectType !== 'Select type' && selectSector !== 'Select Sector'){
+                if(selectType !== 'Select Type' && selectSector !== 'Select Sector'){
                     if(selectType === 'CSE Shariah Shares'){
                         MS_sortedTableData = MS_tableData.filter(function(item) {
                             return item.shariah === '1';
@@ -137,7 +140,7 @@ async function executeB_SharePrice(){
                     });
                     
                 }
-                else if(selectType !== 'Select type'){
+                else if(selectType !== 'Select Type'){
                     if(selectType === 'CSE Shariah Shares'){
                         MS_sortedTableData = MS_tableData.filter(function(item) {
                             return item.shariah === '1';
@@ -153,7 +156,7 @@ async function executeB_SharePrice(){
                 }
                 renderMS_table()
             }else{
-                if(selectType !== 'Select type' && selectSector !== 'Select Sector'){
+                if(selectType !== 'Select Type' && selectSector !== 'Select Sector'){
                     if(selectType === 'CSE Shariah Shares'){
                         MS_sortedTableData = MS_tableData.filter(function(item) {
                             return item.shariah === '1';
@@ -166,7 +169,7 @@ async function executeB_SharePrice(){
                     });
                     
                 }
-                else if(selectType !== 'Select type'){
+                else if(selectType !== 'Select Type'){
                     if(selectType === 'CSE Shariah Shares'){
                         MS_sortedTableData = MS_tableData.filter(function(item) {
                             return item.shariah === '1';
@@ -201,7 +204,7 @@ async function executeB_SharePrice(){
                 const newRow = document.createElement('tr');
                 newRow.classList.add('MS_sharePrice')
                 newRow.innerHTML = `
-                    <td>${data.symbol}</td>
+                    <td style='text-align: left;'>${data.symbol}</td>
                     <td>${data.ltp}</td>
                     <td>${data.ycp}</td>
                     <td>${data.change}</td>
@@ -225,7 +228,7 @@ async function executeB_SharePrice(){
             const newRow = document.createElement('tr');
             newRow.classList.add('MS_sharePrice')
             newRow.innerHTML = `
-                <td>${data.symbol}</td>
+                <td style='text-align: left;'>${data.symbol}</td>
                 <td>${data.ltp}</td>
                 <td>${data.ycp}</td>
                 <td>${data.change}</td>

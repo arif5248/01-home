@@ -26,12 +26,6 @@ body, html {
     z-index: 10;
     margin-bottom: 0px;
 }
-.about01 >h5{
-    margin-top: 30px;
-}
-.about01 >h5>a{
-    color: blue;
-}
 
 .navbar {
     display: inline-block;
@@ -97,7 +91,7 @@ h1{
     position: sticky;
     top: 0;
     display: flex;
-    background-color: #dee2e6;
+    background-color: #e9ecef;
     padding: 7px 0px;
     align-items: center;
     align-content: center;
@@ -105,8 +99,9 @@ h1{
     border-radius: 5px;
     justify-content: space-evenly;
 }
-.active{
-    background-color: white;
+.newsBtnGroup > .active{
+    background-color: #030333;
+    color: #fff;
 }
 .btn:focus{
     box-shadow: none;
@@ -125,8 +120,11 @@ h1{
     position: relative;
 }
 #showMediaNewsDetails{
-    margin-top: -55px;
-    z-index: 1;
+    position: absolute;
+    top: 50vh;
+    left: 50vw;
+    transform: translateX(-50%) translateY(-50%);
+    z-index: 1005;
     width: 100vw;
     flex-direction: column;
     align-items: center;
@@ -138,6 +136,9 @@ h1{
     box-shadow: 0px 0px 5px 3px #000;
     border-radius: 10px;
     margin-bottom: 10px;
+    height: 75vh;
+    display: flex;
+    flex-direction: column;
 }
 .close{
     display: flex;
@@ -164,15 +165,23 @@ h1{
     box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.273);
 }
 .exchangeHeading{
-    background-color: #0d6efd;
+    background-color: #000;
     padding: 5px;
     text-align: center;
     border-radius: 5px 5px 0px 0px;
 }
 .exchangeHeading > h4{
     font-weight: 400;
-    font-size: 22px;
+    font-size: 14px;
     color: white;
+    margin: 0;
+    padding: 3px 0px;
+}
+.newsSourceDate{
+    font-size: 12px;
+}
+.selectedNewsBodyDetails{
+    font-size: 14px;
 }
 .newsImage{
     display: flex;
@@ -228,7 +237,7 @@ h1{
     padding: 5px 0px;
 }
 .allCompanyList{
-    margin-top: 5px;
+    margin-top: 35px;
     list-style-type: none;
     max-height: 200px;
     overflow-y: auto;
@@ -252,7 +261,39 @@ h1{
 .close_img_Box.hidden {
     transform: translateY(-50px); /* Change this value according to your needs */
 }
+.newsBtnGroup > div{
+    border: 1px solid #0000005b;
+    border-radius: 10px;
+    font-size: 12px;
+    padding: 8px 0px;
+    width: 32%;
+    text-align: center;
+    font-weight: 500;
+}
 
-
-
+#closeNewsDetails{
+    text-align: center;
+    flex: 0 auto;
+    border-top: 1px solid #000;
+    padding: 5px 0px;
+    box-shadow: 0px 0px 5px 1px #000;
+}
+#closeNewsDetails > p{
+    background-color: red;
+    color: #fff;
+    margin: 0px 10px;
+    border-radius: 5px;
+    padding: 5px 0px;
+    font-size: 14px;
+}
+.newsDetailsHeading{
+    text-align: center;
+    background-color: #000;
+    color: #fff;
+    border-radius: 10px 10px 0px 0px;
+    padding: 7px 0px;
+}
+.newsDetailsHeading  > h5{
+    font-size: 16px;
+}
 

@@ -15,10 +15,10 @@ async function executechildID(){
                 </div>
             </div>
 
-            <div class="container">
+            <div style='margin-bottom: 5px;' class="container">
                 <div class="summuryChildID" id="summuryChildID"></div>
             </div>
-            <div class="container" style="flex: 1 auto;overflow-y: auto;">
+            <div onscroll="resetLogoutTimer()" class="container" style="flex: 1 auto;overflow-y: auto;">
                 <div class="allChildID" id="allChildID"></div>
             </div> 
         `
@@ -26,7 +26,6 @@ async function executechildID(){
 
     function renderSummuryChildID(){
         let summaryData ={}
-        if(fetchedChildPortfolio.status === true){
             summaryData = {
                 totalId : fetchedChildPortfolio.Data.length,
                 totalMainBal: fetchedChildPortfolio.totalMainBal,
@@ -35,32 +34,30 @@ async function executechildID(){
                 totalStockVal: fetchedChildPortfolio.totalStockVal,
                 totalPortVal: fetchedChildPortfolio.totalPortVal,
             }
-            
-        }
         const tableData = document.getElementById('summuryChildID')
         tableData.innerHTML =  `
 
         <table class="table table-bordered">
             <tbody>
                 <tr>
-                    <td>Total Id</td>
-                    <td>${summaryData.totalId}</td>
+                    <td>Total ID</td>
+                    <td style='text-align: right'>${summaryData.totalId}</td>
                     <td>Profit <br> Balance</td>
-                    <td>${summaryData.totalProfitBal}</td>
+                    <td style='text-align: right'>${summaryData.totalProfitBal}</td>
                 </tr>
 
                 <tr>
                     <td>Main <br> Balance</td>
-                    <td>${summaryData.totalMainBal}</td>
+                    <td style='text-align: right'>${summaryData.totalMainBal}</td>
                     <td>Stock <br> Balance</td>
-                    <td>${summaryData.totalStockVal}</td>
+                    <td style='text-align: right'>${summaryData.totalStockVal}</td>
                 </tr>
 
                 <tr>
                     <td>Mature <br> Balance</td>
-                    <td>${summaryData.totalMatBal}</td>
+                    <td style='text-align: right'>${summaryData.totalMatBal}</td>
                     <td>Profolio <br> Value</td>
-                    <td>${summaryData.totalPortVal}</td>
+                    <td style='text-align: right'>${summaryData.totalPortVal}</td>
                 </tr>
             </tbody
         </table>
@@ -77,35 +74,35 @@ async function executechildID(){
                 <table>
                     <tbody>
                         <tr>
-                            <td>Id</td>
+                            <td>ID</td><td>: &nbsp;</td>
                             <td>${childID.InvestorID}</td>
                         </tr>
                         <tr>
-                            <td>Name</td>
+                            <td>Name</td><td>: &nbsp;</td>
                             <td>${childID.InvestorName}</td>
                         </tr>
                         <tr>
-                            <td>Main Balance</td>
+                            <td>Main Balance</td><td>: &nbsp;</td>
                             <td>${childID.MainBalance}</td>
                         </tr>
                         <tr>
-                            <td>Mature Balance</td>
+                            <td>Mature Balance</td><td>: &nbsp;</td>
                             <td>${childID.MaturedBalance}</td>
                         </tr>
                         <tr>
-                            <td>Profit Balance</td>
+                            <td>Profit Balance</td><td>: &nbsp;</td>
                             <td>${childID.ProfitBalance}</td>
                         </tr>
                         <tr>
-                            <td>Stock Value</td>
+                            <td>Stock Value</td><td>: &nbsp;</td>
                             <td>${childID.StockValue}</td>
                         </tr>
                         <tr>
-                            <td>Portfolio Value</td>
+                            <td>Portfolio Value</td><td>: &nbsp;</td>
                             <td>${childID.PortfolioValue}</td>
                         </tr>
                         <tr>
-                            <td>Status</td>
+                            <td>Status</td><td>: &nbsp;</td>
                             <td class="idStatus">${childID.Status}</td>
                         </tr>
                     </tbody>

@@ -5,7 +5,7 @@ async function executeTP_halted(){
         document.getElementById('mainContentSection').innerHTML = `
         <div class="pageHeading" id="financial-Heading">
             <div class="heading">
-                <h1>HALTED COMPANIES</h1>
+                <h1>Halted Companies</h1>
             </div>
         </div>
         <div class='btnSection'>

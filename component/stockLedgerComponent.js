@@ -8,7 +8,7 @@ async function executeStockLedger(){
         `
             <div class="pageHeading" id="financial-Heading">
                 <div class="heading">
-                    <h1>Stock Ledger</h1>
+                    <h1>Stock Statement</h1>
                 </div>
             </div>
             <div class="section section-availableStok-btn">
@@ -26,11 +26,9 @@ async function executeStockLedger(){
                 </div>
             </div>
             <div class="section section-availableStok">
-                <div class="container">
-                    <div class="stockBody">
-                        <div class="currentStockBody" id="currentStockBody"></div>
-                        <div class="oldStockBody" id="oldStockBody"></div>
-                    </div>
+                <div style='height: 100%'class="container">
+                    <div class="currentStockBody" id="currentStockBody"></div>
+                    <div class="oldStockBody" id="oldStockBody"></div>
                 </div>
             </div>
            
@@ -42,15 +40,17 @@ async function executeStockLedger(){
         const tableBody = document.getElementById('currentStockBody');
         tableBody.innerHTML =
          `
-            <table>
-                <tr>
-                    <th>Company</th>
-                    <th>Stock<br>Qty</th>
-                    <th>Avg<br>Cost</th>
-                    <th>Last<br>Price</th>
-                    <th>Total<br>Price</th>
-                </tr>
-            </table>
+            <div onscroll="resetLogoutTimer()" style="flex: 1 auto;">
+                <table>
+                    <tr>
+                        <th>Company</th>
+                        <th>Stock Qty</th>
+                        <th>Avg Cost</th>
+                        <th>Last Price</th>
+                        <th>Total Price</th>
+                    </tr>
+                </table>
+            </div>
             <div id="currentStockFooter" class="currentStockFooter"></div>
         `;
     
@@ -58,7 +58,7 @@ async function executeStockLedger(){
             const newRow = document.createElement('tr');
     
             newRow.innerHTML = `
-            <td>${stock.company}</td>
+            <td style="text-align:left">${stock.company}</td>
             <td>${stock.Stock}</td>
             <td>${stock.FIFO}</td>
             <td>${stock.LTP}</td>
@@ -68,8 +68,8 @@ async function executeStockLedger(){
         });
         const tableFooter = document.getElementById('currentStockFooter');
         const totalCount = currentStocks.length;
-        const totalValue = currentStocks.reduce((total, stock) => total + stock.stock_qty, 0);
-    
+        let totalValue = currentStocks.reduce((total, stock) => total + Number(stock.Total_Taka.replace(/,/g, '')), 0);
+        totalValue = totalValue.toLocaleString("en-IN")
         tableFooter.innerHTML = `
             <p>Count : ${totalCount}</p>
             <p>Total Value: ${totalValue}</p>
@@ -79,15 +79,17 @@ async function executeStockLedger(){
         const tableBody = document.getElementById('oldStockBody');
         tableBody.innerHTML =
          `
-            <table>
-                <tr>
-                    <th>Company</th>
-                    <th>Stock<br>Qty</th>
-                    <th>Avg<br>Cost</th>
-                    <th>Last<br>Price</th>
-                    <th>Total<br>Price</th>
-                </tr>
-            </table>
+            <div onscroll="resetLogoutTimer()" style="flex: 1 auto;">
+                <table>
+                    <tr>
+                        <th>Company</th>
+                        <th>Stock<br>Qty</th>
+                        <th>Avg<br>Cost</th>
+                        <th>Last<br>Price</th>
+                        <th>Total<br>Price</th>
+                    </tr>
+                </table>
+            </div>
             <div id="oldStockFooter" class="oldStockFooter"></div>
         `;
     
@@ -95,7 +97,7 @@ async function executeStockLedger(){
             const newRow = document.createElement('tr');
     
             newRow.innerHTML = `
-                <td>${stock.company}</td>
+                <td style="text-align:left">${stock.company}</td>
                 <td>${stock.Stock}</td>
                 <td>${stock.FIFO}</td>
                 <td>${stock.LTP}</td>
@@ -105,8 +107,8 @@ async function executeStockLedger(){
         });
         const tableFooter = document.getElementById('oldStockFooter');
         const totalCount = oldStocks.length;
-        const totalValue = oldStocks.reduce((total, stock) => total + stock.stock_qty, 0);
-    
+        let totalValue = oldStocks.reduce((total, stock) => total + Number(stock.Total_Taka.replace(/,/g, '')), 0);
+        totalValue = totalValue.toLocaleString("en-IN")
         tableFooter.innerHTML = `
             <p>Count : ${totalCount}</p>
             <p>Total Value: ${totalValue}</p>
@@ -117,7 +119,7 @@ async function executeStockLedger(){
     stockLedger()
     renderCurrentStockTable()
     renderOldStockTable()
-    document.getElementById('currentStockBody').style.display = 'block';
+    document.getElementById('currentStockBody').style.display = 'flex';
     document.getElementById('oldStockBody').style.display = 'none';
 }
 
@@ -125,7 +127,7 @@ function showStockData(stockType) {
     document.getElementById('currentStockBody').style.display = 'none';
     document.getElementById('oldStockBody').style.display = 'none';
 
-    document.getElementById(stockType).style.display = 'block';
+    document.getElementById(stockType).style.display = 'flex';
     updateButtonState(stockType);
 
 }

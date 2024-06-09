@@ -1,3 +1,6 @@
+
+
+#tradesContent,
 #loggedInClientsContent,
 #tradedClientsContent,
 #fundInOutContent,
@@ -8,14 +11,18 @@
     margin: 5px 0px;
     background-color: #fff;
     box-shadow: 0px 0px 5px 2px #4b4848;
-    height: 350px;
+    /* height: 350px; */
     display: flex;
     flex-direction: column;
 }
-#totalClientContent,
+#tradedClientsContent,
+#loggedInClientsContent{
+    min-height: 350px;
+}
+/* #totalClientContent,
 #fundInOutContent{
     height: 200px;
-}
+} */
 .boxHeading{
     background-color: #D4D0CF;
     text-align: center;
@@ -35,9 +42,12 @@
 
 }
 input{
-    background-color: transparent;
-    padding: 5px 0px;
-    border-radius: 5px;
+    padding: 10px 2px;
+    background-color: #676a6666;
+    border-radius: 10px;
+    font-weight: 500;
+    max-width: 105px;
+    font-size: 14px;
     text-align: center;
 }
 .dateSearchBox{
@@ -48,10 +58,13 @@ input{
 }
 .searchBox{
     border: 1px solid #000;
-    padding: 3px 15px;
+    padding: 3px 10px;
     border-radius: 5px;
 }
-table{
+#showBO_Details > div > table,
+#tableContent > table,
+#loggedInClientsTable > table,
+#tradedClientsTable > table{
     width: 100%;
     border-collapse: separate;
     border-spacing: 0 10px;
@@ -64,39 +77,58 @@ table{
     position: relative !important;
     overflow-y: auto !important;
 } */
-table > tbody > tr:first-child{
+#showBO_Details > div > table > tbody > tr:first-child,
+#tableContent > table > tbody > tr:first-child,
+#loggedInClientsTable > table > tbody > tr:first-child,
+#tradedClientsTable > table > tbody > tr:first-child{
     position: sticky;
     top: 0;
     background-color: black;
 }
-table > tbody > tr:first-child > th{
+#showBO_Details > div > table > tbody > tr:first-child > th,
+#tableContent > table > tbody > tr:first-child > th,
+#loggedInClientsTable > table > tbody > tr:first-child > th,
+#tradedClientsTable > table > tbody > tr:first-child > th{
     color: #fff;
     font-size: 14px;
-    padding: 5px 3px;
+    padding: 5px 5px;
     text-align: center;
 }
-table > tbody > tr:first-child > th:first-child{
+/* table > tbody > tr:first-child > th:first-child{
     -webkit-padding-start: 10px;
 }
 table > tbody > tr:first-child > th:last-child{
     -webkit-padding-end: 10px;
-}
+} */
 
-table > tbody > tr > td{
+#showBO_Details > div > table > tbody > tr > td,
+#tableContent > table > tbody > tr > td,
+#loggedInClientsTable > table > tbody > tr > td,
+#tradedClientsTable > table > tbody > tr > td{
     font-weight: 600;
     font-size: 12px;
-    padding: 5px 3px;
+    padding: 5px 5px;
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
-    text-align: center;
+    text-align: left;
+    overflow-wrap: break-word;
 }
-table > tbody > tr > td:first-child{
-    -webkit-padding-start: 10px;
+#showBO_Details > div > table > tbody > tr > td:first-child,
+#tableContent > table > tbody > tr > td:first-child,
+#loggedInClientsTable > table > tbody > tr > td:first-child,
+#tradedClientsTable > table > tbody > tr > td:first-child{
+    padding-left: 10px;
     border-left: 1px solid #000;
     border-radius: 15px 0px 0px 15px;
 }
-table > tbody > tr > td:last-child{
-    -webkit-padding-end: 10px;
+#showBO_Details > div > table > tbody > tr > td:last-child{
+    overflow-wrap: anywhere;
+}
+#showBO_Details > div > table > tbody > tr > td:last-child,
+#tableContent > table > tbody > tr > td:last-child,
+#loggedInClientsTable > table > tbody > tr > td:last-child,
+#tradedClientsTable > table > tbody > tr > td:last-child{
+    padding-right: 10px;
     border-right: 1px solid #000;
     border-radius: 0px 15px 15px 0px;
 }
@@ -105,20 +137,24 @@ table > tbody > tr > td:last-child{
     flex-direction: column;
     align-items: center;
 }
+#tradesContent > .date_search,
 #loggedInClientsContent > .date_search,
 #tradedClientsContent > .date_search,
 #totalClientContent > .date_search,
 #fundInOutContent > .date_search{
     display: flex;
     justify-content: space-around;
+    flex-wrap: wrap;
     align-items: center;
 }
+#tradesContent > .date_search > .dateSearchBox,
 #loggedInClientsContent > .date_search > .dateSearchBox,
 #tradedClientsContent > .date_search > .dateSearchBox,
 #totalClientContent > .date_search > .dateSearchBox,
 #fundInOutContent > .date_search > .dateSearchBox{
     width: auto;
     display: flex;
+    padding-bottom: 5px;
 }
 .tableFooterDiv{
     display: flex;
@@ -132,6 +168,9 @@ h4 > span{
     font-weight: 700;
     border-radius: 5px;
     background-color: #adb5bd;
+}
+h4{
+    font-size: 18px;
 }
 #showBO_Details{
     position: fixed;

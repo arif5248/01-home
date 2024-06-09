@@ -6,6 +6,7 @@
     background-color: #4CB050;
     color: #fff;
     text-align: center;
+    font-size: 14px;
 }
 .box{
     background-color: #fff;
@@ -35,7 +36,7 @@
     border: 1px solid #000;
     border-radius: 10px;
     width: 50%;
-    height: 45px;
+    height: 35px;
     font-size: 16px;
     text-align: center;
 }
@@ -81,7 +82,7 @@ table > tbody > tr:first-child{
     background-color: black;
 }
 table > tbody > tr:first-child > th{
-    
+    overflow-wrap: anywhere;
     color: #fff;
     font-size: 20px;
     padding: 5px 1px;
@@ -102,6 +103,7 @@ table > tbody > tr > td{
     border-bottom: 1px solid #000;
     color: #000 !important;
     text-align: center;
+    overflow-wrap: anywhere;
 }
 table > tbody > tr > td:first-child{
     -webkit-padding-start: 10px;

@@ -1,0 +1,35 @@
+.aboutUsFooter{
+    width: 100%;
+}
+.footerContent{
+    width: 100%;
+}
+p{
+    font-size: 14px;
+    text-align: justify;
+}
+#aboutUsData > p {
+    border: 1px solid #000;
+    color: #000;
+    margin: 0;
+    padding: 10px 10px;
+    text-align: justify;
+    font-size: 14px;
+    background-color: #fff;
+} 
+.footerContent > p{
+    border: 1px solid #000;
+    color: #000;
+    margin: 0;
+    padding: 10px 10px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    background-color: #fff;
+}
+.officaLocationItem{
+    margin: 10px 0px;
+    box-shadow: 0px 0px 3px 1px #000;
+    border-radius: 5px;
+    padding: 0px 10px;
+    background-color: #fff;
+}

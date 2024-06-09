@@ -15,7 +15,7 @@ async function executeMainToProfitLedger(){
         document.getElementById('mainContentSection').innerHTML = `
         <div class="pageHeading pageHeading_2" id="financial-Heading">
             <div class="heading">
-                <h1>MAIN LEDGER TO PROFIT LEDGER (VICE VERSA)</h1>
+                <h1>Main Ledger To Profit Ledger (Vice Versa)</h1>
             </div>
         </div>
 
@@ -31,7 +31,7 @@ async function executeMainToProfitLedger(){
                 </div>
                 <div class="box-data">
                     <label for="availableBalanceFrom">Available Balance</label>
-                    <input type="number" id="availableBalanceFrom" name="availableBalanceFrom"  required readonly>
+                    <input type="text" id="availableBalanceFrom" name="availableBalanceFrom"  required readonly>
                 </div>
             </div>
 
@@ -42,7 +42,7 @@ async function executeMainToProfitLedger(){
                 </div>
                 <div class="box-data">
                     <label for="availableBalanceTo">Available Balance</label>
-                    <input type="number" id="availableBalanceTo" name="availableBalanceTo" required readonly>
+                    <input type="text" id="availableBalanceTo" name="availableBalanceTo" required readonly>
                 </div>
             </div>
 
@@ -53,7 +53,7 @@ async function executeMainToProfitLedger(){
                 </div>
                 <p style="display: none;" id="invalidAmount">Entered amount exceeds available balance.</p>
                 <div class="submit-box">
-                    <input id='submitM_to_P' type="submit" value="SUBMIT">
+                    <input id='submitM_to_P' type="submit" value="SUBMIT" class="btn btn-primary !important">
                 </div>
             </div>
         </div>
@@ -68,12 +68,7 @@ async function executeMainToProfitLedger(){
             <div class="transferHistory" id="transferHistory"></div>
         </div>
         <div id='errorDiv'></div>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
+        
         `
     }
     function renderTransferHistory(){
@@ -82,7 +77,7 @@ async function executeMainToProfitLedger(){
          `
             <table>
                 <tr>
-                    <th>Inv Id</th>
+                    <th>ID</th>
                     <th>Type</th>
                     <th>Amount</th>
                     <th>Tr.Date</th>
@@ -96,9 +91,9 @@ async function executeMainToProfitLedger(){
             newRow.innerHTML = `
                 <td>${user.LoggedInInvestorId}</td>
                 <td>${data.trType}</td>
-                <td>${data.trAmo}</td>
+                <td style='text-align: right;'>${parseInt(data.trAmo).toLocaleString("en-IN")}</td>
                 <td>${data.trDate}</td>
-                <td>${data.trBy}</td>
+                <td style='text-align: right;'>${data.trBy}</td>
             `;
             contentBody.querySelector('tbody').appendChild(newRow);
         })
@@ -111,17 +106,17 @@ async function executeMainToProfitLedger(){
         const fromValue = document.getElementById('tansferFrom').value
         switch (fromValue) {
             case '1': 
-                document.getElementById('availableBalanceFrom').value = mainBalance
+                document.getElementById('availableBalanceFrom').value = parseFloat(mainBalance).toLocaleString("en-IN")
                 document.getElementById('to').value = 'Profit Ledger'
-                document.getElementById('availableBalanceTo').value = profitbalance
+                document.getElementById('availableBalanceTo').value = parseFloat(profitbalance).toLocaleString("en-IN")
                 toValue = 2
                 document.getElementById('amountForTrans').removeAttribute('readonly');
                 document.getElementById('amountForTrans').value = null
                 break;
             case '2':
-                document.getElementById('availableBalanceFrom').value = profitbalance
+                document.getElementById('availableBalanceFrom').value = parseFloat(profitbalance).toLocaleString("en-IN")
                 document.getElementById('to').value = 'Main Ledger'
-                document.getElementById('availableBalanceTo').value = mainBalance
+                document.getElementById('availableBalanceTo').value = parseFloat(mainBalance).toLocaleString("en-IN")
                 toValue = 1
                 document.getElementById('amountForTrans').removeAttribute('readonly');
                 document.getElementById('amountForTrans').value = null
@@ -151,7 +146,7 @@ async function executeMainToProfitLedger(){
                 displayBox.innerHTML = ''
                 displayBox.innerHTML = `
                     <p style='font-weight: 700; padding-bottom: 10px;'>Error:</p>
-                    <p style='color: red; font-weight: 600; padding-bottom: 10px;'>Please select a Ledger and Enter a vlid amount</p>
+                    <p style='color: red; font-weight: 600; padding-bottom: 10px;'>Please Select a Ledger and Enter a Valid amount</p>
                     <hr style='opacity:1;'>
                     <div id='closePopUp'>OK</div>
                 `

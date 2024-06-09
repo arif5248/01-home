@@ -9,7 +9,6 @@
     list-style-type: none;
     max-height: 200px;
     overflow-y: auto;
-    position: absolute;
     background-color: #fff;
     box-shadow: 0px 0px 10px 2px #000000de;
     padding: 0px;
@@ -39,15 +38,15 @@
     justify-content: space-between;
     align-items: center;
 }
-.drop-box > img{
+/* .drop-box > img{
     width: 25px;
-}
+} */
 .drop-box > img:last-child{
     rotate: 180deg;
 }
-.reload > img {
+/* .reload > img {
     width: 35px;
-}
+} */
 #basic-more > table{
     margin-top: 15px;
     border-color: #000 !important;
@@ -55,6 +54,7 @@
 #basic-more > table > tbody > tr > td{
     border-bottom: 1px solid #000;
     width: 50%;
+    overflow-wrap: anywhere;
 }
 #basic-more > table > tbody > tr > td:last-child{
     text-align: right;
@@ -89,10 +89,11 @@
 #finance-more > table > tbody > tr:first-child > th{
     color: #fff;
     font-size: 14px;
-    padding: 5px 1px;
-    text-align: right;
+    padding: 5px 5px;
+    /* text-align: right; */
+    /* overflow-wrap: break-word; */
 }
-#priceHistory-more > table > tbody > tr:first-child > th:first-child,
+/* #priceHistory-more > table > tbody > tr:first-child > th:first-child,
 #dividend-more > table > tbody > tr:first-child > th:first-child,
 #finance-more > table > tbody > tr:first-child > th:first-child{
     -webkit-padding-start: 10px;
@@ -102,24 +103,44 @@
 #dividend-more > table > tbody > tr:first-child > th:last-child,
 #finance-more > table > tbody > tr:first-child > th:last-child{
     -webkit-padding-end: 10px;
-}
-#priceHistory-more > table > tbody > tr > th,
-#dividend-more > table > tbody > tr > th,
+} */
+/* #priceHistory-more > table > tbody > tr > th,
+#dividend-more > table > tbody > tr > th, */
 #finance-more > table > tbody > tr > th{
-    
     width: 20% !important;
+}
+#finance-more > table > tbody > tr > td{
+    width: 20%;
+}
+#priceHistory-more > table > tbody > tr:first-child > th,
+#dividend-more > table > tbody > tr:first-child > th{
+    width: 25%;
+}
+#priceHistory-more > table > tbody > tr > td,
+#dividend-more > table > tbody > tr > td{
+    width: 25%;
 }
 #priceHistory-more > table > tbody > tr > td,
 #dividend-more > table > tbody > tr > td,
 #finance-more > table > tbody > tr > td{
     width: 20%;
-    font-weight: 700;
     font-size: 13px;
-    padding: 10px 0px;
+    padding: 10px 5px;
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
-    color: #000 !important;
+    color: #000 ;
     text-align: right;
+    overflow-wrap: break-word;
+}
+#dividend-more > table > tbody > tr > td{
+    width: 20%;
+    font-size: 13px;
+    padding: 10px 5px;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    color: #000 ;
+    text-align: left;
+    overflow-wrap: break-word;
 }
 #priceHistory-more > table > tbody > tr > td:first-child,
 #dividend-more > table > tbody > tr > td:first-child,
@@ -146,6 +167,9 @@
     display: flex;
     padding: 0px 10px;
     justify-content: space-between;
+}
+.companyCategoryBox > p{
+    font-size: 14px;
 }
 .negative-change {
     background-color: #FE0000;

@@ -11,13 +11,18 @@ async function executeTP_News(data){
     function news(){
         document.getElementById('mainContentSection').innerHTML =
          `
+         <div class="pageHeading" id="financial-Heading" style="flex: 0 auto;">
+                <div class="heading">
+                    <h1>News of: ${data}</h1>
+                </div>
+            </div>
             <div class="newsBtnGroup">
-                <button type="button" class="btn active" onclick="showNews('mediaNews')">
+                <div class="btn active" onclick="showNews('mediaNews')">
                     MEDIA NEWS
-                </button>
-                <button type="button" class="btn" onclick="showNews('exchangeNews')">
+                </div>
+                <div class="btn" onclick="showNews('exchangeNews')">
                     EXCHANGE NEWS
-                </button>
+                </div>
             </div>
             <div class="newsBody" style="flex: 1 auto; overflow-y: auto;">
                 <div class='container'>
@@ -81,35 +86,42 @@ async function executeTP_News(data){
 
     function showNewsDetails(newsItem){
         return function(event){
+            document.getElementById('overlay').style.display = 'block'
             document.getElementById('showMediaNewsDetails').style.display = 'flex'
             document.getElementById('showMediaNewsDetails').innerHTML = `
-                <div class='close'>
-                    <div class='close_img_Box' id='closeButton' onclick='closeNewsDetails()'>
-                        <img style='width:30px; height: auto' src='../images/icons/icons8-cross.gif'>
-                    </div>
-                    <p style='display: inline-block; font-weight: 900; font-size: 25px'>|</p>
-                </div>
+                
                 <div class='selectedNewsBody' id='selectedNewsBody'>
-                    <div class="heading">
+                    <div style='flex: 0 auto;' class="heading">
                         <h1>News Details</h1>
                     </div>
-                    <div class='container'>
+                    <div style='flex: 1 auto;height: 100%;overflow-y: auto;' class='container'>
                         <div style="margin-top: 10px;" class='imgBox'>
                             <img style='width: 100%; height: auto;' src=${newsItem.ImgLink} alt='news details picture'>
                         </div>
                         <div class='newsSourceDate'>
-                            <p>Date: ${newsItem.news_date}</p>
+                            <p>Date: ${customDateConverter(newsItem.news_date, 'defaultToCustom')}</p>
                             <p>Source: ${newsItem.news_source}</p>
                         </div>
                         <div style="margin: 10px 0px;" class='selectedNewsHeading'>
                             <h3 style="text-align: center; margin: 10px 0px; font-weight: 600;"> ${newsItem.heading} </h3>
                         </div>
                         <div class='selectedNewsBodyDetails'>
-                            <p>${newsItem.news_body}</p>
+                            <p style='text-align: justify;font-size:14px'>${newsItem.news_body}</p>
                         </div>
+                    </div>
+                    <div id='closeNewsDetails'>
+                        <p>CLOSE</p>
                     </div>
                 </div>
             `
+            document.getElementById('closeNewsDetails').addEventListener('click', ()=>{
+                document.getElementById('showMediaNewsDetails').style.display = 'none'
+                document.getElementById('overlay').style.display = 'none'
+            })
+            document.getElementById('overlay').addEventListener('click', ()=>{
+                document.getElementById('showMediaNewsDetails').style.display = 'none'
+                document.getElementById('overlay').style.display = 'none'
+            })
         }
     }
    
@@ -140,7 +152,4 @@ function updateBtnState(activeButton) {
     if (activeButtonElement) {
         activeButtonElement.classList.add('active');
     }
-}
-function closeNewsDetails(){
-    document.getElementById('showMediaNewsDetails').style.display = 'none'
 }

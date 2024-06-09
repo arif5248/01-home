@@ -11,7 +11,7 @@
 .tp_rate_history > table{
     width: 100%;
     border-collapse: separate;
-    border-spacing: 0 10px;
+    border-spacing: 0 5px;
     
 }
 
@@ -23,34 +23,36 @@
 }
 .tp_rate_history > table > tbody > tr:first-child > th{
     color: #fff;
-    font-size: 20px;
-    padding: 5px 1px;
+    font-size: 14px;
+    padding: 5px 5px;
     text-align: center;
-    
+    overflow-wrap: break-word;
+    width: 33%;
 }
-.tp_rate_history > table > tbody > tr:first-child > th:first-child{
+/* .tp_rate_history > table > tbody > tr:first-child > th:first-child{
     -webkit-padding-start: 10px;
 }
 .tp_rate_history > table > tbody > tr:first-child > th:last-child{
     -webkit-padding-end: 10px;
-}
+} */
 
 .tp_rate_history > table > tbody > tr > td{
-    font-weight: 700;
-    font-size: 15px;
-    padding: 10px 0px;
+    width: 33%;
+    font-size: 13px;
+    padding: 5px 5px;
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
-    color: #000 !important;
+    color: #000 ;
     text-align: center;
+    overflow-wrap: break-word;
 }
 .tp_rate_history > table > tbody > tr > td:first-child{
-    -webkit-padding-start: 10px;
+    padding-left: 10px;
     border-left: 1px solid #000;
     border-radius: 15px 0px 0px 15px;
 }
 .tp_rate_history > table > tbody > tr > td:last-child{
-    -webkit-padding-end: 10px;
+    padding-right: 10px;
     border-right: 1px solid #000;
     border-radius: 0px 15px 15px 0px;
 }

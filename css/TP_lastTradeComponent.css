@@ -24,10 +24,10 @@
 }
 .lastTradeBody > table > tbody > tr:first-child > th{
     color: #fff;
-    font-size: 20px;
-    padding: 5px 1px;
+    font-size: 13px;
+    padding: 5px 10px;
     text-align: center;
-    
+    overflow-wrap: anywhere;
 }
 .lastTradeBody > table > tbody > tr:first-child > th:first-child{
     -webkit-padding-start: 10px;
@@ -36,14 +36,14 @@
     -webkit-padding-end: 10px;
 }
 
-.lastTradeBody > table > tbody > tr > td{
-    font-weight: 700;
-    font-size: 15px;
-    padding: 10px 0px;
+.lastTradeBody > table > tbody > tr > td{    
+    font-size: 13px;
+    padding: 10px 5px;
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
     color: #000 !important;
     text-align: center;
+    overflow-wrap: anywhere;
 }
 .lastTradeBody > table > tbody > tr > td:first-child{
     -webkit-padding-start: 10px;

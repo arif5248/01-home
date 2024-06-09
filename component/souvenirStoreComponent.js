@@ -9,7 +9,7 @@ function executeSouvenirStore(){
         </div>
 
         <div class="container">
-            <div >Coming Soon...</div>
+            <div >No product(s) available now</div>
         </div>
         
         `

@@ -1,6 +1,5 @@
 .mainContentSection{
     height: 100%;
-    padding-bottom: 30px;
 }
 .pageHeading  .heading{
     text-align: center;
@@ -9,44 +8,40 @@
     color: #fff;
 }
 .total_stock{
-    margin-top: 10px;
     background-color: #fff;
 }
-.table{ 
-    font-weight: 700;
+.total_stock > table{ margin: 0;
     border-color: #000;
 }
 .allStock{
     background-color: #fff;
     padding: 0px 5px;
+    height: 100%;
 }
 .allStock > table{
     width: 100%;
     border-collapse: separate;
-    border-spacing: 0 10px;
+    border-spacing: 0 5px;
 }
 .allStock > table > tbody > tr:first-child{
     background-color: black;
 }
 .allStock > table > tbody > tr:first-child > th{
     color: #fff;
-    font-size: 20px;
-    padding: 5px 1px;
-}
-.allStock > table > tbody > tr:first-child > th:first-child{
-    -webkit-padding-start: 10px;
-}
-.allStock > table > tbody > tr:first-child > th:last-child{
-    -webkit-padding-end: 10px;
+    font-size: 14px;
+    padding: 5px 5px;
+    overflow-wrap: break-word;
+    text-align: center;
 }
 
 .allStock > table > tbody > tr > td{
-    font-weight: 700;
-    font-size: 15px;
-    padding: 10px 0px;
+    font-size: 13px;
+    padding: 5px 5px;
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
-    color: #000 !important;
+    color: #000 ;
+    overflow-wrap: break-word;
+    text-align: right;
 }
 .allStock > table > tbody > tr > td:first-child{
     -webkit-padding-start: 10px;

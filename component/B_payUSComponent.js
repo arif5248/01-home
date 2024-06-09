@@ -11,17 +11,17 @@ async function executeB_HowToPayUs(){
     }
 
     function B_HowToPayUs(){
-        document.getElementById('page_heading').innerHTML=`How To Pay Us`
         document.getElementById('beforeMain').innerHTML = `
-        <div class="howToPayUsSection">
+        <h3 id="page_heading">How To Pay 01</h3>
+        <div class="howToPayUsSection" style="flex: 1 auto;height: 100%;overflow-y: auto;">
             <div class="container">
                 <div class="payUscontent" id="payUscontent">
-                    <div class="payUsMobile">
+                    <div class="payUsBank">
                         <div class="payUsHeading">
-                            <h4>Mobile</h4>
+                            <h4>Bank</h4>
                             <hr style='opacity: 1;'>
                         </div>
-                        <div id ='payUsMobile' class="payUs"></div>
+                        <div id ='payUsBank' class="payUs"></div>
                     </div>
                     <div class="payUsCard">
                         <div class="payUsHeading">
@@ -30,12 +30,12 @@ async function executeB_HowToPayUs(){
                         </div>
                         <div id ='payUsCard' class="payUs"></div>
                     </div>
-                    <div class="payUsBank">
+                    <div class="payUsMobile">
                         <div class="payUsHeading">
-                            <h4>Bank</h4>
+                            <h4>Mobile</h4>
                             <hr style='opacity: 1;'>
                         </div>
-                        <div id ='payUsBank' class="payUs"></div>
+                        <div id ='payUsMobile' class="payUs"></div>
                     </div>
                 </div>
             </div>

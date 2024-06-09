@@ -7,8 +7,8 @@ async function executeB_Get01Technology(){
         getTechList = fetchedData.TechList
     }
     function B_Get01Technology(){
-        document.getElementById('page_heading').innerHTML=`Get 01 Technology`
         document.getElementById('beforeMain').innerHTML = `
+        <h3 id="page_heading">Get 01 Technology</h3>
         <div class="get-01-section" id="get-01-section">
             <div class="container">
                 <div class="get-01-content" id="get-01-content1"></div>

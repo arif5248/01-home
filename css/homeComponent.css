@@ -57,10 +57,6 @@ body{
     background-color: #fff;
     z-index: 10;
 }
-.logo-01 > img{
-    width: 55px;
-}
-
 
 /*-----------------profile-------------------*/
 .section-profile{
@@ -186,6 +182,7 @@ table{
     margin-bottom: 5px;
     border-radius: 10px 0px 0px 10px;
     border-right: 1px solid #fff;
+    font-size: 14px;
 }
 .column-right{
     padding-left: 10px;
@@ -195,6 +192,7 @@ table{
     margin-bottom: 5px;
     border-radius: 0px 10px 10px 0px;
     border-right: 1px solid #fff;
+    font-size: 14px;
 }
 .column-right >div{
     display: flex;
@@ -202,7 +200,7 @@ table{
 }
 .more{
     color: #00008C;
-    font-size: 25px;
+    font-size: 16px;
     font-weight: 700;
 }
 
@@ -226,19 +224,22 @@ table{
     align-items: center;
 }
 .stockBtn{
-    padding: 8px 15px;
+    padding: 8px 0px;
     border: 3px solid #676a66e8;
     border-radius: 10px;
+    width: 48%;
 }
 .btnGroup > .active{
-    padding: 8px 15px;
-    border: 3px solid #000;
+    padding: 8px 0px;
+    border: 2px solid #000;
     border-radius: 10px;
 }
-.currentBtn,.stockBtn{
-    font-size: 16px;
+.currentBtn,.oldButton{
+    font-size: 14px;
     color: white;
     font-family: sans-serif;
+    width: 100%;
+    text-align: center;
 }
 .currentStockBody,
 .oldStockBody{
@@ -256,7 +257,7 @@ table{
 .currentStockBody > div >  table{
     width: 100%;
     border-collapse: separate;
-    border-spacing: 0 10px;
+    border-spacing: 0 5px;
     overflow-y: auto;
     max-height: 200px;
 }
@@ -274,42 +275,34 @@ table{
 .executedTrades > div > table > tbody > tr:first-child > th,
 .oldStockBody > div >  table > tbody > tr:first-child > th,
 .currentStockBody > div >  table > tbody > tr:first-child > th{
-    
+    overflow-wrap: break-word;
     color: #fff;
-    font-size: 12px;
-    padding: 5px 1px;
+    font-size: 14px;
+    padding: 5px 5px;
     text-align: center;
 }
-/* .executedTrades > table > tbody > tr:first-child > th:first-child,
-.oldStockBody > table > tbody > tr:first-child > th:first-child,
-.currentStockBody > table > tbody > tr:first-child > th:first-child{
-    -webkit-padding-start: 10px;
-}
-.executedTrades > table > tbody > tr:first-child > th:last-child,
-.oldStockBody > table > tbody > tr:first-child > th:last-child,
-.currentStockBody > table > tbody > tr:first-child > th:last-child{
-    -webkit-padding-end: 10px;
-} */
 .executedTrades > div > table > tbody > tr > td,
 .oldStockBody > div >  table > tbody > tr > td,
 .currentStockBody > div >  table > tbody > tr > td{
-    font-size: 12px;
-    padding: 10px 0px;
+    font-size: 13px;
+    padding: 5px 5px;
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
-    text-align: center;
+    overflow-wrap: break-word;
+    text-align: right;
 }
 .executedTrades > div > table > tbody > tr > td:first-child,
 .oldStockBody > div >  table > tbody > tr > td:first-child,
 .currentStockBody > div >  table > tbody > tr > td:first-child{
-    -webkit-padding-start: 10px;
+    padding-left: 10px;
     border-left: 1px solid #000;
     border-radius: 15px 0px 0px 15px;
+    text-align: left;
 }
 .executedTrades > div > table > tbody > tr > td:last-child,
 .oldStockBody > div >  table > tbody > tr > td:last-child,
 .currentStockBody > div >  table > tbody > tr > td:last-child{
-    -webkit-padding-end: 10px;
+    padding-right: 10px;
     border-right: 1px solid #000;
     border-radius: 0px 15px 15px 0px;
 }
@@ -344,78 +337,29 @@ table{
 }
 
 .searchImg{
-    padding: 5px 20px;
+    padding: 5px 15px;
     border-radius: 5px;
     border: 1px solid #000;
 }
 .input-box{
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
+    flex-wrap: wrap;
 }
-.input-box > input {
-    padding: 10px 10px;
+.input-box > .date_input{
+    padding-bottom: 5px;
+}
+.input-box > .date_input >  input {
+    padding: 10px 2px;
     background-color: #676a6666;
     border-radius: 10px;
-    font-weight: 700;
-    width: 140px;
+    font-weight: 500;
+    max-width: 105px;
+    font-size: 14px;
+    text-align: center;
 }
-/*-----------------Get User Details-------------------*/
-.inv_ProfileBox{
-    margin-top: 5px;
-    display: flex;
-    align-items: center;
-}
-.inv_ProfileBox > .img_box{
-    width: 50%;
-    padding: 10px;
-}
-.inv_ProfileBox > .img_box > .img_border_box{
-    width: 100%;
-    height: 100%;
-    border: 1px solid #000;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #fff;
-}
-.inv_ProfileBox > .img_box > .img_border_box > .invImgDiv{
-    display: flex;
-    height: 80%;
-    align-items: center;
-    justify-content: center;
-}
-.invPhoto{
-    width: 60%;
-    height: auto;
-}
-/* .invSign{
-    width: 95%;
-    height: auto;
-} */
-.invDetailsBody > table > tbody > tr > td{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border: 1px solid #000;
-    padding: 10px 5px;
-    border-radius: 5px;
-    background-color: #fff;
-}
-.invDetailsBody > table{
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0 10px;
-}
-.invDetailsBody > table > tbody > tr > td > p:first-child{
-    width: 50%;
-}
-.invDetailsBody > table > tbody > tr > td > p:last-child{
-    width: 50%;
-    text-align: right;
-}
+
 
 /*-----------------Footer-------------------*/
 .section-footer{

@@ -18,19 +18,20 @@ async function executeProfitLoss(){
 
                 
             }
-        })
-        
+        })  
     }
     function profitLoss(){
+        let today = new Date().toISOString().split('T')[0];
+        today = customDateConverter(today, 'defaultToCustom');
         document.getElementById('mainContentSection').innerHTML = 
         `
             <div class="pageHeading" id="financial-Heading">
                 <div class="heading">
-                    <h1>Profit Loss</h1>
+                    <h1>Profit Loss Statement</h1>
                 </div>
                 <div class="sub-heading">
                     <p>Statement As On</p>
-                    <p>18-Jan-2024</p>
+                    <p>${today}</p>
                 </div>
             </div>
             
@@ -39,9 +40,9 @@ async function executeProfitLoss(){
                     <div class= 'profitLossSummary' id= 'profitLossSummary'></div>
                 </div>
             </div>
-            <div class="section section-availableStok" style="flex: 1 auto;overflow-y: auto;">
+            <div onscroll="resetLogoutTimer()" class="section section-availableStok" style="flex: 1 auto;overflow-y: auto;">
                 <div class="container" style="position: relative;">
-                    <div class="btnRow" style="position: sticky;top: 0;">
+                    <div class="btnRow" style="position: sticky;top: -1px;">
                         <div class="btnGroup">
                             <div class="stockBtn active" onclick="showStockData('currentStockBody')">
                                 <div class="currentBtn">CURRENT STOCK</div>
@@ -61,19 +62,23 @@ async function executeProfitLoss(){
     }
 
     function renderProfitLossSummary(){
+        profitLossSummaryData.tsv = profitLossSummaryData.tsv === undefined ? 0 : profitLossSummaryData.tsv
+        profitLossSummaryData.real_val = profitLossSummaryData.real_val === undefined ? 0 : profitLossSummaryData.real_val
+        profitLossSummaryData.unreal_val = profitLossSummaryData.unreal_val === undefined ? 0 : profitLossSummaryData.unreal_val
         const profitLossSummaryBody = document.getElementById('profitLossSummary')
+        // console.log(typeof(profitLossSummaryData.tsv))
         profitLossSummaryBody.innerHTML = `
         <div class='itemRow'>
             <p>Total Stock Value</P>
-            <p>${profitLossSummaryData.tsv}</p>
+            <p>${profitLossSummaryData.tsv.toLocaleString("en-IN")} </p>
         </div>
         <div class='itemRow'>
             <p>Total Realized Profit/Loss</P>
-            <p id='trpl'>${profitLossSummaryData.real_val}</p>
+            <p id='trpl'>${profitLossSummaryData.real_val.toLocaleString("en-IN")}</p>
         </div>
         <div class='itemRow'>
             <p>Total Unrealized Profit/Loss</P>
-            <p id='tupl'>${profitLossSummaryData.unreal_val}</p>
+            <p id='tupl'>${profitLossSummaryData.unreal_val.toLocaleString("en-IN")}</p>
         </div>
         `
         document.getElementById(`trpl`).style.color = profitLossSummaryData.real_val >= 0 ? (profitLossSummaryData.real_val > 0 ? '#04A41E' : '#000') : '#FE0000'
@@ -137,10 +142,10 @@ async function executeProfitLoss(){
             const newDiv = document.createElement('div')
             newDiv.innerHTML = 
             `
-                <p>${trade.type}</p>
+                <p style="text-align:left">${trade.type}</p>
                 <p>${trade.qty}</p>
                 <p>${trade.price_per_qty}</p>
-                <p>Tk ${trade.total_price}</p>
+                <p>Tk ${trade.total_price.toLocaleString("en-IN")}</p>
             `;
             bottomData.appendChild(newDiv);
         })
@@ -208,10 +213,10 @@ async function executeProfitLoss(){
             const newDiv = document.createElement('div')
             newDiv.innerHTML = 
             `
-                <p>${trade.type}</p>
+                <p style="text-align:left">${trade.type}</p>
                 <p>${trade.qty}</p>
                 <p>${trade.price_per_qty}</p>
-                <p>Tk ${trade.total_price}</p>
+                <p>Tk ${trade.total_price.toLocaleString("en-IN")}</p>
             `;
             bottomData.appendChild(newDiv);
         })

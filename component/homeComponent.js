@@ -3,8 +3,8 @@ async function executeHome(){
     let dashBoardData = null;
     let loginDashData = null
 
-    const storedData = localStorage.getItem('loginData');
-    const storedDashBoardData = localStorage.getItem('dashBoard');
+    const storedData = sessionStorage.getItem('loginData');
+    const storedDashBoardData = sessionStorage.getItem('dashBoard');
     if (storedData) {
         const loginData = JSON.parse(storedData);
         user = loginData[0]
@@ -16,14 +16,13 @@ async function executeHome(){
         loginDashData = fetchedDashData;
         dashBoardData = fetchedDashData.Data[0]
     }
-    
     const table1 = [
         {
             fieldName: "Ledger Balance",
             value: dashBoardData.Ledger
         },
         {
-            fieldName: "Profile Balance",
+            fieldName: "Profit Balance",
             value: dashBoardData.profit_bal
         },
         {
@@ -32,7 +31,7 @@ async function executeHome(){
         },
         {
             fieldName: "Total Portfolio",
-            value: parseInt(dashBoardData.Equity.replace(/,/g, ''),10) + parseInt(dashBoardData.profit_bal.replace(/,/g, ''),10)
+            value: (parseInt(dashBoardData.Equity.replace(/,/g, ''),10) + parseInt(dashBoardData.profit_bal.replace(/,/g, ''),10)).toLocaleString("en-IN")
         },
         {
             fieldName: "Change from Last Day",
@@ -56,7 +55,7 @@ async function executeHome(){
             fieldName: "Withdrawn",
             value: dashBoardData.Withdrawn
         },
-        {
+        { 
             fieldName: "Net Investment",
             value: dashBoardData.NetInvestment
         },
@@ -198,6 +197,11 @@ async function executeHome(){
             `;
     
             table.appendChild(tableRow);
+            if (row.fieldName === 'Change from Last Day') {
+                
+                const spanElement = tableRow.querySelector('.column-right span:last-child');
+                spanElement.style.color = Number(row.value.replace(/,/g, '')) >= 0 ? (Number(row.value.replace(/,/g, '')) > 0 ? '#04A41E' : '#000') : '#FE0000';
+            }
             if(index===4){
                 var breakRow = document.createElement('br');
                 table.appendChild(breakRow);
@@ -218,9 +222,26 @@ async function executeHome(){
                 <td class="column-right">
                     <div> <span>TK</span> <span>${row.value}</span> </div>
                 </td>
-            `;
+            `;       
     
             table.appendChild(tableRow);
+
+            if (row.fieldName === "Net Investment") {
+                const spanElement = tableRow.querySelector('.column-right span:last-child');
+                spanElement.style.color = Number(row.value.replace(/,/g, '')) >= 0 ? (Number(row.value.replace(/,/g, '')) > 0 ? '#04A41E' : '#000') : '#FE0000';
+            }
+            if (row.fieldName === "Realized Profit/(Loss)") {
+                const spanElement = tableRow.querySelector('.column-right span:last-child');
+                spanElement.style.color = Number(row.value.replace(/,/g, '')) >= 0 ? (Number(row.value.replace(/,/g, '')) > 0 ? '#04A41E' : '#000') : '#FE0000';
+            }
+            if (row.fieldName === "Unrealized Profit/(Loss)") {
+                const spanElement = tableRow.querySelector('.column-right span:last-child');
+                spanElement.style.color = Number(row.value.replace(/,/g, '')) >= 0 ? (Number(row.value.replace(/,/g, '')) > 0 ? '#04A41E' : '#000') : '#FE0000';
+            }
+            if (row.fieldName === "Net Profit/(Loss)") {
+                const spanElement = tableRow.querySelector('.column-right span:last-child');
+                spanElement.style.color = Number(row.value.replace(/,/g, '')) >= 0 ? (Number(row.value.replace(/,/g, '')) > 0 ? '#04A41E' : '#000') : '#FE0000';
+            }
             if(index===2){
                 var breakRow = document.createElement('br');
                 table.appendChild(breakRow);
@@ -244,20 +265,38 @@ async function executeHome(){
            </div>
             <div id="currentStockFooter" class="currentStockFooter"></div>
         `;
-        loginDashData.Stock.forEach(stock => {
+        loginDashData.Stock.forEach((stock, index) => {
             const newRow = document.createElement('tr');
-    
             newRow.innerHTML = `
                 <td>${stock.company}</td>
                 <td>${stock.Stock}</td>
                 <td>${stock.FIFO}</td>
                 <td>${stock.LTP}</td>
-                <td>${stock.Total_Taka}</td>
+                <td>
+                    ${stock.Total_Taka}
+                    <br>
+                    <span id='changesSpan${index}' style="font-size: 10px;">
+                        ${parseFloat((
+                            (parseFloat(stock.Total_Taka.replace(/,/g, '')) -
+                            (parseFloat(stock.Stock.replace(/,/g, '')) * parseFloat(stock.FIFO.replace(/,/g, ''))))
+                        ).toFixed(2)).toLocaleString("en-IN")}
+                    </span>
+                </td>
             `;
         tableBody.querySelector('tbody').appendChild(newRow);
-        newRow.querySelectorAll('td').forEach(td=>{
-            td.style.color = Number(stock.Profit.replace(/,/g, '')) >= 0 ? (Number(stock.Profit.replace(/,/g, '')) > 0 ? '#04A41E' : '#000') : '#FE0000'
-        })
+        newRow.style.backgroundColor =Number(stock.Profit.replace(/,/g, '')) > 0 ? '#04A41E' : '#fff' ;
+        if(Number(stock.Profit.replace(/,/g, '')) < 0){
+            document.getElementById(`changesSpan${index}`).style.color = '#FE0000'
+        }
+        if(Number(stock.Profit.replace(/,/g, '')) > 0){
+            const cells = newRow.getElementsByTagName("td");
+            for (let i = 0; i < cells.length; i++) {
+                cells[i].style.color = "#fff"; 
+            }
+        }
+        // newRow.querySelectorAll('td').forEach(td=>{
+        //     td.style.color = Number(stock.Profit.replace(/,/g, '')) >= 0 ? (Number(stock.Profit.replace(/,/g, '')) > 0 ? '#04A41E' : '#000') : '#FE0000'
+        // })
         newRow.addEventListener('click', handleClick(stock.company))
         });
         const tableFooter = document.getElementById('currentStockFooter');
@@ -266,7 +305,7 @@ async function executeHome(){
     
         tableFooter.innerHTML = `
             <p>Count : ${totalCount}</p>
-            <p>Total Value: ${totalValue}</p>
+            <p>Total Value: ${totalValue.toLocaleString("en-IN")}</p>
         `;
     }
     function renderOldStockTable() {
@@ -308,20 +347,23 @@ async function executeHome(){
     
         tableFooter.innerHTML = `
             <p>Count : ${totalCount}</p>
-            <p>Total Value: ${totalValue}</p>
+            <p>Total Value: ${totalValue.toLocaleString("en-IN")}</p>
         `;
     }
     function renderExecutionTrades() {
-        const today = new Date().toISOString().split('T')[0];
+        let today = new Date().toISOString().split('T')[0];
+        today = customDateConverter(today, 'defaultToCustom')
         const executedTrades = document.getElementById('executedTrades');
         executedTrades.innerHTML =
          `  <div class="btnRow">
                 <div class="searchContent">
                     <div class="input-box">
-                        <input type="date" id="date-from" value= ${today} >
-                        <span>To</span>
-                        <input type="date" id="date-to" value= ${today}>
-                        <div onclick='allExecuteTrades(${user.LoggedInInvestorId})' class="searchImg">
+                        <div class='date_input'>
+                            <input type="text" id="date-from" value=${today} readonly>
+                            <span>To</span>
+                            <input type="text" id="date-to" value=${today} readonly>
+                        </div>
+                        <div id='getAllExct' class="searchImg">
                             <img style="width: 20px;" src="../images/icons/magnifying-glass.png" alt="search">
                         </div>
                     </div>
@@ -340,6 +382,60 @@ async function executeHome(){
             </div>
             <div id="executionStockFooter" class="oldStockFooter"></div>
         `;
+        document.getElementById('getAllExct').addEventListener('click', ()=>{
+            allExecuteTrades(user.LoggedInInvestorId)
+        })
+    
+        $("#date-from").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: "dd/M/yy"
+        });
+    
+        $("#date-to").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: "dd/M/yy"
+        });
+        
+    }
+    async function allExecuteTrades(inv_Id) {
+    
+        let executedTradesData = []
+        const tableRows = document.querySelectorAll('.excTrdRow');
+        if(tableRows){
+            tableRows.forEach(row => {
+                row.remove();
+            });
+        }  
+        const executedTrades = document.getElementById('executedTrades');
+        const dateFrom = document.getElementById('date-from').value;
+        const dateTo = document.getElementById('date-to').value;
+        const fetchedTradesData = await getAllExecuteTrades(dateFrom, dateTo, inv_Id)
+        executedTradesData = fetchedTradesData.Data
+        executedTradesData.forEach((stock, index) => {
+            const newRow = document.createElement('tr');
+            newRow.classList.add('excTrdRow')
+            newRow.innerHTML = `
+                <td>${stock.company}</td>
+                <td id='B_S${index}'>${stock['B/S']}</td>
+                <td>${stock.Qty}</td>
+                <td>${stock.Rate}</td>
+                <td>${stock.Amount}</td>
+            `;
+            executedTrades.querySelector('tbody').appendChild(newRow);
+            document.getElementById(`B_S${index}`).style.color = stock['B/S'] === 'Buy' ? '#04A41E' : '#FE0000'
+            newRow.addEventListener('click', handleClick(stock.company))
+            
+        });
+        const tableFooter = document.getElementById('executionStockFooter');
+        const totalCount = executedTradesData.length;
+        const totalValue = executedTradesData.reduce((total, stock) => total + parseInt(stock.Amount.replace(/,/g, ''),10), 0);
+    
+        tableFooter.innerHTML = `
+            <p>Count : ${totalCount}</p>
+            <p>Total Value: ${totalValue.toLocaleString("en-IN")}</p>
+        `;
     }
     
     homeComponent()
@@ -356,114 +452,37 @@ async function executeHome(){
     document.getElementById('currentStockBody').style.minHeight = '300px';
     document.getElementById('oldStockBody').style.display = 'none';
     allExecuteTrades(user.LoggedInInvestorId)
-}
-async function allExecuteTrades(inv_Id) {
-    
-    let executedTradesData = []
-    const tableRows = document.querySelectorAll('.excTrdRow');
-    if(tableRows){
-        tableRows.forEach(row => {
-            row.remove();
-        });
-    }  
-    const executedTrades = document.getElementById('executedTrades');
-    const dateFrom = document.getElementById('date-from').value;
-    const dateTo = document.getElementById('date-to').value;
-    const fetchedTradesData = await getAllExecuteTrades(dateFrom, dateTo, inv_Id)
-    executedTradesData = fetchedTradesData.Data
-    executedTradesData.forEach((stock, index) => {
-        const newRow = document.createElement('tr');
-        newRow.classList.add('excTrdRow')
-        newRow.innerHTML = `
-            <td>${stock.company}</td>
-            <td id='B_S${index}'>${stock['B/S']}</td>
-            <td>${stock.Qty}</td>
-            <td>${stock.Rate}</td>
-            <td>${stock.Amount}</td>
-        `;
-        executedTrades.querySelector('tbody').appendChild(newRow);
-        document.getElementById(`B_S${index}`).style.color = stock['B/S'] === 'Buy' ? '#04A41E' : '#FE0000'
-        
-    });
-    const tableFooter = document.getElementById('executionStockFooter');
-    const totalCount = executedTradesData.length;
-    const totalValue = executedTradesData.reduce((total, stock) => total + parseInt(stock.Amount.replace(/,/g, ''),10), 0);
 
-    tableFooter.innerHTML = `
-        <p>Count : ${totalCount}</p>
-        <p>Total Value: ${totalValue}</p>
-    `;
+    function calculateAnimationDuration(containerWidth, speed) {
+        const duration = containerWidth / speed;
+        return duration + 's'; 
+    }
+
+    function initializeMarqueeAnimation() {
+        const marqueeContainer = document.getElementById('marqueeContainer');
+        const containerWidth = marqueeContainer.offsetWidth; 
+        const speed = 50;
+        const animationDuration = calculateAnimationDuration(containerWidth, speed);
+
+        marqueeContainer.style.animationDuration = animationDuration;
+    }
+
+    initializeMarqueeAnimation()
     
     
+
+    
+
 }
+
 
 async function getUserDetails(userId){
-    const userDetails = await getUserDetailsData(userId)
-    document.getElementById('mainContentSection').innerHTML=`
-    <div class="invProfileSection">
-        <div class="pageHeading" id="pageHeading">
-            <div class="heading">
-                <h1>Investor Profile</h1>
-            </div>
-        </div>
-        <div class="container">
-            <div class="inv_ProfileBox">
-                <div id='img_box_1' class="img_box">
-                    <div class="img_border_box">
-                        <div class='invImgDiv'>
-                            <img class='invPhoto' alt='Investor Photo' src=${userDetails.Photo[0].Photo}>
-                        </div>
-                        <div class='divHeading'>
-                            <p>Photo</p>
-                        </div> 
-                    </div>
-                </div>
-                <div id='img_box_2' class="img_box">
-                    <div class="img_border_box">
-                        <div class='invImgDiv'>
-                            <img style='width: 95%; height: auto;' class='invSign' alt='Investor Signature' src=${userDetails.Sign[0].Sign}>
-                        </div>
-                        <div class='divHeading'>
-                            <p>Signature</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class='container'>
-            <div class='invDetailsBody' id='invDetailsBody'>
-                <table>
-                    <tbody>
-                        
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        
-    </div> 
-    <br>  
-    <br>  
-    <br>  
-    <br>  
-    `
-   squareDiv()
-   const invDetails = document.getElementById('invDetailsBody')
-   userDetails.Data.forEach(item => {
-        const newRow = document.createElement('tr')
-        newRow.innerHTML=`
-        <td>
-            <p>${item.title}</P>
-            <p>${item.value}</P>
-        </td>
-        `
-        invDetails.querySelector('tbody').appendChild(newRow)
-   })
-    
-
+    removeFooterBtnState(); 
+    route('../component/accountProfileComponent.js','../css/accountProfileComponent.css', 'accountProfile')
 }
 async function getTable1More(){
     let dashBoardData = null
-    const storedDashBoardData = localStorage.getItem('dashBoard');
+    const storedDashBoardData = sessionStorage.getItem('dashBoard');
     if (storedDashBoardData) {
         const loginDashData = JSON.parse(storedDashBoardData);
         dashBoardData = loginDashData.Data[0]
@@ -545,11 +564,5 @@ function updateButtonState(activeButton) {
         activeButtonElement.classList.add('active');
     }
 }
-function squareDiv()  {
-    const imgBoxWidth = document.querySelector('.img_box').offsetWidth;
-    const imgBoxes = document.querySelectorAll('.img_box');
-    imgBoxes.forEach(imgBox => {
-        imgBox.style.height = `${imgBoxWidth}px`;
-    });
-};
+
 

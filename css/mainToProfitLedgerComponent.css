@@ -22,7 +22,7 @@
 }
 .box-data > label{
     width: 50%;
-    font-size: 18px;
+    font-size: 14px;
 }
 .box-data > input{
     border: 1px solid #000;
@@ -35,20 +35,20 @@
     border: 1px solid #000;
     border-radius: 10px;
     width: 50%;
-    height: 45px;
-    font-size: 16px;
+    height: 35px;
+    font-size: 14px;
     text-align: center;
 }
 .submit-box{
-    margin-top: 40px;
+    margin-top: 20px;
 }
 .submit-box > input{
     width: 100%;
-    background-color: #000;
+    /* background-color: #000; */
     color: #fff;
     border-radius: 10px;
     padding: 10px 0px;
-    font-size: 20px;
+    font-size: 14px;
 }
 #invalidAmount{
     color: red;
@@ -56,23 +56,20 @@
     margin-top: -15px;
     height: 10px;
 }
-.pageHeading_2 > .heading > h1{
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-.pageHeading_2 {
-    margin-bottom: 10px;
-}
+
+
 .transferHistory{
     background-color: #fff;
     padding: 0px 10px;
+    max-height: 300px;
+    overflow-y: auto;
 }
 /*=================table================*/
 
 table{
     width: 100%;
     border-collapse: separate;
-    border-spacing: 0 10px;
+    border-spacing: 0 5px;
 }
 
 table > tbody > tr:first-child{
@@ -81,37 +78,31 @@ table > tbody > tr:first-child{
     background-color: black;
 }
 table > tbody > tr:first-child > th{
-    
+    overflow-wrap: break-word;
     color: #fff;
-    font-size: 20px;
-    padding: 5px 1px;
+    font-size: 14px;
+    padding: 5px 5px;
     text-align: center;
-}
-table > tbody > tr:first-child > th:first-child{
-    -webkit-padding-start: 10px;
-}
-table > tbody > tr:first-child > th:last-child{
-    -webkit-padding-end: 10px;
 }
 
 table > tbody > tr > td{
-    font-weight: 700;
-    font-size: 15px;
-    padding: 10px 0px;
+    font-size: 14px;
+    padding: 5px 5px;
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
     color: #000 !important;
-    text-align: center;
+    text-align: left;
+    overflow-wrap: break-word;
 }
 table > tbody > tr > td:first-child{
-    -webkit-padding-start: 10px;
     border-left: 1px solid #000;
     border-radius: 15px 0px 0px 15px;
+    padding-left: 10px;
 }
 table > tbody > tr > td:last-child{
-    -webkit-padding-end: 10px;
     border-right: 1px solid #000;
     border-radius: 0px 15px 15px 0px;
+    padding-right: 10px;
 }
 #errorDiv{
     position: absolute;

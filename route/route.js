@@ -1,11 +1,14 @@
 const historyStack = [];
 let otpCountDownInterval;
+let intervalClosere
 let tradeTimeIntervalId;
 let currentSection = null;
 let page_name = null;
 let selectedScript =  null;
+let storedTrade
 const urlParams = new URLSearchParams(window.location.search);
 document.addEventListener('DOMContentLoaded', function () {
+    currentSection = localStorage.getItem('currentSection');
     document.getElementById('overlay').style.display = 'none';
     document.getElementById('settings').style.display = 'none';
     closeSupportTeam();
@@ -14,19 +17,34 @@ document.addEventListener('DOMContentLoaded', function () {
     if(currentSection === null){
         route('../component/homeComponent.js', '../css/homeComponent.css', 'home');
     }else{
+        if(currentSection === 'moneyDeposit'){
+            removeFooterBtnState();
+        }
         route(`../component/${currentSection}Component.js`, `../css/${currentSection}Component.css`, `${currentSection}`);
+        if( localStorage.getItem('currentSection')){
+            localStorage.removeItem('currentSection')
+        }
     }
-    
+   
   });
   
   
   
   async function route(js, css, case_name, data) {
+    if(case_name){
+        const log = await saveLog(user.LoggedInInvestorId, case_name);
+        // console.log(log,'===========', case_name, user.LoggedInInvestorId)
+    }
+    if(case_name && case_name === 'trade'){
+        if(selectedScript !== null){
+            data = selectedScript
+        }
+    }
     async function executeRoute(data){
         if (currentSection !== null) {
            clearMemory();
         }
-        try {
+        try{
             const styleElement = document.createElement('link');
             styleElement.id = `style-${case_name}`;
             styleElement.rel = 'stylesheet';
@@ -59,7 +77,9 @@ document.addEventListener('DOMContentLoaded', function () {
             if(case_name !== 'moneyWithdrawal' && otpCountDownInterval !== undefined){
                 clearInterval(otpCountDownInterval)
             }
-            
+            if(case_name !== 'openBoForm' && intervalClosere !== undefined){
+                clearInterval(intervalClosere)
+            }
             if (case_name !== 'trade' && tradeTimeIntervalId !== undefined) {
                 clearInterval(tradeTimeIntervalId);
                 
@@ -67,11 +87,20 @@ document.addEventListener('DOMContentLoaded', function () {
             if(case_name && typeof case_name === 'string' && case_name.startsWith('TP_')){
                 selectedScript = data;
             }
+            if(case_name && typeof case_name === 'string' && case_name === 'companyInfo' && data){
+                console.log(data)
+                selectedScript = data;
+            }
+            
             if(case_name !== 'trade' && !case_name.startsWith('TP_')){
                 sessionStorage.removeItem('userData');
             }
+            
         } catch (error) {
             console.error(error);
+            if(error){
+                
+            }
         }
     }
     function displayNone(){
@@ -93,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const script = document.head.getElementsByTagName('script');
         const scriptTagsArray = Array.from(script);
         scriptTagsArray.forEach( (scriptTag) => {
-            if (scriptTag.id !== 'boots' && scriptTag.id !== 'routes' && scriptTag.id !== 'fetch' && scriptTag.id !== 'main' && scriptTag.id !== 'tradeGraph') {
+            if (scriptTag.id !== 'boots' && scriptTag.id !== 'routes' && scriptTag.id !== 'fetch' && scriptTag.id !== 'main' && scriptTag.id !== 'tradeGraph' && scriptTag.id !== 'ticker' && scriptTag.id !== 'jQuery' && scriptTag.id !== 'jQueryUi' && scriptTag.id !== 'pdfJs1' && scriptTag.id !== 'pdfJs2') {
                 scriptTag.parentNode.removeChild(scriptTag);
             }
         });
@@ -102,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const styleSheet = document.head.getElementsByTagName('link');
         const styleTagsArray = Array.from(styleSheet);
         styleTagsArray.forEach(style => {
-          if (style.id !== 'boots' && style.id !== 'main-page') {
+          if (style.id !== 'boots' && style.id !== 'main-page' && style.id !== 'jQueryStyle'  && style.id !== 'pdfStyle') {
             style.parentNode.removeChild(style);
           }
         });
@@ -125,6 +154,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
         if(case_name && typeof case_name === 'string' && case_name.startsWith('TP_')){
+            
             route(`../component/tradeComponent.js`, `../css/tradeComponent.css`, 'trade', selectedScript);
             updateFooterBtnState('trade');
         }else{
@@ -197,7 +227,7 @@ async function isVerifiedCacse(case_name, data){
             document.getElementById('loadingApi').style.display = 'none'
             break;
         case 'ipo':
-            await executeIpo();
+            await executeIpo(data);
             document.getElementById('loadingApi').style.display = 'none'
             break;
         case 'dividendRecord':
@@ -205,7 +235,7 @@ async function isVerifiedCacse(case_name, data){
             document.getElementById('loadingApi').style.display = 'none'
             break;
         case 'companyInfo':
-            await executeCompanyInfo();
+            await executeCompanyInfo(data);
             document.getElementById('loadingApi').style.display = 'none'
             break;
         case 'moneyDeposit':
@@ -232,8 +262,8 @@ async function isVerifiedCacse(case_name, data){
             await executeRefer01();
             document.getElementById('loadingApi').style.display = 'none'
             break;
-        case 'specalOffer':
-            await executeOffer();
+        case 'promotions':
+            await executePromotions();
             document.getElementById('loadingApi').style.display = 'none'
             break;
         case 'souvenirStore':
@@ -241,11 +271,11 @@ async function isVerifiedCacse(case_name, data){
             document.getElementById('loadingApi').style.display = 'none'
             break;
         case 'trade':
-            await executeTrade(data);
+            storedTrade = await executeTrade(data);
             document.getElementById('loadingApi').style.display = 'none'
             break;
         case 'TP_companyInfo':
-            await executeTP_CompanyInfo();
+            await executeTP_CompanyInfo(data);
             document.getElementById('loadingApi').style.display = 'none'
             break;
         case 'TP_news':
@@ -322,6 +352,18 @@ async function isVerifiedCacse(case_name, data){
             break;
         case 'digitalBranch':
             await executeDigitalBranch();
+            document.getElementById('loadingApi').style.display = 'none'
+            break;
+        case 'aboutUs':
+            await executeAboutUs();
+            document.getElementById('loadingApi').style.display = 'none'
+            break;
+        case 'openBoForm':
+            await executeOpenBoForm();
+            document.getElementById('loadingApi').style.display = 'none'
+            break;
+        case 'accountProfile':
+            await executeAccountProfile();
             document.getElementById('loadingApi').style.display = 'none'
             break;
     }

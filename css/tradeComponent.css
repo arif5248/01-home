@@ -1,10 +1,58 @@
+ /*Ticker*/
+ .mqdn {
+    padding: 2px;
+    white-space: nowrap;
+    color: white;
+    background-image: url('../images/icons/RedBar.png');
+  }
+
+  .mqsm {
+    padding: 2px;
+    white-space: nowrap;
+    color: white;
+    background-image: url('../images/icons/BlueBar.png');
+  }
+
+  .mqup {
+    padding: 2px;
+    white-space: nowrap;
+    color: white;
+    background-image: url('../images/icons/GreenBar.png');
+  }
+
+  .mqnws {
+    padding: 3px 8px 3px 8px;
+    white-space: nowrap;
+    color: white;
+    background-image: url('../images/icons/BlackBar.png');
+    background-size: cover;
+    cursor: pointer;
+  }
+
+  .tdWidth {
+    width: 50px;
+  }
+
+  .tdtxtAlign {
+    text-align: right;
+    word-break: break-all;
+  }
+
+  /**/
+.logolg {
+    height: 30px;
+    width: 30px;
+    border-width: 0;
+    border-radius: 2px;
+}
+#confirmModify,
 #modifyOrder,
 #confirmSell,
 #confirmBuy,
 #popupDiv{
     position: fixed;
-    background-color: #e9ecef;
-    width: 60%;
+    background-color: #fff;
+    width: 75%;
     top: 50vh;
     left: 50vw;
     transform: translateX(-50%) translateY(-50%);
@@ -14,21 +62,23 @@
 }
 #popupDiv > h5{
     text-align: center;
-    padding: 5px 0px;
-    background-color: #d4d7db;
+    padding: 8px 0px;
+    background-color: #000;
+    color: #fff;
     border-radius: 10px 10px 0px 0px;
     font-weight: 500;
 }
 #modifyOrder > h5,
 #confirmSell > h5 {
     background-color: red;
-    padding: 5px 0px;
+    padding: 8px 0px;
     color: #fff;
     border-radius: 10px 10px 0px 0px;
 }
+#confirmModify > h5,
 #confirmBuy > h5{
-    background-color: #4CB050;
-    padding: 5px 0px;
+    background-color: #000;
+    padding: 7px 0px;
     color: #fff;
     border-radius: 10px 10px 0px 0px;
 }
@@ -50,6 +100,7 @@
     font-weight: 500;
     font-size: 16px;
 }
+#confirmModify > div,
 #modifyOrder > div,
 #confirmSell > div,
 #confirmBuy > div{
@@ -60,6 +111,7 @@
     margin-top: 10px;
     padding: 5px 0px;
 }
+#confirmModify > div > p,
 #modifyOrder > div > p,
 #confirmSell > div > p,
 #confirmBuy > div > p{
@@ -67,17 +119,41 @@
     padding: 3px 10px;
     border-radius: 5px;
     color: #fff;
+    width: 48%;
 }
 #popupDiv > div > p{
-    display: inline-block;
-    border: 1px solid #000;
     border-radius: 5px;
-    padding: 3px 10px;
-    background-color: #212529;
+    padding: 3px 0px;
+    background-color: #4CB050;
     color: #fff;
+    margin: 0px 5px;
 }
 #mainContentSection{
     background-color :#111111;
+}
+.orderModifyBody{
+    flex-direction: column;
+    border: none !important;
+}
+.orderModifyRow{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 5px 5px;
+}
+.orderModifyRow > p,
+.orderModifyRow > input{
+    width: 50%;
+}
+.orderModifyRow > input{
+    /* background-color: transparent; */
+    border-radius: 5px;
+    text-align: right;
+    height: 30px;
+}
+.orderModifyRow > p:first-child{
+    text-align: left;
 }
 h6{
     margin: 0px;
@@ -135,6 +211,7 @@ h6{
 .marketScheduleBox > .remaining_time{
     display: flex;
     justify-content: space-around;
+    font-size: 14px;
 }
 .marketStatus > p,
 .remaining_time > h4{
@@ -147,8 +224,8 @@ h6{
 .remaining_time > h4{
     font-weight: 700;
     margin-top: 5px;
+    font-size: 18px;
 }
-
 #trade_status{
     color: green;
 }
@@ -189,7 +266,7 @@ h6{
     background-color: #737373;
     width: 75px;
     height: 35px;
-    margin: 5px;
+    margin: 2px;
     font-size: 10px;
     display: flex;
     justify-content: center;
@@ -210,7 +287,10 @@ h6{
     text-align: right;
 }
 .innerCol > p{
-    margin-top: 5px;
+    font-size: 12px;
+}
+.innerCol > h4{
+    font-size: 18px;
 }
 /*=============main trade==============*/
 .mainTradeSection{
@@ -220,7 +300,7 @@ h6{
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 10px 0px;
+    padding: 5px 0px;
     margin: 10px 0px;
     background-color: #868686;
     border-radius: 10px;
@@ -229,10 +309,10 @@ h6{
     padding: 10px 10px;
     border: 1px solid #0000005b;
     border-radius: 10px;
-    font-size: 16px;
-    font-weight: 700;
+    font-size: 14px;
+    font-weight: 600;
     text-align: center;
-    width: 40%;
+    width: 48%;
 }
 .mainTradeSection > .container > .box > .btnGroup > .active{
     background-color: #5C5C5C;
@@ -244,7 +324,7 @@ h6{
 .buyerSeller > h3{
     width: 50%;
     text-align: center;
-    font-size: 20px;
+    font-size: 15px;
     color: #fff;
 }
 .buySellData{
@@ -267,6 +347,7 @@ h6{
     font-size: 14px;
     font-weight: 600;
     width: 16.6667%;
+    overflow-wrap: anywhere;
 }
 .buySellData > .ipoContent > div > table > tbody >tr > td:nth-child(3){
     border-right: 4px solid #5C5C5C;
@@ -282,6 +363,7 @@ h6{
     font-size: 12px;
     width: 16.6667%;
     text-align: center;
+    overflow-wrap: anywhere;
 }
 .buySellData > .ipoContent > div > table > tbody >tr > td:first-child{
     -webkit-padding-start: 10px;
@@ -349,7 +431,7 @@ h6{
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 10px 0px;
+    padding: 5px 0px;
     margin: 10px 0px;
     background-color: #868686;
     border-radius: 10px;
@@ -358,11 +440,12 @@ h6{
     padding: 10px 10px;
     border: 1px solid #0000005b;
     border-radius: 10px;
-    font-size: 16px;
-    font-weight: 700;
+    font-size: 14px;
+    font-weight: 600;
     text-align: center;
-    width: 40%;
+    width: 35%;
     color: #000;
+    width: 48%;
 }
 .availableFund{
     display: flex;
@@ -443,7 +526,7 @@ h6{
     }
 }
 
-#overlay{
+/* #overlay{
     animation: overlay 0.5s linear(0.54 -17.65%, 1 100%);
 }
 @keyframes overlay {
@@ -453,7 +536,7 @@ h6{
     to {
         top: 0; 
     }
-}
+} */
 
 .fundStatusBox > .container > .box{
     background-color: #fff;
@@ -488,7 +571,10 @@ h6{
     white-space: nowrap;
     box-sizing: border-box;
   }
-  .scrolling-content >  #tradeMarqueeContainer {
+  #tradeMarqueeContainer > table{
+    margin: 5px 0px;
+  }
+  /* .scrolling-content >  #tradeMarqueeContainer {
     display: inline-flex;
     padding-left: 100%;
     animation: marquee 800s linear infinite;
@@ -496,7 +582,7 @@ h6{
   @keyframes marquee {
     from { transform: translateX(0); }
     to { transform: translateX(-100%); }
-  }
+  } */
   /* =====================open Order=================== */
   .openOrderHeading > h3{
     text-align: center;
@@ -515,14 +601,15 @@ padding: 0;
     margin-bottom: 10px;
 }
 
-.openOrderItem  > .heading{
+.openOrderItem  > .openOrderHeading{
     display: flex;
     align-items: center;
     background-color: #98989A;
     border-radius: 10px 10px 0px 0px;
+    justify-content: space-around;
 }
 .openOrderItem  > .heading > h5{
-    width: 15%;
+    width: 20%;
     border-right: 1px solid #fff;
     padding: 10px 10px;
     font-weight: 600;
@@ -530,7 +617,7 @@ padding: 0;
 .script_status{
     display: flex;
     justify-content: space-between;
-    width: 85%;
+    width: 80%;
     padding: 10px 10px;
 }
 .script_status > h5{
@@ -573,3 +660,36 @@ padding: 0;
     border-radius: 5px;
     color: #fff;
 }
+#openOrderContent{
+    min-height: 300px;
+    margin-bottom: 15px;
+}
+
+/* ========off hour ticker */
+#offHourTickerCSE,
+#offHourTickerDSE{
+    display: flex;
+    padding-left: 100%;
+    animation: marquee 30s linear infinite;
+
+}
+@keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-100%); }
+  }
+#offHourTickerCSE > div,
+#offHourTickerDSE > div {
+    text-align: center;
+}
+#offHourTickerCSE > div > h6,
+#offHourTickerDSE > div > h6{
+    font-size: 10px;
+}
+#offHourTickerCSE > div > p,
+#offHourTickerDSE > div > p{
+    font-size: 10px;
+}
+.exchangeImage{
+    z-index: 10;
+}
+

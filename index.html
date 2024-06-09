@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./vendor/bootstrap/css/bootstrap.min.css">
@@ -9,10 +10,23 @@
     <script id="index" src="./js/index.js"></script>
     <script src="./vendor/bootstrap/js/bootstrap.min.js"></script>
     <title>01</title>
-    
+    <script id="jQuery" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script id="jQueryUi" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link id='jQueryStyle' rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <style>
+        .day {
+          background-image: url('../images/day_image.jpg');
+        }
+        
+        .night {
+          background-image: url('../images/night_image.jpg');
+        }
+      </style>
 </head>
 <body>
-    <div class="overlay"></div>
+    <div id='overlay' class="overlay"></div>
+    <div style="display: none;" id='overlayVideoChat' class="overlay"></div>
+    <div style="display: none;" id='popupOverlay' class="popupOverlay"></div>
     <section class="homeContent">
         <!-- ==============Navbar============== -->
         <div class="topSection" id="beforeTopSection">
@@ -21,104 +35,135 @@
                     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"     data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    
-                    <div class="btn-login-get01">
-                        <button class="btn btn-login" onclick="navigateToPage('index.html')">Login</button>
-                        <button onclick="showGetNew01Id()" class="btn btn-01">Get New 01 ID</button>
+                    <div onclick="window.location.href='./index.html'" class="logo-01" >
+                        <img src="../images/01.gif" alt="01">
+                    </div>
+                    <div onclick="showSupportTeam()" id="supportTeam" class="support-team-area" >
+                        <img style="width: 30px;" src="../images/icons/customer-serviceWhite.png" alt="Customer Service">
                     </div>
                 
                     <div class="offcanvas offcanvas-start" tabindex="1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                         <div class="offcanvas-header">
                             <img class="offcanvas-title" id="offcanvasNavbarLabel" src="./images/01.gif" alt="01 ltd">
     
-                            <div class="appInfo" >
-                                <div>
-                                    <span style="font-weight: bold;"> 01 APP </span>  <br> V 1.0.3 <br> 01 Limited
-                                </div>
-                                <div class="about01">
-                                    <h5><a style='text-decoration: none; color: #000;' href="./mainPage/about01.html">About 01</a></h5>
-                                </div>
+                            <div class="appInfo" style="text-align: left;" >
+                                <span style="font-weight: bold;"> 01 APP </span>  <br> V: 24.05.01 <br> 01 Limited
                             </div>
                             
                         </div>
                         <div class="offcanvas-body">
                             <ul id="menu" class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="index.html">Login</a>
-                                    <hr>
+                                <li>Company
+                                    <ul style="list-style-type: none;">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" aria-current="page" href="./mainPage/template.html?case=B_aboutUs">About 01</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link active" aria-current="page" href="/mainPage/template.html?case=B_ourService">01 Services</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link active" aria-current="page" href="/mainPage/template.html?case=B_why01">Why 01</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link active" aria-current="page" href="mainPage/template.html?case=B_payUs">How to Pay 01</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link active" aria-current="page" href="/mainPage/template.html?case=B_get01">Get 01 Technology</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link active" aria-current="page" href="/mainPage/template.html?case=B_careerWith01">Career With 01</a>
+                                        </li>
+                                    </ul>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="./mainPage/template.html?case=B_marketStatus">Market Staus</a>
-                                    <hr>
+                                <li>Market
+                                    <ul style="list-style-type: none;">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" aria-current="page" href="./mainPage/template.html?case=B_marketStatus">Market Status</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link active" aria-current="page" href="/mainPage/template.html?case=B_sharePrice">Share Price</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link active" aria-current="page" href="/mainPage/template.html?case=B_news">News</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link active" aria-current="page" href="/mainPage/template.html?case=B_ipo">IPO Information</a>
+                                        </li>
+                                    </ul>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="/mainPage/template.html?case=B_sharePrice">Share Price</a>
-                                    <hr>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="/mainPage/template.html?case=B_news">News</a>
-                                    <hr>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="/mainPage/template.html?case=B_ipo">IPO Status</a>
-                                    <hr>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="/mainPage/template.html?case=B_why01">Why 01</a>
-                                    <hr>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="/mainPage/template.html?case=B_ourService">Our Service</a>
-                                    <hr>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="mainPage/template.html?case=B_payUs">How to Pay Us</a>
-                                    <hr>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="/mainPage/template.html?case=B_get01">Get 01 Technology</a>
-                                    <hr>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="/mainPage/template.html?case=B_promotions">Promotions</a>
-                                    <hr>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="/mainPage/template.html?case=B_careerWith01">Career With 01</a>
-                                    <hr>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="./mainPage/template.html?case=B_noti">Notifications</a>
-                                    <hr>
+                                <li>Miscellaneous
+                                    <ul style="list-style-type: none;">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" aria-current="page" href="/mainPage/template.html?case=B_promotions">Promotions</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link active" aria-current="page" href="./mainPage/template.html?case=B_noti">Notifications</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link active" aria-current="page" href="market://details?id=com.zero.one.limited" target="_blank" rel="external" >Update App</a>
+                                        </li>
+                                    </ul>
                                 </li>
                             </ul>
 
                             <div class="socialIcon">
                                 <div class="icon">
-                                    <a href="#">
+                                    <a href="fb://profile/your_profile_id" onclick="openLink(event, 'https://www.facebook.com/01LimitedOfficial/')">
+                                        <img style="width: 40px;  height: auto;" src="./images/icons/facebook.png" alt="facebook">
+                                    </a>
+                                </div>
+                                <div class="icon">
+                                    <a href="instagram://user?username=01limited.official" onclick="openLink(event, 'https://www.instagram.com/01limited.official')">
+                                        <img style="width: 40px; height: auto;" src="./images/icons/instagram.png" alt="instagram">
+                                    </a>
+                                    
+                                </div>
+                                <div class="icon">
+                                    <a href="vnd.youtube://channel/UC9HG6DdFf9PBhpkqzTkp1Vw" target="_blank" rel="external">
+                                        <img style="width: 40px;  height: auto;" src="./images/icons/youtube.png" alt="youtube">
+                                    </a>
+                                </div>
+                                <div class="icon">
+                                    <a href="https://www.linkedin.com/company/14480691/">
+                                        <img style="width: 40px; height: auto;" src="./images/icons/linkedin.png" alt="linkedin">
+                                    </a> 
+                                    <!-- <a href="linkedin://company/14480691" onclick="openLink(event, 'https://www.linkedin.com/company/14480691/')">
+                                        <img style="width: 40px; height: auto;" src="../images/icons/linkedin.png" alt="linkedin">
+                                    </a>                                     -->
+                                </div>
+                                <div class="icon">
+                                    <a href="https://twitter.com/01LimitedOfc" >
+                                        <img style="width: 40px;  height: auto;" src="./images/icons/twitter.png" alt="twitter">
+                                    </a>
+                                    <!-- <a href="twitter://user?screen_name=01LimitedOfc" onclick="openLink(event, 'https://twitter.com/01LimitedOfc')">
+                                        <img style="width: 40px;  height: auto;" src="../images/icons/twitter.png" alt="twitter">
+                                    </a> -->
+                                </div>
+                                <!-- <div class="icon">
+                                    <a href="https://www.facebook.com/01LimitedOfficial/" target="_blank">
                                         <img src="./images/icons/facebook.png" alt="facebook">
                                     </a>
                                 </div>
                                 <div class="icon">
-                                    <a href="#">
+                                    <a href="https://www.instagram.com/01limited.official/" target="_blank">
                                         <img src="./images/icons/instagram.png" alt="instagram">
                                     </a>
                                 </div>
                                 <div class="icon">
-                                    <a href="#">
+                                    <a href="https://www.youtube.com/channel/UC9HG6DdFf9PBhpkqzTkp1Vw" target="_blank">
                                         <img src="./images/icons/youtube.png" alt="youtube">
                                     </a>
                                 </div>
                                 <div class="icon">
-                                    <a href="#">
+                                    <a href="https://www.linkedin.com/company/14480691/" target="_blank">
                                         <img src="./images/icons/linkedin.png" alt="linkedIn">
                                     </a>
                                 </div>
-                                <div class="icon">
-                                    <a href="#">
+                                <div class="icon" target="_blank">
+                                    <a href="https://twitter.com/01LimitedOfc">
                                         <img src="./images/icons/twitter.png" alt="twitter">
                                     </a>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -130,30 +175,36 @@
         <!-- ==============Navbar============== -->
 
         <div class="homeMainSection">
+            <div style="display: none;" id="popUpSection" class=" popUpSection"></div>
             <div style="display: none;" id="forgotPasswordModal" class=" forgotPasswordModal">
                 <div class=" recoverPassword">
                     <h3 class="recoverPassHeading">RECOVER PASSWORD</h3>
-                    <input type="text" placeholder="Enter your 01 ID/phone number" class="inputStyle input-color input-recoverPass container" id="01_id" name="01_id">
-                    <div class="recoverPassBtn container">
-                        <div class="close btn btndsgn" onclick="closeForgotPasswordModal()">CANCEL</div>
-                        <button class="ok btn btndsgn">OK</button>
+                    <div class='recoverPassBody'>
+                        <input type="text" placeholder="Enter your 01 ID" class="input-recoverPass" id="01_id" name="01_id" maxlength="10" required>
+                        <input type="text" placeholder="Enter your Mobile Number" class="input-recoverPass" id="01_phone" name="01_id" minlength="8" maxlength="15" required>
                     </div>
+                    <div class="recoverPassBtn container">
+                        <button onclick="recoverPass(document.getElementById('01_id').value, document.getElementById('01_phone').value)" class="ok btn btndsgn">OK</button>
+                        <div class="close btn btndsgn" onclick="closeForgotPasswordModal()">CANCEL</div>                        
+                    </div>
+                    <div id="resultRecoverPassDiv" style="display: none;"></div>
                 </div>
             </div>
             <div style="display: none;" id="support-slide" class="support-slide">
                 <div class="support-content">
                     <div class="container supportHeading">
                         <span></span>
-                        <h3 class="heading">Support Team</h3>
-                        <img onclick="closeSupportTeam()" src="./images/icons/remove.png" alt="Close">
+                        <h3 class="supportHeadingText">Support Team</h3>
+                        <!-- <img style="width: 30px;" onclick="closeSupportTeam()" src="./images/icons/remove.png" alt="Close"> -->
                     </div>
                     <div class="container supportCall">
                         <a href="tel:+8809678781212"><img src="./images/icons/call.jpg" alt="Call" class="supportIcon"> Call +88 096 7878 1212</a>
                     </div>
-                    <div class="container supportCall">
-                        <a href="tel:+8801810031200"><img src="./images/icons/call.jpg" alt="Call" class="supportIcon"> Call +88 018 1003 1200</a>
+                    <div class="container ">
+                        <a href="tel:+8801810031200">+88 018 1003 1200</a>
                     </div>
                     <div class="container supportIconGroup">
+                        <a href="#"><img src="./images/icons/call.jpg" alt="call" class="supportIcon"></a>
                         <a href="#"><img src="./images/icons/messenger.png" alt="Messenger" class="supportIcon"></a>
                         <a href="#"><img src="./images/icons/whatsapp.png" alt="WhatsApp" class="supportIcon"></a>
                         <a href="#"><img src="./images/icons/viber.png" alt="Viber" class="supportIcon"></a>
@@ -169,7 +220,7 @@
                         <div class="innerIconGroup" onclick="showVideoChat()">
                             <a href="#" class="innerElement"><img src="./images/icons/video-call.png" alt="Video Chat" class="supportIcon"><span>Video Chat</span></a>
                         </div>
-                        <div class="innerIconGroup">
+                        <div class="innerIconGroup" onclick="window.open('https://tawk.to/chat/610a438bd6e7610a49ae8021/default/?$_tawk_popout=true' )" >
                             <a href="#" class="innerElement"><img src="./images/icons/live-chat.png" alt="Live Chat" class="supportIcon"><span>Live Chat</span></a>
                         </div>
                     </div>
@@ -182,13 +233,13 @@
                 <div id="logInDetails" class="logInDetails">
                     <form>
                         <div>
-                            <input type="text" placeholder="User ID" class="input-color inputStyle " id="user_id" name="user_id" autocomplete="user ID">
+                            <input type="text" placeholder="Login ID" class="input-color inputStyle " id="user_id" name="user_id" autocomplete="user ID" maxlength="10" required>
                         </div>
                         <div class="password-container">
-                            <input id="loginPass" type="password" placeholder="Password" id="password" name="password" class="input-color inputStyle password-input" autocomplete="current-password">
+                            <input id="loginPass" type="password" placeholder="Password" id="password" name="password" class="input-color inputStyle password-input" autocomplete="current-password" minlength="6"  maxlength="16" required>
                             <div class="logInPassIcon">
-                                <img style="display: none;" onclick="showPassword()" style="width: 30px;" id="showPass" src="./images/icons/eye-white.png" alt="show password">
-                                <img style="display: none;" onclick="hidePassword()" style="width: 30px;" id="hidePass" src="./images/icons/view-white.png" alt="hide password">
+                                <img style="display: none; width: 20px;" onclick="showPassword()" id="showPass" src="./images/icons/eye-white.png" alt="show password">
+                                <img style="display: none; width: 20px;" onclick="hidePassword()" id="hidePass" src="./images/icons/view-white.png" alt="hide password">
                             </div>
                         </div>
                         <div style="display: none;" class="failed_login" id="failed_login">
@@ -198,21 +249,34 @@
                             <input type="checkbox" class="input-color form-check-input checkboxStyle" id="saveMe">
                             <label class="form-check-label" for="saveMe">Save Me</label>
                         </div>
-                        <div class="logInBtnRow">
-                            <div href="#" class="forgotPass" onclick="showForgotPassword()">Forgot ID/Password</div>
-                            <a href="./mainPage/home.html">
-                                <input type="submit" value="Login" class="btn login-btn">
-                            </a>
-                        </div>
+                        <!-- <div type="submit" class="btn login-btn logInBtnRow">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"/>
+                                <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+                              </svg>
+                            <input type="submit" value="Login" class="btn">
+                        </div> -->
+                        <button type="submit" class="btn login-btn logInBtnRow">
+                            <svg style="margin-bottom: 3px;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"/>
+                                <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+                            </svg>
+                            <!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder2-open" viewBox="0 0 16 16">
+                                <path d="M1 3.5A1.5 1.5 0 0 1 2.5 2h2.764c.958 0 1.76.56 2.311 1.184C7.985 3.648 8.48 4 9 4h4.5A1.5 1.5 0 0 1 15 5.5v.64c.57.265.94.876.856 1.546l-.64 5.124A2.5 2.5 0 0 1 12.733 15H3.266a2.5 2.5 0 0 1-2.481-2.19l-.64-5.124A1.5 1.5 0 0 1 1 6.14zM2 6h12v-.5a.5.5 0 0 0-.5-.5H9c-.964 0-1.71-.629-2.174-1.154C6.374 3.334 5.82 3 5.264 3H2.5a.5.5 0 0 0-.5.5zm-.367 1a.5.5 0 0 0-.496.562l.64 5.124A1.5 1.5 0 0 0 3.266 14h9.468a1.5 1.5 0 0 0 1.489-1.314l.64-5.124A.5.5 0 0 0 14.367 7z"/>
+                            </svg> -->
+                            <!-- <img style="width: 20px;" src="./images/icons/log-in.png" alt="Login Icon"> -->
+                            <span>Login</span>
+                        </button>
+                        <div style="text-align: center;" class="forgotPass" onclick="showForgotPassword()">Forgot ID/Password</div>
                     </form>
                 </div>
             </div>
 
-            <div style="display: none;" class="getNew01Section">
-                <div id="get-new-01-ID" class="get-new-01-ID">
+            <div class="getNew01Section" style="overflow-y: auto;height: 100%;align-content: center;">
+                <div style="display: none;" id="get-new-01-ID" class="get-new-01-ID">
                     <form id="createNew01Id">
                         <div>
-                            <input type="text" placeholder="NAME (As in NID/PASSWORD)" class="inputStyle input-color" id="new_user_nid" name="user_name" required>
+                            <input type="text" placeholder="Name (As in NID/Passport)" class="inputStyle input-color" id="new_user_nid" name="user_name" required>
                             <p class=" instructionLine">B/O account must be open in this name</p>
                         </div>
                         <div class="country-city-mobile-container">
@@ -221,44 +285,134 @@
                                     <option value="">-- Select Country --</option>
                                 </select>
                                 <select name="city" id="city" required>
-                                    <option value="">-- Select City --</option>
+                                    <!-- <option value="">-- Select City --</option> -->
                                 </select>
                             </div>
                             <div class="mobile" id="mobileContainer">
                                 <span id="countryCode" class="countryCode"></span>
-                                <input type="tel" class="input-color inputStyle" placeholder="Mobile Number" name="mobile" id="mobile" required>
+                                <input type="tel" class="input-color inputStyle" placeholder="Mobile Number" name="mobile" id="mobile" readonly required>
                             </div>
                             <p class="instructionLine">Login Password will be sent to this number</p>
                         </div>
                         <div>
-                            <input type="text" placeholder="Email" class="input-color inputStyle " id="new_user_email" name="email" required>
+                            <input type="text" placeholder="Email Address" class="input-color inputStyle " id="new_user_email" name="email" required>
                             <p class="instructionLine">All documents shall be sent to this Email</p>
                         </div>
-                        <select name="occupation" class="css-for-select" id="occupation" required>
-                            <option value="">-- Select Occupation --</option>
-                        </select>
+                        <select name="occupation" class="css-for-select" id="occupation" required></select>
                         <input type="text" placeholder="Enter 01 Reference ID (if any)" class="input-color inputStyle " id="userReference" name="Reference">
                         <select class="css-for-select" name="howToFind" id="howFindUs" required>
-                            <option value="">-- How Do you Find Us --</option>
                         </select>
         
                         <div class="form-group form-check">
                             <input type="checkbox" class="form-check-input checkboxStyle" name="confirmation" id="confirm" required>
-                            <label class="form-check-label" for="confirm">I Confirm,Above information are  correct.</label>
+                            <label class="form-check-label" for="confirm">I confirm, above information is correct</label>
                         </div>
-                        <div class="logInBtnRow">
-                            <input type="submit" value="CREATE MY ID"  class="input-color btn login-btn">
-                        </div>
+                        <div style="text-align: center;" id="validationError"></div>
+                        <button class="logInBtnRow btn login-btn mt-3">
+                            <svg style="margin-bottom: 5px;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-folder2-open" viewBox="0 0 16 16">
+                                <path d="M1 3.5A1.5 1.5 0 0 1 2.5 2h2.764c.958 0 1.76.56 2.311 1.184C7.985 3.648 8.48 4 9 4h4.5A1.5 1.5 0 0 1 15 5.5v.64c.57.265.94.876.856 1.546l-.64 5.124A2.5 2.5 0 0 1 12.733 15H3.266a2.5 2.5 0 0 1-2.481-2.19l-.64-5.124A1.5 1.5 0 0 1 1 6.14zM2 6h12v-.5a.5.5 0 0 0-.5-.5H9c-.964 0-1.71-.629-2.174-1.154C6.374 3.334 5.82 3 5.264 3H2.5a.5.5 0 0 0-.5.5zm-.367 1a.5.5 0 0 0-.496.562l.64 5.124A1.5 1.5 0 0 0 3.266 14h9.468a1.5 1.5 0 0 0 1.489-1.314l.64-5.124A.5.5 0 0 0 14.367 7z"/>
+                              </svg>
+                            <span style="font-size: 18px;">CREATE MY ID</span>
+                        </button>
                     </form>
                 </div>
             </div>
         </div>
         
-        <div class="support">
-            <div onclick="showSupportTeam()" id="supportTeam" class="btn supportTeam">Support Team</div>
+        <div style="flex: 0 0 auto;" class="footerBtn">
+            <div id="footerLoginBtn" class="footerLoginBtn">Log In</div>
+            <div  id="footerGet01Btn" class="footerGet01Btn">Get New ID</div>
         </div>
     </section>
 </body>
+<script>
+    
+    document.getElementById('popupOverlay').addEventListener('click', ()=>{
+        document.getElementById('popupOverlay').style.display = 'none'
+        closeSupportTeam()
+        closeForgotPasswordModal()
+    })
+    window.onload = async function() {
+        let osType;
+        const urlParamsForDevice = new URLSearchParams(window.location.search);
+        osType = urlParamsForDevice.get('device');
+        sessionStorage.setItem('osType', osType);
+        
+        
+        existUser()
+        closeForgotPasswordModal();
+        closeSendMessage();
+        closeVideoChat();
+        closeSupportTeam();
+        videoChat();
+        sendMessage();
+        hidePassword();
+        document.getElementById('footerLoginBtn').style.backgroundColor = '#007'
+        document.getElementById('footerGet01Btn').style.backgroundColor = 'unset'
+        const result = await saveLog('', 'IndexLogin')
+        
+        if(case_name === 'get01'){
+            showGetNew01Id()
+            document.getElementById('footerLoginBtn').style.backgroundColor = 'unset'
+            document.getElementById('footerGet01Btn').style.backgroundColor = '#007'
+            const result = await saveLog('', 'Index-Create New ID')
+        }
+        
+    };
+    document.getElementById('footerLoginBtn').addEventListener('click', ()=>{
+        document.getElementById('logInDetails').style.display = 'block'
+        document.getElementById('get-new-01-ID').style.display = 'none'
+        document.getElementById('footerLoginBtn').style.backgroundColor = '#007'
+        document.getElementById('footerGet01Btn').style.backgroundColor = 'unset'    
+    })
+    document.getElementById('footerGet01Btn').addEventListener('click', ()=>{
+        showGetNew01Id()
+        document.getElementById('footerLoginBtn').style.backgroundColor = 'unset'
+        document.getElementById('footerGet01Btn').style.backgroundColor = '#007'
+    })
+    
+</script>
+<script>
+    setInterval(change_background, 1000 * 60 * 60);
 
+    function change_background() {
+      var d = new Date();
+      var n = d.getHours();
+      //console.log(n);
+      if (n >= 18 || n <6) {
+        document.body.className = "night";
+      } else {
+        document.body.className = "day";
+      }
+     
+    }
+
+    change_background();
+    function openLink(event, fallbackUrl) {
+            // event.preventDefault();
+            // const link = event.currentTarget;
+            // const appUrl = link.getAttribute('href');
+
+            // // Try to open the app link
+            // window.location = appUrl;
+
+            // // If the app is not installed, open the fallback URL in the browser after a short delay
+            // setTimeout(() => {
+            //     window.location = fallbackUrl;
+            // }, 200);
+            const now = Date.now();
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
+            iframe.src = appUrl;
+
+            setTimeout(() => {
+                document.body.removeChild(iframe);
+                if (Date.now() - now < 1500) {
+                    window.location = fallbackUrl;
+                }
+            }, 1000);
+        }
+  </script>
 
 </html>

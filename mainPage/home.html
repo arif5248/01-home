@@ -5,17 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link  id="boots" rel="stylesheet" href="../vendor/bootstrap/css/bootstrap.min.css">
     <link id="main-page" rel="stylesheet" href="../css/mainPage.css">
+
+    <script id="pdfJs1" src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+    <script id="pdfJs2" src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.worker.min.js"></script>
+    <!-- <link id="pdfStyle" rel="stylesheet" href="path/to/pdf.js/web/viewer.css">
+        
+    <script id="pdfJs1" src="path/to/pdf.js/build/pdf.js"></script>
+    <script id="pdfJs2" src="path/to/pdf.js/build/pdf.worker.js"></script> -->
+
     <script id="fetch" src="../apiFeatching/fetchData.js"></script>
     <script id="routes" src="../route/route.js"></script>
     <script id="main" src="../js/mainPage.js"></script>
     <script id="tradeGraph" src="https://unpkg.com/lightweight-charts@4.0/dist/lightweight-charts.standalone.production.js"></script>
     <script id="boots" src="../vendor/bootstrap/js/bootstrap.min.js"></script>
-    
+    <script id="jQuery" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script id="ticker" src="../vendor/jquery.signalR-2.4.1.min.js"></script>
+    <script id="marQ" src="../vendor/jquery.marquee.min.js"></script>
+
     <title>Home</title>
 
+    <script id="jQueryUi" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link id='jQueryStyle' rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+</head>
+
 </head> 
-<body>
+<body style="height: 100vh; width: 100vw;">
     <div id="overlay"></div>
+    <div id="overlayVideoChat" style="display: none;"></div>
+    <div style="display: none;" id="popUpLogoutDiv"></div>
     <div id="loadingApi" style="display: none;">
         <div class="loadingApiBox" style='background-color: #F1F2F4;'>
             <img style="width: 20%; height: auto;" src="../images/loading.gif" alt="01 Logo">
@@ -32,16 +49,9 @@
                     <div class="logo-01" onclick="updateFooterBtnState('home');route('../component/homeComponent.js','../css/homeComponent.css','home')">
                         <img src="../images/01.gif" alt="01">
                     </div>
-                    <div class="support-team-area" onclick="showSupportTeam()">
-                        <p>Support Team</p>
-                        <div class="icon-group" >
-                            <img src="../images/icons/call.jpg" style="width: 20px;height: auto;" alt="phone call">
-                            <img src="../images/icons/whatsapp.png" style="width: 20px;height: auto;" alt="WhatsApp">
-                            <img src="../images/icons/messenger.png" style="width: 20px;height: auto;" alt="Messenger">
-                            <img src="../images/icons/viber.png" style="width: 20px;height: auto;" alt="Viber">
-                        </div>
+                    <div onclick="showSupportTeam()" id="supportTeam" class="support-team-area" >
+                        <img style="width: 30px;height: auto;" src="../images/icons/customer-service.png" alt="Customer Service">
                     </div>
-                
                         <div class="offcanvas offcanvas-start" tabindex="1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                             <div class="offcanvas-header">
                                 <div class="header_box_1">
@@ -49,146 +59,192 @@
         
                                     <div class="appInfo" >
                                         <div>
-                                            <span style="font-weight: bold;"> 01 APP </span>  <br> V 1.0.3 <br> 01 Limited
+                                            <span style="font-weight: bold;"> 01 APP </span>  <br> V: 24.05.01 <br> 01 Limited
                                         </div>
-                                        <div class="about01">
-                                            <h5><a href="./about01.html">About 01</a></h5>
-                                        </div>
+                                        <!-- <div style="margin-top: 5px;" class="about01">
+                                            <h5 onclick="removeFooterBtnState(); route('../component/aboutUsComponent.js','../css/aboutUsComponent.css', 'aboutUs')"data-bs-dismiss="offcanvas">About 01</h5>
+                                        </div> -->
                                     </div>
                                 </div>
 
                                 <div class="header_box_2">
                                     <div class="footer-icon" onclick="removeFooterBtnState(); route('../component/personalNoteComponent.js','../css/personalNoteComponent.css', 'personalNote')" data-bs-dismiss="offcanvas">
-                                        <img style="width: 40px; height: auto;" src="../images/icons/notes.png" alt="Home">
+                                        <img style="width: 30px; height: auto;" src="../images/icons/notes.png" alt="Home">
                                         <span>Notes</span>
                                     
                                     </div>
                                     <div class="footer-icon notiBox" onclick="removeFooterBtnState(); route('../component/personalNotificationComponent.js','../css/personalNotificationComponent.css', 'personalNotification')" data-bs-dismiss="offcanvas" >
-                                        <img style="width: 40px; height: auto;" src="../images/icons/notification-bell.png" alt="notification">
-                                        <span>notification</span>
+                                        <img style="width: 30px; height: auto;" src="../images/icons/notification-bell.png" alt="notification">
+                                        <span>Notification</span>
                                         <p id="unreadNotiNo"></p>
                                     
                                     </div>
                                     <div class="footer-icon" >
-                                        <img onclick="logout()" style="width: 40px; height: auto;" src="../images/icons/logout.png" alt="Home">
-                                        <span>Logout</span>
+                                        <img onclick="logout()" style="width: 30px; height: auto;" src="../images/icons/logout.png" alt="Home">
+                                        <span>Log-Out</span>
                                     
                                     </div>
                                 </div>
                             </div>
                             <div class="offcanvas-body">
                                 <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                                    <li class="nav-item">
-                                        <div onclick="removeFooterBtnState(); route('../component/openBoAccountComponent.js','../css/openBoAccountComponent.css', 'openBoAccount')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">BO Account Open</div>
-                                        <hr >
+                                    <li>My Account
+                                        <ul style="list-style-type: none;">
+                                            <li id="boAccountOpenListItem" class="nav-item">
+                                                <div  onclick="removeFooterBtnState(); route('../component/openBoAccountComponent.js','../css/openBoAccountComponent.css', 'openBoAccount')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">BO Account Open</div>
+                                                <hr >
+                                            </li>
+                                            <li class="nav-item">
+                                                <div onclick="removeFooterBtnState(); route('../component/accountProfileComponent.js','../css/accountProfileComponent.css', 'accountProfile')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Account Profile</div>
+                                                <hr >
+                                            </li>
+                                            <li class="nav-item">
+                                                <div onclick="removeFooterBtnState(); route('../component/financialLedgerComponent.js','../css/financialLedgerComponent.css', 'financialLedger')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Financial Ledger</div>
+                                                <hr>
+                                            </li>
+                                            <li class="nav-item">
+                                                <div onclick="removeFooterBtnState(); route('../component/profitLedgerComponent.js','../css/profitLedgerComponent.css', 'profitLedger')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Profit Ledger</div>
+                                                <hr>
+                                            </li>
+                                            <li class="nav-item">
+                                                <div onclick="removeFooterBtnState(); route('../component/stockLedgerComponent.js','../css/stockLedgerComponent.css', 'stockLedger')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Stock Statement</div>
+                                                <hr>
+                                            </li>
+                                            <li class="nav-item">
+                                                <div onclick="removeFooterBtnState(); route('../component/profitLossComponent.js','../css/profitLossComponent.css', 'profitLoss')" class="nav-link active" aria-current="page" href="#" data-bs-dismiss="offcanvas">Profit Loss Statement</div>
+                                                <hr>
+                                            </li>
+                                            <li class="nav-item">
+                                                <div onclick="removeFooterBtnState(); route('../component/childIDComponent.js','../css/childIDComponent.css', 'childID')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Child ID Status</div>
+                                                <hr >
+                                            </li> 
+                                        </ul>
                                     </li>
-                                    <li class="nav-item">
-                                        <div onclick="removeFooterBtnState(); route('../component/boInfoChangesComponent.js', '../css/boInfoChangesComponent.css', 'boInfoChanges')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">BO Info Changes</div>
-                                        <hr class="hr-highlite">
+                                    <li>Operations
+                                        <ul style="list-style-type: none;">
+                                            <li class="nav-item">
+                                                <div onclick="updateFooterBtnState('trade'); route('../component/tradeComponent.js','../css/tradeComponent.css', 'trade')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Online Trade</div>
+                                                <hr >
+                                            </li>
+                                            <li class="nav-item">
+                                                <div onclick="removeFooterBtnState(); route('../component/ipoComponent.js','../css/ipoComponent.css', 'ipo', 'IPO Application')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">IPO Application</div>
+                                                <hr >
+                                            </li>
+                                            <li class="nav-item">
+                                                <div onclick="removeFooterBtnState(); route('../component/moneyDepositComponent.js','../css/moneyDepositComponent.css', 'moneyDeposit')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Money Deposit</div>
+                                                <hr>
+                                            </li>
+                                            <li class="nav-item">
+                                                <div onclick="removeFooterBtnState(); route('../component/moneyWithdrawalComponent.js','../css/moneyWithdrawalComponent.css', 'moneyWithdrawal')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Money Withdrawal</div>
+                                                <hr>
+                                            </li>
+                                            <li class="nav-item">
+                                                <div onclick="removeFooterBtnState(); route('../component/internalFundTransComponent.js','../css/internalFundTransComponent.css', 'internalFundTrans')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Internal Fund Transfer</div>
+                                                <hr >
+                                            </li>
+                                            <li class="nav-item">
+                                                <div onclick="removeFooterBtnState(); route('../component/boInfoChangesComponent.js', '../css/boInfoChangesComponent.css', 'boInfoChanges')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">BO Info Changes</div>
+                                                <hr >
+                                            </li>
+                                            <li class="nav-item">
+                                                <div onclick="removeFooterBtnState(); route('../component/brokeragePlanComponent.js','../css/brokeragePlanComponent.css', 'brokeragePlan')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Set Brokerage Plan</div>
+                                                <hr >
+                                            </li>
+
+                                        </ul>
                                     </li>
-                                    <li class="nav-item">
-                                        <div onclick="removeFooterBtnState(); route('../component/brokeragePlanComponent.js','../css/brokeragePlanComponent.css', 'brokeragePlan')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Set Brokerage Plan</div>
-                                        <hr class="hr-highlite">
+                                    <li>Market
+                                        <ul style="list-style-type: none;">
+                                            <li class="nav-item">
+                                                <div onclick="updateFooterBtnState('marketStatus');route('../component/marketStatusComponent.js','../css/marketStatusComponent.css','marketStatus')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Market Status</div>
+                                                <hr >
+                                            </li>
+                                            <li class="nav-item">
+                                                <div onclick="updateFooterBtnState('news');route('../component/newsComponent.js','../css/newsComponent.css','news')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">News Information</div>
+                                                <hr >
+                                            </li>
+                                            <li class="nav-item">
+                                                <div onclick="removeFooterBtnState(); route('../component/dividendRecordComponent.js','../css/dividendRecordComponent.css', 'dividendRecord')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Dividend & Record Dates</div>
+                                                <hr>
+                                            </li>
+                                            <li class="nav-item">
+                                                <div onclick="removeFooterBtnState(); route('../component/ipoComponent.js','../css/ipoComponent.css', 'ipo', 'IPO Information')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">IPO Information</div>
+                                                <hr>
+                                            </li>
+                                            <li class="nav-item">
+                                                <div onclick="removeFooterBtnState(); route('../component/companyInfoComponent.js','../css/companyInfoComponent.css', 'companyInfo')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Listed Company Info</div>
+                                                <hr >
+                                            </li>
+                                            
+                                        </ul>
                                     </li>
-                                    <li class="nav-item">
-                                        <div onclick="removeFooterBtnState(); route('../component/financialLedgerComponent.js','../css/financialLedgerComponent.css', 'financialLedger')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Financial Ledger</div>
-                                        <hr>
-                                    </li>
-                                    <li class="nav-item">
-                                        <div onclick="removeFooterBtnState(); route('../component/profitLedgerComponent.js','../css/profitLedgerComponent.css', 'profitLedger')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Profit Ledger</div>
-                                        <hr>
-                                    </li>
-                                    <li class="nav-item">
-                                        <div onclick="removeFooterBtnState(); route('../component/stockLedgerComponent.js','../css/stockLedgerComponent.css', 'stockLedger')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Stock Ledger</div>
-                                        <hr>
-                                    </li>
-                                    <li class="nav-item">
-                                        <div onclick="removeFooterBtnState(); route('../component/profitLossComponent.js','../css/profitLossComponent.css', 'profitLoss')" class="nav-link active" aria-current="page" href="#" data-bs-dismiss="offcanvas">Profit Loss Statement</div>
-                                        <hr>
-                                    </li>
-                                    <li class="nav-item">
-                                        <div onclick="removeFooterBtnState(); route('../component/childIDComponent.js','../css/childIDComponent.css', 'childID')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Child Id Status</div>
-                                        <hr class="hr-highlite">
-                                    </li>
-                                    <li class="nav-item">
-                                        <div onclick="removeFooterBtnState(); route('../component/ipoComponent.js','../css/ipoComponent.css', 'ipo')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">IPO</div>
-                                        <hr class="hr-highlite">
-                                    </li>
-                                    <li class="nav-item">
-                                        <div onclick="removeFooterBtnState(); route('../component/dividendRecordComponent.js','../css/dividendRecordComponent.css', 'dividendRecord')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Dividend & Record Dates</div>
-                                        <hr>
-                                    </li>
-                                    <li class="nav-item">
-                                        <div onclick="removeFooterBtnState(); route('../component/companyInfoComponent.js','../css/companyInfoComponent.css', 'companyInfo')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Company Info</div>
-                                        <hr class="hr-highlite">
-                                    </li>
-                                    <li class="nav-item">
-                                        <div onclick="removeFooterBtnState(); route('../component/moneyDepositComponent.js','../css/moneyDepositComponent.css', 'moneyDeposit')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Money Deposit</div>
-                                        <hr>
-                                    </li>
-                                    <li class="nav-item">
-                                        <div onclick="removeFooterBtnState(); route('../component/moneyWithdrawalComponent.js','../css/moneyWithdrawalComponent.css', 'moneyWithdrawal')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Money Withdrawal</div>
-                                        <hr>
-                                    </li>
-                                    <li class="nav-item">
-                                        <div onclick="removeFooterBtnState(); route('../component/internalFundTransComponent.js','../css/internalFundTransComponent.css', 'internalFundTrans')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Internal Fund Transfer</div>
-                                        <hr class="hr-highlite">
-                                    </li>
-                                    <li class="nav-item">
-                                        <div onclick="removeFooterBtnState(); route('../component/rewardPointsComponent.js','../css/rewardPointsComponent.css', 'rewardPoints')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Reward Points</div>
-                                        <hr>
-                                    </li>
-                                    <li class="nav-item">
-                                        <div onclick="removeFooterBtnState(); route('../component/refer01Component.js','../css/refer01Component.css', 'refer01')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Refer Friends & Family</div>
-                                        <hr>
-                                    </li>
-                                    <li class="nav-item">
-                                        <div onclick="removeFooterBtnState(); route('../component/offerComponent.js','../css/offerComponent.css', 'specalOffer')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Special Offer</div>
-                                        <hr class="hr-highlite">
-                                    </li>
-                                    <li class="nav-item">
-                                        <div onclick="removeFooterBtnState(); route('../component/souvenirStoreComponent.js','../css/souvenirStoreComponent.css', 'souvenirStore')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Souvenir Store</div>
-                                        <hr class="hr-highlite">
-                                    </li>
-                                    <li class="nav-item">
-                                        <div class="nav-link active" aria-current="page" onclick="removeFooterBtnState(); showSettings()" data-bs-dismiss="offcanvas">Settings</div>
-                                        <hr>
-                                    </li>
-                                    <li class="nav-item">
-                                        <div onclick="removeFooterBtnState(); route('../component/scheduleChargesComponent.js','../css/scheduleChargesComponent.css', 'scheduleCharges')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Scedule Of Charges</div>
-                                        <hr class="hr-highlite">
-                                    </li>
-                                    <li class="nav-item">
-                                        <div onclick="removeFooterBtnState(); route('../component/digitalBranchComponent.js','../css/digitalBranchComponent.css', 'digitalBranch')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Digital Branch</div>
-                                        <hr class="hr-highlite">
+                                    <li>Miscellaneous
+                                        <ul style="list-style-type: none;">
+                                            <li class="nav-item">
+                                                <div onclick="removeFooterBtnState(); route('../component/refer01Component.js','../css/refer01Component.css', 'refer01')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Refer Friends & Family</div>
+                                                <hr>
+                                            </li>
+                                            <li class="nav-item">
+                                                <div onclick="removeFooterBtnState(); route('../component/rewardPointsComponent.js','../css/rewardPointsComponent.css', 'rewardPoints')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Reward Points</div>
+                                                <hr>
+                                            </li>
+                                            
+                                            <li class="nav-item">
+                                                <div onclick="removeFooterBtnState(); route('../component/promotionsComponent.js', '../css/promotionsComponent.css', 'promotions')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Promotions</div>
+                                                <hr >
+                                            </li>
+                                            <li class="nav-item">
+                                                <div onclick="removeFooterBtnState(); route('../component/souvenirStoreComponent.js','../css/souvenirStoreComponent.css', 'souvenirStore')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Souvenir Store</div>
+                                                <hr >
+                                            </li>
+                                            <li class="nav-item">
+                                                <div class="nav-link active" aria-current="page" onclick="removeFooterBtnState(); route('../component/changePassComponent.js','../css/changePassComponent.css', 'changePass')" data-bs-dismiss="offcanvas">Password Change</div>
+                                                <hr>
+                                            </li>
+                                            <li class="nav-item">
+                                                <div onclick="removeFooterBtnState(); route('../component/scheduleChargesComponent.js','../css/scheduleChargesComponent.css', 'scheduleCharges')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Schedule Of Charges</div>
+                                                <hr >
+                                            </li>
+                                            <li class="nav-item">
+                                                <div onclick="removeFooterBtnState(); route('../component/digitalBranchComponent.js','../css/digitalBranchComponent.css', 'digitalBranch')" class="nav-link active" aria-current="page" data-bs-dismiss="offcanvas">Digital Branch</div>
+                                                <hr >
+                                            </li>
+                                        </ul>
                                     </li>
                                 </ul>
     
                             <div class="nav-socialIcon">
                                 <div class="icon">
-                                    <a href="#">
+                                    <a href="fb://profile/your_profile_id" onclick="openLink(event, 'https://www.facebook.com/01LimitedOfficial/')">
                                         <img style="width: 40px;  height: auto;" src="../images/icons/facebook.png" alt="facebook">
                                     </a>
                                 </div>
                                 <div class="icon">
-                                    <a href="#">
-                                        <img style="width: 40px;  height: auto;" src="../images/icons/instagram.png" alt="instagram">
+                                    <a href="instagram://user?username=01limited.official" onclick="openLink(event, 'https://www.instagram.com/01limited.official')">
+                                        <img style="width: 40px; height: auto;" src="../images/icons/instagram.png" alt="instagram">
                                     </a>
+                                    
                                 </div>
                                 <div class="icon">
-                                    <a href="#">
+                                    <a href="vnd.youtube://channel/UC9HG6DdFf9PBhpkqzTkp1Vw" target="_blank" rel="external">
                                         <img style="width: 40px;  height: auto;" src="../images/icons/youtube.png" alt="youtube">
                                     </a>
                                 </div>
                                 <div class="icon">
-                                    <a href="#">
-                                        <img style="width: 40px;  height: auto;" src="../images/icons/linkedin.png" alt="linkedIn">
-                                    </a>
+                                    <a href="https://www.linkedin.com/company/14480691/">
+                                        <img style="width: 40px; height: auto;" src="../images/icons/linkedin.png" alt="linkedin">
+                                    </a> 
+                                    <!-- <a href="linkedin://company/14480691" onclick="openLink(event, 'https://www.linkedin.com/company/14480691/')">
+                                        <img style="width: 40px; height: auto;" src="../images/icons/linkedin.png" alt="linkedin">
+                                    </a>                                     -->
                                 </div>
                                 <div class="icon">
-                                    <a href="#">
+                                    <a href="https://twitter.com/01LimitedOfc" >
                                         <img style="width: 40px;  height: auto;" src="../images/icons/twitter.png" alt="twitter">
                                     </a>
+                                    <!-- <a href="twitter://user?screen_name=01LimitedOfc" onclick="openLink(event, 'https://twitter.com/01LimitedOfc')">
+                                        <img style="width: 40px;  height: auto;" src="../images/icons/twitter.png" alt="twitter">
+                                    </a> -->
                                 </div>
                             </div>
                         </div>
@@ -196,7 +252,11 @@
                 </div>
             </nav>  
         </div>
-
+        <!-- <div id="loadingApi" style="display: none;">
+            <div class="loadingApiBox" style='background-color: #F1F2F4;'>
+                <img style="width: 20%; height: auto;" src="../images/loading.gif" alt="01 Logo">
+            </div>
+        </div> -->
         <div class="mainContentSection" id="mainContentSection"></div>
 
         <div class="bottomSection" id="bottomSecion">
@@ -224,14 +284,15 @@
             <div class="support-content">
                 <div class="container supportHeading">
                     <span></span>
-                    <h3 class="support_heading">Support Team</h3>
-                    <img onclick="closeSupportTeam()" src="../images/icons/remove.png" alt="Close">
+                    <h3 style="padding: 10px 0px;" class="support_heading">Support Team</h3>
+                    <span></span>
+                    <img style="display: none;" onclick="closeSupportTeam()" src="../images/icons/remove.png" alt="Close">
                 </div>
                 <div class="container supportCall">
                     <a href="tel:+8809678781212"><img src="../images/icons/call.jpg" alt="Call" class="supportIcon"> Call +88 096 7878 1212</a>
                 </div>
-                <div class="container supportCall">
-                    <a href="tel:+8801810031200"><img src="../images/icons/call.jpg" alt="Call" class="supportIcon"> Call +88 018 1003 1200</a>
+                <div class="container ">
+                    <a href="tel:+8801810031200">+88 018 1003 1200</a>
                 </div>
                 <div class="container supportIconGroup">
                     <a href="#"><img src="../images/icons/messenger.png" alt="Messenger" class="supportIcon"></a>
@@ -249,7 +310,7 @@
                     <div class="innerIconGroup" onclick="showVideoChat()">
                         <a href="#" class="innerElement"><img src="../images/icons/video-call.png" alt="Video Chat" class="supportIcon"><span>Video Chat</span></a>
                     </div>
-                    <div class="innerIconGroup">
+                    <div class="innerIconGroup" onclick="window.open('https://tawk.to/chat/610a438bd6e7610a49ae8021/default/?$_tawk_popout=true' )">
                         <a href="#" class="innerElement"><img src="../images/icons/live-chat.png" alt="Live Chat" class="supportIcon"><span>Live Chat</span></a>
                     </div>
                 </div>
@@ -261,7 +322,7 @@
                 <h3>Send Message</h3>
                 <img onclick="closeSendMessage()" src="../images/icons/remove.png" alt="Close">
             </div>
-            <div class="container">
+            <div onscroll="resetLogoutTimer()" style="flex: 1 auto; height: 100%; overflow-y: auto;" class="container">
                 <div class="sendMessageBody" id="sendMessageBody">
                     
                 </div>
@@ -271,17 +332,21 @@
             <div class="sendMessageHeading">
                 <span></span>
                 <h3>Video Chat(Via Zoom)</h3>
-                <img onclick="closeVideoChat()" src="../images/icons/remove.png" alt="Close">
-            </div>
+                <img onclick="closeVideoChat()" src="../images/icons/remove.png" alt="Close" style='font-size: 20px'>
+            </div> 
             <div class="container">
                 <div class="sendMessageBody">
-                    <form action="" method="post" enctype="multipart/form-data">
-                        <input type="text" placeholder="Enter Name" class="inputStyle input-color" id="video_req_user_name" name="name">
-                        <input type="text" placeholder="Enter Mobile Number" class="inputStyle input-color" id="video_req_user_mobile" name="mobile">
-                        <input type="text" placeholder="Enter Email Address" class="inputStyle input-color" id="video_req_user_email" name="email">
-                        <input type="date" placeholder="Select a Date" class="inputStyle input-color" id="video_req_date" name="date">
-                        <input type="time" placeholder="Select a Time" class="inputStyle input-color" id="video_req_time" name="time">
-                        <button class= "submitSendMsg" type="submit">Submit</button>
+                    <form id="videoChatReqForm" action="" method="post" enctype="multipart/form-data">
+                        <input type="text" placeholder="Enter Name" class="inputStyle input-color" id="video_req_user_name" name="name" readonly>
+                        <div class="video_req_mobileContainer" id="video_req_mobileContainer">
+                            <select id="video_req_countryCode" class="countryCode"></select>
+                            <input type="text"  placeholder="Enter Mobile Number" name="mobile" id="video_req_user_mobile"  required maxlength='15' readonly>
+                        </div>
+                        <input type="email" placeholder="Enter Email Address" class="inputStyle input-color" id="video_req_user_email" name="email" readonly>
+                        <input type="text" placeholder="Select a Date" class="inputStyle input-color" id="video_req_date" name="date">
+                        <select placeholder="Select a Time" class="inputStyle input-color" id="video_req_time" name="time"></select>
+                        <span id="reqTimeValidationSpan" style="display: none;"> Select a Time.</span>
+                        <button class= "btn btn-primary submitSendMsg" type="submit">Submit</button>
                     </form>
                 </div>
             </div>
@@ -291,7 +356,7 @@
                 <div class="box">
                     <div class="head">SETTINGS</div>
                     <div class="body" onclick="changePass()">Change Password</div>
-                    <div class="footer" onclick="closeSettings()">CANCEL</div>
+                    <div class="footer" onclick="closeSettings()"><p>CANCEL</p></div>
                 </div>
             </div>
         </div>
@@ -299,7 +364,49 @@
     </section>
     <script>
         document.getElementById('overlay').addEventListener('click', closeSettings)
-    </script>
-</body>
+        document.getElementById('overlay').addEventListener('click', closeSupportTeam)
+        window.onload = async function() {
+            const fetchedData = await getBoStatus(user.LoggedInInvestorId)
+            if (fetchedData.status === true) {
+                boData = fetchedData.Data
+            }
+            if (boData[0].bo_id !== '') {
+                const item =  document.getElementById('boAccountOpenListItem')
+                if(item){
+                    item.style.display = 'none'
+                }
+                
+            }
+        }
+        
+        function openLink(event, fallbackUrl) {
+            // event.preventDefault();
+            // const link = event.currentTarget;
+            // const appUrl = link.getAttribute('href');
 
+            // // Try to open the app link
+            // window.location = appUrl;
+
+            // // If the app is not installed, open the fallback URL in the browser after a short delay
+            // setTimeout(() => {
+            //     window.location = fallbackUrl;
+            // }, 200);
+            const now = Date.now();
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
+            iframe.src = appUrl;
+
+            setTimeout(() => {
+                document.body.removeChild(iframe);
+                if (Date.now() - now < 1500) {
+                    window.location = fallbackUrl;
+                }
+            }, 1000);
+        }
+    </script>
+    <!-- <script src="../vendor/sweetAlert2.js"></script> -->
+    
+</body>
+    
 </html>

@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link  id="boots" rel="stylesheet" href="../vendor/bootstrap/css/bootstrap.min.css">
+    <script id="boots" src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../apiFeatching/fetchData.js"></script>
+    <script src="../js/mainPage.js"></script>
     <style>
         body{
             font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -21,7 +25,7 @@
             box-shadow: 0px 0px 5px 0px #000;
         }
         .innerBox1{
-            background-color: #ED213A;
+            background-color: #dc3545;
             margin-bottom: -1px;
             border-radius: 10px 10px 0px 0px;
             height: 150px;
@@ -55,11 +59,18 @@
         }
         
         .close{
-            border: 1px solid #ED213A;
-            background-color: #ED213A;
-            padding: 7px 30px;
-            border-radius: 20px;
+            width: 48%;
+            border-radius: 10px;
             color: #fff;
+        }
+        .tryagainBtn{
+            width: 48%;
+            border-radius: 10px;
+            color: #fff;
+        }
+        .sucClose{
+            width: 40%;
+            border-radius: 10px;
         }
     </style>
 </head>
@@ -72,12 +83,13 @@
                 <img style="width: 90px;" src="../images/icons/danger.png" alt="Failed">
             </div>
             <svg viewBox="0 0 500 100">
-                <path d="M 0 50 C 150 150 300 0 500 80 L 500 0 L 0 0" fill="#ED213A"></path>
+                <path d="M 0 50 C 150 150 300 0 500 80 L 500 0 L 0 0" fill="#dc3545"></path>
             </svg>
             <div class="innerBox2">
-                <p>It seems we have not receieved money</p>
+                <p style="margin: 0px 5px;margin-bottom: 10px;text-align: center;">It seems we have not receieved money</p>
                 <div class="btnBox">
-                    <div id="close" class="close">Close</div>
+                    <div id="close" class="close btn btn-danger">Cancel</div>
+                    <div id="tryAgain" class="tryagainBtn btn btn-primary">Try Again</div>
                 </div>
             </div>
         </div>
@@ -87,37 +99,71 @@
         <div class="box">
             <div class="s_innerBox1">
                 <h1 style="margin: 0; color: #fff;">Success!</h1>
-                <img style="width: 90px;" src="../images/icons/correct.png" alt="Failed">
+                <img style="width: 90px;" src="../images/icons/correct.png" alt="success">
             </div>
             <svg viewBox="0 0 500 100">
                 <path d="M 0 50 C 150 150 300 0 500 80 L 500 0 L 0 0" fill="#22A954"></path>
             </svg>
             <div class="innerBox2">
-                <p>It seems we have not receieved money</p>
+                <p style="margin: 0px 5px;margin-bottom: 10px;text-align: center;">We have receieved money successfully</p>
                 <div class="btnBox">
-                    <div id="close" class="close">Close</div>
+                    <div id="closeD" class="sucClose btn btn-success">Close</div>
                 </div>
             </div>
         </div>
     </div>
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const response = urlParams.get('res');
-        const trxId = urlParams.get('tid')
-        const bdt = urlParams.get('bdt')
+        async function executReturnPage(){
+            const urlParams = new URLSearchParams(window.location.search);
+            const response = urlParams.get('res');
+            if(response){
+                const trxId = urlParams.get('tid')
+                const bdt = urlParams.get('bdt')
+                const cid = urlParams.get('cid')
+                if(response){
+                    if(response === 'Failed'){
+                    document.getElementById('failedSection').style.display= 'block'
+                    }
+                    else{
+                        document.getElementById('successSection').style.display= 'block'
+                        const result = await postStatus01(cid, user.LoggedInInvestorId, trxId)
+                        console.log(result)
+                    }
+                }
+            }else{
+                const urlParamsForNagad = new URLSearchParams(window.location.search);
+                const responseForNagad = urlParamsForNagad.get('status');
+                if(responseForNagad){
+                    const trxId = urlParamsForNagad.get('billno')
+                    const cid = urlParamsForNagad.get('cid') ? urlParamsForNagad.get('cid') : 115
+                    if(responseForNagad === 'FAILED'){
+                        document.getElementById('failedSection').style.display= 'block'
+                    }
+                    else{
+                        document.getElementById('successSection').style.display= 'block'
+                        const result = await postStatus01(cid, user.LoggedInInvestorId, trxId)
+                        console.log(result)
+                    }
+                }
+            }
 
-        if(response === 'Failed'){
-            document.getElementById('failedSection').style.display= 'block'
-        }else{
-            document.getElementById('successSection').style.display= 'block'
+            document.getElementById('closeD').addEventListener('click', ()=>{
+                window.location.href='../mainPage/home.html'
+            })
+            document.getElementById('close').addEventListener('click', ()=>{
+                window.location.href='../mainPage/home.html'
+            })
+            document.getElementById('tryAgain').addEventListener('click', ()=>{
+                localStorage.setItem('currentSection', 'moneyDeposit');
+                window.location.href='../mainPage/home.html'
+            })
+            // document.getElementById('tryAgain').addEventListener('click', ()=>{
+            //     window.location.href='../mainPage/home.html?case=moneyDeposit'
+            // })
+
         }
-
-        document.getElementById('close').addEventListener('click', ()=>{
-            window.location.href='../mainPage/home.html'
-        })
-        document.getElementById('tryAgain').addEventListener('click', ()=>{
-            window.location.href='../mainPage/home.html?case=moneyDeposit'
-        })
+        executReturnPage()
+        
     </script>
 </body>
 </html>

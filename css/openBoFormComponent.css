@@ -1,0 +1,11 @@
+.boFormContainer{
+    flex: 1 auto;
+}
+#boFormDiv{
+    height: 100%;
+    width: 100%;
+}
+#contentIframe{
+    height: 100%;
+    width: 100%;
+}

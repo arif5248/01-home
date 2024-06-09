@@ -1,247 +1,185 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery.Marquee/1.5.0/jquery.marquee.min.js"></script>
-
-
-
-    </head>
-    <body>
-       <div>
-        <div class="w3-container  w3-border" style="margin: 5 5px;  padding: 1px; background-color:rgb(255, 255, 255);">
-            <div class="d-flex">
-              <div class="marqP" id="dvMarq"
-                style="display: none; background-color: black; overflow: hidden; padding-top: 1px"></div>
-              <div style="display:none; margin:auto"><img src="#" class="logolg" /></div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BO Account</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.8.335/pdf_viewer.min.css">
+    <script src="../apiFeatching//fetchData.js"></script>
+    <style>
+        .pdf-container {
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+        }
+        .pdf-modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 60px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        .pdf-modal-content {
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            height: 80%;
+            background-color: #fefefe;
+        }
+        .pdf-page {
+            display: block;
+            margin: 10px 0;
+        }
+        .close {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="mainContentSection"></div>
+    <div id="pdfModal" class="pdf-modal">
+        <div class="pdf-modal-content">
+            <div class='docHeading'>
+                <h5>Document Viewer</h5>
             </div>
-            <div class="d-flex">
-              <div class="marqPD" id="dvMarqD"
-                style="display: none; background-color: black; overflow: hidden; padding-top: 1px"></div>
-              <div style="display:none; margin:auto"><img src="#" class="logolg" /></div>
-            </div>
-            <table id="ifmTick" cellspacing="0" style="color: White; width: 100%">
-              <tr>
-                <td style="width:10%;" id="s1"></td>
-                <td style="width:10%;" id="s2"></td>
-                <td style="width:10%;" id="s3"></td>
-                <td style="width:10%;" id="s4"></td>
-                <!--<td style="width:10%;" id="s5"></td>
-                <td style="width:10%;" id="s6"></td>
-                   <td style="width:10%;" id="s7"></td>
-                  <td style="width:10%;" id="s8"></td>
-                  <td style="width:10%;" id="s9"></td>
-                  <td style="width:10%;" id="s10"></td>
-                  <td style="width:10%;" id="s11"></td>
-                  <td style="width:10%;" id="s12"></td> -->
-                <td style="width:1%; text-align:right"><img style="width:30px" src="#" class="logolg" /></td>
-              </tr>
-            </table>
-            <table id="ifmTickD" cellspacing="0" style="color: White; width: 100%">
-              <tr>
-                <td style="width:10%;" id="ds1"></td>
-                <td style="width:10%;" id="ds2"></td>
-                <td style="width:10%;" id="ds3"></td>
-                <td style="width:10%;" id="ds4"></td>
-                <!--<td style="width:10%;" id="ds5"></td>
-                <td style="width:10%;" id="ds6"></td>
-                  <td style="width:10%;" id="ds7"></td>
-                  <td style="width:10%;" id="ds8"></td>
-                  <td style="width:10%;" id="ds9"></td>
-                  <td style="width:10%;" id="ds10"></td>
-                   <td style="width:10%;" id="ds11"></td>
-                  <td style="width:10%;" id="ds12"></td> -->
-                <td style="width:1%; text-align:right"><img style="width:30px" src="#" class="logolg" /></td>
-              </tr>
-            </table>
-    
-          </div>
+            <div class="pdf-container" id="pdfContainer"></div>
+            <div id="closeModal" class="close"><p>CLOSE</p></div>
+        </div>
+    </div>
 
-       </div>
-        
-    </body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.8.335/pdf.min.js"></script>
     <script>
-        getTicker()
-        function getTicker() {
-        $.get('https://www.berichbd.com/matrix/matrix.aspx?CMND=_TICKER_&exch=CSE', function (data) {
-        var mrq1 = '<tr>';
-        var mrq2 = '<tr>';
-        $.each(data, function (i, item) {
-            console.log(item)
-          var cls = 'mqsm';
-          if (item.Chng > 0) {
-            cls = 'mqup';
-          }
-          else if (item.Chng < 0) {
-            cls = 'mqdn';
-          }
-          mrq1 += '<td class="' + cls + '" style="cursor:pointer;" onclick="selscrip(\'' + item.scrip + '\');">' + item.scrip + '</td>';
-          mrq2 += '<td class="' + cls + '">' + item.LTP + '&nbsp;(' + item.Chng.toFixed(1) + ')</td>';
-        });
-        mrq1 += '</tr>';
-        mrq2 += '</tr>';
-        var fins = '<table style="text-align: center; color: white; border-collapse: separate; border-spacing: 1px 0px; font-size: xx-small;">' + mrq1 + mrq2 + '</table>';
-        $("#dvMarq").html(fins);
-        $('.marqP').marquee({ speed: 100, direction: 'left', pauseOnHover: true });
-      }, "json").fail(function () {
-      });
+        function renderPDF(url, canvasContainer) {
+    const loadingTask = pdfjsLib.getDocument(url);
+    loadingTask.promise.then(function(pdf) {
+        const numPages = pdf.numPages;
+        canvasContainer.innerHTML = ''; // Clear previous PDF content
+        
+        // Loop through each page and render it
+        for (let pageNumber = 1; pageNumber <= numPages; pageNumber++) {
+            pdf.getPage(pageNumber).then(function(page) {
+                const viewport = page.getViewport({ scale: 1.5 });
+                const canvas = document.createElement('canvas');
+                canvas.className = 'pdf-page';
+                canvasContainer.appendChild(canvas);
+                const context = canvas.getContext('2d');
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
 
-      $.get('https://www.berichbd.com/matrix/matrix.aspx?CMND=_TICKER_&exch=CSE', function (data) {
-        var mrq1 = '<tr>';
-        var mrq2 = '<tr>';
-        $.each(data, function (i, item) {
-          var cls = 'mqsm';
-          if (item.Chng > 0) {
-            cls = 'mqup';
-          }
-          else if (item.Chng < 0) {
-            cls = 'mqdn';
-          }
-          mrq1 += '<td class="' + cls + '" style="cursor:pointer;" onclick="selscrip(\'' + item.scrip + '\');">' + item.scrip + '</td>';
-          mrq2 += '<td class="' + cls + '">' + item.LTP + '&nbsp;(' + item.Chng.toFixed(1) + ')</td>';
-        });
-        mrq1 += '</tr>';
-        mrq2 += '</tr>';
-        var fins = '<table style="text-align: center; color: white; border-collapse: separate; border-spacing: 1px 0px; font-size: xx-small;">' + mrq1 + mrq2 + '</table>';
-        $("#dvMarqD").html(fins);
-        $('.marqPD').marquee({ speed: 100, direction: 'left', pauseOnHover: true });
-      }, "json").fail(function () {
-      });
-    }
-
-    function fillRTTicker(jsnG) {
-      var jsn = JSON.parse(jsnG);
-      $.each(jsn, function (i, item) {
-        if (item.Exch == 'DSE') {
-          try {
-            var Fn = '<tr><td>' + item.CNam + '</td></tr><tr><td>' + item.CVol + ' @ ' + item.CLTP.toFixed(1) + " (" + item.Chng.toFixed(1) + ")</td></tr>";
-            var bkcol = "url('imgri/BlueBar.png')";
-            if (Number(item.Chng) < 0) {
-              bkcol = "url('imgri/RedBar.png')";
-            }
-            else if (Number(item.Chng) > 0) {
-              bkcol = "url('imgri/GreenBar.png')";
-            }
-            $('#ds1').html($('#ds2').html());
-            $('#ds2').html($('#ds3').html());
-            $('#ds3').html($('#ds4').html());
-            // $('#ds4').html($('#ds5').html());
-            //$('#ds5').html($('#ds6').html());
-            // $('#ds6').html($('#ds7').html());
-            // $('#ds7').html($('#ds8').html());
-            // $('#ds8').html($('#ds9').html());
-            // $('#ds9').html($('#ds10').html());
-            var Ht = '<table class="tktbl" style="text-align:center; width:100%; font-size:7px; padding:0px; background-image:' + bkcol + '; background-size:cover; cursor:pointer;" onclick="selscrip(\'' + item.CNam + '\');">' + Fn + '</table>';
-            $('#ds4').html(Ht);
-
-          }
-          catch (err) { }
-        } else {
-          try {
-            var Fn = '<tr><td>' + item.CNam + '</td></tr><tr><td>' + item.CVol + ' @ ' + item.CLTP.toFixed(1) + " (" + item.Chng.toFixed(1) + ")</td></tr>";
-            var bkcol = "url('imgri/BlueBar.png')";
-            if (Number(item.Chng) < 0) {
-              bkcol = "url('imgri/RedBar.png')";
-            }
-            else if (Number(item.Chng) > 0) {
-              bkcol = "url('imgri/GreenBar.png')";
-            }
-            $('#s1').html($('#s2').html());
-            $('#s2').html($('#s3').html());
-            $('#s3').html($('#s4').html());
-            // $('#s4').html($('#s5').html());
-            // $('#s5').html($('#s6').html());
-            //$('#s6').html($('#s7').html());
-            // $('#s7').html($('#s8').html());
-            // $('#s8').html($('#s9').html());
-            // $('#s9').html($('#s10').html());
-            var Ht = '<table class="tktbl" style="text-align:center; width:100%; font-size:7px; padding:0px; background-image:' + bkcol + '; background-size:cover; cursor:pointer;" onclick="selscrip(\'' + item.CNam + '\');">' + Fn + '</table>';
-            $('#s4').html(Ht);
-
-          }
-          catch (err) { }
-        }
-
-
-      });
-    }
-    //
-    // TRade Time Check
-
-    var tikonce = 0;
-    var cntdn;
-    function getTradeTime() {
-      clearInterval(cntdn);
-      $.get('https://www.berichbd.com/matrix/matrix.aspx' + '?CMND=THOUR', function (data) {
-        if (data.trade == '1') {
-
-          // For Ticker+News Marquee
-          var sgUrl = "https://ticker.berichbd.com:8088/signalr";
-          if (window.location.hostname == 'localhost') {
-            sgUrl = "http://localhost:8088/signalr";
-          }
-
-          $.getScript(sgUrl + "/hubs", function () {
-            $.connection.hub.url = sgUrl;
-            simpleHubProxy = $.connection.simpleHub;
-            simpleHubProxy.client.addMessage = function (name, jsnF) {
-              fillRTTicker(jsnF);
-            };
-            $.connection.hub.start().done(function () {
-              simpleHubProxy.server.setUserName($('#hdus').val());
+                // Render PDF page into canvas context
+                const renderContext = {
+                    canvasContext: context,
+                    viewport: viewport
+                };
+                page.render(renderContext);
             });
-          });
-
-
-          $("#ifmTick").show();
-          $("#ifmTickD").show();
-          $("#dvMarq").hide();
-          $("#dvMarqD").hide();
-          $("#dvMarq").next().hide();
-          $("#dvMarqD").next().hide();
-          // $('#mktOpen').html("OPEN");
-          // $('#mktOpen').css('color', 'green');
-          // $("#trdtmcap").html('Remaining Trade Time');
-          tikonce = 0;
         }
-        else {
-          if (tikonce == 0) {
-            getTicker();
-            tikonce = 1;
-            // $('#mktOpen').html("CLOSED");
-            // $('#mktOpen').css('color', '#ff0000');
-            // $("#trdtmcap").html('Trade Will Start');
-          }
-          $("#ifmTick").hide();
-          $("#dvMarq").show();
-          $("#ifmTickD").hide();
-          $("#dvMarqD").show();
-          $("#dvMarq").next().show();
-          $("#dvMarqD").next().show();
+    }, function(reason) {
+        console.error(reason);
+    });
+}
+        async function executeOpenBOAcc() {
+            let boData = [];
+            const fetchedData = await getBoStatus(28);
+            if (fetchedData.status === true) {
+                boData = fetchedData.Data;
+            }
+            if (boData[0].bo_id === '') {
+                window.location.href = `https://01.limited/wvboaccount.aspx?id=28`;
+                return;
+            }
+
+            function openBoAccount() {
+                document.getElementById('mainContentSection').innerHTML =
+                    `
+                    <div class="BO-Heading" id="BO-Heading">
+                        <div class="heading">
+                            <h1>Open BO Account</h1>
+                        </div>
+                    </div>
+                    <div class='boContentSection'>
+                        <div class="container">
+                            <div class="BO-content" id="BO-content"></div>
+                        </div>
+                    </div>
+                    <div id="pdfModal" class="pdf-modal">
+                        <div class="pdf-modal-content">
+                            <div class='docHeading'>
+                                <h5>Document Viewer</h5>
+                            </div>
+                            <div class="pdf-container" id="pdfContainer"></div>
+                            <div id="closeModal" class="close"><p>CLOSE</p></div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            function bo_account_details() {
+                document.getElementById('BO-content').innerHTML =
+                    `
+                    <div class="BO-status">
+                        <h3>${boData[0].bo_id === '' ? "You Don't have BO Account. Please Click on Show BO Form" : 'BO Account Opened Successfully'}</h3>
+                    </div>
+                    
+                    <table>
+                        <tr>
+                            <td>BO Number</td>
+                            <td>${boData[0].bo_id}</td>
+                        </tr>
+                        <tr>
+                            <td>BO Date</td>
+                            <td>${boData[0].bo_date}</td>
+                        </tr>
+                        <tr>
+                            <td>BO Name</td>
+                            <td>${boData[0].inv_name}</td>
+                        </tr>
+                        <tr>
+                            <td>CDBL BO<br>Acknowledgement</td>
+                            <td><div id="pdfViewer1">View File</div></td>
+                        </tr>
+                        <tr>
+                            <td>All Signed Documents</td>
+                            <td><div id="pdfViewer2" style="cursor: pointer;">View File</div></td>
+                        </tr>
+                    </table>
+                    <div class="showBOForm">
+                        <a target="_self" href='https://01.limited/wvboaccount.aspx?id=28'>    
+                            <h5>SHOW BO FORM</h5>
+                        </a>
+                    </div>
+                `;
+                
+                document.getElementById('pdfViewer1').addEventListener('click', function() {
+                    var pdfUrl = boData[0].CDBL;
+                    document.getElementById('pdfContainer').innerHTML = ''; // Clear previous PDF content
+                    renderPDF(pdfUrl, document.getElementById('pdfContainer'));
+                    document.getElementById('pdfModal').style.display = 'block';
+                });
+                
+                document.getElementById('pdfViewer2').addEventListener('click', function() {
+                    var pdfUrl = boData[0].Signed;
+                    document.getElementById('pdfContainer').innerHTML = ''; // Clear previous PDF content
+                    renderPDF(pdfUrl, document.getElementById('pdfContainer'));
+                    document.getElementById('pdfModal').style.display = 'block';
+                });
+                
+                document.getElementById('closeModal').addEventListener('click', function() {
+                    document.getElementById('pdfModal').style.display = 'none';
+                });
+            }
+
+            openBoAccount();
+            bo_account_details();
         }
-        var countDownDate = new Date(data.cntm).getTime();
-        cntdn = setInterval(function () {
-          var now = new Date().getTime();
-          var distance = countDownDate - now;
-          var hours = Math.floor(distance / (1000 * 60 * 60));
-          var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-          var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-          $("#trdtmval").html(NmPad(hours, 2) + ":" + NmPad(minutes, 2) + ":" + NmPad(seconds, 2));
-          if (distance < 0) {
-            clearInterval(cntdn);
-            $("#trdtmval").html('');
-          }
-        }, 1000);
-      }, "json").fail(function () {
-      });
-      /* setTimeout(function () { getTradeTime(); }, 90000);*/
-    }
-    //
-    function NmPad(num, size) {
-      var s = "000000000" + num; return s.substr(s.length - size);
-    }
+
+        executeOpenBOAcc();
     </script>
+</body>
 </html>

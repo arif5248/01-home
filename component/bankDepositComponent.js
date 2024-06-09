@@ -1,4 +1,5 @@
 async function executeBankDeposit(data){
+    // await saveLog(user.LoggedInInvestorId, '');
     const bank = data[0]
     const purposeOptions = data[1]
     const allBankList = data[2]
@@ -39,14 +40,15 @@ async function executeBankDeposit(data){
     }
 
     function moneyDeposit(){
-        const today = new Date().toISOString().split('T')[0];
+        let today = new Date().toISOString().split('T')[0];
+        today =  customDateConverter(today, 'defaultToCustom')
         document.getElementById('mainContentSection').innerHTML =`
             <div class="pageHeading" id="financial-Heading">
                 <div class="heading">
                     <h1>Bank Deposit</h1>
                 </div>
             </div>
-            <div class="container">
+            <div onscroll="resetLogoutTimer()" style="flex: 1 auto;height: 100%;overflow-y: auto;" class="container">
                 <div class="bottomBox">
                     <div class='shareBox'>
                         <div id='shareBankDetails' class='shareImageBox'>
@@ -68,7 +70,7 @@ async function executeBankDeposit(data){
                         </div>
                         <div class="form-box-3">
                             <label for="date">Deposit Date</label>
-                            <input type="date" id="date" name="date" value=${today} required>
+                            <input style='text-align: center;' type="text" id="date" name="date" value=${today} required readonly>
                         </div>
                         <div class="form-box-3">
                             <label for="bank_purpose">Purpose</label>
@@ -118,8 +120,8 @@ async function executeBankDeposit(data){
                         </div>
                         <div id='formValidationError'></div>
                         <div class="proceed-btn">
-                            <input type="button" value="Cancel" onclick="removeFooterBtnState(); route('../component/moneyDepositComponent.js','../css/moneyDepositComponent.css', 'moneyDeposit')">
-                            <input type="submit" value="PROCEED">
+                            <input class='btn btn-danger' type="button" value="Cancel" onclick="removeFooterBtnState(); route('../component/moneyDepositComponent.js','../css/moneyDepositComponent.css', 'moneyDeposit')">
+                            <input class='btn btn-primary' type="submit" value="PROCEED">
                         </div>
                     </form>
                 </div>
@@ -127,6 +129,11 @@ async function executeBankDeposit(data){
             <div style='display: none;' id='shareBankDetailsBox'></div>
             <div style='display: none;' id='shareBankDetailsMsg'></div>
         `
+        $("#date").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: "dd/M/yy"
+        });
         const selectElement = document.getElementById('bank_purpose')
         purposeOptions.forEach(option =>{
             const newOption = document.createElement('option')
@@ -175,10 +182,10 @@ async function executeBankDeposit(data){
                     <div class='inputBox'>
                         <div id='telegramInput'>
                             <select id="countryCode" name="countryCode" required></select> 
-                            <input type="number" id="telegramNumber" name="telegramNumber" placeholder="Enter Telegram Number" required>
+                            <input type="text" id="telegramNumber" name="telegramNumber" placeholder="Enter Telegram Number" maxlength="11" required>
                         </div>
                         <div style='display: none;' id='emailInput'>
-                            <input type="email" id="sharedToEmail" name="sharedToEmail" placeholder="Enter A Email" required>
+                            <input type="email" id="sharedToEmail" name="sharedToEmail" placeholder="Enter Email Address" required>
                         </div>
                         <div style='text-align: right;' id='showError'></div>
                     </div>
@@ -186,8 +193,8 @@ async function executeBankDeposit(data){
                 <hr style="opacity: 1;">
                 <div class='footer'>
                     <div class="proceed-btn">
-                        <input type="button" value="CANCEL" onclick="hideShareBankDetailsBox()">
-                        <input id='shareBankDetailsBtn' type="submit" value="SHARE">
+                        <input class='btn btn-danger' type="button" value="CANCEL" onclick="hideShareBankDetailsBox()">
+                        <input class='btn btn-primary' id='shareBankDetailsBtn' type="submit" value="SHARE">
                     </div>
                 </div>
             </div>

@@ -5,8 +5,8 @@ async function executeB_OurService(){
         serviceContents = fetchedData.service
     }
     function B_OurService(){
-        document.getElementById('page_heading').innerHTML=`Our Service`
         document.getElementById('beforeMain').innerHTML = `
+        <h3 id="page_heading">01 Services</h3>
         <div class="our-service-section" id="our-service-section">
             <div class="container">
                 <div class="our-service-content" id="our-service-content"></div>
@@ -18,7 +18,6 @@ async function executeB_OurService(){
         const why01Div = document.getElementById('our-service-content');
     
         serviceContents.forEach(content=> {
-            console.log(content)
             const newContent = document.createElement('div');
             newContent.classList.add('ourService_item');
     

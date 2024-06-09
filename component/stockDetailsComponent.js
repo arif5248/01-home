@@ -23,18 +23,18 @@ async function executeStockDetails(script){
     async function stockDetails(){
         document.getElementById('mainContentSection').innerHTML = 
         `
-            <div class="financial-Heading" id="financial-Heading">
+            <div class="pageHeading" id="financial-Heading">
                 <div class="heading">
-                    <h1>Stock Details(${script})</h1>
+                    <h1>Stock Details (${script})</h1>
                 </div>
             </div>
 
             <div style='margin-top: 5px' class="container">
                 <div class="searchContent">
                     <div class="input-box">
-                        <input type="date" id="FL_date-from" >
+                        <input type="text" id="FL_date-from" readonly>
                         <span>To</span>
-                        <input type="date" id="FL_date-to">
+                        <input type="text" id="FL_date-to" readonly>
                     </div>
                     <div class="searchLedger">
                         <h5>SEARCH</h5>
@@ -51,6 +51,17 @@ async function executeStockDetails(script){
             </div>
             
         `
+        $("#FL_date-from").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: "dd/M/yy"
+        });
+    
+        $("#FL_date-to").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: "dd/M/yy"
+        });
     }
     function renderStockSummury(){
         stockSummuryData.company = script;
@@ -111,18 +122,14 @@ async function executeStockDetails(script){
                     <th>Taka</th>
                 </tr>
             </table>
-            <br>
-            <br>
-            <br>
-            <br>
+            
         `;
         stockData.forEach(data => {
             const newRow = document.createElement('tr');
-    
             newRow.innerHTML = `
                 <td>${data.Date}</td>
-                <td>${data.Type}</td>
-                <td>${data.Type === 'Sales' ? data.SQt : data.BQt}</td>
+                <td style='text-align:left;'>${data.Type}</td>
+                <td>${data.Type === 'Sales' ? parseFloat(data.SQt).toLocaleString("en-IN") : parseFloat(data.BQt).toLocaleString("en-IN")}</td>
                 <td>${data.Type === 'Sales' ? data.Srt : data.Brt}</td>
                 <td>${data.Type === 'Sales' ? data.Stk : data.Btk}</td>
             `;
@@ -130,6 +137,12 @@ async function executeStockDetails(script){
             total_sell = total_sell + Number(data.Stk.replace(/,/g, ''))
 
             tableBody.querySelector('tbody').appendChild(newRow);
+            if(data.Type === 'Sales' || data.Type === 'Purchase'){
+                const cells = newRow.getElementsByTagName("td");
+                for (let i = 0; i < cells.length; i++) {
+                    cells[i].style.color = "#fff"; 
+                }
+            }
 
             if(data.Type === 'Purchase'){
                 newRow.style.backgroundColor = '#3766FC'
@@ -145,8 +158,8 @@ async function executeStockDetails(script){
     }
 
     await stockDetails()
-    document.getElementById('FL_date-from').value = formattedOneYearAgo;
-    document.getElementById('FL_date-to').value = formattedCurrentDate;
+    document.getElementById('FL_date-from').value =customDateConverter(formattedOneYearAgo, 'defaultToCustom') ;
+    document.getElementById('FL_date-to').value =customDateConverter(formattedCurrentDate, 'defaultToCustom') ; 
     renderStockTable()
     renderStockSummury()
     

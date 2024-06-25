@@ -32,7 +32,7 @@ async function executeTP_marketMover(){
             </div>
         </div>
 
-        <div class="container">
+        <div onscroll="resetLogoutTimer()" class="container" style="flex: 1 auto;height: 100%;overflow-y: auto;position: relative;">
             <div class="marketMoverContainer" id="marketMoverContainer">
                 <div class="topGainerBody" id="topGainerBody"></div>
                 <div class="topLooserBody" id="topLooserBody"></div>
@@ -186,7 +186,5 @@ async function executeTP_marketMover(){
     renderTopLooser()
     renderTopValue()
     renderTopVolume()
-
-  
 }
 

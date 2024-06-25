@@ -20,7 +20,7 @@ async function executeTP_StockStatus(data){
             </div>
         </div>
 
-        <div class='container' style="flex: 1 auto;height: 100%;overflow-y: auto;">
+        <div onscroll="resetLogoutTimer()" class='container' style="flex: 1 auto;height: 100%;overflow-y: auto;">
             <div class="tp_stock_status" id="tp_stock_status"></div>
         </div>
         `

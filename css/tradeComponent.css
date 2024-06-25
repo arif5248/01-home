@@ -52,7 +52,7 @@
 #popupDiv{
     position: fixed;
     background-color: #fff;
-    width: 75%;
+    width: 85%;
     top: 50vh;
     left: 50vw;
     transform: translateX(-50%) translateY(-50%);
@@ -83,7 +83,8 @@
     border-radius: 10px 10px 0px 0px;
 }
 #popupDiv > p {
-    padding: 10px 0px;
+    padding: 10px 5px;
+    line-height: 20px;
 }
 #popupDiv > div{
     border-top: 1px solid #000;
@@ -424,6 +425,13 @@ h6{
 }
 
 /*=============BuySell order==============*/
+.exchangeBox{
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+}
 .buySellSection{
     margin: 10px 0px;
 }
@@ -507,7 +515,9 @@ h6{
     padding: 10px 10px;
     border-radius: 5px;
 }
-
+#buyFormSubmit > .rowForm > input[readonly]{
+    background-color: #98989A !important;
+}
 .fundStatusBox {
     transform: translateY(-50%) translateX(-40vw);
     position: fixed;

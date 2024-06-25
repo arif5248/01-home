@@ -1,12 +1,6 @@
 async function executeTP_News(data){
     let mediaNews = []
-
-    const fetchedMediaNews = await getSelectedCompanyNews(data)
-    if(fetchedMediaNews.status === true){
-        mediaNews = fetchedMediaNews.Data
-    }
-
-    const exchangeNews = await get_SCRIPNEWS_(data)
+    let exchangeNews = []
     
     function news(){
         document.getElementById('mainContentSection').innerHTML =
@@ -24,7 +18,7 @@ async function executeTP_News(data){
                     EXCHANGE NEWS
                 </div>
             </div>
-            <div class="newsBody" style="flex: 1 auto; overflow-y: auto;">
+            <div onscroll="resetLogoutTimer()" class="newsBody" style="flex: 1 auto; overflow-y: auto;">
                 <div class='container'>
                     <div class="mediaNews" id="mediaNews"></div>
                     <div class="exchangeNews" id="exchangeNews"></div>
@@ -131,7 +125,17 @@ async function executeTP_News(data){
     
     document.getElementById('mediaNews').style.display = 'block';
     document.getElementById('exchangeNews').style.display = 'none';
-    
+    const fetchedMediaNews = await getSelectedCompanyNews(data)
+    console.log(fetchedMediaNews)
+    if(fetchedMediaNews.status === true){
+        mediaNews = fetchedMediaNews.Data
+        populatedMediaNews()
+    }
+
+    exchangeNews = await get_SCRIPNEWS_(data)
+    if(exchangeNews.status === false){
+        exchangeNews = []
+    }
 }
 
 function showNews(newsType) {

@@ -1,6 +1,6 @@
 async function executeTP_halted(){
-    const fetchedHaltedCompany = await get_HALTED_()
-    haltedCompany = fetchedHaltedCompany ? fetchedHaltedCompany : []
+    let fetchedHaltedCompany 
+    let haltedCompany = []
     function halted(){
         document.getElementById('mainContentSection').innerHTML = `
         <div class="pageHeading" id="financial-Heading">
@@ -18,7 +18,7 @@ async function executeTP_halted(){
                 </div>
             </div>
         </div>
-        <div style='flex: 1 1 auto; overflow-y: auto; height: 100%; margin-top: 5px;' class="haltedSection">
+        <div onscroll="resetLogoutTimer()" style='flex: 1 1 auto; overflow-y: auto; height: 100%; margin-top: 5px;' class="haltedSection">
             <div class= "container">   
                 <div class="buySellOrder">
                     <div class="no_seller" id="no_seller"></div>
@@ -81,6 +81,11 @@ async function executeTP_halted(){
     renderHaltedSeller()
     renderHaltedBuyer()
     document.getElementById('no_seller').style.display = 'none'
+    fetchedHaltedCompany = await get_HALTED_()
+    // console.log(fetchedHaltedCompany)
+    haltedCompany = fetchedHaltedCompany ? fetchedHaltedCompany : []
+    renderHaltedSeller()
+    renderHaltedBuyer()
 }
 function show(content){
     document.getElementById('no_seller').style.display = 'block'

@@ -5,7 +5,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 10px 0px;
+    padding: 10px 5px;
     background-color: #868686;
     border-radius: 10px;
 }
@@ -16,9 +16,10 @@
     font-size: 13px;
     font-weight: 700;
     text-align: center;
+    width: 48%;
 }
 .btnSection > .container > .box > .btnGroup > .active{
-    background-color: #5C5C5C;
+    background-color: #030333;
     color: #fff;
 }
 /* ===================table==================== */

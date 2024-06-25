@@ -221,11 +221,11 @@ async function executeBrokeragePlan(){
                 <div class='paymentOptionBox'>
                     <div class='fromAcc'>
                         <input id='fromAccClicked' type='radio' name='paymentBy' value='Account'>
-                        <label>Account Debit</label>
+                        <label for="fromAccClicked">Account Debit</label>
                     </div>
                     <div class='fromReward' style='pointer-events: none; opacity: 0.5;'>
                         <input id='fromRewardClicked' value='Reward' type='radio' name='paymentBy' disabled>
-                        <label>Reward Point</label>
+                        <label for="fromRewardClicked">Reward Point</label>
                     </div>
                 </div> 
                 <div class='bill_reward'>
@@ -256,8 +256,20 @@ async function executeBrokeragePlan(){
     }
     function renderTermsAndCondition(){
         document.getElementById('termsCondition').innerHTML= `
-        <p>${fetcheAllBrokeragePlandData.status === true ? fetcheAllBrokeragePlandData.Terms[0].terms : ''}</p>
+            <div class='popUpHeader'>
+                <h5>Terms & Conditions</h5>
+            </div>
+            <div class='popUpBody'>
+                <p>${fetcheAllBrokeragePlandData.status === true ? fetcheAllBrokeragePlandData.Terms[0].terms : ''}</p>
+            </div>
+            <div class='popUpFooter'>
+                <p class='btn btn-success' id='submitPopUp'>Ok</p>
+            </div>
         `
+        document.getElementById('submitPopUp').addEventListener('click',()=>{
+            document.getElementById('termsCondition').style.display = 'none'
+            document.getElementById('overlay').style.display = 'none'
+        })
         document.getElementById('overlay').style.display = 'block'
         document.getElementById('overlay').style.height = '160%'
         document.getElementById('termsCondition').style.display = 'block'

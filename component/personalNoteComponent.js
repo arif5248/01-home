@@ -1,13 +1,13 @@
 async function executePersonalNote(){
-    let user = null;
+    // let user = null;
     let allNoteData = []
-    const storedData = localStorage.getItem('loginData');
-    if (storedData) {
-        const loginData = JSON.parse(storedData);
-        user = loginData[0]
-    }else{
-        window.location.href = '../index.html';
-    }
+    // const storedData = sessionStorage.getItem('loginData');
+    // if (storedData) {
+    //     const loginData = JSON.parse(storedData);
+    //     user = loginData[0]
+    // }else{
+    //     window.location.href = '../index.html';
+    // }
     
     let fetchedData =await getAllNotes(user.LoggedInInvestorId)
     if(fetchedData.status === true){
@@ -78,7 +78,7 @@ async function executePersonalNote(){
                         <p>Date</p>
                         <p>Note</p>
                     </div>
-                    <div class="all-note-box" id='all_note_box'>
+                    <div onscroll="resetLogoutTimer()" class="all-note-box" id='all_note_box'>
                         
                     </div>
                 </div>

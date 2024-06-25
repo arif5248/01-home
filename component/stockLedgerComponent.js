@@ -47,7 +47,7 @@ async function executeStockLedger(){
                         <th>Stock Qty</th>
                         <th>Avg Cost</th>
                         <th>Last Price</th>
-                        <th>Total Price</th>
+                        <th>Stock<br>Value</th>
                     </tr>
                 </table>
             </div>
@@ -86,7 +86,7 @@ async function executeStockLedger(){
                         <th>Stock<br>Qty</th>
                         <th>Avg<br>Cost</th>
                         <th>Last<br>Price</th>
-                        <th>Total<br>Price</th>
+                        <th>Stock<br>Value</th>
                     </tr>
                 </table>
             </div>

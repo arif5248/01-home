@@ -15,15 +15,17 @@ async function executeTrade(data){
     let availableShare = 0
     let availableFund
     let openOrderData = []
+    let exchange = user.exch
 
     const tradePageLogin = await Post_LOGIN_({
         CMND: "_LOGIN_",
-        tid: "447",
+        tid: exchange === 'DSE' ? 137: 447,
         inv_id: user.inv_id,
         inv_pass: user.ngts_pass2, 
         force: "0",
         cid : device === 'android' ? 100 : 101
     })
+    // console.log(tradePageLogin)
     if(tradePageLogin.success === true){
         tradeHour = await get_THOUR_()
     }
@@ -153,14 +155,14 @@ async function executeTrade(data){
                     <div class="tradeAllBtnBox" id="tradeAllBtnBox">
                         <div id='TP_companyInfo' class="singleBtn">COMP INFO</div>
                         <div id='TP_news' class="singleBtn">NEWS</div>
-                        <div id='TP_todayTrade' class="singleBtn">ALL TRADES</div>
                         <div style='background-color: #73737366; color: #ffffff87;' id='TP_priceAlert' class="singleBtn">PRICE ALERT</div>
-                        <div id='TP_fundStatus' class="singleBtn">FUND STATUS</div>
-                        <div id='TP_lastTrade' class="singleBtn">LAST TRADES</div>   
-                        <div id='TP_marketMover' class="singleBtn">MKT MOVER</div>                        
-                        <div id='TP_dividend' class="singleBtn">DIVIDEND</div>                       
-                        <div id='TP_stockStatus' class="singleBtn">STK STATUS</div>
-                        <div id='TP_rateHistory' class="singleBtn">RATE HISTORY</div>                       
+                        <div id='TP_lastTrade' class="singleBtn">LAST TRADES</div>
+                        <div id='TP_dividend' class="singleBtn">DIVIDEND</div>
+                        <div id='TP_rateHistory' class="singleBtn">RATE HISTORY</div>
+                        <div id='TP_todayTrade' class="singleBtn">ALL TRADES</div>
+                        <div id='TP_fundStatus' class="singleBtn">FUND STATUS</div> 
+                        <div id='TP_marketMover' class="singleBtn">MKT MOVER</div>                     
+                        <div id='TP_stockStatus' class="singleBtn">STK STATUS</div>                      
                         <div id='TP_halted' class="singleBtn">HALTED COMP</div>
                         <div style='background-color: #73737366; color: #ffffff87;' id='TP_favourit' class="singleBtn">FAVOURITES</div>
                     </div>
@@ -218,6 +220,7 @@ async function executeTrade(data){
 
             <div style='display: none;' class="fundStatusBox" id="fundStatusBox"></div>
         `
+        
         document.getElementById('TP_companyInfo').addEventListener('click', handleTradeBtn('companyInfo'))
         document.getElementById('TP_dividend').addEventListener('click', handleTradeBtn('TP_dividend'))
         document.getElementById('TP_halted').addEventListener('click', handleTradeBtn('TP_halted'))
@@ -716,7 +719,7 @@ async function executeTrade(data){
                     <p>:</p>
                 </div>
                 <div class="right">
-                    <p>${fetchedDse_buySellData.success === true ? fetchedDse_buySellData.lowLimit+' - '+fetchedCse_buySellData.upLimit : ''}</p>
+                    <p>${fetchedDse_buySellData.success === true ? fetchedDse_buySellData.lowLimit+' - '+fetchedDse_buySellData.upLimit : ''}</p>
                 </div>     
             </div>
         </div>
@@ -747,7 +750,24 @@ async function executeTrade(data){
                 </div>
                 <div class="rowForm">
                     <label for="estimatedTotal">Estimated Taka, You Need</label>
-                    <input style='background-color: #98989A' type="text" id="estimatedTotal" name="" placeholder="Tk0" required readonly>
+                    <input style='background-color: #98989A !important' type="text" id="estimatedTotal" name="" placeholder="Tk0" required readonly>
+                </div>
+                <div class="rowForm">
+                    <label for="exchange">Exchange</label>
+                    <div class='exchangeBox'>
+                        <div class='excahngeItem'>
+                            <input type="radio" id="b_cse" name="exchange" value="CSE">
+                            <label for="b_cse">CSE</label>
+                        </div>
+                        <div class='excahngeItem'>
+                            <input type="radio" id="b_dse" name="exchange" value="DSE">
+                            <label for="b_dse">DSE</label>
+                        </div>
+                    <!-- <div class='excahngeItem'>
+                        <input type="radio" id="b_auto" name="exchange" value="Auto">
+                        <label for="b_auto">Auto</label>
+                        </div> -->
+                    </div>
                 </div>
                 <div class="orderSubmit">
                     <input type="submit" id="buyOrderSubmit" value="ORDER SUBMIT">
@@ -755,6 +775,15 @@ async function executeTrade(data){
             </form>
         </div>
         `
+        if(exchange === 'CSE'){
+            document.getElementById('b_cse').checked = true;
+            document.getElementById('b_dse').disabled = true;
+            // document.getElementById('s_auto').disabled = true;
+        }else{
+            document.getElementById('b_dse').checked = true;
+            document.getElementById('b_cse').disabled = true;
+            // document.getElementById('s_auto').disabled = true;
+        }
         function goConfirmBuy(){
             document.getElementById('overlay').style.display = 'block'
             document.getElementById('confirmBuy').style.display = 'block'
@@ -766,7 +795,7 @@ async function executeTrade(data){
                     Quantity: ${document.getElementById('b_quantity').value} @ Rate: ${document.getElementById('b_marketPrice').checked ? 'Market Price' : document.getElementById('b_rate').value }
                 </p>
                 <div>
-                    <p style='background-color: red;' id='cancelBtn'>CANCEL</p>
+                    <p style='background-color: red;' id='cancelBtn'>CLOSE</p>
                     <p style='background-color: #4CB050;' id='buyConfirmBtn'>CONFIRM</p>
                 </div> 
             `
@@ -785,7 +814,7 @@ async function executeTrade(data){
                     Prc: document.getElementById('b_marketPrice').checked ? '' : document.getElementById('b_rate').value ,
                     BS: "BUY",
                     mktPrc: document.getElementById('b_marketPrice').checked ? 1 : 0,
-                    Exch: "CSE",
+                    Exch: exchange,
                     GTC: ""
                 })
                 document.getElementById('confirmBuy').style.display = 'none'
@@ -886,7 +915,24 @@ async function executeTrade(data){
                 </div>
                 <div class="rowForm">
                     <label for="sellTotal">Total Taka, You Received</label>
-                    <input style='background-color: #98989A' type="text" id="sellTotal" name="sellTotal" placeholder="Tk0" required readonly>
+                    <input style='background-color: #98989A !important;' type="text" id="sellTotal" name="sellTotal" placeholder="Tk0" required readonly>
+                </div>
+                <div class="rowForm">
+                    <label for="exchange">Exchange</label>
+                    <div class='exchangeBox'>
+                        <div class='excahngeItem'>
+                            <input type="radio" id="s_cse" name="exchange" value="CSE">
+                            <label for="s_cse">CSE</label>
+                        </div>
+                        <div class='excahngeItem'>
+                            <input type="radio" id="s_dse" name="exchange" value="DSE">
+                            <label for="s_dse">DSE</label>
+                        </div>
+                    <!-- <div class='excahngeItem'>
+                        <input type="radio" id="s_auto" name="exchange" value="Auto">
+                        <label for="s_auto">Auto</label>
+                        </div> -->
+                    </div>
                 </div>
                 <div class="orderSubmit">
                     <input type="submit" id="sellOrderSubmit" value="ORDER SUBMIT">
@@ -894,6 +940,16 @@ async function executeTrade(data){
             </form>
         </div>
         `
+        // console.log(exchange)
+        if(exchange === 'CSE'){
+            document.getElementById('s_cse').checked = true;
+            document.getElementById('s_dse').disabled = true;
+            // document.getElementById('s_auto').disabled = true;
+        }else{
+            document.getElementById('s_dse').checked = true;
+            document.getElementById('s_cse').disabled = true;
+            // document.getElementById('s_auto').disabled = true;
+        }
         function goConfirmSell(){
             document.getElementById('overlay').style.display = 'block'
             document.getElementById('confirmSell').style.display = 'block'
@@ -905,7 +961,7 @@ async function executeTrade(data){
                     Quantity: ${document.getElementById('s_quantity').value} @ Rate: ${document.getElementById('s_marketPrice').checked ? 'Market Price' : document.getElementById('s_rate').value }
                 </p>
                 <div>
-                    <p style='background-color: red;' id='cancelBtn'>CANCEL</p>
+                    <p style='background-color: red;' id='cancelBtn'>CLOSE</p>
                     <p style='background-color: #4CB050;' id='sellConfirmBtn'>CONFIRM</p>
                 </div> 
             `
@@ -924,14 +980,20 @@ async function executeTrade(data){
                     Prc: document.getElementById('s_marketPrice').checked ? '' : document.getElementById('s_rate').value ,
                     BS: "SELL",
                     mktPrc: document.getElementById('s_marketPrice').checked ? 1 : 0,
-                    Exch: "CSE",
+                    Exch: exchange,
                     GTC: "",
                     cid : device === 'android' ? 100 : 101
                 })
+                console.log(sellOrder)
                 document.getElementById('confirmSell').style.display = 'none'
                 if(sellOrder.success === true){
                     const heading = 'Success'
                     const errorMessage = 'Order Placed Successfully'
+                    const case_name = 'trade'
+                    handlePopUpMessage(heading, errorMessage, case_name)
+                }else{
+                    const heading = 'Failed'
+                    const errorMessage = sellOrder.message
                     const case_name = 'trade'
                     handlePopUpMessage(heading, errorMessage, case_name)
                 }
@@ -1031,7 +1093,7 @@ async function executeTrade(data){
                 </div>
             </div>
             <div>
-                <p style='background-color: red;' id='cancelBtn'>CANCEL</p>
+                <p style='background-color: red;' id='cancelBtn'>CLOSE</p>
                 <p style='background-color: #4CB050;' id='modifyConfirmBtn'>CONFIRM</p>
             </div> 
         `
@@ -1043,20 +1105,25 @@ async function executeTrade(data){
         document.getElementById('quantity_MF').addEventListener('input', handleTotalTaka)
         document.getElementById('rate_MF').addEventListener('input', handleTotalTaka)
         document.getElementById('modifyConfirmBtn').addEventListener('click', async ()=>{
+            document.getElementById('overlay').style.display = 'none'
+            document.getElementById('modifyOrder').style.display = 'none'
             const orderModify = await Post_MODIFY_({
                 LMT: "",
                 Ref: selectedOrder.Ref,
                 Qt: document.getElementById('quantity_MF').value,
                 Prc: document.getElementById('rate_MF').value,
-                Exch:"CSE",
+                Exch:exchange,
                 CMND:"_MODIFY_",
                 cid : device === 'android' ? 100 : 101
             })
+            // console.log(orderModify)
             if(orderModify.success === true){
-                route('../component/tradeComponent.js','../css/tradeComponent.css','trade')
+                const heading = 'Success'
+                const errorMessage = exchange === 'CSE'? 'Order has been successfully modified ' : 'Order has been successfully modified.<br><span style="font-size : 12px"> Please wait a while if you experience any inconvenience</span>';
+                handlePopUpMessage(heading, errorMessage, 'trade')
             }else{
                 const heading = 'Failed'
-                const errorMessage = postCancelOrdere.message === ''? 'Modifiaction Failed. Please Try Again' : postCancelOrdere.message;
+                const errorMessage = orderModify.message === ''? 'Modifiaction Failed. Please Try Again' : orderModify.message;
                 handlePopUpMessage(heading, errorMessage)
             }
         })
@@ -1077,6 +1144,7 @@ async function executeTrade(data){
         `
         const contentBody = document.getElementById('openOrderList')
         openOrderData.forEach((data, index)=> {
+            // console.log(data)
             const newDiv = document.createElement('div');
             newDiv.classList.add('openOrderItem');
             newDiv.innerHTML = `
@@ -1133,7 +1201,7 @@ async function executeTrade(data){
                         <span>Are you sure to cancel the order of ${data.Scrip}?</span>
                     </p>
                     <div>
-                        <p style='background-color: red;' id='cancelBtn'>CANCEL</p>
+                        <p style='background-color: red;' id='cancelBtn'>CLOSE</p>
                         <p style='background-color: #4CB050;' id='cancelConfirmBtn'>CONFIRM</p>
                     </div>
                 `
@@ -1145,18 +1213,24 @@ async function executeTrade(data){
                 document.getElementById('overlay').addEventListener('click', cancelOrder)
 
                 document.getElementById('cancelConfirmBtn').addEventListener('click', async ()=>{
+                    document.getElementById('overlay').style.display = 'none'
+                    document.getElementById('confirmModify').style.display = 'none'
                     const postCancelOrdere = await postOrder_CANCEL_({
                         LMT: "",
                         Ref: data.Ref,
-                        Exch: "CSE",
+                        Exch: exchange,
                         CMND: "_CANCEL_",
                         cid : device === 'android' ? 100 : 101
                     })
                     // console.log(postCancelOrdere)
+
                     if(postCancelOrdere.success === true){
-                        document.getElementById('overlay').style.display = 'none'
-                        document.getElementById('confirmModify').style.display = 'none'
-                        route('../component/tradeComponent.js','../css/tradeComponent.css','trade')
+                        const heading = 'Success'
+                        const errorMessage = exchange === 'CSE'? 'Order has been successfully cancelled' : 'Order has been successfully cancelled.<br><span style="font-size : 12px"> Please wait a while if you experience any inconvenience</span>';
+                        handlePopUpMessage(heading, errorMessage, 'trade')
+                        // document.getElementById('overlay').style.display = 'none'
+                        // document.getElementById('confirmModify').style.display = 'none'
+                        // route('../component/tradeComponent.js','../css/tradeComponent.css','trade')
                     }else{
                         const heading = 'Failed'
                         const errorMessage = postCancelOrdere.message === ''? 'Cancelation Failed. Please Try Again' : postCancelOrdere.message;
@@ -1166,6 +1240,12 @@ async function executeTrade(data){
 
             })
             if(data.Stat === 'CANCELLED'){
+                document.getElementById(`heading${index}`).style.backgroundColor = '#120181'
+                document.getElementById(`heading${index}`).style.color = '#fff'
+                document.getElementById(`openOrderCancele${index}`).style.display = 'none'
+                document.getElementById(`openOrderModify${index}`).style.display = 'none'
+            }
+            if(data.Stat === 'REJECTED'){
                 document.getElementById(`heading${index}`).style.backgroundColor = '#120181'
                 document.getElementById(`heading${index}`).style.color = '#fff'
                 document.getElementById(`openOrderCancele${index}`).style.display = 'none'
@@ -1183,7 +1263,7 @@ async function executeTrade(data){
                 document.getElementById(`openOrderCancele${index}`).style.display = 'none'
                 document.getElementById(`openOrderModify${index}`).style.display = 'none'
             }
-            if(data.Stat === 'SUBMITTED' || data.Stat === 'REJECTED'){
+            if(data.Stat === 'SUBMITTED'){
                 document.getElementById(`heading${index}`).style.backgroundColor = '#DFE1DC'
                 document.getElementById(`heading${index}`).style.color = '#4CB050'
             }
@@ -1214,7 +1294,7 @@ async function executeTrade(data){
                             <p>${fetchedClientDetails.success === true ? parseInt(fetchedClientDetails.freeCash).toLocaleString("en-IN") : '0'}</p>
                         </div>
                     </div>
-                    <div id='fundStatusCancel' class="footer">CANCEL</div>
+                    <div id='fundStatusCancel' class="footer">CLOSE</div>
                 </div>
             </div>
         `

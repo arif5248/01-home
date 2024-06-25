@@ -259,7 +259,7 @@ async function executeHome(){
                         <th>Stock<br>Qty</th>
                         <th>Avg<br>Cost</th>
                         <th>Last<br>Price</th>
-                        <th>Total<br>Price</th>
+                        <th>Stock<br>Value</th>
                     </tr>
                 </table>
            </div>
@@ -319,7 +319,7 @@ async function executeHome(){
                         <th>Stock<br>Qty</th>
                         <th>Avg<br>Cost</th>
                         <th>Last<br>Price</th>
-                        <th>Total<br>Price</th>
+                        <th>Stock<br>Value</th>
                     </tr>
                 </table>
             </div>

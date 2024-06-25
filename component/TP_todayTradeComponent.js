@@ -13,7 +13,7 @@ async function executeTP_todayTrade(){
             <div class="tradeSearchBox" id="tradeSearchBox"></div>
         </div>
         
-        <div class='container' style="flex: 1  auto; height: 100%; overflow-y: auto;">
+        <div onscroll="resetLogoutTimer()" class='container' style="flex: 1  auto; height: 100%; overflow-y: auto;">
             <div class="todaysTradeBody" id="todaysTradeBody"></div>
         </div>
        

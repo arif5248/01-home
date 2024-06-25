@@ -3,17 +3,10 @@ async function executeNews(){
     let companyList =[]
     let allMediaNews = []
     let storeAllMediaNews = []
-
-    const fetchedNews =await getNews()
-    const fetchedData = await getCompanyList()
+    let fetchedNews
+    let fetchedData
+    let allExchangeNews = []
     
-    if(fetchedNews.mediaNews.status === true){
-        allMediaNews = fetchedNews.mediaNews.Data
-        storeAllMediaNews = fetchedNews.mediaNews.Data
-    }
-    if(fetchedData.status === true){
-        companyList = fetchedData.Data
-    }
 
     async function handleListItemClick(event) {
         companyName = event.target.textContent;
@@ -78,10 +71,7 @@ async function executeNews(){
     }
     
     function populatedExchangeNews() {
-        let allExchangeNews = []
-        if(fetchedNews.exchangeNews.status === true){
-            allExchangeNews = fetchedNews.exchangeNews.TodaysNews
-        }
+        
         let exchangeNewsDiv = document.getElementById('exchangeNews');
     
         allExchangeNews.forEach(function (newsItem) {
@@ -111,7 +101,7 @@ async function executeNews(){
     
             newsElement.innerHTML = `
                 <div class="newsImage">
-                    <img src="${newsItem.image}" alt="News Image">
+                    <img style="width: 100%;" src="${newsItem.image}" alt="News Image">
                 </div>
                 <div class="newsContent">
                     <div class="date-source">
@@ -137,7 +127,7 @@ async function executeNews(){
             newsElement.classList.add('news-item');
             newsElement.innerHTML = `
                 <div class="newsImage">
-                    <img src="${newsItem.ImgLink}" alt=${companyName ? companyName+'NewsImage' : 'NewsImage'}>
+                    <img style="width: 100%;" src="${newsItem.ImgLink}" alt=${companyName ? companyName+'NewsImage' : 'NewsImage'}>
                 </div>
                 <div class="newsContent">
                     <div class="date-source">
@@ -262,6 +252,19 @@ async function executeNews(){
     //     console.log('hiiiii')
     // }
     // window.addEventListener('scroll', handleScroll)
+    fetchedNews =await getNews()
+    fetchedData = await getCompanyList()
+    if(fetchedNews.exchangeNews.status === true){
+        allExchangeNews = fetchedNews.exchangeNews.TodaysNews
+    }
+    if(fetchedNews.mediaNews.status === true){
+        allMediaNews = fetchedNews.mediaNews.Data
+        storeAllMediaNews = fetchedNews.mediaNews.Data
+    }
+    if(fetchedData.status === true){
+        companyList = fetchedData.Data
+    }
+    renderAllNews()
     
 }
 

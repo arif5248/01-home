@@ -24,7 +24,7 @@ async function executeDividend_Record(){
                 <div onclick="show('upcomingDividendContent')" class="Btn active" id="upcomig">Upcoming</div>
                 <div onclick="show('passedDividendContent')" class="Btn" id="history">Passed</div>
             </div>
-            <div style="flex: 1 auto;height: 100%;overflow-y: auto;" class="container">
+            <div onscroll="resetLogoutTimer()" style="flex: 1 auto;height: 100%;overflow-y: auto;" class="container">
                 <div class="ipoContent" id="upcomingDividendContent"></div>
                 <div class="ipoContent" id="passedDividendContent"></div>
             </div>

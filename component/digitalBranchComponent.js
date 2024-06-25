@@ -212,7 +212,7 @@ async function executeDigitalBranch(){
                     <img id='searchBoxTradedClients' style='width:30px; height:auto;' src='../images/icons/magnifying-glass.png' alt='search'>
                 </div>
             </div>
-            <div style='flex: 1 auto;overflow-y: auto; ' id='tradedClientsTable'>
+            <div onscroll="resetLogoutTimer()" style='flex: 1 auto;overflow-y: auto; ' id='tradedClientsTable'>
                 <table>
                     <tbody>
                         <tr>
@@ -270,7 +270,7 @@ async function executeDigitalBranch(){
                     <img id='searchBoxLoggedInClients' style='width:30px; height:auto;' src='../images/icons/magnifying-glass.png' alt='search'>
                 </div>
             </div>
-            <div style='flex: 1 auto;overflow-y: auto; ' id='loggedInClientsTable'>
+            <div onscroll="resetLogoutTimer()" style='flex: 1 auto;overflow-y: auto;height:300px ' id='loggedInClientsTable'>
                 <table>
                     <tbody>
                         <tr>
@@ -321,7 +321,7 @@ async function executeDigitalBranch(){
                     </div>
                 </div>
             </div>
-            <div style='flex: 1 auto;overflow-y: auto; ' id='tableContent'>
+            <div onscroll="resetLogoutTimer()" style='flex: 1 auto;overflow-y: auto; ' id='tableContent'>
                 <table>
                     <tbody>
                         <tr>
@@ -363,7 +363,7 @@ async function executeDigitalBranch(){
             <div class='boxHeading'>
                 <h5>${heading}</h5>
             </div>
-            <div style='flex: 1 auto;overflow-y: auto; ' id='${heading}'>
+            <div onscroll="resetLogoutTimer()" style='flex: 1 auto;overflow-y: auto; ' id='${heading}'>
                 <table>
                     <tbody>
                         <tr>
@@ -438,7 +438,7 @@ async function executeDigitalBranch(){
             const startDate = document.getElementById('tradedClientsStrtDate').value;
             const endDate = document.getElementById('tradedClientsEndDate').value;
             const fetchedTradedClientnsData = await getDigitalBranchTradedClients(user.LoggedInInvestorId, startDate, endDate);
-            if (fetchedFundStatusData.status === true) {
+            if (fetchedTradedClientnsData.status === true) {
                 tradedClients = fetchedTradedClientnsData.Data;
                 totalID_tradedClients = fetchedTradedClientnsData.totalID;
                 totalTrade_tradedClients = fetchedTradedClientnsData.totalTrade;
@@ -470,7 +470,7 @@ async function executeDigitalBranch(){
             const startDate = document.getElementById('loggedInClientsStrtDate').value;
             const endDate = document.getElementById('loggedInClientsEndDate').value;
             const fetchedLoggedInClientData = await getDigitalBranchLoggedInClients(user.LoggedInInvestorId, startDate, endDate);
-            if(fetchedTotalClientData.status === true){
+            if(fetchedLoggedInClientData.status === true){
                 loggedInClients = fetchedLoggedInClientData.Data
                 renderLoggedInClients(startDate, endDate)
             }

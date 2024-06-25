@@ -326,53 +326,6 @@
     </section>
 </body>
 <script>
-    
-    document.getElementById('popupOverlay').addEventListener('click', ()=>{
-        document.getElementById('popupOverlay').style.display = 'none'
-        closeSupportTeam()
-        closeForgotPasswordModal()
-    })
-    window.onload = async function() {
-        let osType;
-        const urlParamsForDevice = new URLSearchParams(window.location.search);
-        osType = urlParamsForDevice.get('device');
-        sessionStorage.setItem('osType', osType);
-        
-        
-        existUser()
-        closeForgotPasswordModal();
-        closeSendMessage();
-        closeVideoChat();
-        closeSupportTeam();
-        videoChat();
-        sendMessage();
-        hidePassword();
-        document.getElementById('footerLoginBtn').style.backgroundColor = '#007'
-        document.getElementById('footerGet01Btn').style.backgroundColor = 'unset'
-        const result = await saveLog('', 'IndexLogin')
-        
-        if(case_name === 'get01'){
-            showGetNew01Id()
-            document.getElementById('footerLoginBtn').style.backgroundColor = 'unset'
-            document.getElementById('footerGet01Btn').style.backgroundColor = '#007'
-            const result = await saveLog('', 'Index-Create New ID')
-        }
-        
-    };
-    document.getElementById('footerLoginBtn').addEventListener('click', ()=>{
-        document.getElementById('logInDetails').style.display = 'block'
-        document.getElementById('get-new-01-ID').style.display = 'none'
-        document.getElementById('footerLoginBtn').style.backgroundColor = '#007'
-        document.getElementById('footerGet01Btn').style.backgroundColor = 'unset'    
-    })
-    document.getElementById('footerGet01Btn').addEventListener('click', ()=>{
-        showGetNew01Id()
-        document.getElementById('footerLoginBtn').style.backgroundColor = 'unset'
-        document.getElementById('footerGet01Btn').style.backgroundColor = '#007'
-    })
-    
-</script>
-<script>
     setInterval(change_background, 1000 * 60 * 60);
 
     function change_background() {
@@ -414,5 +367,53 @@
             }, 1000);
         }
   </script>
+<script>
+    
+    document.getElementById('popupOverlay').addEventListener('click', ()=>{
+        document.getElementById('popupOverlay').style.display = 'none'
+        closeSupportTeam()
+        closeForgotPasswordModal()
+    })
+    window.onload = async function() {
+        let osType;
+        const urlParamsForDevice = new URLSearchParams(window.location.search);
+        osType = urlParamsForDevice.get('device');
+        sessionStorage.setItem('osType', osType);
+        
+        change_background()
+        existUser()
+        closeForgotPasswordModal();
+        closeSendMessage();
+        closeVideoChat();
+        closeSupportTeam();
+        videoChat();
+        sendMessage();
+        hidePassword();
+        document.getElementById('footerLoginBtn').style.backgroundColor = '#007'
+        document.getElementById('footerGet01Btn').style.backgroundColor = 'unset'
+        const result = await saveLog('', 'IndexLogin')
+        
+        if(case_name === 'get01'){
+            showGetNew01Id()
+            document.getElementById('footerLoginBtn').style.backgroundColor = 'unset'
+            document.getElementById('footerGet01Btn').style.backgroundColor = '#007'
+            const result = await saveLog('', 'Index-Create New ID')
+        }
+        
+    };
+    document.getElementById('footerLoginBtn').addEventListener('click', ()=>{
+        document.getElementById('logInDetails').style.display = 'block'
+        document.getElementById('get-new-01-ID').style.display = 'none'
+        document.getElementById('footerLoginBtn').style.backgroundColor = '#007'
+        document.getElementById('footerGet01Btn').style.backgroundColor = 'unset'    
+    })
+    document.getElementById('footerGet01Btn').addEventListener('click', ()=>{
+        showGetNew01Id()
+        document.getElementById('footerLoginBtn').style.backgroundColor = 'unset'
+        document.getElementById('footerGet01Btn').style.backgroundColor = '#007'
+    })
+    
+</script>
+
 
 </html>

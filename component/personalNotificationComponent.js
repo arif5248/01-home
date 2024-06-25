@@ -8,7 +8,7 @@ function executePersonalNotification(){
             </div>
         </div>
 
-        <div style="flex: 1 auto;height: 100%;overflow-y: auto;" class='noticeBodySection'>
+        <div onscroll="resetLogoutTimer()" style="flex: 1 auto;height: 100%;overflow-y: auto;" class='noticeBodySection'>
             <div class="container">
                 <div class='noticeBody' id='noticeBody'></div>
             </div>

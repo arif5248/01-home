@@ -31,10 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
   
   
   async function route(js, css, case_name, data) {
-    if(case_name){
-        const log = await saveLog(user.LoggedInInvestorId, case_name);
-        // console.log(log,'===========', case_name, user.LoggedInInvestorId)
-    }
+    
     if(case_name && case_name === 'trade'){
         if(selectedScript !== null){
             data = selectedScript
@@ -42,8 +39,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     async function executeRoute(data){
         if (currentSection !== null) {
-           clearMemory();
+           await clearMemory();
         }
+        
         try{
             const styleElement = document.createElement('link');
             styleElement.id = `style-${case_name}`;
@@ -95,29 +93,33 @@ document.addEventListener('DOMContentLoaded', function () {
             if(case_name !== 'trade' && !case_name.startsWith('TP_')){
                 sessionStorage.removeItem('userData');
             }
+            if(case_name){
+                const log = await saveLog(user.LoggedInInvestorId, case_name);
+                // console.log(log,'===========', case_name, user.LoggedInInvestorId)
+            }
             
         } catch (error) {
             console.error(error);
-            if(error){
+            // if(error){
                 
-            }
+            // }
         }
     }
-    function displayNone(){
+    async function displayNone(){
         document.getElementById('loadingApi').style.display = 'block'
-        document.getElementById('mainContentSection').style.display = 'none'
+        document.getElementById('mainContentSection').innerHTML = ''
     }
-    function displayBlock(){
+    async function displayFlex(){
         document.getElementById('mainContentSection').style.display = 'flex'
         document.getElementById('mainContentSection').style.flexDirection = 'column'
     }
 
-    displayNone()
-    executeRoute(data)
-    displayBlock()
+    await displayNone() 
+    await executeRoute(data)
+    await displayFlex()
 }
 
-  async function clearMemory() {
+async function clearMemory() {
     async function clearScript(){
         const script = document.head.getElementsByTagName('script');
         const scriptTagsArray = Array.from(script);
@@ -138,9 +140,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }  
     clearScript()
     clearStyle()  
-    }
+}
 
-  function goBack() {
+function goBack() {
     document.getElementById('overlay').style.display = 'none'
     if (historyStack.length > 1) {
         historyStack.pop(); 
@@ -160,15 +162,16 @@ document.addEventListener('DOMContentLoaded', function () {
         }else{
             updateFooterBtnState(case_name);
         }
-        
     }
 }
+
 function scrollToTop() {
-        mainContentSection.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    }
+    mainContentSection.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('popstate', function (event) {
         if (event.state) {

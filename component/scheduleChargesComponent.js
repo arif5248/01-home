@@ -12,7 +12,7 @@ async function executeScheduleCharges(){
             </div>
         </div>
 
-        <div style='flex: 1 auto; height: 100%; overflow-y: auto;' class="chargeSection">
+        <div onscroll="resetLogoutTimer()" style='flex: 1 auto; height: 100%; overflow-y: auto;' class="chargeSection">
             <div class="container">
                 <div id='scheduleChargesItem'></div>
             </div>

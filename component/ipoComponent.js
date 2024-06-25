@@ -1,4 +1,4 @@
-async function executeIpo(data){
+async function executeIpo(data , runningIpoName){
     console.log(data)
     const { fetchedUpcomingIpo, fetchedRunningIpo, fetchedHistoryIpo } = await getIpo()
     const fetchedIpoName = await getIpoName(user.LoggedInInvestorId)
@@ -6,46 +6,51 @@ async function executeIpo(data){
     
     let ipoList = []
     
-    function handleSelectedIpo(event){
-        const selectedIpo = ipoList.filter(data =>{
-            return data.IPOName === event.target.value
-        })
-        document.getElementById('valuePerShare').value = selectedIpo[0].IPORate
-         switch (selectedIpo[0].IPOType) {
-            case 0:
-                document.getElementById('ipoType').value = "Share"
-                break;
-            case 1:
-                document.getElementById('ipoType').value = "Bond"
-                break;
-            case 2:
-                document.getElementById('ipoType').value = "Mutual Fund"
-                break;
-        
-            default:
-                break;
-        } 
-
-        const ApplicationAmountElement = document.getElementById('appAmount')
-
-        const existList = document.querySelectorAll('.amountItem');
-        if(existList){
-            existList.forEach(item => {
-                item.remove();
-            });
-        } 
-        
-        for( x = Number(selectedIpo[0].IPOLimMin.replace(/,/g, '')); x <= Number(selectedIpo[0].IPOLimMax.replace(/,/g, '')); x = x + Number(selectedIpo[0].IPOLimStep.replace(/,/g, '')) ){
-            const newOption = document.createElement('option')
-            newOption.classList.add('amountItem')
-            newOption.value = x;
-            newOption.textContent = x.toLocaleString("en-IN");
-            ApplicationAmountElement.appendChild(newOption)
-        }
-        ApplicationAmountElement.addEventListener('change', (event)=>{
-            document.getElementById('appQuantity').value =Math.round(event.target.value / Number(selectedIpo[0].IPORate.replace(/,/g, '')))
+    function handleSelectedIpo(data){
+        return function(event){
+            const selectedIpo = data
+            console.log(selectedIpo)
+            document.getElementById('valuePerShare').value = selectedIpo.IPORate
+            switch (selectedIpo.IPOType) {
+                case "0":
+                    document.getElementById('ipoType').value = "Share"
+                    break;
+                case "1":
+                    document.getElementById('ipoType').value = "Bond"
+                    break;
+                case "2":
+                    document.getElementById('ipoType').value = "Mutual Fund"
+                    break;
             
-        })
+                default:
+                    break;
+            } 
+
+            const ApplicationAmountElement = document.getElementById('appAmount')
+
+            const existList = document.querySelectorAll('.amountItem');
+            if(existList){
+                existList.forEach(item => {
+                    item.remove();
+                });
+            } 
+            
+            for( x = Number(selectedIpo.IPOLimMin.replace(/,/g, '')); x <= Number(selectedIpo.IPOLimMax.replace(/,/g, '')); x = x + Number(selectedIpo.IPOLimStep.replace(/,/g, '')) ){
+                const newOption = document.createElement('option')
+                newOption.classList.add('amountItem')
+                newOption.value = x;
+                newOption.textContent = x.toLocaleString("en-IN");
+                ApplicationAmountElement.appendChild(newOption)
+            }
+            ApplicationAmountElement.addEventListener('change', (event)=>{
+                document.getElementById('appQuantity').value =Math.round(event.target.value / Number(selectedIpo.IPORate.replace(/,/g, '')))
+                
+            })
+        }
+        // const selectedIpo = ipoList.filter(data =>{
+        //     return data.IPOName === event.target.value
+        // })
+        
     }
     async function renderPDF(pdfUrl, containerId) {
             var container = document.getElementById(containerId);
@@ -287,7 +292,7 @@ async function executeIpo(data){
             `   
                 ipoContentBody.appendChild(newDiv)
                 document.getElementById(`applyRunningIpo${index}`).addEventListener('click', ()=>{
-                    executeIpo('IPO Application')
+                    executeIpo('IPO Application', ipo.Company)
                 })
                 document.getElementById(`RunningPdfViewerPros${index}`).addEventListener('click', ()=>{
                     var pdfUrl = ipo.Link_Prospectus;
@@ -563,7 +568,8 @@ async function executeIpo(data){
             })
         })
     }
-    function renderApplyIpoContent(){
+    function renderApplyIpoContent(runningIpoName){
+        console.log(runningIpoName)
         let today = new Date().toISOString().split('T')[0];
         today = customDateConverter(today, 'defaultToCustom');
         
@@ -647,8 +653,13 @@ async function executeIpo(data){
                     newOption.value = selectedIpo.IPOName;
                     newOption.textContent = selectedIpo.IPOName;
                     ipoNameElement.appendChild(newOption)
+                    if (selectedIpo.IPOName === runningIpoName) {
+                        newOption.selected = true;
+                        handleSelectedIpo(selectedIpo)();
+                    }
+                    document.getElementById('ipoName').addEventListener('change', handleSelectedIpo(selectedIpo))
                 })
-                document.getElementById('ipoName').addEventListener('change', handleSelectedIpo)
+                
             }
             
     }
@@ -708,7 +719,7 @@ async function executeIpo(data){
     ipo()
     renderAllIpoContent()
     renderHistoryIpoContent()
-    renderApplyIpoContent()
+    renderApplyIpoContent(runningIpoName)
     renderResultIpoContent()
     document.getElementById('historyIpoContent').style.display = 'none'
     document.getElementById('resultIpoContent').style.display = 'none'
@@ -761,6 +772,18 @@ async function executeIpo(data){
                 formData.append('ipo_qty', document.getElementById('appAmount').value);
 
                 const result = await ipoApply(formData)
+                // console.log(result)
+                // const result = {status: true, message: 'Succesfully Submitted the IPO Appliation'}
+                if (result){
+                    document.getElementById('NoIpoRunning_overlay').style.display = 'block';
+                    document.getElementById('NoIpoRunning').style.display = 'block';
+                    document.getElementById('NoIpoRunning').innerHTML=`
+                        <h5>${result.status === true ? 'Success' : 'Failed'}</h5>
+                        <p style="padding: 10px 0px;">${result.message}</p>
+                        <div class='cancelBtn' onclick='closeNoError()'> <p>OK</p></div>
+                    `;    
+                    document.getElementById('NoIpoRunning_overlay').addEventListener('click', closeNoError)
+                }
             }else{
                 document.getElementById('applyIpoContent').style.overflowY = 'hidden';
                 document.getElementById('applyIpoContent').style.overscrollBehaviorY = 'none';

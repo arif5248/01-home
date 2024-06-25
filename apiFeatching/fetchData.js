@@ -157,7 +157,12 @@ async function fetchDataByUrl(url){
         });
         
         if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+            const error = new Error(`HTTP error! Status: ${response.status}`);
+            // console.log(error)
+            let apiError = {}
+            apiError.status = false
+            apiError.message = `Error With Status Code: ${response.status}`
+            throw apiError;
         }
         
         const text = await response.text();
@@ -166,7 +171,13 @@ async function fetchDataByUrl(url){
         return data;
         
     } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error(error);
+        // let fetchedError = error
+        // console.log(fetchedError)
+        // console.log(fetchedError.response.status)
+        // let apiError = {}
+        // apiError.status = error.status
+        // console.log(apiError)
         return error
     }
 }

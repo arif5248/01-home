@@ -1,10 +1,8 @@
 async function executeMarketStatus(){
-    const fetchedData = await getCseDseData()
-    const fetchedMS_tableData = await getSharePrice('Name')
-    const { fetchedCseData, fetchedDseData } = fetchedData
+    
     let MS_tableData = []
     let MS_sortedTableData = null
-    MS_tableData = fetchedMS_tableData.status === true ? fetchedMS_tableData.CurrentSharePrice : []
+    
 
     function handleClick(script){
         return function (event){
@@ -27,31 +25,32 @@ async function executeMarketStatus(){
                         <tr>
                             <th rowspan="6" class="verticaclAlign">
                                 <div class="cse_logo">
-                                    <img src="../images/cse_logo.jpg" alt="Chittagong Stock Exchange">
+                                    <img style='width: 100px;'  src="../images/cse_logo.jpg" alt="Chittagong Stock Exchange">
                                 </div>
                             </th>
-                            <th colspan="2">As on - ${fetchedCseData.Data[0].Date1}</th>
+                            <th style='font-size: 14px;' id='cseAsOn1' colspan="2">As on - DD/MM/YYY</th>
                         </tr>
+                        
                         <tr> 
                             <td>
                                 <div class="dataBox">
-                                    <div id='td_cse_index1' class="data">${parseFloat(fetchedCseData.Data[0].Index1).toLocaleString("en-IN")}</div>
-                                    <div id='td_cse_IndexChv1'>${fetchedCseData.Data[0].IndexChv1}</div>
-                                    <div id='td_cse_IndexChp1'>${fetchedCseData.Data[0].IndexChp1}</div>
+                                    <div id='td_cse_index1' class="data"></div>
+                                    <div id='td_cse_IndexChv1'></div>
+                                    <div id='td_cse_IndexChp1'></div>
                                 </div>
-                                <div style="margin-top: 15px;">BDT ${fetchedCseData.Data[0].Value1}</div>
+                                <div id='cseValue1' style="margin-top: 15px;"></div>
                             </td>
                         </tr>
                         <tr>
-                            <th colspan="2">As on - ${fetchedCseData.Data[0].Date2}</th>
+                            <th style='font-size: 14px;' id='cseAsOn2' colspan="2">As on - DD/MM/YYY</th>
                         </tr>
                         <tr>
                             <td>
                                 <div class="dataBox">
-                                    <div id='td_cse_index2' class="data">${parseFloat(fetchedCseData.Data[0].Index2).toLocaleString("en-IN")}</div>
-                                    <div id='td_cse_IndexChv2'>${fetchedCseData.Data[0].IndexChv2}</div>  <div id='td_cse_IndexChp2'>${fetchedCseData.Data[0].IndexChp2}</div>
+                                    <div id='td_cse_index2' class="data"></div>
+                                    <div id='td_cse_IndexChv2'></div>  <div id='td_cse_IndexChp2'></div>
                                 </div>
-                                <div style="margin-top: 15px;">BDT ${fetchedCseData.Data[0].Value2}</div>
+                                <div id='cseValue2' style="margin-top: 15px;"></div>
                             </td>
                         </tr>
                     </table>
@@ -66,30 +65,31 @@ async function executeMarketStatus(){
                         <tr>
                             <th rowspan="6" class="verticaclAlign">
                                 <div class="cse_logo">
-                                    <img src="../images/dse_logo.jpg" alt="Chittagong Stock Exchange">
+                                    <img  style='width: 100px;' src="../images/dse_logo.jpg" alt="Chittagong Stock Exchange">
                                 </div>
                             </th>
-                            <th colspan="2">As on - ${fetchedDseData.Data[0].Date1}</th>
+                            <th style='font-size: 14px;' id='dseAsOn1' colspan="2">As on - DD/MM/YYY</th>
                         </tr>
+                        
                         <tr>
                             <td >
                                 <div class="dataBox">
-                                    <div id='td_dse_index1' class="data">${parseFloat(fetchedDseData.Data[0].Index1).toLocaleString("en-IN")}</div>
-                                    <div id='td_dse_IndexChv1'>${fetchedDseData.Data[0].IndexChv1}</div>  <div id='td_dse_IndexChp1'>${fetchedDseData.Data[0].IndexChp1}</div>
+                                    <div id='td_dse_index1' class="data"></div>
+                                    <div id='td_dse_IndexChv1'></div>  <div id='td_dse_IndexChp1'></div>
                                 </div>
-                                <div style="margin-top: 15px;">BDT ${fetchedDseData.Data[0].Value1}</div>
+                                <div id='dseValue1' style="margin-top: 15px;"></div>
                             </td>
                         </tr>
                         <tr>
-                            <th colspan="2">As on - ${fetchedDseData.Data[0].Date2}</th>
+                            <th style='font-size: 14px;' id='dseAsOn2' colspan="2">As on - DD/MM/YYY</th>
                         </tr>
                         <tr>
                             <td >
                                 <div class="dataBox">
-                                    <div id='td_dse_index2' class="data">${parseFloat(fetchedDseData.Data[0].Index2).toLocaleString("en-IN")}</div>
-                                    <div id='td_dse_IndexChv2'>${fetchedDseData.Data[0].IndexChv2}</div>  <div id='td_dse_IndexChp2'>${fetchedDseData.Data[0].IndexChp2}</div>
+                                    <div id='td_dse_index2' class="data"></div>
+                                    <div id='td_dse_IndexChv2'></div>  <div id='td_dse_IndexChp2'></div>
                                 </div>
-                                <div style="margin-top: 15px;">BDT ${fetchedDseData.Data[0].Value2}</div>
+                                <div id='dseValue2' style="margin-top: 15px;"></div>
                             </td>
                         </tr>
                     </table>
@@ -136,47 +136,9 @@ async function executeMarketStatus(){
         </div>
     
     `
-        if(fetchedCseData.Data[0].IndexChv1 < 0){ 
-            document.getElementById('td_cse_index1').style.color = '#FE0000'
-            document.getElementById('td_cse_IndexChv1').style.color = '#FE0000'
-            document.getElementById('td_cse_IndexChp1').style.color = '#FE0000'
-        }
-        if(fetchedCseData.Data[0].IndexChv1 > 0){
-            document.getElementById('td_cse_index1').style.color = '#04A41E'
-            document.getElementById('td_cse_IndexChv1').style.color = '#04A41E'
-            document.getElementById('td_cse_IndexChp1').style.color = '#04A41E'
-        }
-        if(fetchedCseData.Data[0].IndexChv2 < 0){ 
-            document.getElementById('td_cse_index2').style.color = '#FE0000'
-            document.getElementById('td_cse_IndexChv2').style.color = '#FE0000'
-            document.getElementById('td_cse_IndexChp2').style.color = '#FE0000'
-        }
-        if(fetchedCseData.Data[0].IndexChv2 > 0){
-            document.getElementById('td_cse_index2').style.color = '#04A41E'
-            document.getElementById('td_cse_IndexChv2').style.color = '#04A41E'
-            document.getElementById('td_cse_IndexChp2').style.color = '#04A41E'
-        }
+       
 
-        if(fetchedDseData.Data[0].IndexChv1 < 0){ 
-            document.getElementById('td_dse_index1').style.color = '#FE0000'
-            document.getElementById('td_dse_IndexChv1').style.color = '#FE0000'
-            document.getElementById('td_dse_IndexChp1').style.color = '#FE0000'
-        }
-        if(fetchedDseData.Data[0].IndexChv1 > 0){
-            document.getElementById('td_dse_index1').style.color = '#04A41E'
-            document.getElementById('td_dse_IndexChv1').style.color = '#04A41E'
-            document.getElementById('td_dse_IndexChp1').style.color = '#04A41E'
-        }
-        if(fetchedDseData.Data[0].IndexChv2 < 0){ 
-            document.getElementById('td_dse_index2').style.color = '#FE0000'
-            document.getElementById('td_dse_IndexChv2').style.color = '#FE0000'
-            document.getElementById('td_dse_IndexChp2').style.color = '#FE0000'
-        }
-        if(fetchedDseData.Data[0].IndexChv2 > 0){
-            document.getElementById('td_dse_index2').style.color = '#04A41E'
-            document.getElementById('td_dse_IndexChv2').style.color = '#04A41E'
-            document.getElementById('td_dse_IndexChp2').style.color = '#04A41E'
-        }
+        
 
         document.getElementById('MS_table').addEventListener('scroll', resetLogoutTimer); 
     }
@@ -247,7 +209,82 @@ async function executeMarketStatus(){
     document.getElementById('MS_selectSort').addEventListener('change', filter)
     document.getElementById('MS_selectSector').addEventListener('change', filter)
     document.getElementById('MS_selectType').addEventListener('change', filter)
+    let fetchedMS_tableData = await getSharePrice('Name')
+    MS_tableData = fetchedMS_tableData.status === true ? fetchedMS_tableData.CurrentSharePrice : []
+    let fetchedData = await getCseDseData()
+    let { fetchedCseData, fetchedDseData } = fetchedData
+    if(fetchedCseData.status === true){                 
+        document.getElementById('cseAsOn1').innerText = `As on - ${fetchedCseData.Data[0].Date1}`
+        document.getElementById('td_cse_index1').innerText = `${parseFloat(fetchedCseData.Data[0].Index1).toLocaleString("en-IN")}`
+        document.getElementById('td_cse_IndexChv1').innerText = `${fetchedCseData.Data[0].IndexChv1}`
+        document.getElementById('td_cse_IndexChp1').innerText = `${fetchedCseData.Data[0].IndexChp1}`
+        document.getElementById('cseValue1').innerText = `BDT ${fetchedCseData.Data[0].Value1}`
+        
+        document.getElementById('cseAsOn2').innerText = `As on - ${fetchedCseData.Data[0].Date2}`
+        document.getElementById('td_cse_index2').innerText = `${parseFloat(fetchedCseData.Data[0].Index2).toLocaleString("en-IN")}`
+        document.getElementById('td_cse_IndexChv2').innerText = `${fetchedCseData.Data[0].IndexChv2}`
+        document.getElementById('td_cse_IndexChp2').innerText = `${fetchedCseData.Data[0].IndexChp2}`
+        document.getElementById('cseValue2').innerText = `BDT ${fetchedCseData.Data[0].Value2}`
+
+        if(fetchedCseData.Data[0].IndexChv1 < 0){ 
+            document.getElementById('td_cse_index1').style.color = '#FE0000'
+            document.getElementById('td_cse_IndexChv1').style.color = '#FE0000'
+            document.getElementById('td_cse_IndexChp1').style.color = '#FE0000'
+        }
+        if(fetchedCseData.Data[0].IndexChv1 > 0){
+            document.getElementById('td_cse_index1').style.color = '#04A41E'
+            document.getElementById('td_cse_IndexChv1').style.color = '#04A41E'
+            document.getElementById('td_cse_IndexChp1').style.color = '#04A41E'
+        }
+        if(fetchedCseData.Data[0].IndexChv2 < 0){ 
+            document.getElementById('td_cse_index2').style.color = '#FE0000'
+            document.getElementById('td_cse_IndexChv2').style.color = '#FE0000'
+            document.getElementById('td_cse_IndexChp2').style.color = '#FE0000'
+        }
+        if(fetchedCseData.Data[0].IndexChv2 > 0){
+            document.getElementById('td_cse_index2').style.color = '#04A41E'
+            document.getElementById('td_cse_IndexChv2').style.color = '#04A41E'
+            document.getElementById('td_cse_IndexChp2').style.color = '#04A41E'
+        }
+    }
+    if(fetchedDseData.status === true){
+       
+        document.getElementById('dseAsOn1').innerText = `As on - ${fetchedDseData.Data[0].Date1}`
+        document.getElementById('td_dse_index1').innerText = `${parseFloat(fetchedDseData.Data[0].Index1).toLocaleString("en-IN")}`
+        document.getElementById('td_dse_IndexChv1').innerText = `${fetchedDseData.Data[0].IndexChv1}`
+        document.getElementById('td_dse_IndexChp1').innerText = `${fetchedDseData.Data[0].IndexChp1}`
+        document.getElementById('dseValue1').innerText = `BDT ${fetchedDseData.Data[0].Value1}`
+
+        document.getElementById('dseAsOn2').innerText = `As on - ${fetchedDseData.Data[0].Date2}`
+        document.getElementById('td_dse_index2').innerText = `${parseFloat(fetchedDseData.Data[0].Index2).toLocaleString("en-IN")}`
+        document.getElementById('td_dse_IndexChv2').innerText = `${fetchedDseData.Data[0].IndexChv2}`
+        document.getElementById('td_dse_IndexChp2').innerText = `${fetchedDseData.Data[0].IndexChp2}`
+        document.getElementById('dseValue2').innerText = `BDT ${fetchedDseData.Data[0].Value2}`
+
+        if(fetchedDseData.Data[0].IndexChv1 < 0){ 
+            document.getElementById('td_dse_index1').style.color = '#FE0000'
+            document.getElementById('td_dse_IndexChv1').style.color = '#FE0000'
+            document.getElementById('td_dse_IndexChp1').style.color = '#FE0000'
+        }
+        if(fetchedDseData.Data[0].IndexChv1 > 0){
+            document.getElementById('td_dse_index1').style.color = '#04A41E'
+            document.getElementById('td_dse_IndexChv1').style.color = '#04A41E'
+            document.getElementById('td_dse_IndexChp1').style.color = '#04A41E'
+        }
+        if(fetchedDseData.Data[0].IndexChv2 < 0){ 
+            document.getElementById('td_dse_index2').style.color = '#FE0000'
+            document.getElementById('td_dse_IndexChv2').style.color = '#FE0000'
+            document.getElementById('td_dse_IndexChp2').style.color = '#FE0000'
+        }
+        if(fetchedDseData.Data[0].IndexChv2 > 0){
+            document.getElementById('td_dse_index2').style.color = '#04A41E'
+            document.getElementById('td_dse_IndexChv2').style.color = '#04A41E'
+            document.getElementById('td_dse_IndexChp2').style.color = '#04A41E'
+        }
+    }
+    renderMS_table()
    async function filter(event){
+        document.getElementById('searchSharePrice').value = ''
         let selectType = document.getElementById('MS_selectType').value
         let selectSort = document.getElementById('MS_selectSort').value
         let selectSector = document.getElementById('MS_selectSector').value

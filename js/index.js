@@ -376,22 +376,30 @@ async function showGetNew01Id(){
 }
 
 async function recoverPass(id, phone){
-    const postRecoverPass = await getRecoverPass(id, phone)
-    await saveLog(id, 'Password Recovered');
-    if(postRecoverPass.status === true){
-        document.getElementById('resultRecoverPassDiv').style.display = 'block'
-        document.getElementById('resultRecoverPassDiv').innerHTML = `
-            <p style='color: green;'>${postRecoverPass.message}</p>
-        `
-        setTimeout(() => {
-            document.getElementById('resultRecoverPassDiv').style.display = 'none'
-            document.getElementById('resultRecoverPassDiv').innerHTML = ''
-            closeForgotPasswordModal()
-        }, 3000);
+    if(id !== '' && phone !== ''){
+        const postRecoverPass = await getRecoverPass(id, phone)
+        await saveLog(id, 'Password Recovered');
+        if(postRecoverPass.status === true){
+            document.getElementById('resultRecoverPassDiv').style.display = 'block'
+            document.getElementById('resultRecoverPassDiv').innerHTML = `
+                <p style='color: green;'>${postRecoverPass.message}</p>
+            `
+            setTimeout(() => {
+                document.getElementById('resultRecoverPassDiv').style.display = 'none'
+                document.getElementById('resultRecoverPassDiv').innerHTML = ''
+                closeForgotPasswordModal()
+            }, 3000);
+        }else{
+            showRecoverPassError(postRecoverPass.message)
+        }
     }else{
+        const message = (id === '' && phone === '') ? 'Please Enter Your ID and Mobile Number' : (id === '' ? 'Please Enter Your ID' : 'Please Enter Your Mobile Number')
+        showRecoverPassError(message)
+    }
+    function showRecoverPassError(message){
         document.getElementById('resultRecoverPassDiv').style.display = 'block'
         document.getElementById('resultRecoverPassDiv').innerHTML = `
-            <p style='color: red;'>${postRecoverPass.message}</p>
+            <p style='color: red;'>${message}</p>
         `
         setTimeout(() => {
             document.getElementById('resultRecoverPassDiv').style.display = 'none'

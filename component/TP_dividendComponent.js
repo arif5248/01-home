@@ -7,7 +7,7 @@ async function executeTP_dividend(data){
                     <h1>Dividend of: ${data}</h1>
                 </div>
             </div>
-            <div style='flex: 1 auto; overflow-y: auto;' class="dividendContentSection">
+            <div onscroll="resetLogoutTimer()" style='flex: 1 auto; overflow-y: auto;' class="dividendContentSection">
                 <div id="dividendContent"></div>
             </div>
         `

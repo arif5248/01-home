@@ -82,6 +82,7 @@ tr>td:last-child{
     height: 35px;
     font-size: 14px;
     text-align: center;
+    background-color: #fff;
 }
 .submit-box{
     margin-top: 15px;

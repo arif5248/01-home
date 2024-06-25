@@ -61,7 +61,7 @@
 .marketMoverContainer{
     margin-top: 10px;
     position: relative;
-    overflow-y: auto;
+    /* overflow-y: auto; */
     height: 80vh;
 }
 

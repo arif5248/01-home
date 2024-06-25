@@ -19,7 +19,7 @@ async function executechildID_Details(data){
                 <div class="total_stock" id="total_stock"></div>
             </div>
 
-            <div onscroll="resetLogoutTimer()" class="container" style="flex: 1 auto;overflow-y: auto;">
+            <div onscroll="resetLogoutTimer()" onscroll="resetLogoutTimer()" class="container" style="flex: 1 auto;overflow-y: auto;">
                 <div class="allStock" id="allStock"></div>
             </div>
         `
@@ -44,8 +44,8 @@ async function executechildID_Details(data){
                 <tr>
                     <th>Sl</th>
                     <th>Company</th>
-                    <th>Qty</th>
-                    <th>LTP</th>
+                    <th>Stock Qty</th>
+                    <th>Last Price</th>
                     <th>Stock Value</th>
                 </tr>
             </tbody

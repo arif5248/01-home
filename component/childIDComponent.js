@@ -5,6 +5,7 @@ async function executechildID(){
     if(fetchedChildPortfolio.status === true){
         childIdData = fetchedChildPortfolio.Data
     }
+    // console.log(childIdData)
 
     function childID(){
         document.getElementById('mainContentSection').innerHTML = 

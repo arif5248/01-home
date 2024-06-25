@@ -199,7 +199,7 @@ h1{
 
 }
 .newsImage > img{
-    width: 100%;
+    /* width: 100%; */
     padding: 10px;
 }
 .date-source{
@@ -224,6 +224,7 @@ h1{
 }
 .exchangeContent > p{
     text-align: justify;
+    font-size: 14px;
 }
 .selectedNewsBody > .heading{
     background-color: rgb(4 5 52);

@@ -20,7 +20,7 @@ async function executePromotions(){
             <div class='promotionsDetailsHeading'>
                 <h5>Promotion Details</h5>
             </div>
-            <div style="flex: 1 auto;height: 100%;overflow-y: auto;" class="container">
+            <div onscroll="resetLogoutTimer()" style="flex: 1 auto;height: 100%;overflow-y: auto;" class="container">
                 <div id="promotionsDetails_content"></div>
             </div>
             <div id='closePromotionDetails'>

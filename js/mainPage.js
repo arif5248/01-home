@@ -357,11 +357,11 @@ function popUpLogout(){
     })
 }
 function startLogoutTimer() {
-    logoutTimer = setTimeout(popUpLogout, 5 * 60 * 5000);
+    console.log('Start Logout Timer')
+    logoutTimer = setTimeout(popUpLogout, 3 * 60 * 1000);
 }
 
 function resetLogoutTimer() {
-    // console.log('reset Logout')
     clearTimeout(logoutTimer);
     startLogoutTimer();
 }

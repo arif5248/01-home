@@ -1,0 +1,1 @@
+Only for Mobile version
